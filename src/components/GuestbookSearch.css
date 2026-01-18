@@ -27,6 +27,8 @@
 .guestbook-search__header img {
   max-width: 100%;
   height: auto;
+  image-rendering: crisp-edges; /* older browser fallback */
+  image-rendering: pixelated;
 }
 
 .guestbook-search__header h1 {
@@ -113,12 +115,32 @@
   padding: 20px;
 }
 
-.guestbook-search__browse {
+.guestbook-search__notice {
+  color: #555;
+  margin-bottom: 15px;
   text-align: center;
-  margin-top: 15px;
 }
 
-.guestbook-search__browse a {
+.guestbook-search__notice small {
+  display: block;
+  margin-top: 5px;
+}
+
+.guestbook-search__archive {
+  text-align: center;
+}
+
+.guestbook-search__archive-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.guestbook-search__archive-list li {
+  margin: 8px 0;
+}
+
+.guestbook-search__archive-list a {
   color: var(--link-color);
 }
 

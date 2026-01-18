@@ -111,6 +111,11 @@ function parseEntry(tableHtml: string, index: number): GuestEntry | null {
     .replace(/\{\{BR\}\}/g, "\n")
     .trim();
 
+  // Normalize image paths to use /images/*.gif
+  response = response
+    .replace(/\(images\/players\.gif\)/g, "(/images/players.gif)")
+    .replace(/\(broomsticksAdvanced\/images\/items\.gif\)/g, "(/images/items.gif)");
+
   const id = generateId(date, name, index);
 
   return { name, email, homepage, homepageUrl, from, date, comments, response, id, wasCommented: false };
@@ -241,6 +246,8 @@ function generateModernHtml(entries: GuestEntry[], title: string, backLink: stri
     header img {
       max-width: 100%;
       height: auto;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
     }
 
     h1 {
@@ -425,7 +432,7 @@ ${css}
 <body>
   <div class="container">
     <header>
-      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <img src="/images/intro.gif" alt="Broomsticks by Paul Rajlich">
       <h1>Guestbook</h1>
     </header>
 
@@ -445,140 +452,6 @@ ${entriesHtml}
 </html>`;
 }
 
-function generateIndexHtml(originalHtml: string): string {
-  // Extract the links section from the original
-  const linksMatch = originalHtml.match(/View Guestbook:[\s\S]*?<a href="official\.html">/i);
-
-  const css = `
-    :root {
-      --bg-color: #aaaacc;
-      --card-bg: #e5e5e5;
-      --border-color: #444444;
-      --text-color: #000;
-      --link-color: #0000cc;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Helvetica, Arial, sans-serif;
-      font-size: 13px;
-      background-color: var(--bg-color);
-      margin: 0;
-      padding: 20px;
-      color: var(--text-color);
-      line-height: 1.4;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    header img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 1.8em;
-      margin: 10px 0;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .notice {
-      color: #555;
-      margin-bottom: 15px;
-    }
-
-    .notice small {
-      display: block;
-      margin-top: 5px;
-    }
-
-    .archive-list {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0;
-    }
-
-    .archive-list li {
-      margin: 8px 0;
-    }
-
-    a {
-      color: var(--link-color);
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-    }
-  `.trim();
-
-  // Extract all the archive links
-  const linkPattern = /<a href="(guests-[^"]+\.html)">([^<]+)<\/a>(\s*\([^)]*\))?/gi;
-  const links: string[] = [];
-  let linkMatch;
-
-  while ((linkMatch = linkPattern.exec(originalHtml)) !== null) {
-    const href = linkMatch[1];
-    const text = linkMatch[2];
-    const count = linkMatch[3] || "";
-    links.push(`<li><a href="${href}">${text}</a>${count}</li>`);
-  }
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Broomsticks by Paul Rajlich - Guestbook</title>
-  <style>
-${css}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
-      <img src="../broomsticks3d/logo.gif" alt="Broomsticks 3D by Paul Rajlich">
-      <h1>Guestbook</h1>
-    </header>
-
-    <div class="card">
-      <p class="notice">
-        Sign Guestbook<br>
-        <small>January, 2006: guestbook signing has been disabled due to abuse by spammers.</small>
-      </p>
-
-      <p>View Guestbook:</p>
-      <ul class="archive-list">
-${links.join("\n")}
-      </ul>
-
-      <p><a href="official.html">Back to Top</a></p>
-    </div>
-  </div>
-</body>
-</html>`;
-}
-
 async function processFile(filename: string): Promise<SearchableEntry[]> {
   const inputPath = join(INPUT_DIR, filename);
   const outputPath = join(OUTPUT_DIR, filename);
@@ -586,10 +459,8 @@ async function processFile(filename: string): Promise<SearchableEntry[]> {
   const html = await readFile(inputPath, "latin1");
 
   if (filename === "guestbook.html") {
-    // Process the index page
-    const modernHtml = generateIndexHtml(html);
-    await writeFile(outputPath, modernHtml);
-    console.log(`Processed index: ${filename}`);
+    // Skip - the React app serves /guestbook now
+    console.log(`Skipping ${filename} - served by React app`);
     return [];
   }
 
@@ -605,7 +476,7 @@ async function processFile(filename: string): Promise<SearchableEntry[]> {
   const titlePart = titleMatch ? titleMatch[1] : "Archive";
   const title = `Broomsticks Guestbook - ${titlePart}`;
 
-  const modernHtml = generateModernHtml(entries, title, "guestbook.html");
+  const modernHtml = generateModernHtml(entries, title, "/guestbook");
   await writeFile(outputPath, modernHtml);
 
   console.log(`Processed ${filename}: ${entries.length} entries`);
