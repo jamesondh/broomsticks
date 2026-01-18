@@ -1,75 +1,45 @@
-# React + TypeScript + Vite
+# Broomsticks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live at [broomsticks.xyz](https://broomsticks.xyz)**
 
-Currently, two official plugins are available:
+A preservation and modernization project for **Broomsticks**, originally created by **Paul Rajlich**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About
 
-## React Compiler
+Broomsticks is a classic game that was originally released as:
+- **Broomsticks** - Java applet
+- **Broomsticks2** - C++/OpenGL/SDL
+- **Broomsticks iOS** - Objective-C
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+This repository aims to preserve the original games and port them to modern web technologies (HTML5/TypeScript/React).
 
-Note: This will impact Vite dev & build performances.
+## Project Status
 
-## Expanding the ESLint configuration
+**Source code pending.** We are awaiting the original source code from Paul Rajlich. Once received, work will begin on the HTML5 port.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Current Work
+- Guestbook archive: Modernized with fuzzy search, showing deleted posts, and other improvements
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Planned
+- HTML5 port of the original Broomsticks game
+- Preservation of original source code
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Credits
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Original Author:** Paul Rajlich - Creator of Broomsticks, Broomsticks2, and Broomsticks iOS
+- **Preservation & Port:** Jameson Hodge
+
+## Development
+
+```bash
+bun install              # Install dependencies
+bun run dev              # Start dev server
+bun run build            # Build for production (includes guestbook processing)
+bun run preview          # Preview production build
+bun run lint             # Run ESLint
+bun run build:guestbook  # Regenerate modernized guestbook data
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## License
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
