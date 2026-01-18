@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - jul</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="jul1-lala-0">
+      <a href="#jul1-lala-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:munny@mcmail.com">LaLa</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none yet" target="_blank">none yet</a></dd>
+        <dd><dt>From:</dt> England</dd>
+        <dd><dt>Date:</dt> Sun Jul  1 01:57:11 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Thank u very much for making Broomsticks. I love Quiddich and I was shouting at the computer because I kept getting Bumped by the Blugers!!!! THanks again from LaLa(A Big Harry Potter Fan who lives in England)</p>
+      </div>
+      <div class="entry-response"><p>Thanks LaLA!</p></div>
+    </article>
+
+<article class="entry" id="jul1-ilikeit-1">
+      <a href="#jul1-ilikeit-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:I like it">I like it</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.ilikeit.com" target="_blank">I like it</a></dd>
+        <dd><dt>From:</dt> I like it</dd>
+        <dd><dt>Date:</dt> Sun Jul  1 02:00:43 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I like it.It is good good good good good good good and gooooooooood once again.P.S. I Like It.</p>
+      </div>
+      <div class="entry-response"><p>Thanks! :-)</p></div>
+    </article>
+
+<article class="entry" id="jul1-googa-2">
+      <a href="#jul1-googa-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:googs@virgn.net">googa</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.gooooooga.com" target="_blank">googa</a></dd>
+        <dd><dt>From:</dt> googa</dd>
+        <dd><dt>Date:</dt> Sun Jul  1 02:06:46 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>The real game is well pricey.Except for more charachters(that don't matter) the snitch, games with 2 players on each side and maybe a couple of other things the demo preety much the same. Oh yeh the Expert mode is cool</p>
+      </div>
+      <div class="entry-response"><p>The full version is much better than the regular version! Being able to add more balls, change the size of the playing field, and add more players makes for much more fun! People who have the full version know what I am talking about! :-)</p></div>
+    </article>
+
+<article class="entry" id="jul1-gjk-3">
+      <a href="#jul1-gjk-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sdj">gjk</a></dd>
+        <dd><dt>Homepage:</dt> <a href="jgujtglj" target="_blank">g,kgj</a></dd>
+        <dd><dt>From:</dt> gjluguy</dd>
+        <dd><dt>Date:</dt> Sun Jul  1 02:09:49 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>The real game is so expenseve compared to the demo, I agree with Googa there is not much in it.</p>
+      </div>
+      <div class="entry-response"><p>The full version is much better, trust me! There is no comparison! </p>
+<p> Besides, $10 is much cheaper than most games!</p></div>
+    </article>
+
+<article class="entry" id="jul1-brad17-4">
+      <a href="#jul1-brad17-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Jul  1 03:21:47 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul and all the users here I was wondering if you would like to use a UBB instead of this guestbook? You can have a look at it here. Note that it is hosted on my server.</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> Maybe. I'll check it out. </p>
+<p> One thing that I do like about this guestbook is that I wrote the scripts myself, so I know exactly what is going on...</p></div>
+    </article>
+
+<article class="entry" id="jul1-anon-5">
+      <a href="#jul1-anon-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Jul  1 18:19:50 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I think your game is good.. But... I dont know if i want to buy your &quot;EXPERT VERSIONhttp://brighton.ncsa.uiuc.edu/~prajlich/broomsticks/images/intro.gif Is it true that your game is not good? like &quot;bill gates&quot; says&quot;? I will think about it</p>
+      </div>
+      <div class="entry-response"><p>It's the FULL VERSION, more info here: </p>
+<p> <a href="full.html">Full Version</a> </p>
+<p> of course it's not true. &quot;Bill Gates&quot; is just some goofball messing with my guestbook. :-)</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul1-billgates-6">
+      <a href="#jul1-billgates-6" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Bill Gates</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Jul  1 18:29:27 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your game sucks big time....................like i said give up. im tired and sweating like crazy at the restaurant yesterday. Your game is really stupid. i will gladly die on my dead body than buy your game! what's the matter with you ? Cant stand up. the game even indicates its adversary. you idiot you are walking in a death trap. our little frolicare must end now. the fictional characters you added to your game cant CONTROL ME?!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul1-billgates-7">
+      <a href="#jul1-billgates-7" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> BILL GATES</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Jul  1 18:31:00 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dont waste your unadequate strength trying. Im a mess.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul2-brad17-8">
+      <a href="#jul2-brad17-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon Jul  2 04:56:09 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>QUOTE by Paul: Sure, I remember you Brad! Thanks for the new characters! I will add them to the Characters Gallery soon. The 3D game may run ok on a PII if you have a nice graphics card (like a TNT2 for example). END QUOTE Damn. I don't have a 3D card yet, but I'm getting one soon (we aren't exactly rich at my house), it's nice that you remember me though :) Anyway, about the UBB I really only wanted more thits to my site :)</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul2-chris-9">
+      <a href="#jul2-chris-9" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Chris</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Mon Jul  2 12:42:42 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul,</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul2-chris-10">
+      <a href="#jul2-chris-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Chris</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Mon Jul  2 12:46:43 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, i love your demo and am thinking of getting your full version soon. but one thing troubles me, how big is the cd and excatlly how does it work? where do you put it in your drive? maybe you could have pictures on your website of the game in the drive. that would be nice for all the people who have the same question as me. ;) one more question. in the full version can you make up the score to play to or is it always 50? thank you! Chris</p>
+      </div>
+      <div class="entry-response"><p>Chris, </p>
+<p> The mini CD is the size of a credit card, but it works in any standard CD-ROM drive. If you open your drive, you will notice that in the CD tray there is an &quot;inner&quot; circle. The CD fits nicely in there. Having a picture is a good idea, I may do that. </p>
+<p> Yes, in the full version you can choose the score. Or, you can also choose that the game ends when the gold ball is caught.</p></div>
+    </article>
+
+<article class="entry" id="jul2-lillian-11">
+      <a href="#jul2-lillian-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Lillian</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> California</dd>
+        <dd><dt>Date:</dt> Mon Jul  2 17:05:29 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I LOVE your website! Thank you so much for making it. I plan to buy it, but first I have to convince my Dad. Thanks again! -lily :)</p>
+      </div>
+      <div class="entry-response"><p>Thanks Lily! You will love the full version!</p></div>
+    </article>
+
+<article class="entry" id="jul2-brad17-12">
+      <a href="#jul2-brad17-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon Jul  2 20:56:46 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just a little survey, how old is everyone here? You couldn't add that to this script could you Paul, I think the results would be quite interesting. BTW, I am 12 :)</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> yes, I could add that to the guestbook. Good suggestion. It just never occurred to me.</p></div>
+    </article>
+
+<article class="entry" id="jul4-brad17-13">
+      <a href="#jul4-brad17-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 06:25:22 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, you haven't sent me an email yet. Anyway, do you know C/C++? Obviously you know JAVA but I was wondering if you knew C/C++, as I wanted to know what language you use to code the CAVE. I am learning C++ at the moment, here is my first program. Note that I only started today :) #include int main() { int age; cout&gt;age; if(age100) { cout&lt;&lt;&quot;You are really old&quot;; } return 0; } Note that this program doesn't make much sense as the age factors are all wrong, but it's my first program... Oh yes, if you do use C/C++ for the CAVE, which compiler do you use or did you make your own? I use Dev-CPP 4</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> I was out of town. Yes, in fact, I use C/C++ much more than I use Java. For CAVE programs, I use the SGI compiler since the CAVE runs off of a million dollar SGI system. When I'm not developing for the CAVE, I'm usually developing for Linux and so I use g++/gcc.</p></div>
+    </article>
+
+<article class="entry" id="jul4-brad17-14">
+      <a href="#jul4-brad17-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 06:32:57 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Sorry, I did not realise that this guestbook does not support formatting. See if this works : #include int main() { int age; cout&gt;age; if(age100) { cout</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> looks good to me. :-)</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul4-brad17-15">
+      <a href="#jul4-brad17-15" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 06:36:21 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yay, I found out how to preserve text. I used to know how but I forgot. Hello Paul</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul4-brad17-16">
+      <a href="#jul4-brad17-16" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 06:41:23 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just a little test... Thanks for posting Brad, you are so cool, way cooler than me... Paul did NOT, repeat NOT write that.</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul4-brad17grea-17">
+      <a href="#jul4-brad17grea-17" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17@greatestgamers.com</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 06:42:59 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oops! Ignore that last post, I forgot to format it... Oh well, I'll test it again... Hi brad, you are cool</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul4-me-18">
+      <a href="#jul4-me-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> me</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Jul  4 15:48:22 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>how much is the full version?</p>
+      </div>
+      <div class="entry-response"><p>It costs $10 US. More info here: </p>
+<p> <a href="full.html">Full Version</a></p></div>
+    </article>
+
+<article class="entry" id="jul4-brad17-19">
+      <a href="#jul4-brad17-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.coma" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 23:23:10 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul what are the names of ALL the picture files in the full version? Please tell me urgently, I need to know, and I never got your email.</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> I sent you an email a little while ago, so you should have it now. BTW, I removed your tests above so as not to clutter the guestbook. </p>
+<p> Anybody who wants to host the Broomsticks demo on their site (rather than just linking to it), use this zip file: </p>
+<p> http://brighton.ncsa.uiuc.edu/~prajlich/broomDemo.zip </p>
+<p> It has everything you need.</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul4-brad17-20">
+      <a href="#jul4-brad17-20" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 23:28:32 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Scratch that, I need to know where the pciture files are stored on this site and what they are called, as I have got broom.jar and BroomsticksApplet.class but I need the picture files and the path for them to get it working on my site!</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul4-brad17-21">
+      <a href="#jul4-brad17-21" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul  4 23:34:10 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I got the rest of the classes that the game needs but I still need the images.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul5-brad17-22">
+      <a href="#jul5-brad17-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Jul  5 18:43:22 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I don't know if you are on-line right now but if you are could you please go to http://www.pokemoncrater.com/arena/chatroom.php3 and meet me there, as I need to talk to you about something. If you can't go there then go to http://www.mattachutranslations.cjb.net</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul5-brad17-23">
+      <a href="#jul5-brad17-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Jul  5 22:37:40 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Thanks for saying that my code worked. What compiler do you use? I use Dev-CPP 4.</p>
+      </div>
+      <div class="entry-response"><p>For the CAVE I use the SGI compiler. For Linux, I use g++/gcc.</p></div>
+    </article>
+
+<article class="entry" id="jul6-brad17-24">
+      <a href="#jul6-brad17-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Jul  6 09:11:13 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul can I play the game with different characters if I replace the players.gif file on the online demo?</p>
+      </div>
+      <div class="entry-response"><p>If you want to use your Pokemon characters, that is fine with me.</p></div>
+    </article>
+
+<article class="entry" id="jul6-chelseygal-25">
+      <a href="#jul6-chelseygal-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ange;ga;;agher2005@yahoo.com">Chelsey Gallagher</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> bell Fouche SD</dd>
+        <dd><dt>Date:</dt> Fri Jul  6 17:45:14 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul6-chelseygal-26">
+      <a href="#jul6-chelseygal-26" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ange;ga;;agher2005@yahoo.com">Chelsey Gallagher</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> bell Fouche SD</dd>
+        <dd><dt>Date:</dt> Fri Jul  6 17:45:25 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul6-brad17-27">
+      <a href="#jul6-brad17-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Jul  6 22:38:59 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>No, I didn't mean that. I meant that I could set up a few Broomsticks Demos on my server, each using different players, like the ones found on this site, and I could change the background, so I can use different players without buying the full version.</p>
+      </div>
+      <div class="entry-response"><p>Brad, </p>
+<p> no, only setup one demo. I want people to host the demo, but I don't want people tinkering with it. I will let you use your Pokemon characters though. </p>
+<p> If you want to talk about it more, send me an email.</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul7-andrew-28">
+      <a href="#jul7-andrew-28" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:shadowman_15000@iwon.com">Andrew</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Las Vegas</dd>
+        <dd><dt>Date:</dt> Sat Jul  7 14:46:04 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul7-andrew-29">
+      <a href="#jul7-andrew-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:shadowman_15000@iwon.com">Andrew</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Las Vegas</dd>
+        <dd><dt>Date:</dt> Sat Jul  7 14:47:55 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul8-williemacl-30">
+      <a href="#jul8-williemacl-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:boogaboo@efni.com">Willie Maclean</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Outer Space</dd>
+        <dd><dt>Date:</dt> Sun Jul  8 16:02:05 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>WUZAAAAAAAAAAAAP? TO AL YOU EARTH LETS</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jul8-john-31">
+      <a href="#jul8-john-31" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:KJdogg07@yahoo.com">John</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Jul  8 18:54:25 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul8-john-32">
+      <a href="#jul8-john-32" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:KJdogg07@yahoo.com">John</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Maryland</dd>
+        <dd><dt>Date:</dt> Sun Jul  8 18:57:48 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>My birthday just past and I'm really thinking of buying your game. I was just wondering if you are putting too much work into Broomsticks and not into lasertron. I mean every time I play lasertron, its always the same. I only see adjustments on the game broomsticks. Nice job on the games anyways.</p>
+      </div>
+      <div class="entry-response"><p>John, </p>
+<p> I wrote Lasertron in 1997, so I stopped working on it a while back. Sometime, I should go back and improve it. I'm very busy though, check out <a href="http://brighton.ncsa.uiuc.edu/~prajlich/">my webpage</a>. I make these Java games on the side as a hobby. </p>
+<p> Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jul9-cheezeblok-33">
+      <a href="#jul9-cheezeblok-33" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kbsales1@swbell.net">Cheezeblok</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Kansas</dd>
+        <dd><dt>Date:</dt> Mon Jul  9 19:00:46 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really like your game!I am trying to convince my dad to let me buy the full version, but he thinks all sellers on the internet are evil and scam people all the time. :( I think, if i show him all the happy people in the guestbook, he'll let me though. I have lots of fun playing 2 player with my bro on the demo....I love sitting on top of him so he keeps getting bumped to the ground over and over.....:) Great game! keep it up! ~Cheezeblok~</p>
+      </div>
+      <div class="entry-response"><p>:-) </p>
+<p> Thanks Cheezeblock!</p></div>
+    </article>
+
+<article class="entry" id="jul10-cheezeblok-34">
+      <a href="#jul10-cheezeblok-34" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kbsales1@swbell.net">CheezeBlok</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> kansas</dd>
+        <dd><dt>Date:</dt> Tue Jul 10 17:09:16 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>me again.......BROOMSTICKS RULES. Oh yeah, one of the characters on the demo, the boy one without the glasses, and the brown hair looks like neville longbottom ^_^ Brandon aka ~CheezeBlok~</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul11-cheezeblok-35">
+      <a href="#jul11-cheezeblok-35" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kbsales1@swbell.net">CheezeBlok</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Kansas</dd>
+        <dd><dt>Date:</dt> Wed Jul 11 07:49:55 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, i sent you an email! ummmm, thats all &gt;_&gt; -Brandon-AKA~CheezeBlok~</p>
+      </div>
+      <div class="entry-response"><p>Got it! Thanks for ordering the full version. You will love it!</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul11-stephanie-36">
+      <a href="#jul11-stephanie-36" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ponymagic">stephanie</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> levittown Pa</dd>
+        <dd><dt>Date:</dt> Wed Jul 11 09:03:08 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>DO NOT E-MAIL ME!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul11-stephanie-37">
+      <a href="#jul11-stephanie-37" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ponymagic@yahoo.com">stephanie</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> levittown Pa</dd>
+        <dd><dt>Date:</dt> Wed Jul 11 09:03:23 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>DO NOT E-MAIL ME!!!</p>
+      </div>
+      <div class="entry-response"><p>Then why do you list your email? :-) </p>
+<p> I removed it (the email address).</p></div>
+    </article>
+
+<article class="entry" id="jul11-brad17-38">
+      <a href="#jul11-brad17-38" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:brad17@greatestgamers.com">brad17</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.brad23hacks.f2s.com" target="_blank">Brad23 Hacks</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Jul 11 18:38:24 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>For those of you who didn't know, Paul has gone away for a week.</p>
+      </div>
+      <div class="entry-response"><p>Yep, I was out of town. But now I am back! :-)</p></div>
+    </article>
+
+<article class="entry" id="jul11-tom-39">
+      <a href="#jul11-tom-39" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> tom</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Jul 11 23:11:49 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>It is a gret game i love to play it. but some times i go to play it and it doesnt work why</p>
+      </div>
+      <div class="entry-response"><p>Tom, </p>
+<p> hmmm... interesting. How often does it not work for you? What browser are you using?</p></div>
+    </article>
+
+<article class="entry" id="jul12-jan-40">
+      <a href="#jul12-jan-40" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:j-ph.hopf@web.de">Jan</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.the-potterpage.de.vu" target="_blank">Harry Potter</a></dd>
+        <dd><dt>From:</dt> Germany</dd>
+        <dd><dt>Date:</dt> Thu Jul 12 05:02:45 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ich möchte fragen, ob ich das Spiel auf meine Homepagne setzen darf. Schreib bitte schnell.</p>
+      </div>
+      <div class="entry-response"><p>I don't speak German. :-( </p>
+<p> Anybody want to translate? :-)</p></div>
+    </article>
+
+<article class="entry" id="jul12-cheezeblok-41">
+      <a href="#jul12-cheezeblok-41" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kbsales1@swbell.net">CheezeBlok</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Kansas</dd>
+        <dd><dt>Date:</dt> Thu Jul 12 13:22:39 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>yes, here i am again......sorry for cluttering the guestbook, but i have a question. Is the lasertron game on the internet a demo, or the full version? And, i heard lasertron comes on the full version of broomsticks too. IS that just a demo or the full version? or is there no full version at all? Im confused :-) -Brandon- Aka ~CheezeBlok~</p>
+      </div>
+      <div class="entry-response"><p>Brandon, </p>
+<p> good question. </p>
+<p> There is only one version of Lasertron, so the one on the CD is the same as the one online. However, the CD also comes with a demo of Broomsticks 3D which is not anywhere else. However, to run Broomsticks 3D, you will need a capable 3D graphics card that has OpenGL support.</p></div>
+    </article>
+
+<article class="entry" id="jul12-luna-42">
+      <a href="#jul12-luna-42" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:angeldoggytanja@hotmail.com">Luna</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.wizardmansion.com/~LunaSpellman" target="_blank">My wizard Page</a></dd>
+        <dd><dt>From:</dt> Minnesota</dd>
+        <dd><dt>Date:</dt> Thu Jul 12 14:09:15 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really like this game. I always wanted to play quidditch or at least somthing like it... Im eventually gonna order the full game. Ive been making a game of my own like quidditch that you can play outside, without flying... well thats it for me, great job on this!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Luna!</p></div>
+    </article>
+
+<article class="entry" id="jul16-emily-43">
+      <a href="#jul16-emily-43" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Sugar031688@yahoo.com">Emily</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/sugar031688/index.html" target="_blank">Hogwarts School of Witchcraft and Wizardry</a></dd>
+        <dd><dt>From:</dt> Atlanta, GA</dd>
+        <dd><dt>Date:</dt> Mon Jul 16 10:41:37 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>&quot;Broomsticks&quot; is such a fun game! It's not too difficult, yet it's hard enough to be challenging. Keep up the good work!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Emily! That's the idea! :-)</p></div>
+    </article>
+
+<article class="entry" id="jul16-katie-44">
+      <a href="#jul16-katie-44" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Ktbug7567@aol.com">Katie</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/harrypotterstower.html" target="_blank">Harry Potter's Tower (Not my website but I am a student there!)</a></dd>
+        <dd><dt>From:</dt> Dunwoody (Near Atlanta) Georgia</dd>
+        <dd><dt>Date:</dt> Mon Jul 16 11:17:02 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul! I love playing your game, broomsticks. I've played with all my friends and they love it too. Just curious, Brad said something about a player.gif file in the demo. How can you add players to the demo version? I thought that you couldn't. Also, how do you make these extra player files? Do you need the Full version? I want to get it but my mom hates ordering online. Something about scams--whatever. I'll keep trying.</p>
+      </div>
+      <div class="entry-response"><p>Katie, </p>
+<p> If you download the demo version, you can change the players image file manually. However, it's not the same as having the full version. The full version has a bunch more options. </p>
+<p> Keep trying. :-)</p></div>
+    </article>
+
+<article class="entry" id="jul16-katie-45">
+      <a href="#jul16-katie-45" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Ktbug7567@aol.com">Katie</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/harrypotterstower/" target="_blank">Harry Potter's Tower (Not my website but I am a student there!)</a></dd>
+        <dd><dt>From:</dt> Dunwoody (Near Atlanta) Georgia</dd>
+        <dd><dt>Date:</dt> Mon Jul 16 11:21:01 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just had to fix the website thing, i typed it in wrong. Anyways, Paul, Do you ever think about becoming the next bill gates, sorta? Because you seem to be really good with the games. Ever try expanding?</p>
+      </div>
+      <div class="entry-response"><p>I don't really think about that, but sure, I wouldn't mind having that kind of money. ;-) </p>
+<p> Thanks! I'm glad you like the games. Maybe I should promote them more.</p></div>
+    </article>
+
+<article class="entry" id="jul16-sleepingdr-46">
+      <a href="#jul16-sleepingdr-46" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sleepingdragon270">sleeping dragon27</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://harrypotterfreak.com" target="_blank">harry potter</a></dd>
+        <dd><dt>From:</dt> texas</dd>
+        <dd><dt>Date:</dt> Mon Jul 16 18:22:12 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>your web sight is so cool! my graphics arnt half as good where do you find the pictures?(the authentic ones)</p>
+      </div>
+      <div class="entry-response"><p>I think you must have posted to the wrong place. This the Broomsticks site, so the only pictures are the Broomsticks players.</p></div>
+    </article>
+
+<article class="entry" id="jul17-hermionebl-47">
+      <a href="#jul17-hermionebl-47" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:headmistress_99@hotmail.com">Hermione Black</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://theresashogwarts.moonfruit.com" target="_blank">Hogwarts School of Witchcraft And Wizardry</a></dd>
+        <dd><dt>From:</dt> Canada</dd>
+        <dd><dt>Date:</dt> Tue Jul 17 20:00:16 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi everyone who is currently reading my form!!!! Just to say that the game &quot;broomsticks&quot; is like PERFECT for Quidditch in Harry Potter!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jul18-anon-48">
+      <a href="#jul18-anon-48" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:------------">------------</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://----------" target="_blank">--------------</a></dd>
+        <dd><dt>From:</dt> -----------</dd>
+        <dd><dt>Date:</dt> Wed Jul 18 10:55:03 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>broomsticksiswicked!!!!!!!!!!!!!keep it up paul!!!!!!!!!!!!!!11</p>
+      </div>
+      <div class="entry-response"><p>:-) Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jul18-aaron-49">
+      <a href="#jul18-aaron-49" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Aaron</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Arkansas</dd>
+        <dd><dt>Date:</dt> Wed Jul 18 13:40:35 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi! A couple of months ago I was searching the web for some good games based on Quidditch. I am so glad I found yours. Broomsticks is fun. It is like no other &quot;Quidditch&quot; game I have played. In most other games you can't even hold the &quot;Quaffle&quot;, it just bounces off your charactor. In other games, the &quot;Bludgers&quot; don't hit you at all, and the &quot;Snitch&quot; could fly around for HOURS before it EVER gets caught. Broomsticks, however, is perfect. Start checking your mailbox! My parents said I can get the full version!:-) - Aaron, lover of games of all sorts.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Aaron! I'm glad you like the game. </p>
+<p> I got your order. You will love the full version!</p></div>
+    </article>
+
+<article class="entry" id="jul21-jp-50">
+      <a href="#jul21-jp-50" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:wright_jp@hotmail.com">JP</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> England</dd>
+        <dd><dt>Date:</dt> Sat Jul 21 14:33:42 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your new expert demo is wicked!</p>
+      </div>
+      <div class="entry-response"><p>Thanks JP!</p></div>
+    </article>
+
+<article class="entry" id="jul21-aaron-51">
+      <a href="#jul21-aaron-51" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:rage1463">Aaron</a></dd>
+        <dd><dt>Homepage:</dt> dont have one</dd>
+        <dd><dt>From:</dt> atlanta,georgia usa</dd>
+        <dd><dt>Date:</dt> Sat Jul 21 21:37:38 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul22-potterfan-52">
+      <a href="#jul22-potterfan-52" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:girdee@excite.com">PotterFan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> hogwarts</dd>
+        <dd><dt>Date:</dt> Sun Jul 22 21:41:35 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>wassup the demo is good but I hope to buy the full version soon. CONGRADULATIONS I can't wait</p>
+      </div>
+      <div class="entry-response"><p>Thanks! Yes, the full version is a lot more fun!</p></div>
+    </article>
+
+<article class="entry" id="jul23-aquaboo-53">
+      <a href="#jul23-aquaboo-53" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:AquaBoo@irishstepdancing.net">AquaBoo</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://quidditch.cjb.net" target="_blank">Quidditch.cjb.net</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jul 23 14:59:16 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>In response to your request for a translation from a July entry: &quot;I would like to ask whether I may set the play on my Homepage. Write please fast.&quot; (word for word) &quot;Ich möchte fragen, ob ich das Spiel auf meine Homepagne setzen darf. Schreib bitte schnell. -Jan&quot; Also, I downloaded your zip file, but where is the BroomsticksApplet.class file?</p>
+      </div>
+      <div class="entry-response"><p>Thanks for the translation! </p>
+<p> The answer of course is yes. Anybody can link to the demo: </p>
+<p> http://brighton.ncsa.uiuc.edu/broomsticks/ </p>
+<p> or host it by getting the zip file: </p>
+<p> http://brighton.ncsa.uiuc.edu/~prajlich/broomDemo.zip </p>
+<p> The class files are in the jar file. If you want to extract them (you don't need to), you can use Winzip.</p></div>
+    </article>
+
+<article class="entry" id="jul24-nameless-54">
+      <a href="#jul24-nameless-54" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> (nameless)</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Jul 24 08:12:14 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>i think your price is to high,sure games out there are like $30-$40, but those games have lots of memory, they are in 3d, and youll probably be playing them longer than broomsticks, and your game is 2d, doesnt use a lot of memory or programming, compared to the games out there, yours is 1/3-1/4 the price! i say at the most sell it for $5,because ive seen 3d games that are $10 and are way more sophisticated than yours,its a good game, but the price is high, thats way half the people that write in this guestbook cant.</p>
+      </div>
+      <div class="entry-response"><p>If you think that the value of a program is based on the amount of memory it uses, then you've been using too many Microsoft products! Hahahahaaha! :-) </p>
+<p> No seriously, the full version is a lot of fun and there are many ways to play that will keep you interested. I just got two emails today from people that bought it that said it was the best game that they bought in some time. </p>
+<p> 3D games are not necessarily better. I've played a bunch of 3D games that get boring quick. However, if you insist on 3D, don't forget that there is also the Broomsticks 3D game on the CD: </p>
+<p> <a href="br3d.html">Broomsticks 3D screenshots</a> </p>
+<p> It is a Quake3-style renderer, meaning that it is on the opposite end of the spectrum (from the 2D game) in terms of rendering technology. You will need a decent 3D graphics card just to run it.</p></div>
+    </article>
+
+<article class="entry" id="jul24-nameless-55">
+      <a href="#jul24-nameless-55" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> (nameless)</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Jul 24 08:19:18 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>and please answer me concerning your thoughts</p>
+      </div>
+      <div class="entry-response"><p>Just did.</p></div>
+    </article>
+
+<article class="entry" id="jul24-fleurdelac-56">
+      <a href="#jul24-fleurdelac-56" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Fleur Delacour</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> america</dd>
+        <dd><dt>Date:</dt> Tue Jul 24 15:13:07 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>you,re game iz really cool for when i cant play cause i need a new broom</p>
+      </div>
+      <div class="entry-response"><p>Thanks! :-)</p></div>
+    </article>
+
+<article class="entry" id="jul24-fleurdelac-57">
+      <a href="#jul24-fleurdelac-57" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Fleur Delacour</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Beuxbatons academey of magic</dd>
+        <dd><dt>Date:</dt> Tue Jul 24 15:17:26 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I decided to write more. could you please create a character bearing my image? it would be a great honour for Beauxbatons. And add where you can pick a nimbus,firebolt,etc. Thanx, Fleur Delacour Student of Beauxbatons Acadeny of Magic</p>
+      </div>
+      <div class="entry-response"><p>I'll consider it. But, how about you? You can make characters too! :-) </p>
+<p> Anybody who has made new characters, let me know and I will add them to the <a href="characters.html">characters gallery</a>!</p></div>
+    </article>
+
+<article class="entry" id="jul24-ra-58">
+      <a href="#jul24-ra-58" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> R.A.</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> usa</dd>
+        <dd><dt>Date:</dt> Tue Jul 24 17:29:58 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hey! I love this game!!How much does it cost and where do I send the money??</p>
+      </div>
+      <div class="entry-response"><p>Thanks! It costs 10$ US. Details here: </p>
+<p> <a href="full.html">Full Version</a></p></div>
+    </article>
+
+<article class="entry was-commented" id="jul26-yujgfjyut-59">
+      <a href="#jul26-yujgfjyut-59" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:uuuuuuu">yujgfjyut</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://yyyyy" target="_blank">uuu</a></dd>
+        <dd><dt>From:</dt> yyy</dd>
+        <dd><dt>Date:</dt> Thu Jul 26 11:49:37 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>your game fucking sucks</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul26-marty-60">
+      <a href="#jul26-marty-60" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Sorry but as much as a harry potter fan that i am, you're not getting my mail">Marty</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.none.com" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> USA (MA)</dd>
+        <dd><dt>Date:</dt> Thu Jul 26 16:05:49 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I love this game I wish you had the golden snitch and more players but I guess that's what the full version is for. Another thing, those bludgers are tough. And the quaffle is really hard to get. Now I know what all those quidditch players feel like @ HOgwarts Great Job! Make one for the triwizard tournament too.</p>
+      </div>
+      <div class="entry-response"><p>Thanks! </p>
+<p> Yep, that is what the full version is for. :-) </p>
+<p> I'm glad you like the gameplay. That's what I like to hear.</p></div>
+    </article>
+
+<article class="entry" id="jul26-bob-61">
+      <a href="#jul26-bob-61" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> bob</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jul 26 16:52:05 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul26-nameless-62">
+      <a href="#jul26-nameless-62" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> (nameless)</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jul 26 18:12:19 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>your game is basic, a little complex, but still pretty insignificant compared to other games your price! im trying to make a point that your game is $10, ive seen games for the same price, and they are in 3d,and 20x more complex! im just saying people could buy other games that are better than yours for the same price! and those screen shots are fake, theres no broomsticks 3-d. thats just some other game your developing at cave.</p>
+      </div>
+      <div class="entry-response"><p>Are complex games necessarily better? Think about it for a while. </p>
+<p> The truth is that what makes a game good is gameplay. Quality of graphics is also important, but secondary. Why did Tetris sell so well? </p>
+<p> There is a Broomsticks 3D. I'm using some of the same code that I used for one of my CAVE projects, but it is a separate game that runs on regular computers. I have the ability to do really high end 3D graphics (that's my job), but the truth is that most people will probably enjoy the regular Broomsticks more than the 3D one. The 3D one is more complicated and harder to play.</p></div>
+    </article>
+
+<article class="entry" id="jul26-nameless-63">
+      <a href="#jul26-nameless-63" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> (nameless)</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jul 26 18:16:14 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>then again, looking back at those screenshots,you probably are developing a 3-d broomsticks, but still concern the what i said before, lower the price.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul26-timmy-64">
+      <a href="#jul26-timmy-64" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:timmay10@hotmail.com">timmy</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> missouri</dd>
+        <dd><dt>Date:</dt> Thu Jul 26 19:01:56 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>i liked you game good job</p>
+      </div>
+      <div class="entry-response"><p>Thanks Timmy!</p></div>
+    </article>
+
+<article class="entry" id="jul26-anonymous-65">
+      <a href="#jul26-anonymous-65" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> anonymous</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jul 26 22:40:23 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just got done reading your entire guestbook. (It took a VERY long time). I have some suggestions for your game. I have read how some people suggested that you put in an option to choose brooms. I have a suggestion just a little different. I think that you should have to earn the right to these brooms by winning matches to get points that you can buy the brooms with. You could also add a single-player campaign.</p>
+      </div>
+      <div class="entry-response"><p>Wow! That is a lot of reading. :-) </p>
+<p> That is a good suggestion. Originally, this game was two player only. I added the single player as an afterthought because many people did not have anybody to play against. Having a single-player campaign would be nice...</p></div>
+    </article>
+
+<article class="entry was-commented" id="jul27-hyperlilki-66">
+      <a href="#jul27-hyperlilki-66" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:*$R%&amp;$#^#*)$**">hyper lil' kid</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http:// Ireallydon'tknow.Com" target="_blank">...........?</a></dd>
+        <dd><dt>From:</dt> Beats me.</dd>
+        <dd><dt>Date:</dt> Fri Jul 27 13:49:05 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really want the full version of it but have no $$$. A really Really really really really good hint for 1st timers is that if youre on the wrong side of the screen, dont turn around. Hit the wall and bounce back. turnning taks time.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul27-hyperlilki-67">
+      <a href="#jul27-hyperlilki-67" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:*$R%&amp;$#^#*)$**">hyper lil' kid</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http:// Ireallydon'tknow.Com" target="_blank">...........?</a></dd>
+        <dd><dt>From:</dt> Beats me.</dd>
+        <dd><dt>Date:</dt> Fri Jul 27 13:52:01 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really want the full version of it but have no $$$. A really Really really really really good hint for 1st timers is that if youre on the wrong side of the screen, dont turn around. Hit the wall and bounce back. turnning takes time.</p>
+      </div>
+      <div class="entry-response"><p>That's a good tip!</p></div>
+    </article>
+
+<article class="entry" id="jul27-nameless-68">
+      <a href="#jul27-nameless-68" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> (nameless)</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Jul 27 21:07:28 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>let me ask you one question.do you beleive games should be priced by how good they are?</p>
+      </div>
+      <div class="entry-response"><p>No, not necessarily. People will just buy more copies of good games. Games are priced by many factors. Mostly, the cost of developing the game and the cost of distributing it. </p>
+<p> In my case, development costs were low (just my time), but distribution is not cheap because I make the CDs myself in small quantities. </p>
+<p> Really, in the end I chose the price because I thought it was reasonable. Anybody who really wants my game should be able to save up $10.</p></div>
+    </article>
+
+<article class="entry" id="jul28-dannee-69">
+      <a href="#jul28-dannee-69" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Dannee@v21mail.co.uk">Dannee</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Devon</dd>
+        <dd><dt>Date:</dt> Sat Jul 28 07:43:11 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I am the biggest fan of your mavellous game! Hopefully I shall get the Full Version for christmas:-)</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jul28-terjer-70">
+      <a href="#jul28-terjer-70" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:cyberjunkus@yahoo.com">Terje R</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.JesusFolk.com" target="_blank">Jesus Christ is #1</a></dd>
+        <dd><dt>From:</dt> Sydney</dd>
+        <dd><dt>Date:</dt> Sat Jul 28 07:52:54 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Warm Greetings from Australia!!! found your page via Google.... anyway not sure if i should be here... God bless you all abundantly! Hope to meet you all where the streets are paved with gold and where we will never grow old :) Regards Terje R</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul28-dannee-71">
+      <a href="#jul28-dannee-71" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Dannee@v21mail.co.uk">Dannee</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Devon</dd>
+        <dd><dt>Date:</dt> Sat Jul 28 10:57:49 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I LUV your expert game</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jul28-jordand-72">
+      <a href="#jul28-jordand-72" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:??????????????">Jordan D</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://cool" target="_blank">??????????????????????????</a></dd>
+        <dd><dt>From:</dt> Hogwarts</dd>
+        <dd><dt>Date:</dt> Sat Jul 28 20:34:15 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul, guess what?! After 3 months my mom will let me buy the full vesion!!!! My order should be there in a couple of days P.S. How long would it take for it to get to Utah? YOUR GAME ROCKS!!!!!!!!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Excellent! You will love it! </p>
+<p> It should take three days or so.</p></div>
+    </article>
+
+<article class="entry" id="jul30-aaron-73">
+      <a href="#jul30-aaron-73" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:rage1463">Aaron</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.yahoo.com" target="_blank">yahoo</a></dd>
+        <dd><dt>From:</dt> alabama,usa</dd>
+        <dd><dt>Date:</dt> Mon Jul 30 12:38:39 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this game is awesome im gunna buy the whole version!!!!!!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Aaron!</p></div>
+    </article>
+
+<article class="entry" id="jul30-marty-74">
+      <a href="#jul30-marty-74" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:martthetart11@yahoo.com">Marty</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> MA</dd>
+        <dd><dt>Date:</dt> Mon Jul 30 17:39:12 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great game. Hey, I was looking through the guest book and why people think $10 is expensive is a mystery to me. But whatever.Only one thing that I'd like you to change on the game, instead of saying catch the red ball or don't get hit by the black balls. Say the REAL name like the quaffle and the bludgers. Then if need be, put the red ball or black ball in perenthesses! Being the Harry Potter fan I am, I find it rather annoying. THANX!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Marty! </p>
+<p> Actually, since my game is not official, I cannot use those names. Sorry. :-)</p></div>
+    </article>
+
+<article class="entry" id="jul30-valtanner-75">
+      <a href="#jul30-valtanner-75" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tjtanner2001@yahoo.com">Val Tanner</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Ward Arkansas</dd>
+        <dd><dt>Date:</dt> Mon Jul 30 22:47:02 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Awsome dude!This game is totally cool.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Val!</p></div>
+    </article>
+
+<article class="entry" id="jul30-amandatann-76">
+      <a href="#jul30-amandatann-76" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tjtanner2001@yahoo.com">amanda  tanner</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> ward ar</dd>
+        <dd><dt>Date:</dt> Mon Jul 30 22:51:10 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this is a cool game.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Amanda! Related to Val? :-)</p></div>
+    </article>
+
+<article class="entry" id="jul31-marty-77">
+      <a href="#jul31-marty-77" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:martthetart11@yahoo.com">Marty</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> MA,USA</dd>
+        <dd><dt>Date:</dt> Tue Jul 31 07:59:19 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>One more thing, the name of the game ain't broomsticks. It's QUIDDITCH. So I think you should change the name or it will appear you are stealing the idea of the game from JK ROWLING!</p>
+      </div>
+      <div class="entry-response"><p>Again, my game is not official so I can't use that name. Besides, this game is not as complicated as Quidditch, so using that name would probably not be appropriate anyway.</p></div>
+    </article>
+
+<article class="entry" id="jul31-marty-78">
+      <a href="#jul31-marty-78" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:martthetart11@yahoo.com">Marty</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> GRYFFINDOR, HOGWARTS</dd>
+        <dd><dt>Date:</dt> Tue Jul 31 08:11:32 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>what kind brooms are these? I want a firebolt but i guess i could live with a NImbus 2000 or a 2001 but just dont give me anything lower than a CleanSweep7! I mean, Butterflies are faster than them!</p>
+      </div>
+      <div class="entry-response"><p>Try the expert version! :-) </p>
+<p> In the full version, you can set the speeds to whatever you want. You can also change the graphics.</p></div>
+    </article>
+
+<article class="entry" id="jul31-marty-79">
+      <a href="#jul31-marty-79" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:martthetart11@yahoo.com">Marty</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> HOGWARTS!!</dd>
+        <dd><dt>Date:</dt> Tue Jul 31 15:20:24 CDT 2001</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>OK I get what you mean. By the way have you ever read the Harry Potter books??</p>
+      </div>
+      <div class="entry-response"><p>Yes I have!</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

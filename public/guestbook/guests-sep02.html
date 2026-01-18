@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - sep02</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="sep1-dougall-0">
+      <a href="#sep1-dougall-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:msjj@ics.mq.edu.au">Dougall</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Sep  1 15:10:49 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Can you please anounce the winners of the charracter contest. Please don't delay it!!!</p>
+      </div>
+      <div class="entry-response"><p>You mean the skins contest?</p></div>
+    </article>
+
+<article class="entry" id="sep2-dougall-1">
+      <a href="#sep2-dougall-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Sep  2 03:27:06 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I mean skins, I'm hopeless</p>
+      </div>
+      <div class="entry-response"><p>Yes, I will do that soon! :-)</p></div>
+    </article>
+
+<article class="entry" id="sep5-kai-2">
+      <a href="#sep5-kai-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kaibrewster@msn.com">Kai</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Wayzata Minnesota</dd>
+        <dd><dt>Date:</dt> Thu Sep  5 19:36:24 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>How long does it take for br3d to ship??? it's a great game!!!!</p>
+      </div>
+      <div class="entry-response"><p>I send the game the morning after I get your order. Then it takes 2-3 days. Thanks!</p></div>
+    </article>
+
+<article class="entry" id="sep5-matthewdav-3">
+      <a href="#sep5-matthewdav-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Sep  5 21:45:14 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi. I recently got a burnt cd which contained everything from my last computer, so I have some new skins at home. I'm going to connect my new computer to the internet when I get home and e-mail them as soon as possible. (PS: Paul, you need to add another page to the guest book)</p>
+      </div>
+      <div class="entry-response"><p>I look forward to seeing the new graphics. </p>
+<p> Thanks for the reminder. :-)</p></div>
+    </article>
+
+<article class="entry was-commented" id="sep6-angelo-4">
+      <a href="#sep6-angelo-4" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:bernina@hotelbernina.com">angelo</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.hotelbernina.com" target="_blank">hotel bernina Milano</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Sep  6 09:16:00 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear Sir/Mrs Descrition Hotel Bernina The Bernina Hotel is located in front of Milan's Central Railway Station, wich is the heart of the business center and the crossroads of the economic life of the province of Lombardy. It is well connected to the most important places in Milan and the hinterland ( highways, the Central Station, lines 2&amp;3 of the underground FAIR of Milan, Public square DUOMO), bus terminal for both Linate,Orio al Serio and Malpensa airports. The Hall of the hotel is noted for its worm atmosphere in wich customer satisfation is the prime factor; there is on on-going exhibition of contemporary artists an Internet corner with dedicated ADSL lines at the disposal of customers and on INFOPOINT where guest can get information about entertainment. All the room have private bath rooms with either a shower or bath, a hair dryer, a safety deposit box, minibar, air condition, direct external telephone lines and color satellite tv. We regret you, and faitfully yours. Hotel Bernina Via Napo Torriani 27 Milano Tel 02/66988022 fax 02/6702964</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep7-xavierjone-5">
+      <a href="#sep7-xavierjone-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thexmasta1@msn.com">Xavier Jones</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/thexmasta/wizardingnet.html" target="_blank">The Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Memphis, Tennessee, USA</dd>
+        <dd><dt>Date:</dt> Sat Sep  7 04:29:58 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I haven't been to this site in a long time, and I just now found out about your Broomsticks 3D game Paul. I'm downloading it right now, and if I really like it, I might decide to sell some to other people. Anyway, I would like to say that I love all the games you make and for you to check out my new and improved website (not all the way finished) at the address above!!! :-P</p>
+      </div>
+      <div class="entry-response"><p>Nice to hear from you again Xavier. I hope you do like Broomsticks 3D. Let me know what you think. </p>
+<p> Thanks. I checked out your website. Thanks for linking to Broomsticks!</p></div>
+    </article>
+
+<article class="entry" id="sep8-phairestof-6">
+      <a href="#sep8-phairestof-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:edeakasha@hotmail.com">Phairest of the Mall</a></dd>
+        <dd><dt>Homepage:</dt> <a href="under construction" target="_blank">Severus Foreverus</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Sun Sep  8 02:09:26 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Brromsticks is a neat game! How can I convince you to let me run the demo on my site?</p>
+      </div>
+      <div class="entry-response"><p>Sure you can! Grab this file: </p>
+<p> http://brighton.ncsa.uiuc.edu/~prajlich/broomDemo.zip </p>
+<p> You can also link to my site if you want.</p></div>
+    </article>
+
+<article class="entry" id="sep9-manon-7">
+      <a href="#sep9-manon-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:choupettemc@aol.com">Manon</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> France</dd>
+        <dd><dt>Date:</dt> Mon Sep  9 07:03:00 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I LOVE broomsticks 3d and broomsticks! I'm very happy because i have win the contest skins! Thanks Paul!!!!! PS: I'm french, my english isn't perfect!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Manon! Congratulations on winning the contest!</p></div>
+    </article>
+
+<article class="entry" id="sep11-willdavis-8">
+      <a href="#sep11-willdavis-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Violin_dude02@yahoo.com">Will Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.angelfire.com/goth/eaglecorpse" target="_blank">The Official Eaglecorpse Website</a></dd>
+        <dd><dt>From:</dt> Maine</dd>
+        <dd><dt>Date:</dt> Wed Sep 11 12:30:28 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your site is really cool but I can't get Broomsticks 3D to work</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep11-rhanaja-9">
+      <a href="#sep11-rhanaja-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Rhanaja@aol.com">Rhanaja</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Rhanaja</dd>
+        <dd><dt>Date:</dt> Wed Sep 11 22:12:05 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hi and I am the master of the game</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep12-dougall-10">
+      <a href="#sep12-dougall-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Sep 12 02:47:38 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Thanx. Got a contest in mind? Did you get my adress</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep12-daniel-11">
+      <a href="#sep12-daniel-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Sep 12 16:36:39 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I don't think we need a contest going on all the time Dougall! Just make it an Anual thing or something but, we need to take a break!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep13-dougall-12">
+      <a href="#sep13-dougall-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Sep 13 05:17:53 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ok, sure Daniel, I was just thinking how hard it is to think of one.</p>
+<p> Do you have the full version, Daniel?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep13-daniel-13">
+      <a href="#sep13-daniel-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Fri Sep 13 16:01:37 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dougall: Yes, actualy I have 2 copies of the full version! Paul, or to anyone: this may be a stupid question but, when you write something in the guestbook, how do you like make a space between 2 paragraphs? Because when I hit enter it works but then when i submit it, it puts it all together.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep14-dougall-14">
+      <a href="#sep14-dougall-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Sep 14 01:26:04 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Daniel, <br> For a new line type &amp;lt;br&amp;gt; (just how it is, no tricks)<br> for a new paragraph type &amp;lt;p&amp;gt;</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep14-mike-15">
+      <a href="#sep14-mike-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Mike</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Sep 14 12:38:36 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Broomsticks is awesome!</p>
+<p> Real awesome</p>
+      </div>
+      <div class="entry-response"><p>Thanks Mike!</p></div>
+    </article>
+
+<article class="entry" id="sep15-daniel-16">
+      <a href="#sep15-daniel-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep 15 12:11:27 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just a reminder Paul: to make a screenshots page for brm 3d.</p>
+<p> Thanks for the help Dougall!</p>
+      </div>
+      <div class="entry-response"><p>Ah, yes. Thanks for reminding me.</p></div>
+    </article>
+
+<article class="entry" id="sep15-dougall-17">
+      <a href="#sep15-dougall-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep 15 15:08:59 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I love helping others! <br> it was a bit of a chalenge making it show the commands<br>You can make the guestbook do anything on a webpage, eg I dont know how this will turn out: This is my thing<br> oh dear!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep16-wooops-18">
+      <a href="#sep16-wooops-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> wooops</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Sep 16 16:30:15 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep16-joey-19">
+      <a href="#sep16-joey-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kingsfordchark@aol.com">Joey</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://broomsticks.zzn.com" target="_blank">Broomstick's e-mail</a></dd>
+        <dd><dt>From:</dt> New York</dd>
+        <dd><dt>Date:</dt> Mon Sep 16 18:39:06 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear Paul have you made network play?</p>
+      </div>
+      <div class="entry-response"><p>Not yet. I have done some experiments, but is not ready yet. </p>
+<p> One problem is going to be that for a fast paced game like this, network latency (lag) is going to be a problem. For instance, I don't know if it will be possible for this to be playable over a modem.</p></div>
+    </article>
+
+<article class="entry" id="sep17-karlioryan-20">
+      <a href="#sep17-karlioryan-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Karli O'Ryan</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Scotland</dd>
+        <dd><dt>Date:</dt> Tue Sep 17 12:24:27 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep18-dougall-21">
+      <a href="#sep18-dougall-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Sep 18 03:50:59 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul,<br> I don't intend to bug you or anything, but I have a few ?s. Why aren't you giving out the source, I would except an answer like, &quot;I want to be the only one working&quot; Are there going to be more compotitons? Now I have won the game, could I win the source?</p>
+      </div>
+      <div class="entry-response"><p>Dougall, </p>
+<p> the main reason for not giving out source is that I want one official version of each game. However, I really do want help with the artwork, that is why I had the contests. I do plan to have more contests in the near future.</p></div>
+    </article>
+
+<article class="entry" id="sep20-kallekalma-22">
+      <a href="#sep20-kallekalma-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kalle_kalmari@luukku.com">Kalle Kalmari</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Finland</dd>
+        <dd><dt>Date:</dt> Fri Sep 20 03:32:42 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi Paul still remember me? i got a new computer and br3d is working super cool its fantastic i just chaced a golden snatch and i get it... whenn you add multiplayer/web playing thing or bots for single player? Kalle</p>
+      </div>
+      <div class="entry-response"><p>Sure I remember you! You were one of the contest winners! :-) </p>
+<p> Excellent! I'm glad you like Broomsticks3D. I do plan to add those things. I've just been very busy with other things and so it is going very slowly. :-(</p></div>
+    </article>
+
+<article class="entry" id="sep21-lukas-23">
+      <a href="#sep21-lukas-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:reader486@aol.com">Lukas</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> New York</dd>
+        <dd><dt>Date:</dt> Sat Sep 21 17:29:43 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Is Broomsticks 3D for mac? And, have you upgraded the orriginal broomsticks at all? <br> </p>
+<p> P.S. I hyave played your game for at least two years and love it. <br> <br> Lukas</p>
+      </div>
+      <div class="entry-response"><p>Lukas, </p>
+<p> right now Broomsticks3D is only for Windows. I should make it cross-platform in the future. </p>
+<p> I've made minor upgrades to Broomsticks. For instance, in the Full Version with 2-on-2, you can pass the ball to your teammate. </p>
+<p> Thanks! Comments like your P.S. make me glad that I made this game!</p></div>
+    </article>
+
+<article class="entry" id="sep22-heatherrio-24">
+      <a href="#sep22-heatherrio-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:45675">Heather rios</a></dd>
+        <dd><dt>Homepage:</dt> <a href="94 candlewood DR." target="_blank">harrry Potter</a></dd>
+        <dd><dt>From:</dt> New Jersey</dd>
+        <dd><dt>Date:</dt> Sun Sep 22 17:58:48 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Harry Potter was the best book I read this summerhe makes the bests books ever</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep24-matthewdav-25">
+      <a href="#sep24-matthewdav-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Sep 24 20:58:50 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi Paul. Broomsticks won't work =( <br> I need the get a Java Virtual Machine from Microsoft, but they don't have it available seperately. HELP =(</p>
+      </div>
+      <div class="entry-response"><p>Hmmm... maybe you have the JVM but it is disabled. Look at Tools-&gt;Internet Options-&gt;Security-&gt;Internet-&gt;Custom Level. </p>
+<p> If you really do not have it, maybe you can upgrade your browser?</p></div>
+    </article>
+
+<article class="entry was-commented" id="sep25-joey-26">
+      <a href="#sep25-joey-26" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@broomsticks.zzn.com">Joey</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://broomsticks.zzn.com" target="_blank">Broomsticks e-mail</a></dd>
+        <dd><dt>From:</dt> Ney York</dd>
+        <dd><dt>Date:</dt> Wed Sep 25 17:24:48 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Want FREE Broomsticks e-mail? Check out the linkabove or go to: http://broomsticks.zzn.com</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep25-joey-27">
+      <a href="#sep25-joey-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@broomsticks.zzn.com">Joey</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://broomsticks.zzn.com" target="_blank">Broomsticks e-mail</a></dd>
+        <dd><dt>From:</dt> Ney York</dd>
+        <dd><dt>Date:</dt> Wed Sep 25 17:26:25 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Want FREE Broomsticks e-mail? Check out the linkabove or go to: http://broomsticks.zzn.com</p>
+      </div>
+      <div class="entry-response"><p>Cool!</p></div>
+    </article>
+
+<article class="entry" id="sep26-michaelwil-28">
+      <a href="#sep26-michaelwil-28" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Michael williams</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> england</dd>
+        <dd><dt>Date:</dt> Thu Sep 26 14:10:20 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hi paul I havent been on your website 4 ages and aither has danlie Im crying right now Ihavent been on it for ages.</p>
+      </div>
+      <div class="entry-response"><p>Welcome back! Are those tears of joy? :-)</p></div>
+    </article>
+
+<article class="entry" id="sep27-hpotter-29">
+      <a href="#sep27-hpotter-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hhh@happy.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://redrumklan.freeservers.com" target="_blank">REDRUMKLAN#2</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Sep 27 00:03:19 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>dear paul i got a new site that uses html and i need the html for this guest book. thanks paul.</p>
+      </div>
+      <div class="entry-response"><p>This guestbook uses a CGI Perl script. It is probably not allowed on your server. I can do it because I run my own web server. :-)</p></div>
+    </article>
+
+<article class="entry" id="sep28-daniel-30">
+      <a href="#sep28-daniel-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Sat Sep 28 10:39:59 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just wondering Paul, but when do you expect to have the next Brm 3d demo thing. (the one that says expired)?</p>
+<p> Thanks!</p>
+      </div>
+      <div class="entry-response"><p>Thanks for the reminder Daniel. I'll try to get that up in the next couple of days.</p></div>
+    </article>
+
+<article class="entry" id="sep28-ashleyhock-31">
+      <a href="#sep28-ashleyhock-31" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:luckeylittleone2002@yaho.com">Ashley Hockings</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Goodwood</dd>
+        <dd><dt>Date:</dt> Sat Sep 28 20:20:43 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Found Broomsticks while I was looking for the release of Harry Potter.I played againest the computer,myself and my best friend.We laughed our way through the game which is a pretty good remake,we agreed, of the actual game(as we can;t fly brooms it certainly makes up for our inability)If only Harry, Hermoine, and Ron could see us now! Legolas43</p>
+      </div>
+      <div class="entry-response"><p>Thanks! I'm glad that you are having fun with it!</p></div>
+    </article>
+
+<article class="entry" id="sep29-katiejohns-32">
+      <a href="#sep29-katiejohns-32" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:StormRider14@aol.com">Katie Johnson</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep 29 10:07:39 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="sep29-nadimkobei-33">
+      <a href="#sep29-nadimkobei-33" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:r0b0tnik@msn.com">Nadim Kobeissi</a></dd>
+        <dd><dt>Homepage:</dt> None :(</dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep 29 12:40:18 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="sep29-nadimkobei-34">
+      <a href="#sep29-nadimkobei-34" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:r0b0tnik@msn.com">Nadim Kobeissi</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.NadKo.Tk" target="_blank">www.NadKo.Tk</a></dd>
+        <dd><dt>From:</dt> Lebanon</dd>
+        <dd><dt>Date:</dt> Sun Sep 29 12:41:05 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Please, Please Please, Can You Give A 12 Years ld Child Full Version Of Broomsticks On His B-Day???</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep29-nadimkobei-35">
+      <a href="#sep29-nadimkobei-35" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:r0b0tnik@msn.com">Nadim Kobeissi</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.NadKo.Tk" target="_blank">www.NadKo.Tk</a></dd>
+        <dd><dt>From:</dt> Lebanon</dd>
+        <dd><dt>Date:</dt> Sun Sep 29 12:41:26 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Please, Please Please, Can You Give A 12 Years ld Child Full Version Of Broomsticks On His B-Day??? PS:i think you should realease the game as freeware...</p>
+      </div>
+      <div class="entry-response"><p>Sorry, but the only way to get the Full Version is to order it. The demo is freeware. :-)</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

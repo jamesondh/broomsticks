@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - aug03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="aug1-evan-0">
+      <a href="#aug1-evan-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:eferg@iinet.net.au">Evan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Aug  1 07:58:16 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>After getting repaired from being shocked by lightning, our computor has been freezing, so that means I don't get to play Broomsticks that much (another reason is that our Br 3d expierd a few days ago.) Just to let you know. -Evan.</p>
+      </div>
+      <div class="entry-response"><p>That's too bad. I hope it gets fixed.</p></div>
+    </article>
+
+<article class="entry" id="aug3-robowizard-1">
+      <a href="#aug3-robowizard-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> RoboWizard</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Aug  3 08:50:31 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, it's august now! Update the guestbook!</p>
+      </div>
+      <div class="entry-response"><p>Done. Thanks for the reminder. :-)</p></div>
+    </article>
+
+<article class="entry" id="aug9-evan-2">
+      <a href="#aug9-evan-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:eferg@iinet.net.au">Evan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Aug  9 01:35:53 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yeah Paul, RoboWizard's right!</p>
+      </div>
+      <div class="entry-response"><p>Yeah, yeah... I'm only 2 weeks late on changing it over to August. ;-)</p></div>
+    </article>
+
+<article class="entry was-commented" id="aug9-gfkdohytj-3">
+      <a href="#aug9-gfkdohytj-3" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hjhgkghk">gfkdohytj</a></dd>
+        <dd><dt>Homepage:</dt> hjjkjlkj;ljk</dd>
+        <dd><dt>From:</dt> jhkhgjflkjhljh</dd>
+        <dd><dt>Date:</dt> Sat Aug  9 15:47:29 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>lkjklkjlkjl;jkj,fghjfmngmdfgmrdfngrenermnmrnmrenmnntjyrtjurtyujtytyiyuiu</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="aug9-asswhole-4">
+      <a href="#aug9-asswhole-4" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:fhfffffffffffffffffff">asswhole</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://ffffffffffffffffffffff" target="_blank">fffffffffffffffff</a></dd>
+        <dd><dt>From:</dt> ffffffffffffffffffff</dd>
+        <dd><dt>Date:</dt> Sat Aug  9 15:48:16 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>ffffffffffffffffffffffffffffffffffffffffffffffffffffrrrrrrrrrrrrrrrrrrrrrrrrrfuck</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug10-evan-5">
+      <a href="#aug10-evan-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:eferg@iinet.net.au">Evan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Aug 10 20:42:14 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>The computor's almost working again. Even the best of the best Video Card doesn't make it fully work.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug12-matthewdav-6">
+      <a href="#aug12-matthewdav-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Aug 12 06:00:56 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yo! Paul! Everything alright over your end of the world? </p>
+<p> Just seems that you've forgotten to update the guestbook. It IS the 12th after all =Þ </p>
+<p> Just reminding you... -Matt</p>
+      </div>
+      <div class="entry-response"><p>Yes, I am still alive. I've been out of town and busy with some other stuff. But, I'm back now!</p></div>
+    </article>
+
+<article class="entry" id="aug13-evan-7">
+      <a href="#aug13-evan-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:eferg@iinet.net.au">Evan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Aug 13 07:09:01 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>The computor guy found that the CPU was damaged. IF THAT DOESN'T WORK I'M GETTING A NEW COMPUTOR!!!</p>
+      </div>
+      <div class="entry-response"><p>Ouch! Good luck.</p></div>
+    </article>
+
+<article class="entry" id="aug13-dodo-8">
+      <a href="#aug13-dodo-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:dodo@yahoo.com">dodo</a></dd>
+        <dd><dt>Homepage:</dt> <a href="ttp://www.onlinecasinosolei.com" target="_blank">casino</a></dd>
+        <dd><dt>From:</dt> uk</dd>
+        <dd><dt>Date:</dt> Wed Aug 13 11:21:52 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>great site</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="aug13-friendly-9">
+      <a href="#aug13-friendly-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hppuppy@comcast.net">FrieNDLY</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.freewebs.com/muggleawareness/index.htm" target="_blank">MuggleAwareness</a></dd>
+        <dd><dt>From:</dt> US</dd>
+        <dd><dt>Date:</dt> Wed Aug 13 18:56:08 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Nice site! It's August, isn't it? I LOVE the game Broomsticks! It rocks soo much!!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="aug13-friendly-10">
+      <a href="#aug13-friendly-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hppuppy@comcast.net">FrieNDLY</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.freewebs.com/muggleawareness/index.htm" target="_blank">MuggleAwareness</a></dd>
+        <dd><dt>From:</dt> US</dd>
+        <dd><dt>Date:</dt> Wed Aug 13 19:00:34 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>By the way. Again, this site ROCKS and so does the game!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug15-mark-11">
+      <a href="#aug15-mark-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Mark</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Aug 15 00:01:47 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>are the contest winners going to be posted now??? :)</p>
+      </div>
+      <div class="entry-response"><p>Soon... very soon. :-)</p></div>
+    </article>
+
+<article class="entry" id="aug16-matthewdav-12">
+      <a href="#aug16-matthewdav-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sat Aug 16 06:04:51 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oh good. Nice to see you're still alive and well ^-^ </p>
+<p> Just started to get a little spooky there, that's all =Þ </p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug17-mark-13">
+      <a href="#aug17-mark-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Mark</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Aug 17 19:12:46 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi, after i download broomsticks 2 demo version and i click br2.exe it says this: br2.exe - Unable To Locate DLL The dynamic link library MSVCIRTD.dll could not be found in the specified path (directory here). please help! thanx</p>
+      </div>
+      <div class="entry-response"><p>Mark, </p>
+<p> I accidently compiled a &quot;debug&quot; version rather than a &quot;release&quot; version which is why it is looking for a MSVC library. I've fixed this now, so download again. </p>
+<p> Thanks for discovering this problem.</p></div>
+    </article>
+
+<article class="entry" id="aug17-friendly-14">
+      <a href="#aug17-friendly-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hppuppy@comcast.net">FrieNDLY</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.freewebs.com/muggleawareness/index.htm" target="_blank">MuggleAwareness</a></dd>
+        <dd><dt>From:</dt> US</dd>
+        <dd><dt>Date:</dt> Sun Aug 17 20:54:08 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I still live the game......</p>
+      </div>
+      <div class="entry-response"><p>Did you mean to say &quot;love&quot; instead of &quot;live&quot;? :-)</p></div>
+    </article>
+
+<article class="entry" id="aug19-matthewdav-15">
+      <a href="#aug19-matthewdav-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Aug 19 07:06:53 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>All I can say is : Wow!</p>
+<p> Ok, I can say a bit more than that =Þ Great demo. I love the new passing feature and the clouds in front ^-^ Nice touch. I see that it should support BR1 character and item sets providing that the user converts the GIF file to BMP, so that's also great.<br> I think that it would be nice to be able to change the poles when making a custom item set, or... Ok, steering clear of the animation thing =Þ </p>
+<p> Well, all in all, it's a great demo, even if it's an early one, and I can't wait to see it in the weeks (or months) to come. </p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Thanks Matt! I will think of a way to allow the poles to be modified. </p>
+<p> Update: - if you download the newest version (0.3), you can make a custom pole by creating a 20x185 BMP and naming it pole1.bmp. The hoop is still in the items file though... </p>
+<p> Also, I will come up with a way to allow more animations and yet be compatible with old character sets.</p></div>
+    </article>
+
+<article class="entry" id="aug19-hannahbloo-16">
+      <a href="#aug19-hannahbloo-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:full-bloom@hotmail.com">Hannah Bloom</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> Illinois</dd>
+        <dd><dt>Date:</dt> Tue Aug 19 13:46:41 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>i love broomsticks! i dont have the full version yet but i will get it soon i love to see the characters that other people send in some of them are so funny!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Hannah, I'm glad you like it! </p>
+<p> Yes, I agree that letting people create their own characters can be a lot of fun!</p></div>
+    </article>
+
+<article class="entry" id="aug20-chicagolol-17">
+      <a href="#aug20-chicagolol-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">CHICAGO¤lollie</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Aug 20 06:50:37 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Question/Suggestion:<br> Well, is there any way you can get the game to check the pixel size of the images? That way if the image is bigger than BR1 character sets, it can go on to select the additional images needed...god I must need sleep.</p>
+<p> Sorry if that's a little hard to understand, but I can't think of another way to explain that at the moment. But you know what I mean, right? It'll mean more code obviously, but it shouldn't be that hard to achieve if it's possible, right?</p>
+<p> Right, ok, well, try to make sense of it =D<br> *yawn* Cya,<br> -Matt</p>
+<p> (PS: Thanks for the ability to change the pole image Paul =D)</p>
+      </div>
+      <div class="entry-response"><p>Yes, that is exactly what I was thinking!</p></div>
+    </article>
+
+<article class="entry" id="aug21-matthewdav-18">
+      <a href="#aug21-matthewdav-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Aug 21 05:50:03 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Cool, thought so. But, the programming code you're using, does it have a &quot;Select Case&quot; statement, or would you have to resort to a simple &quot;If/Else&quot; statement?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug22-evan-19">
+      <a href="#aug22-evan-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:eferg@iinet.net.au">Evan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Aug 22 06:19:48 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just bought the full version! (all because I couldn't get an R rated game.) The only bad thing is that it will take about a month to get around to Australia. -Evan</p>
+      </div>
+      <div class="entry-response"><p>Thanks for ordering! It should not take that long, my guess is 10 days or so.</p></div>
+    </article>
+
+<article class="entry" id="aug22-matthewdav-20">
+      <a href="#aug22-matthewdav-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Aug 22 06:54:52 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Actually, I understood all that ^-^</p>
+<p> Well cool, so, like, with the BR2 characters, you could have as many frames as the creator desires for each player then? <br> Cool. So, this means that Broomsticks will, at last, have increased animation, right? Sure, five characters within each set, but that's absolutely fine! Don't need any more than that!</p>
+<p> Now, the animation, would it just be, for example, the cape flapping around while flying or something (no in-between actions), or actual in-depth animation, so like, still for example, the cape flapping around, but actions inbetween going up and down or left and right too?</p>
+<p> Either way, it'll mean more work for the character creator too, but what the hey! It'll definately put a lot more edge in character set competitions!!</p>
+<p> (\(^o^)/) Yayay!!!!!!!!!! </p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Right, there are no &quot;inbetween actions&quot; in the game. However, with multiple frames for each of the 4 states (up-left, up-right, down-left, down-right), there will be plenty to do! </p>
+<p> I'm glad you are excited. I look forward to seeing what you can make with the new capabilities!</p></div>
+    </article>
+
+<article class="entry" id="aug22-matthewdav-21">
+      <a href="#aug22-matthewdav-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Aug 22 07:15:24 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ok, I just downloaded the new demo and went straight to the player graphics for answers. Cape flapping around w/o animations inbetween.</p>
+<p> That's cool though. Having animations inbetween actions would have been really confusing now that I think more about it ^-^</p>
+<p> But cool. Yes, I'm gonna have tons of fun making more sets now!</p>
+<p> *evil grin* Nyeheheheheheheheheeeeeeeeeeeeeee!! </p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug28-tomriddle-22">
+      <a href="#aug28-tomriddle-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:RiddleTomM@aol.com">Tom Riddle</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://hometown.aol.com/cptamelia/myhomepage/hogwarts.html" target="_blank">Dumbledore's Den</a></dd>
+        <dd><dt>From:</dt> Minnesota</dd>
+        <dd><dt>Date:</dt> Thu Aug 28 15:52:23 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This is the best game we ever played! last night 20 of my friends came over and we played this game all night untill 9:00AM that is how much we love it! esspecally the 3D game, keep working Paul cause your going to have some followers..lol hhahahahaha!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Tom! Comments like this make me glad that I made the game. :-)</p></div>
+    </article>
+
+<article class="entry" id="aug30-matthewdav-23">
+      <a href="#aug30-matthewdav-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sat Aug 30 05:26:35 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hellooooooooo peoples of the guestbookie! </p>
+<p> Hehe, just had my pre-16th sleepover b*day with movies and lollies and stuff, so yeah. A little tired, a little hyped, all the same. =Þ </p>
+<p> I downloaded BroomSticks2 0.5, and I've got a question to ask: What changes were made prior to version 0.4? I'm just curious really, `cause I didn't see any at all =S </p>
+<p> I didn't miss something big, did I?</p>
+<p> -Matt<br> (September in 2 days, remember that ^-^)</p>
+      </div>
+      <div class="entry-response"><p>There were a few bug fixes between 0.4 and 0.5. For instance, the front layer did not scale properly with the bigger display modes. </p>
+<p> The only new &quot;feature&quot; is that you can specify the filenames for the images in the settings file.</p></div>
+    </article>
+
+<article class="entry" id="aug31-empireofni-24">
+      <a href="#aug31-empireofni-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:contact@nothere.ch">Empire of Nick</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.nyk.ch" target="_blank">http://www.nyk.ch</a></dd>
+        <dd><dt>From:</dt> Empire of Nick</dd>
+        <dd><dt>Date:</dt> Sun Aug 31 12:10:23 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great Page! Check out mine too! http://www.nyk.ch</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="aug31-empireofni-25">
+      <a href="#aug31-empireofni-25" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:contact@nothere.ch">Empire of Nick</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.nyk.ch" target="_blank">http://www.nyk.ch</a></dd>
+        <dd><dt>From:</dt> Empire of Nick</dd>
+        <dd><dt>Date:</dt> Sun Aug 31 12:33:05 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great Page! Check out mine too! http://www.nyk.ch</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug31-matthewdav-26">
+      <a href="#aug31-matthewdav-26" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Aug 31 20:23:52 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>It's September today!<br> It's September today!<br> This is just a small reminder sung to the tune of &quot;99 bottles of beer on the wall&quot; because I decided that this reminder had to be a little bit more fancy than the last reminders, <br> And it's September today! =Þ</p>
+<p> Yes, don't forget ;) </p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Thanks for the reminder, but I was still 2 days late! LOL! :-)</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

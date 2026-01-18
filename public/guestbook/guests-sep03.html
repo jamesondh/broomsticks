@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - sep03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="sep1-chochang-0">
+      <a href="#sep1-chochang-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Cho Chang</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Houston</dd>
+        <dd><dt>Date:</dt> Mon Sep  1 12:10:29 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>sorry i haven't posted in a while but, my other can't play the game, paul, why? it's say's something about the x active thing. Does any one else here besides me like EVANESCENCE?</p>
+      </div>
+      <div class="entry-response"><p>Your &quot;other&quot;? Which game... Broomsticks, Broomsticks2, or Broomsticks3D? If it is Broomsticks, chances are that Java is broken or not enabled on your browser. If it is Broomsticks3D, then chances are that you do not have OpenGL drivers installed for your graphics card.</p></div>
+    </article>
+
+<article class="entry" id="sep2-matthewdav-1">
+      <a href="#sep2-matthewdav-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Sep  2 06:09:00 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>EVANESCENE?<br> What's that?<br> Did I spell it right?<br> Sorry if I didn't, yay if I did! </p>
+<p> -Matt</p>
+<p> PS: Now it's September! =Þ</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep3-matthewdav-2">
+      <a href="#sep3-matthewdav-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Sep  3 04:50:45 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>&quot;other&quot; = &quot;brother&quot;, I think ^-^ <br> Deet de doo de doo de dum... -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep3-hermioneju-3">
+      <a href="#sep3-hermioneju-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Allison.koreman@verizon.net">Hermione(just kidding, this is Allison)</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://harrypotter.warnerbros.com/" target="_blank">The Official Harry Potter Website</a></dd>
+        <dd><dt>From:</dt> US, Delaware</dd>
+        <dd><dt>Date:</dt> Wed Sep  3 11:50:58 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>The Broomsticks and the Laserton games are great! The homepage is not mine, but I think it is the best!</p>
+      </div>
+      <div class="entry-response"><p>Thanks! I'm glad you like the games.</p></div>
+    </article>
+
+<article class="entry" id="sep7-robowizard-4">
+      <a href="#sep7-robowizard-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:OrbOfWisdom@hotmail.com">RoboWizard</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep  7 15:31:52 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Sorry I haven't been on for a while... Summer school.. Now school... I just checked in, But I am still loyal!!! I didn't even know about the BR2 Demo! I'll download, of course, and I probably won't be on for longer...</p>
+      </div>
+      <div class="entry-response"><p>Nice to hear from you again, welcome back! Yes, definitely try it out and let me know what you think...</p></div>
+    </article>
+
+<article class="entry" id="sep7-matthewdav-5">
+      <a href="#sep7-matthewdav-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Sep  7 23:52:35 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Wow, it's so quiet in here. </p>
+<p> I blame the American School Holidays Placement Department--er--Thingy! =Þ<br> Now, being from Australia, I expect that the arrangement of school holidays are different to that of America.<br> I don't know, but I think mum said that, like, it's school non-stop for 9 months, followed by a 3 month summer holiday break, right? Well, it's different for us Aussies.<br> Holidays follow a pattern of approx. 10 weeks of school, then 1 week of easter holidays, approx. 10 weeks of school, then 2 weeks of end-of-semester holidays, approx. 10 weeks of school, then 2 weeks of September holidays (yay!), then approx. 10 weeks of school, followed by 6 weeks of Christmas Holidays! Whee!!</p>
+<p> Methinks American kids and college/university students should get a more scattered holiday routine =D</p>
+<p> What? Oh right! This is a broomsticks guestbook!! lol, oh well. That happens some times ;)<br> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Actually, so-called &quot;year around schooling&quot; is starting to happen at some grade schools around here (6-12 years old).</p></div>
+    </article>
+
+<article class="entry" id="sep9-ginnyweasl-6">
+      <a href="#sep9-ginnyweasl-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:angel_bird@hotmail.com">Ginny Weasley</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.i'mfromhogwarts.com" target="_blank">Ginny's Page</a></dd>
+        <dd><dt>From:</dt> London,England.</dd>
+        <dd><dt>Date:</dt> Tue Sep  9 17:45:12 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Where can I find www.broomsticks.com?</p>
+      </div>
+      <div class="entry-response"><p>I don't have that domain name. Someone else grabbed it before I did and is using it for something completely unrelated, which is a shame. </p>
+<p> I do have www.broomsticks3d.com and from there you can get to both Broomsticks3d and Broomsticks.</p></div>
+    </article>
+
+<article class="entry" id="sep9-robowizard-7">
+      <a href="#sep9-robowizard-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:OrbOfWisdom@hotmail.com">RoboWizard</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Sep  9 19:20:12 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, can people submit a char. set anytime, even between contests?</p>
+      </div>
+      <div class="entry-response"><p>Sure you can! It will also be automatically entered into the next character set contest.</p></div>
+    </article>
+
+<article class="entry" id="sep11-anon-8">
+      <a href="#sep11-anon-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http:///" target="_blank">I used to be Robo-Wizard!</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Sep 11 16:36:01 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I tried the game, and it was radical! I especially like the player animation and &quot;front&quot;ground (the clouds)! You'll also be getting an e-mail with a regular BR characters, field, background, &amp; items. If they're bad, or mediocre, go easy on me! It's my first try and I'm not that good at drawing on computers... Signing off, =-(+)-=/\/\E+A| $/\/!+&lt;|-|!!!</p>
+      </div>
+      <div class="entry-response"><p>I'm glad you like the new demo! Thanks for sending those in, I will try them out soon.</p></div>
+    </article>
+
+<article class="entry" id="sep12-anon-9">
+      <a href="#sep12-anon-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Sep 12 19:40:17 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Wait... <br>I was searching the dusty internet guestbook archives, and, I remember asking about BR3D (still doesn't work) and I remember you saying something or other about &quot;simulate Windows 98 environment&quot;... <br>I have Windows 2000 Pro, but what is that??<br> =-(+)-=/\/\E+A| $/\/!+&lt;|-| signing off... star date 5925720509.204082409</p>
+      </div>
+      <div class="entry-response"><p>That is a setting that some people use in WinXP. </p>
+<p> Chances are that you do not have OpenGL drivers for your graphics card.</p></div>
+    </article>
+
+<article class="entry" id="sep12-anon-10">
+      <a href="#sep12-anon-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Sep 12 19:41:49 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey,</p>
+<p>I finally learned how to skip a space...</p>
+      </div>
+      <div class="entry-response"><p>:-)</p></div>
+    </article>
+
+<article class="entry" id="sep15-anon-11">
+      <a href="#sep15-anon-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Sep 15 21:18:09 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Geez, so quiet in here...</p>
+      </div>
+      <div class="entry-response"><p>No kidding...</p></div>
+    </article>
+
+<article class="entry" id="sep16-wheredapet-12">
+      <a href="#sep16-wheredapet-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> ~WhereDaPetzAre~</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> CatVille</dd>
+        <dd><dt>Date:</dt> Tue Sep 16 16:41:45 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>yes it is quiet...<br>HI PAUL I'M BACK!</p>
+      </div>
+      <div class="entry-response"><p>Welcome back!</p></div>
+    </article>
+
+<article class="entry" id="sep17-matthewdav-13">
+      <a href="#sep17-matthewdav-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Message Board)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Sep 17 04:54:07 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>AAH! YAY!! <br> *scares the living daylights out of ~wdpa~* WHOO! </p>
+<p> Hehehe, welcome back ~WDPA~!!! Whee!</p>
+<p> ...`tis a tad quiet `round here, isn't it?</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep18-wheredapet-14">
+      <a href="#sep18-wheredapet-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> ~WhereDaPetzAre~</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> CatVille</dd>
+        <dd><dt>Date:</dt> Thu Sep 18 18:44:17 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yes it is... Paul, U there?</p>
+      </div>
+      <div class="entry-response"><p>Yep, I'm here.</p></div>
+    </article>
+
+<article class="entry" id="sep19-anon-15">
+      <a href="#sep19-anon-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Sep 19 14:37:37 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul,<br>I know you have to be outta town, but c'mon!!</p>
+      </div>
+      <div class="entry-response"><p>Actually, I am not out of town, since the guestbook is slow recently I am just being especially bad about checking it. :-)</p></div>
+    </article>
+
+<article class="entry" id="sep22-matthewdav-16">
+      <a href="#sep22-matthewdav-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon Sep 22 05:54:33 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul says:<br> Actually, I am not out of town, since the guestbook is slow recently I am just being especially bad about checking it. :-)</p>
+<p> You lazy bum =Þ Hehehe</p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>This time, I was out of town. :-) </p>
+<p> But yes, you are right, I am a bum when it comes to this guestbook. :-)</p></div>
+    </article>
+
+<article class="entry" id="sep25-daniel-17">
+      <a href="#sep25-daniel-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Thu Sep 25 17:55:30 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Um, I don't think that's a very appropriate reply Matt, even if your just joking.</p>
+<p>Broomsticks is the only thing Paul works on, and I'm sure he doesn't have much time to respond to some of the silly remarks some of you post.</p>
+      </div>
+      <div class="entry-response"><p>Daniel, thanks for backing me up but it's ok, I don't mind the teasing.</p></div>
+    </article>
+
+<article class="entry" id="sep25-daniel-18">
+      <a href="#sep25-daniel-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Sep 25 17:57:06 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Shoot, make that 'isn't the only thing he works on'. Sorry. Maybe I should have just kept my mouth shut in the first place.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep26-matthewdav-19">
+      <a href="#sep26-matthewdav-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Sep 26 00:22:06 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Geez, sorry for being happy and joking around. I'll try to be more of a grumpy bum next time.</p>
+<p> =Þ Ok, I'm sorta kidding there. But every guestbook has an obsessive poster or two! =D<br> In this case, I'm one of a possible few of posters that will pop in and post something for the drat of it (yes I am aware that it isn't supposed to be drat). ;)</p>
+<p> Methinks another &quot;batch&quot; of visitors is to be in order though. This guestbook is getting next to no posts fast, and I think we should do everything in our power to help Save The Broomsticks Guestbook.</p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Bring them in! :-)</p></div>
+    </article>
+
+<article class="entry" id="sep26-brother-20">
+      <a href="#sep26-brother-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:godoug1512@aol.com">brother</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> baltimore</dd>
+        <dd><dt>Date:</dt> Fri Sep 26 12:05:35 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep27-matthewdav-21">
+      <a href="#sep27-matthewdav-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie (Message Board)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sat Sep 27 07:56:07 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Heya <br> Ok, this post has meaning, so I'm not wasting time =Þ Not much time, anyway. </p>
+<p> Well, yeah, Paul, on the message board you gave an idea for another contest, correct? </p>
+<p> Well I have become quite intrigued (did I spell that right?) with the br2 mod idea, and I've been sitting here thinking:</p>
+<p> &quot;Is it an official contest or not?&quot;</p>
+<p> ;)<br> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Yes, it is a real contest. I will announce it soon.</p></div>
+    </article>
+
+<article class="entry" id="sep28-anon-22">
+      <a href="#sep28-anon-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Sep 28 10:08:36 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, delete last entry!</p>
+      </div>
+      <div class="entry-response"><p>Ok, done.</p></div>
+    </article>
+
+<article class="entry" id="sep28-hermioneko-23">
+      <a href="#sep28-hermioneko-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:allison.koreman@verizon.net">Hermione Koreman(Allison again)</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.avalonclubhouse.com/" target="_blank">Avalon Clubhouse - Clubhouse Home</a></dd>
+        <dd><dt>From:</dt> US, Delaware</dd>
+        <dd><dt>Date:</dt> Sun Sep 28 13:03:23 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I changed to another website, just for girls, but I still think your Lasertron and Broomsticks games are the best.- better than most and worse than some. P.S. I will, every time I sign the Guestbook, change the website to another of my favorite websites.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Allison, I'm glad you still like the games.</p></div>
+    </article>
+
+<article class="entry" id="sep29-matthewdav-24">
+      <a href="#sep29-matthewdav-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon Sep 29 06:28:28 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>import java.applet.Applet; import java.awt.Graphics; import java.awt.Color; import java.awt.Event; import java.awt.event.*; import java.io.*; import...</p>
+<p> What in drat's name was that?!!!<br> I'm scared now *quivers with fear*<br> =Þ</p>
+<p> Ok, Paul, with the BR2 mod contest (providing it's a happening thing), are Flash-Enhanced HTMLs allowed? ;)<br> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Somebody tried to post a Java program, I'm not sure why. </p>
+<p> Sure, Flash is fine with me...</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - oct02</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="oct2-dougall-0">
+      <a href="#oct2-dougall-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Oct  2 02:35:57 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>What are the new things in the new demo?<br> Sounds exiting!</p>
+      </div>
+      <div class="entry-response"><p>For now, better graphics. Later I will be adding new gameplay (computer opponent). </p>
+<p> Guess what is coming up? A Broomsticks 3D sky or brooms contest!! :-)</p></div>
+    </article>
+
+<article class="entry" id="oct4-seamusfinn-1">
+      <a href="#oct4-seamusfinn-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Non yet">Seamus Finnigan</a></dd>
+        <dd><dt>Homepage:</dt> <a href="None Yet" target="_blank">None Yet</a></dd>
+        <dd><dt>From:</dt> Felton CA</dd>
+        <dd><dt>Date:</dt> Fri Oct  4 17:11:35 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I like BROOMSTICKS , and i can create a truely 3D scenario with MORFIT 3D WebDesigner(www.Morfit.com)(OOOOhhhhhh!) Reelee Interesting, Ohhh Yeh and i can do the quidditch field</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct4-daniel-2">
+      <a href="#oct4-daniel-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Fri Oct  4 17:22:46 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Holy Cow!!!!!!!!!!!!</p>
+<p> Awesome improvements paul!!! Really awesome!!!!!! So much more realistic!!!</p>
+<p> Are you going to post the sky and broomstick pics. on the website? Because I have got to get those for my full version. </p>
+<p> --Daniel.....Great Job!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Daniel! Yes, I will make those available soon.</p></div>
+    </article>
+
+<article class="entry" id="oct4-hpotter-3">
+      <a href="#oct4-hpotter-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:RimGreaper@inbox.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://redrumclan.com" target="_blank">REDRUMCLAN</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Oct  4 19:42:10 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear paul, why wont my players work? the ones made by other people are transparent but mine are white in the back!!! help!!! HPOTTER</p>
+      </div>
+      <div class="entry-response"><p>Open your gif image in the Windows Paint Program and set the transparent color to white in Image-&gt;Attributes.</p></div>
+    </article>
+
+<article class="entry" id="oct4-hpotter-4">
+      <a href="#oct4-hpotter-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:RimGreaper@inbox.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://redrumclan.com" target="_blank">REDRUMCLAN</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Oct  4 19:45:37 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>dear paul I almost forgot when are you going to have the next charecter contest? HPOTTER</p>
+      </div>
+      <div class="entry-response"><p>I'll have new contests sometime soon.</p></div>
+    </article>
+
+<article class="entry" id="entry-5">
+      <a href="#entry-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:RimGreaper@inbox.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> </dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct4-daniel-6">
+      <a href="#oct4-daniel-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Oct  4 19:57:34 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I don't mean to underestimate you or anything Paul, but did you draw the mountains and lake (background) from scratch? That is some amazing stuff! I have got to learn to draw like that! The problem I have is when I draw on paint, under the microscope it would look terrible and real fuzzy. But whenyou zoom out to normal view it looks awesome. I don't know haow people draw that good.</p>
+      </div>
+      <div class="entry-response"><p>I did not make that background. The backgrounds are called skyboxes. Do a search on skybox and you will find examples and tutorials. Many times, they are made with tools like Bryce and Poser rather than drawn by hand.</p></div>
+    </article>
+
+<article class="entry" id="oct4-daniel-7">
+      <a href="#oct4-daniel-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Oct  4 19:59:58 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I am not going to use this on your website like the other person did, but how do you make the font do those effects on the enrty? HTML code?</p>
+      </div>
+      <div class="entry-response"><p>He used the marquee tag.</p></div>
+    </article>
+
+<article class="entry was-commented" id="oct5-anon-8">
+      <a href="#oct5-anon-8" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Oct  5 08:21:13 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear paul, why wont my players work? the</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct5-daniel-9">
+      <a href="#oct5-daniel-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Oct  5 17:50:03 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Are there faster brooms in the revised Broomsticks 3D? Do you have sound yet? Soon? Remember to make me a super fast broom! :) </p>
+<p> Thanks!</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> no, not yet. I will make sure to do that for the next release. :-)</p></div>
+    </article>
+
+<article class="entry" id="oct6-tedkendric-10">
+      <a href="#oct6-tedkendric-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Ted Kendrick (you know, the ancient guy with the JL characters)</dd>
+        <dd><dt>Homepage:</dt> <a href="http://users.ev1.net/~kryptcom" target="_blank">DCU Animated</a></dd>
+        <dd><dt>From:</dt> A place that I enjoy</dd>
+        <dd><dt>Date:</dt> Sun Oct  6 19:06:24 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul, i see that the site is coming along fine. I always like to check back here to see how it's all goin'. Nice game exept for BS3d. I mean, the graphics are great but you're on your own. You should have two teams facing off at each other. Like in the old broomsticks game. But add 7 on a team like in the books and movies. But, all in all I would say they're both coming along real well. Later, Ted Kendrick</p>
+      </div>
+      <div class="entry-response"><p>Thanks Ted! I do plan to add a computer opponent to br3d. However, teamplay could potentially make the game very complicated. We will see...</p></div>
+    </article>
+
+<article class="entry" id="oct6-tedk-11">
+      <a href="#oct6-tedk-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tkendrck@bellsouth.net">Ted K.</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://users.ev1.net/kryptcom" target="_blank">DCU Animated</a></dd>
+        <dd><dt>From:</dt> Somewhere</dd>
+        <dd><dt>Date:</dt> Sun Oct  6 19:08:13 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>P.S. Paul, You need to change the date. It's October now. HAPPY BIRTHDAY TO ME!!! (September 28)</p>
+      </div>
+      <div class="entry-response"><p>Thanks for reminding me. Happy Birthday!</p></div>
+    </article>
+
+<article class="entry" id="oct7-benjaminep-12">
+      <a href="#oct7-benjaminep-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Tzvantzik@aol.com">Benjamin Epstein</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Texas</dd>
+        <dd><dt>Date:</dt> Mon Oct  7 21:48:18 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi again! Broomsticks is still a great game! I noticed that you put up a new demo version--is there a way to upgrade the full version to the new version? Thanks!</p>
+      </div>
+      <div class="entry-response"><p>Benjamin, </p>
+<p> good question. I will get that together. Email me to remind me.</p></div>
+    </article>
+
+<article class="entry" id="oct7-matthewdav-13">
+      <a href="#oct7-matthewdav-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A/Y (Not Applicable...Yet!)</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon Oct  7 22:52:04 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>HIYA HEYA HOYA BOO! Sorry, I'm a little hyped up. About the upcoming Broomsticks 3D Sky/Broom contest, if it's a sky contest, how would it be possible to make one? Do you need a special plug-in for Bryce or something? Oh yeah, I've started work on a fantastic character set for Broomsticks. Fans of Kirby, be ready for Kirby's Mega-Mix, made exclusively for Paul Rajilich's Broomsticks. (Mega-Mix is also a Remix of all of the tunes from Kirby's Adventure I'm working on) As for JVM, I'll check it out. I still have to get home yet. See, I'm at school at the moment. Oh well, got-sa go-sa! Bye...-sa!</p>
+      </div>
+      <div class="entry-response"><p>That's ok. :-) </p>
+<p> There are tutorials on the web. Do a search for &quot;skybox&quot;. </p>
+<p> Cool, I look forward to seeing those new characters. It has been a while since someone sent in characters.</p></div>
+    </article>
+
+<article class="entry" id="oct9-stephen-14">
+      <a href="#oct9-stephen-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:TWOCANDO33@AOL.COM">STEPHEN</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> MD</dd>
+        <dd><dt>Date:</dt> Wed Oct  9 15:28:02 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>HEY PAUL REMEMBER ME? SORRY I DON'T SIGN EVERY MONTH NOW. DID U EVER PLAY THE SIMS? THAT'S A COOL GAME. OH YEA I'VE SPENT ALL MY TIME PLAYING BROOMSTICKS AND BROOMSTICKS 3D AND PLAYING THE SIMS. I GOT UNLEASHED AND IT'S COOL. CAN U E-MAIL ME TO ANSWER ME PLEASE</p>
+      </div>
+      <div class="entry-response"><p>There have been several Stephens. Which one are you? :-) </p>
+<p> I have not played the Sims, but it does look cool. I should try it out. I'm glad to hear that you are playing my games!</p></div>
+    </article>
+
+<article class="entry" id="oct9-dougall-15">
+      <a href="#oct9-dougall-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Oct  9 16:03:41 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just visited the site again, its awsome!<br> I didn't think you had any time ;-)</p>
+<p> PS: How do you do an HTML comment?</p>
+      </div>
+      <div class="entry-response"><p>I don't have any time. I squeezed in a few hours a couple of weeks ago to make those improvements. </p>
+<p> Comments are started with &amp;lt!- and ended with -&amp;gt.</p></div>
+    </article>
+
+<article class="entry" id="oct10-daniel-16">
+      <a href="#oct10-daniel-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 10 21:20:24 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>It would be cool if there were other items that you could find in the castle. I don't know what they could be though. </p>
+<p> You know when you get the invisible broom, what exactly does it do? I'v gotten it before, does it make you invincible to the blck balls for a little while. Also Paul,when you have time you should give the red and black balls more roundness like you did on reg. broom. (put a little shine on the edges). Can we call the balls by their real names when talking about them in this guestbook or will that violate some copyright thing?</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> I do plan to add other powerups in the future. The invisibility makes it so that the balls do not know where you are. I do plan to improve the graphics for the balls and brooms. </p>
+<p> You can use the real names in the guestbook. I just can't use them to promote my game.</p></div>
+    </article>
+
+<article class="entry" id="oct11-dougall-17">
+      <a href="#oct11-dougall-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Oct 11 21:05:39 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I like Daniels idea. You could have a door and a key or the first broom or you could get levels of control and it could start out hard and get easier and easier. </p>
+<p> Oh, and by the way:<br> HELP!!! I got a computer for my birthday and br3D dosent work on it and I'm not allowed to use dad's! Can you help! Pplleeaassee!</p>
+      </div>
+      <div class="entry-response"><p>Hmmm, what kind of graphics card does it have (right click on desktop, choose Properties and hit the &quot;settings&quot; tab)? You may need to download OpenGL drivers for the card. They should be on the website under support.</p></div>
+    </article>
+
+<article class="entry was-commented" id="oct12-anon-18">
+      <a href="#oct12-anon-18" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Oct 12 07:04:41 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>fuck you</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct13-matthewdav-19">
+      <a href="#oct13-matthewdav-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Oct 13 21:37:21 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>To that inconsiderate person who swore: What's wrong with you? If you wanna swear at someone, make sure you're swearing in the RIGHT guestbook. Honestly, Bin Laden is at the Tellytubbies web site. Go swear at them, they deserve it!!! PS: Paul, it's october now.</p>
+      </div>
+      <div class="entry-response"><p>Thanks for reminding me Matt. I will fix that ASAP.</p></div>
+    </article>
+
+<article class="entry" id="oct15-daniel-20">
+      <a href="#oct15-daniel-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Tue Oct 15 19:30:44 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I am finally going to try to make some skins but I have a question...When I open a skin_.zip file it shows two folders &quot;Texures&quot; and &quot;Texures&quot;. Why does it have 2 copies of the samething? Do I edit both of the files or just one? Also to edit the picture(of a skin) can we edit the pictures on paint, save them as a .jpg and then paste the file in the &quot;Texures&quot; folder?</p>
+<p> To edit the sky, do we need a file from you (I didn't notice if there were &quot;Skys&quot; on the Broom. 3d menu) or is it all ready there. Let us know when the contests will begin. Thanks!</p>
+      </div>
+      <div class="entry-response"><p>The best way to work with the skins and skies is to extract the zip files into the Broomsticks3D directory. You don't need to zip them back up until you are ready to send them into to me. The engine will pick up the files when they are unzipped. Let me know if you have any questions...</p></div>
+    </article>
+
+<article class="entry" id="oct15-tedk-21">
+      <a href="#oct15-tedk-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tkendrck@bellsouth.net">Ted K.</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://users.ev1.net/~kryptcom" target="_blank">DCU Animated</a></dd>
+        <dd><dt>From:</dt> Texas? (Who Knows?)</dd>
+        <dd><dt>Date:</dt> Tue Oct 15 19:52:24 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p><span class="inline-hidden"> Thanks Ted! I do plan to add a computer opponent to br3d. However, teamplay could potentially make the game very complicated. We will see... </span> Paul, first of all you need to add HTML. It'de be a lot cooler in the guestbook. And second, Multipull teames wouldn't be that hard. I can imagine it might be hard for you cuz you're doin' all the work. But it would be kinda' interesting. You know what I mean. Thak you For Your Time, Ted Kendrick</p>
+      </div>
+      <div class="entry-response"><p>HTML should work in the guestbook. </p>
+<p> I think the gameplay could get complicated. If there are multiple human players playing over a network, it might be ok. But if there are multiple computer players, its hard to make them smart enough to play as a team.</p></div>
+    </article>
+
+<article class="entry" id="oct16-dougall-22">
+      <a href="#oct16-dougall-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> Broomsticks Ha HA!</dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Oct 16 04:17:35 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Whats New?...</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct16-daniel-23">
+      <a href="#oct16-daniel-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Oct 16 19:04:11 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Uh, Paul. Why is the Broomsticks 3D demo already expired?</p>
+      </div>
+      <div class="entry-response"><p>I will post another one tonight. I was hoping to add more features, but I don't have time right now, so it will be the same as before. :-(</p></div>
+    </article>
+
+<article class="entry" id="oct17-dougall-24">
+      <a href="#oct17-dougall-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 17 02:54:10 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I say the same thing as Daniel. Couldn't you just put all of them up for download (and the size oif the files) <span class="inline-hidden">I have an HTML added guest book, should I e-mail it to you?</span></p>
+      </div>
+      <div class="entry-response"><p>The new zip files come with the demo, so you should be able to get them all when I post the demo again.</p></div>
+    </article>
+
+<article class="entry" id="oct17-daniel-25">
+      <a href="#oct17-daniel-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 17 11:00:48 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, i ammadea broom skin but no matter what i do it will not paste the brrom dkin in the texures folder. it just goes to the Br3d. folder. HELP!</p>
+      </div>
+      <div class="entry-response"><p>Did you try extracting the zip files and just working in the regular directories? Only when you are ready to send the skins to me do you need to zip everything back up.</p></div>
+    </article>
+
+<article class="entry" id="oct17-daniel-26">
+      <a href="#oct17-daniel-26" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 17 16:15:26 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I am going to make some skins! But I need a favor. I can edit everything but the brooms. I can't do the brooms because my computer is old and cannot save the brooms as .tga . So could I edit the brooms and save them as a jpg. and then e-mail them to you to change to .tga . So you could send them back to me? Will that even work? Thanks!</p>
+      </div>
+      <div class="entry-response"><p>Excellent! If you want to do that, save them as bmp or gif, not jpg. They will convert to TGA better. Also, make sure the background is a solid color so that it can be made transparent.</p></div>
+    </article>
+
+<article class="entry" id="oct19-hermione-27">
+      <a href="#oct19-hermione-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hermionesusan88@hotmail.com">Hermione</a></dd>
+        <dd><dt>Homepage:</dt> <a href="-" target="_blank">-</a></dd>
+        <dd><dt>From:</dt> Malaysia</dd>
+        <dd><dt>Date:</dt> Sat Oct 19 05:09:57 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your home page is very cool!!!!!!!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks! :-)</p></div>
+    </article>
+
+<article class="entry" id="oct19-michael-28">
+      <a href="#oct19-michael-28" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Michael</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Wisconsin</dd>
+        <dd><dt>Date:</dt> Sat Oct 19 12:49:43 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi paul, i used to go here a lot but i got a question: is there any way you can create a COMPLETELY free website?</p>
+      </div>
+      <div class="entry-response"><p>I am pretty sure that you can make a website for free at www.geocities.com.</p></div>
+    </article>
+
+<article class="entry" id="oct19-daniel-29">
+      <a href="#oct19-daniel-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Oct 19 18:57:44 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This may be a stupid question but, what makes some of the skins bigger than others. Like the ones I did were about 800 kb but some other skins are 200 or 400 kb.</p>
+      </div>
+      <div class="entry-response"><p>Two possibilities are that the individual images are bigger (512x512 vs 256x256) or they don't compress as well with jpg.</p></div>
+    </article>
+
+<article class="entry" id="oct19-matthewdav-30">
+      <a href="#oct19-matthewdav-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sat Oct 19 21:19:55 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>For skyboxes, are there tutorials for Skyboxes in Bryce 5? It's the only 3D program I have. And is there a parameter I have to enter in Br3D to play it without the EXPIRED thing coming up?</p>
+      </div>
+      <div class="entry-response"><p>Probably, did you do a websearch (try typing bryce+skybox in google)? </p>
+<p> To get rid of the EXPIRED message, you need to get the Full Version! :-)</p></div>
+    </article>
+
+<article class="entry" id="oct22-daniel-31">
+      <a href="#oct22-daniel-31" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Oct 22 15:15:11 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Did you get my e-mail, along with my skins? My computer is down so i haven't been able to check e-mail. If you haven't recieved it I will resend the email ASAP.</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> I did get your skins but have not tried them out yet. Thanks for reminding me! :-)</p></div>
+    </article>
+
+<article class="entry" id="oct22-daniel-32">
+      <a href="#oct22-daniel-32" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Oct 22 15:23:38 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I downloaded the 3d demo. What do I do to get the skyies and new broom handles to work on my full version? Thanks!</p>
+      </div>
+      <div class="entry-response"><p>I'm going to send you a new br3d.exe. Then you will just have to put 2d.zip and sky.zip in the br3d folder.</p></div>
+    </article>
+
+<article class="entry" id="oct24-daniel-33">
+      <a href="#oct24-daniel-33" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 24 16:05:11 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>what 2d.zip from the demo are you talking about? There is a 2d folder (2 actually) but no 2d.zip.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct24-hpotter-34">
+      <a href="#oct24-hpotter-34" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:rimgreaper@telepath.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> UsA</dd>
+        <dd><dt>Date:</dt> Thu Oct 24 21:35:25 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this is a test... hiding for old browsers // response time test, created by Jasper van Zandbeek // e-mail: jasperz@stack.urc.tue.nl var startTime=new Date(); var endTime=new Date(); var startPressed=false; var bgChangeStarted=false; var maxWait=20; var timerID; function startTest() { document.bgColor=document.response.bgColorChange.options[document.response.bgColorChange.selectedIndex].text; bgChangeStarted=true; startTime=new Date(); } function remark(responseTime) { var responseString=&quot;&quot;; if (responseTime = 0.10 &amp;&amp; responseTime =0.20 &amp;&amp; responseTime =0.30 &amp;&amp; responseTime =0.60 &amp;&amp; responseTime =1) responseString=&quot;Did you fall asleep?&quot;; return responseString; } function stopTest() { if(bgChangeStarted) { endTime=new Date(); var responseTime=(endTime.getTime()-startTime.getTime())/1000; document.bgColor=&quot;white&quot;; alert(&quot;Your response time is: &quot; + responseTime + &quot; seconds &quot; + &quot;\n&quot; + remark(responseTime)); startPressed=false; bgChangeStarted=false; } else { if (!startPressed) { alert(&quot;press start first to start test&quot;); } else { clearTimeout(timerID); startPressed=false; alert(&quot;cheater! you pressed too early!&quot;); } } } var randMULTIPLIER=0x015a4e35; var randINCREMENT=1; var today=new Date(); var randSeed=today.getSeconds(); function randNumber() { randSeed = (randMULTIPLIER * randSeed + randINCREMENT) % (1 &gt; 15) &amp; 0x7fff) / 32767; } function startit() { if(startPressed) { alert(&quot;Already started. Press stop to stop&quot;); return; } else { startPressed=true; timerID=setTimeout('startTest()', 6000*randNumber()); } } </p>
+<p>Test your Response time! Click on &quot;Start&quot; first, and wait until the background color changes. As soon as it changes, hit &quot;stop!&quot; Change background color in: deeppink aliceblue crimson darkkhaki cadetblue darkorchid coral chocolate mediumslateblue tomato darkslategray limegreen cornflowerblue darkolivegreen This free script provided by</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct25-daniel-35">
+      <a href="#oct25-daniel-35" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Oct 25 22:27:02 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Broomsticks 3d is so much better w/ the latest updates! But Paul I think the broomsticks field may need to be made bigger once you have computer opponent.</p>
+      </div>
+      <div class="entry-response"><p>Yeah, you are probably right. :-)</p></div>
+    </article>
+
+<article class="entry" id="oct26-daniel-36">
+      <a href="#oct26-daniel-36" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Oct 26 10:28:00 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Sorry about the blank one above. I have some ideas for sound when you add it. 1) When you score a goal it makes a nice &quot;ding&quot; sound (kind of like in the movie) followed by some applause. 2) There is some good background music while your flying outside or on the field, but when you go inside the castle the music becomes darker, kind of mysterious. 3) When you get a new broom it makes a kind of &quot;ping&quot; sound or something.</p>
+      </div>
+      <div class="entry-response"><p>No problem. </p>
+<p> Those are good suggestions Daniel. Thanks!</p></div>
+    </article>
+
+<article class="entry" id="oct27-mark-37">
+      <a href="#oct27-mark-37" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:robzy44@hotmail.com">Mark</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Windsor</dd>
+        <dd><dt>Date:</dt> Sun Oct 27 17:54:10 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi i have your full version. How do u make broomstick players and send them in?????</p>
+      </div>
+      <div class="entry-response"><p>All you need to do is edit the <a href="images/players.gif">players image</a>.</p></div>
+    </article>
+
+<article class="entry was-commented" id="oct29-robertrayh-38">
+      <a href="#oct29-robertrayh-38" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:truthlove@yahoo.com">Robert Ray Hedges is taking over the internet</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.istopdeath.com" target="_blank">Robert Ray Hedges is taking over the internet</a></dd>
+        <dd><dt>From:</dt> Sedona Az usa</dd>
+        <dd><dt>Date:</dt> Tue Oct 29 02:55:33 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>iam Robert Ray Hedges is taking over the internet Physical Immortality Mortality Resolution International Childrens Immortalisation Network www.istopdeath.com iam Robert Ray Hedges is taking over the internet Physical Immortality Mortality Resolution International Childrens Immortalisation Network www.istopdeath.com iam Robert Ray Hedges is taking over the internet Physical Immortality Mortality Resolution International Childrens Immortalisation Network www.istopdeath.com</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct30-mark-39">
+      <a href="#oct30-mark-39" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> mark</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Oct 30 16:33:45 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>how do u edit?</p>
+      </div>
+      <div class="entry-response"><p>Any paint program such as Photoshop, Windows Paint Program, Paint Shop Pro, GIMP, etc...</p></div>
+    </article>
+
+<article class="entry" id="oct30-daniel-40">
+      <a href="#oct30-daniel-40" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Wed Oct 30 17:57:27 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>--MARK--: Just copy the image into Paint or a picture editor. Note: When editing the characters make sure to stay inside the little black squares! </p>
+<p> Paul: Could you put one of my skins on the skins pg?</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> thanks for answering Mark's question. </p>
+<p> Yes, I will do that. Sorry for the delay.</p></div>
+    </article>
+
+<article class="entry" id="oct31-daniel-41">
+      <a href="#oct31-daniel-41" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Oct 31 19:30:55 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul i got my computer back but we had to completly reinstall windows so everthing was lost. When i reinstalled reg broomsticks it installed fine but when I got to the main pg with the options of speed and stuff, something came up that said &quot;microsoft virual machine&quot; please insert the windows update cd. We don't have one of those cds, can we download the machine thing? do you know what im talking about? :-) ASAP!</p>
+      </div>
+      <div class="entry-response"><p>Hmmm... seems like the Java plugin (the Java Virtual Machine) is missing. Did you figure this out? Maybe upgrading your browser will do the trick...</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

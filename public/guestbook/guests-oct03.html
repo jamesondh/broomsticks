@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - oct03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="oct2-kelsi-0">
+      <a href="#oct2-kelsi-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jesusfreak101k@excite.com">kelsi</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> hufflepuff</dd>
+        <dd><dt>Date:</dt> Thu Oct  2 16:19:32 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>harry potter rocks</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="oct2-kelsi-1">
+      <a href="#oct2-kelsi-1" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jesusfreak101k@excite.com">kelsi</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> boise id</dd>
+        <dd><dt>Date:</dt> Thu Oct  2 16:29:00 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>harry potter rocks</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct5-matthewdav-2">
+      <a href="#oct5-matthewdav-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Oct  5 04:39:03 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oh dear, you've forgotten again =D</p>
+<p> Paul, what shall we do with you?<br> *sets an once-a-month alarm clock in the guestbook* There. This should help remind you to update the guestbook =Þ</p>
+<p> Hehehe...<br> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Yeah, yeah... I should automate the month-to-month changeover. :-)</p></div>
+    </article>
+
+<article class="entry" id="oct6-adam-3">
+      <a href="#oct6-adam-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:lmazzacano@earthlink.net">adam</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> newyork</dd>
+        <dd><dt>Date:</dt> Mon Oct  6 08:24:02 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>i have a kwestion Paul how do i find new brooms on broomsticks3D and how many are there? let me now thanks</p>
+      </div>
+      <div class="entry-response"><p>There are 2 brooms in the demo version, 3 brooms and a special item in the full version. You have to look around the castle to find them.</p></div>
+    </article>
+
+<article class="entry was-commented" id="oct6-adam-4">
+      <a href="#oct6-adam-4" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> adam</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Oct  6 09:07:28 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct6-adam-5">
+      <a href="#oct6-adam-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:lmazzacano@earthlink.net">adam</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> newyork</dd>
+        <dd><dt>Date:</dt> Mon Oct  6 09:15:22 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>oohps i accidetily pressed enter before i could write anything anyway i saw the br3d entry in june i was wandering, how many broomsticks teams have you gotton in the last month</p>
+      </div>
+      <div class="entry-response"><p>No problem, I removed your empty post. </p>
+<p> What do you mean by &quot;Broomsticks Teams&quot;? If you mean character sets, there were 5 or so entered in the last contest.</p></div>
+    </article>
+
+<article class="entry" id="oct7-timothypot-6">
+      <a href="#oct7-timothypot-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagowiseguy2003@yahoo.com">Timothy Potter</a></dd>
+        <dd><dt>Homepage:</dt> the potters</dd>
+        <dd><dt>From:</dt> vardaman</dd>
+        <dd><dt>Date:</dt> Tue Oct  7 12:30:54 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct8-daniel-7">
+      <a href="#oct8-daniel-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Wed Oct  8 19:57:36 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>We don't need to start a whole discussion over it, but I saw that Matthew mentioned Flash enhanced HTML. What is that exactly?</p>
+      </div>
+      <div class="entry-response"><p>I'm assuming that he means a webpage with embedded Flash content (Shockwave).</p></div>
+    </article>
+
+<article class="entry" id="oct11-matthewdav-8">
+      <a href="#oct11-matthewdav-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sat Oct 11 06:50:00 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>*waiting for Paul to answer that one, `cause I'm a lazy bum too =D hehehe*</p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>:-)</p></div>
+    </article>
+
+<article class="entry" id="oct12-adam-9">
+      <a href="#oct12-adam-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:lmazzacano@earthlink.net">adam</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Oct 12 13:26:11 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hey paul i'm working on a new set of characters and I think you'll really like umm I have a set finished and i'd like to know how to send them I don't know if you just attach them to an email or what so let me know okay</p>
+      </div>
+      <div class="entry-response"><p>Sure, you can send them to me by email. I look forward to seeing them!</p></div>
+    </article>
+
+<article class="entry" id="oct15-matthewdav-10">
+      <a href="#oct15-matthewdav-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Oct 15 06:09:39 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Heya ^-^</p>
+<p> I finally found some free time, and I decided I'd try makin` me very first animated character set.<br> It's harder than I thought! =S</p>
+<p> Looks like I'll be at this next one for a lil` while yet, especially since I've gotta juggle between school stuff and home stuff and other stuff and, er, stuff? lol =Þ</p>
+<p> Oh well, I'll keep at it =D<br> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct18-taytom922-11">
+      <a href="#oct18-taytom922-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:who cares">taytom922</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Slytherin House</dd>
+        <dd><dt>Date:</dt> Sat Oct 18 21:13:24 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I LOVE TOM FELTON AAF &lt;3 He's so hott and this game is awesome cuz it's just like Quidditch...duh... If u read this Lana u hafta sign it too.... -TAYLOR p.s.- I LOVE DRACO!!!!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct19-matthewdav-12">
+      <a href="#oct19-matthewdav-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://au.geocities.com/chicagolollie" target="_blank">CHICAGO¤lollie</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Oct 19 05:40:51 CDT 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Well, um, good for you! </p>
+<p> Righteo then, well, I'm still working on a character set, but I think I might finish my mod first. Once I can figure out all the necessaries, the character set will be the only thing left.</p>
+<p> Expect to see a bobby dazzler! =D<br> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct29-imnotgivin-13">
+      <a href="#oct29-imnotgivin-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:kidz2u@hotmail.com">im not giving you my real name</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> canada</dd>
+        <dd><dt>Date:</dt> Wed Oct 29 16:26:33 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>i want to start a website, but i dont know how. help!!</p>
+      </div>
+      <div class="entry-response"><p>You may want to ask in the guestbook.</p></div>
+    </article>
+
+<article class="entry" id="oct31-daniel-14">
+      <a href="#oct31-daniel-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Fri Oct 31 22:14:21 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>So when can we expect a new Broomsticks 2 Demo Paul? Or if your not sure, could you mention a few of the new options/features that you will add or would like to add to Broomsticks 2? </p>
+<p> And I just got Harry Potter: Quidditch World Cup! Though I haven't had time to try it yet becomes I'm upgrading my site with a new layout. I'll let you know whether the games as good as Broomsticks 3D ;-)</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> I have not had time to work on it recently so it is on hold... I'll be sure to let you know if I start up on it again.</p></div>
+    </article>
+
+<article class="entry" id="oct31-daniel-15">
+      <a href="#oct31-daniel-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Oct 31 22:16:16 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ah, I knew I should have included &quot;http://&quot; with the hyperlink to 'my site'. Could you fix that please? Thanks</p>
+      </div>
+      <div class="entry-response"><p>done.</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

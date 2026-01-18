@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - jan03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="jan5-stevez-0">
+      <a href="#jan5-stevez-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:stevezac1@aol.com">steve z</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Florida</dd>
+        <dd><dt>Date:</dt> Sun Jan  5 19:29:45 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>im trying to find all of the brooms in br3d. i found the white broom in the castle, the black one outside the castle, the red broom also outside the castlr, and the invisible broom. did i miss any are there any other brooms?</p>
+      </div>
+      <div class="entry-response"><p>Steve, </p>
+<p> yep, that is all of them... for now. :-)</p></div>
+    </article>
+
+<article class="entry" id="jan6-heybroomst-1">
+      <a href="#jan6-heybroomst-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Hey broomstick lovers</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> America (luv England though)</dd>
+        <dd><dt>Date:</dt> Mon Jan  6 16:08:08 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul! Just wanna say, Thanx for the great game! One of my computers is kinda slow though (the one I use the most) and takes for ever to play the advanced version! But, i think you did a wonderful job, keep up the great work!</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jan7-fauna-2">
+      <a href="#jan7-fauna-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> &quot;Fauna&quot;</dd>
+        <dd><dt>Homepage:</dt> <a href="http://faunamagic.tripod.com" target="_blank"></a></dd>
+        <dd><dt>From:</dt> NY, USA</dd>
+        <dd><dt>Date:</dt> Tue Jan  7 20:15:37 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really, really like this game, my sister and I were playing the advanced demo version, and were having so much fun (taking sibling rivalry to new heights), and I think the characters are pretty neat too. That's all. Good job, by the way. :)</p>
+      </div>
+      <div class="entry-response"><p>Thanks Fauna! I made some of my first games specifically for playing against (and beating!) my brothers.</p></div>
+    </article>
+
+<article class="entry" id="jan8-emmy-3">
+      <a href="#jan8-emmy-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Emmy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> America</dd>
+        <dd><dt>Date:</dt> Wed Jan  8 16:52:22 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dougall, I like your website, but it is a little robusk. You may want to try a broader page, one that grabs everyone's attention and then have paul's stuff off of that, and than your's.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan9-xavierjone-4">
+      <a href="#jan9-xavierjone-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thexmasta1@msn.com">Xavier Jones</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/thexmasta/wizardingnet.html" target="_blank">The Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Memphis, TN, USA</dd>
+        <dd><dt>Date:</dt> Thu Jan  9 01:48:30 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This is a very nice site and I love the games on it!!! Keep up the good work! And to all of those who read this, please go to my site.</p>
+      </div>
+      <div class="entry-response"><p>Nice to hear from you again Xavier!</p></div>
+    </article>
+
+<article class="entry" id="jan18-anon-5">
+      <a href="#jan18-anon-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.budgetphonerates.com" target="_blank">BudgetPhoneRates.com</a></dd>
+        <dd><dt>From:</dt> West New York, NJ</dd>
+        <dd><dt>Date:</dt> Sat Jan 18 13:09:14 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Nice site.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan18-daniel-6">
+      <a href="#jan18-daniel-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:dgs87@cox.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> OKLAHOMA</dd>
+        <dd><dt>Date:</dt> Sat Jan 18 20:25:25 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>For some reason the Message Board doesn't seem to bring in as many posts as this Guestbook ever did.</p>
+<p> If you are wondering you do not have to be a member to ask questions or make comments on the Message Board. Members just get a few extra things that they can access, such as Instant Messaging. Plus if your a member you have a higher rank above guests (people who are not members) and that always kind of cool. :-) </p>
+<p>I thought I would say this because I know that some of you for one reason or another can't or don't want to become members on the Message Board. ***I encourage you all to become members and if you have any questions feel free to post them on the Message Board or e-mail me.</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> actually, the guestbook doesn't get that many posts when you consider that more than 1000 people play the demo of Broomsticks every day! I think that the message board format is better than the guestbook. It is just a matter of time until there are a lot more posts in it than here.</p></div>
+    </article>
+
+<article class="entry" id="jan20-emma-7">
+      <a href="#jan20-emma-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sofresh_em@hotmail.com">emma</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> AUSTRALIA</dd>
+        <dd><dt>Date:</dt> Mon Jan 20 01:49:48 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>what us ravenclaw password??? i nead to know so i can get into my common room</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan21-michaelabb-8">
+      <a href="#jan21-michaelabb-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:scrollerking2yahoo.com">Michael Abbott</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> California</dd>
+        <dd><dt>Date:</dt> Tue Jan 21 15:48:07 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great Game love it. Its so simple yet great. The backgrounds are great but I would love i if you made new ones.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Michael! I haven't made any backgrounds for a while, but others have. Check out the <a href="backgrounds.html">Backgrounds Gallery</a>.</p></div>
+    </article>
+
+<article class="entry was-commented" id="jan21-michaelabb-9">
+      <a href="#jan21-michaelabb-9" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:scrollerking2yahoo.com">Michael Abbott</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> California</dd>
+        <dd><dt>Date:</dt> Tue Jan 21 15:48:15 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great Game love it. Its so simple yet great. The backgrounds are great but I would love i if you made new ones.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan22-jonny-10">
+      <a href="#jan22-jonny-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:n/a">Jonny</a></dd>
+        <dd><dt>Homepage:</dt> <a href="n/a" target="_blank">n/a</a></dd>
+        <dd><dt>From:</dt> China</dd>
+        <dd><dt>Date:</dt> Wed Jan 22 11:04:47 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>dont get the game.</p>
+      </div>
+      <div class="entry-response"><p>Why not? :-)</p></div>
+    </article>
+
+<article class="entry" id="jan22-dracomalfo-11">
+      <a href="#jan22-dracomalfo-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:cody47331@yahoo.com">draco malfoy from the evil paralell universe</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://yahoo.com" target="_blank">born to be a Kid Rock fan</a></dd>
+        <dd><dt>From:</dt> Indiana</dd>
+        <dd><dt>Date:</dt> Wed Jan 22 15:40:31 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>draco malfoy rocks and I am him from the evil paralell universe, so that makes me even more meaner then the malfoy that you now. HAAHAHAAHAHAHAHAHAHAHAHAHAAAAAAAA!!!!!!!!!HEHEHE!!!!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan22-emmy-12">
+      <a href="#jan22-emmy-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Emmy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> America</dd>
+        <dd><dt>Date:</dt> Wed Jan 22 16:35:38 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>why won't you talk to me? All you wrote was thanks! Please talk to me... Thank you!</p>
+      </div>
+      <div class="entry-response"><p>What would you like to talk about? :-) </p>
+<p> Also, if you want to talk to other Broomsticks fans, make sure you check out the <a href="http://broomsticks.proboards12.com">Message Board</a>.</p></div>
+    </article>
+
+<article class="entry" id="jan22-daniel-13">
+      <a href="#jan22-daniel-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Jan 22 17:41:56 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>What is it you want to talk about emma?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan22-bob-14">
+      <a href="#jan22-bob-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:-----------------------">--------bob-------</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://----------------------" target="_blank">-----------------------</a></dd>
+        <dd><dt>From:</dt> --------------------</dd>
+        <dd><dt>Date:</dt> Wed Jan 22 18:51:25 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>have you made the game so you can play aganst the computer yet??? I really like your game but try to make a new game that you can play against the computer Thanks, Bob</p>
+      </div>
+      <div class="entry-response"><p>I assume that you are talking about Broomsticks3D? I've been super busy with other things, but I have worked on it a bit recently. I will release a new demo very soon. Sorry for the delays...</p></div>
+    </article>
+
+<article class="entry" id="jan23-dougall-15">
+      <a href="#jan23-dougall-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Dougall</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jan 23 13:40:05 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Woops<span class="inline-hidden">I forgot the end tags (and didn't intend to send it twice)</span></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan29-emmy-16">
+      <a href="#jan29-emmy-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Emmy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> America</dd>
+        <dd><dt>Date:</dt> Wed Jan 29 15:37:08 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey dougall, my name is Emmy, not emma! But, thanks anyway</p>
+      </div>
+      
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

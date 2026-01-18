@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - 04</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="jan3-anon-0">
+      <a href="#jan3-anon-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Jan  3 15:20:32 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Wait, did you mean you'd watch the show? 'Cause the guestbook's still in Nov. mode...</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan4-anon-1">
+      <a href="#jan4-anon-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Jan  4 14:11:49 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I will be making a BR2 set with all the goods, field, background, and more. The theme(if completed &amp; accepted): Super Mario Advence 3: Yoshi's Island!!</p>
+      </div>
+      <div class="entry-response"><p>Excellent! looking forward to seeing it!</p></div>
+    </article>
+
+<article class="entry was-commented" id="jan5-eyetoy-2">
+      <a href="#jan5-eyetoy-2" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Eye toy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan  5 13:36:54 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jan5-eyetoy-3">
+      <a href="#jan5-eyetoy-3" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Eye toy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan  5 13:37:30 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jan5-eyetoy-4">
+      <a href="#jan5-eyetoy-4" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Eye toy</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan  5 13:37:35 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157 Looking for an eye toy - http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&amp;item=3069844719&amp;category=16157</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan6-daniel-5">
+      <a href="#jan6-daniel-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Tue Jan  6 16:11:27 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Perhaps you should also add a code so that the same person can't post more than 1 time in a row :-/</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan6-anon-6">
+      <a href="#jan6-anon-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Jan  6 17:06:55 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey, everybody! Paul, how do you make item sets transparent? In Paint, if I go to Image -&gt; Attributes, there's nothing about transparency...</p>
+      </div>
+      <div class="entry-response"><p>Hmmm... I wonder if you have a different version?</p></div>
+    </article>
+
+<article class="entry" id="jan6-vic-7">
+      <a href="#jan6-vic-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:vic@msn.com">vic</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.gamespy.com" target="_blank">gamespy</a></dd>
+        <dd><dt>From:</dt> can</dd>
+        <dd><dt>Date:</dt> Tue Jan  6 23:53:47 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>gans</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jan8-assmonkey-8">
+      <a href="#jan8-assmonkey-8" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:assmonkey">assmonkey</a></dd>
+        <dd><dt>Homepage:</dt> <a href="assmonkey" target="_blank">assmonkey</a></dd>
+        <dd><dt>From:</dt> assmoney</dd>
+        <dd><dt>Date:</dt> Thu Jan  8 20:36:01 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this site is a piss ant</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan16-matthewdav-9">
+      <a href="#jan16-matthewdav-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Matthew Davis</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Jan 16 07:19:35 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hello all, long time no type. ;)</p>
+<p> Well, dropping in to say hello, &quot;Hello!&quot;<br> I hope everyone had a nice christmas and a fantastic new year.</p>
+<p> Cyas around again soon ;)<br> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan23-matthewdav-10">
+      <a href="#jan23-matthewdav-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri Jan 23 18:40:33 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey, just came back here to check something...<br> ...everyone seem to just disappear after the 6th, very odd.</p>
+<p> But also, the update's --umm-- two months late. Hehe</p>
+<p> -Matt</p>
+      </div>
+      <div class="entry-response"><p>Yeah, I know. I'm way behind on the guestbook. :-)</p></div>
+    </article>
+
+<article class="entry" id="feb9-davidandda-11">
+      <a href="#feb9-davidandda-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:mrblonde900@hotmail.com">David and Dan</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Helsby</dd>
+        <dd><dt>Date:</dt> Mon Feb  9 08:00:07 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>GREAT GAME!!!!!!!!!!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="feb10-hunter-12">
+      <a href="#feb10-hunter-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Hunter</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Virginia</dd>
+        <dd><dt>Date:</dt> Tue Feb 10 21:52:09 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey great game. me and my pals enjoy playing it at school. lol i was wonndering if the full version has online play so that i can whip them at home. $Hunter$$</p>
+      </div>
+      <div class="entry-response"><p>Thanks, I'm glad you guys are enjoying it. Have you played the advanced demo, or just the simple one? </p>
+<p> Unfortunately, I have not had much time to work on the games lately and so networking is not implemented yet.</p></div>
+    </article>
+
+<article class="entry" id="feb13-joyce-13">
+      <a href="#feb13-joyce-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> joyce</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> houston</dd>
+        <dd><dt>Date:</dt> Fri Feb 13 21:21:36 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>omg, im sooo sorry! i ahvent been here in such a long time...do you still remember me?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="feb19-klaus-14">
+      <a href="#feb19-klaus-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:the_best@gmx.net">klaus</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.trolliges.de" target="_blank">Join</a></dd>
+        <dd><dt>From:</dt> uk</dd>
+        <dd><dt>Date:</dt> Thu Feb 19 04:26:31 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>great site, well done</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="feb25-hermioneag-15">
+      <a href="#feb25-hermioneag-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Allison.koreman@verizon.net">Hermione(again Allison)</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.lego.com/eng/" target="_blank">Lego.com Homepage</a></dd>
+        <dd><dt>From:</dt> Delaware, USA</dd>
+        <dd><dt>Date:</dt> Wed Feb 25 14:45:44 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Anything new? Sorry.. I haven't been to this website for a long time, but I still like it. I still change my &quot;homepage&quot; every time I visit this website. Where is your website? I can't find it, and I would like to visit it again. Good luck if you are making any new games. bye. P. S. Where can I find a link to Lasertron?</p>
+      </div>
+      <div class="entry-response"><p>Welcome back! </p>
+<p> The easiest URL to remember is www.broomsticks3d.com. From there you can also get to regular Broomsticks and Broomsticks 2.</p></div>
+    </article>
+
+<article class="entry" id="mar7-anon-16">
+      <a href="#mar7-anon-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.angelfire.com/wizard2/robowizard/snitch" target="_blank">Click here for BR3D pic</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Mar  7 10:44:26 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I think the gold ball needs to be either faster or the distance when the gold ball reacts (runs away) need to be farther, so the ball starts running away when the player trys to catch it. Look at this picture in my &quot;homepage&quot;!</p>
+      </div>
+      <div class="entry-response"><p>Yeah, you're probably right. I did not spend that much time tweaking the behavior of the gold ball.</p></div>
+    </article>
+
+<article class="entry" id="mar8-daniel-17">
+      <a href="#mar8-daniel-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Mon Mar  8 20:57:05 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey =-(+)-= /\/\E+A| $/\/|+&lt;|-| your URL to your pic isn't working. It didn't upload it properly because the target of the picture begins with &quot;file:///C:/&quot; so it's still saved to your hard drive... :-/</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="mar10-joey-18">
+      <a href="#mar10-joey-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Joey</dd>
+        <dd><dt>Homepage:</dt> <a href="http://broomstick.proboards12.com" target="_blank"></a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Mar 10 08:34:11 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hello Everyone! I put up some new buttons on the message board. Hope everyone likes them!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="mar12-anon-19">
+      <a href="#mar12-anon-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.angelfire.com/wizard2/robowizard/28secsgoldball.bmp" target="_blank">This time it's (hopefully) working</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Mar 12 15:15:51 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Whoops, try this one now... Will it work?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="mar22-joey-20">
+      <a href="#mar22-joey-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Joey</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Mar 22 21:45:23 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yep. That image works.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="mar26-v3mysecond-21">
+      <a href="#mar26-v3mysecond-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:orbofwisdom@hotmail.com">(V)3-|-/\|_§(\)|-|-©|-| (my second name switch)</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Mar 26 17:09:31 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>It works? Cool!</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="apr6-httpemomen-22">
+      <a href="#apr6-httpemomen-22" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> http://emoment.net</dd>
+        <dd><dt>Homepage:</dt> <a href="http://emoment.net" target="_blank">http://emoment.net</a></dd>
+        <dd><dt>From:</dt> http://emoment.net</dd>
+        <dd><dt>Date:</dt> Tue Apr  6 06:58:14 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>http://emoment.net Free International Classifieds offers the opportunity to place your business or private ad absolutely for FREE. Wide language support (has English, French, German, Spanish, Russian, version). Many extra services (quality human translation into other languages, etc.), beautiful design and big ads database. Updated daily.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="apr7-suzi-23">
+      <a href="#apr7-suzi-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> suzi</dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.sofort-anklicken.de" target="_blank">Handy Logo</a></dd>
+        <dd><dt>From:</dt> uk</dd>
+        <dd><dt>Date:</dt> Wed Apr  7 03:38:54 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>great sites, well done</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="apr11-turska-24">
+      <a href="#apr11-turska-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Turska</dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.ennakkosuosikit.fi" target="_blank">Ennakkosuosikit ry</a></dd>
+        <dd><dt>From:</dt> Finland</dd>
+        <dd><dt>Date:</dt> Sun Apr 11 10:22:08 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hello World!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="apr24-michael-25">
+      <a href="#apr24-michael-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:BasiliskFang84@aol.com">Michael</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Georgia</dd>
+        <dd><dt>Date:</dt> Sat Apr 24 13:56:43 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>AWESOME WEBSITE!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="apr25-xenafor-26">
+      <a href="#apr25-xenafor-26" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:rimgreaper@sbcglobal.net">Xenafor</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> California</dd>
+        <dd><dt>Date:</dt> Sun Apr 25 23:25:58 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul! The last time I posted was in 2002, but I used a different name at that time, and my grammer was terrible. Anyhow, I hadn't played broomsticks in a long time and once I found it sitting inside my computer I decided to load it up, a nd I got addicted again! I'd just like to say once again how great a game Broomsticks is. Thanks for putting the time and effort into it! -Xenafor</p>
+      </div>
+      <div class="entry-response"><p>Good to have you back. I'm glad you still enjoy the game after all this time!</p></div>
+    </article>
+
+<article class="entry" id="may5-shelby-27">
+      <a href="#may5-shelby-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hotty78642@excite.com">Shelby</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Liberty HIll,Texas</dd>
+        <dd><dt>Date:</dt> Wed May  5 21:07:03 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>so cool and awsome</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="may8-hoo-28">
+      <a href="#may8-hoo-28" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hoo-@hoopie">hoo</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://hoo-@hoopie" target="_blank">glod</a></dd>
+        <dd><dt>From:</dt> hoo</dd>
+        <dd><dt>Date:</dt> Sat May  8 08:22:52 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may25-hermionegr-29">
+      <a href="#may25-hermionegr-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> HermioneGrangerFreak</dd>
+        <dd><dt>Homepage:</dt> <a href="http://freewebs.com/hermionerocks226" target="_blank">Emma Watson Fan Club</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Tue May 25 10:43:00 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>My Fan Club is messed up. My sister messed with it. I love yur game it is really fun.</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="may27-rachel-30">
+      <a href="#may27-rachel-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:x_wee_rachel_x@yahoo.com">rachel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://xx-rach22-xx@freewebspace.com" target="_blank">ma home page</a></dd>
+        <dd><dt>From:</dt> scotland</dd>
+        <dd><dt>Date:</dt> Thu May 27 13:24:31 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>more games and make the site easier to get round</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jun5-steve-31">
+      <a href="#jun5-steve-31" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Steve</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Port Angeles, WA</dd>
+        <dd><dt>Date:</dt> Sat Jun  5 03:12:09 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I'm BACK!!! No clue if you remember me or not, but I used to write in a lot who knows how long ago, (I tried looking back through the guest book but couldn't figure it out), and now Im here again. I still play Broomsticks occasionally, if I have the time. Just checking in on one of my old all-time favorites!!!</p>
+      </div>
+      <div class="entry-response"><p>Welcome back! Glad you still like the game!</p></div>
+    </article>
+
+<article class="entry" id="jun5-steve-32">
+      <a href="#jun5-steve-32" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Steve</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> P.A., WA</dd>
+        <dd><dt>Date:</dt> Sat Jun  5 03:19:19 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Please help me out here!!! I have been searching the old Guestbook pages but cannot find my old letters! I have no clue how many years it's been since i wrote in last, and I need help!!! it would be so cool to look at the old conversations I had again.</p>
+      </div>
+      <div class="entry-response"><p>Look in April-July 2003.</p></div>
+    </article>
+
+<article class="entry" id="jun10-steve-33">
+      <a href="#jun10-steve-33" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:srm3332008@yahoo.com">Steve</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jun 10 16:31:08 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Thanks, it was cool going back and reading all my old posts. ... This site has slowed down a lot lately, hasn't it? and how come youre not making a new link for each 2004 month in the guestbook? ... I finally got my own e-mail,(just this spring) so Ill try to send in the charecters I made way back then.</p>
+      </div>
+      <div class="entry-response"><p>There hasn't been much traffic in the guestbook, but people are still playing the game. The demo version of broomsticks gets downloaded about 2000 times a day!</p></div>
+    </article>
+
+<article class="entry" id="jun10-steve-34">
+      <a href="#jun10-steve-34" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Steve</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jun 10 16:34:56 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just looked back over the 2004 entries, and was SHOCKED at how few posts there are! when I wrote in before, we got 95 posts in a single month, and now we havn't had that many in a single year!!! PLEASE don't tell me that while I was gone, the broomsticks community has withered to so few??? NNNNOOOOOOOOOOOOOOOOOOOOOOOO!!!! <span class="inline-hidden"> NNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!! </span> please don't let it be so!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jun10-steve-35">
+      <a href="#jun10-steve-35" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:srm3332008@yahoo.com">STEVE</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jun 10 16:43:31 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>*turns into evil alter ego, &quot;HELLO&quot;* ONLY SEVEN FOR JANUARY!! ONLY FIVE FOR FEBRUARY!! OLY SIX FOR MARCH!!! ONLY FOUR FOR APRIL!!! FOUR!!! ONLY FIVE IN MAY!!! AND ONLY I HAVE WRITTEN IN SO FAR THIS MONTH!!! NOOOO!!! HOW CAN THIS BE HAPPENING??? *sobs* WHAT HAS BECOME OF THIS SITE??? *slowly calms down, becomes self again* I'm so sorry, its just it's so -sob- SAD!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jun10-steve-36">
+      <a href="#jun10-steve-36" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:wrm3332008@yahoo.com">Steve</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jun 10 16:57:54 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I'm better now! I just looked at the old posts after I stopped reading and I made a BEUTIFUL discovery! YOU'RE MAKING BROOMSTICKS 2!!! thankyou-thankyou-thankyou! I shall imediatly ask my parents if I can download the demo. YIPPEE!! and I'm learnng to make my own web-page, and I was wondering if I could add a link to yours... Thank you! &gt;...Steve...&lt;</p>
+      </div>
+      <div class="entry-response"><p>I hope you like Broomsticks2. </p>
+<p> Sure, you can link to mine. Good luck with your site!</p></div>
+    </article>
+
+<article class="entry" id="jun10-steve-37">
+      <a href="#jun10-steve-37" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> STeve</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jun 10 17:04:00 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just downloaded br2 demo! Yay!</p>
+      </div>
+      <div class="entry-response"><p>Have fun!</p></div>
+    </article>
+
+<article class="entry" id="jun18-steve-38">
+      <a href="#jun18-steve-38" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Steve</dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/srm3332008" target="_blank">SUPERFREAK Games!</a></dd>
+        <dd><dt>From:</dt> Port Angeles</dd>
+        <dd><dt>Date:</dt> Fri Jun 18 11:20:46 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I got my web site up! (Broomsticks is on it) EVERYBODY try it! be sure to sign the guestbook or fill out the feedback form to let me know how it is! PLEASE!!! THANKYOU!</p>
+      </div>
+      <div class="entry-response"><p>Took a quick look. Good job! Thanks for linking to Broomsticks!</p></div>
+    </article>
+
+<article class="entry" id="jun23-lauren-39">
+      <a href="#jun23-lauren-39" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:elvistcdc@msn.com">Lauren</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://brighton.ncsa.uiuc.edu/~prajlich/broomsticks/sign.html" target="_blank">official site of Harry Potter</a></dd>
+        <dd><dt>From:</dt> Erie, COLORADO   USA</dd>
+        <dd><dt>Date:</dt> Wed Jun 23 12:32:58 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I love your game. It's fantastic!!!!! Did you make this up by your self? Your fan LAUREN THANKS!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Lauren! Yeah, I made the game myself.</p></div>
+    </article>
+
+<article class="entry" id="jun27-starburst-40">
+      <a href="#jun27-starburst-40" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:luka518@yahoo.om">starburst</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> united states</dd>
+        <dd><dt>Date:</dt> Sun Jun 27 16:49:26 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>our game is simply the best. I am looking forward to the expand.</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="jun29-shannon-41">
+      <a href="#jun29-shannon-41" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Shannon</dd>
+        <dd><dt>Homepage:</dt> <a href="http:// purplekittez@ aol.com" target="_blank"></a></dd>
+        <dd><dt>From:</dt> Hogworts</dd>
+        <dd><dt>Date:</dt> Tue Jun 29 07:15:13 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Love the game! Once I get more money, I'll buy it first</p>
+      </div>
+      <div class="entry-response"><p>Thanks Shannon!</p></div>
+    </article>
+
+<article class="entry was-commented" id="jun30-camielle-42">
+      <a href="#jun30-camielle-42" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:camielle_cute@yahoo.com">CaMiElLe:)</a></dd>
+        <dd><dt>Homepage:</dt> I Love you harry</dd>
+        <dd><dt>From:</dt> New zealand</dd>
+        <dd><dt>Date:</dt> Wed Jun 30 00:32:10 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>How can I chat w\ Harry? I really like him 2 b my friend.Ilove you Harry!!!!!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jun30-camielle-43">
+      <a href="#jun30-camielle-43" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:camielle_cute@yahoo.com">CaMiElLe:)</a></dd>
+        <dd><dt>Homepage:</dt> I Love you harry</dd>
+        <dd><dt>From:</dt> New zealand</dd>
+        <dd><dt>Date:</dt> Wed Jun 30 00:33:50 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>How can I chat w\ Harry? I really like him 2 b my friend.Ilove you Harry!!!!!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jul6-hermione-44">
+      <a href="#jul6-hermione-44" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:none">Hermione</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.jkrowling.com/" target="_blank">J.K.Rowling Official Site - Harry Potter and ...</a></dd>
+        <dd><dt>From:</dt> Delaware, U. S. A.</dd>
+        <dd><dt>Date:</dt> Tue Jul  6 00:34:27 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Switched homepages again and I still like the games. Lasertron is too easy, can you make it harder?</p>
+      </div>
+      <div class="entry-response"><p>Glad to hear that you are still playing the games. It would be hard to make an intelligent Lasertron opponent. The opponent would have to figure out how to use the mirrors. I intended the game to be for two players, so you are best off finding a friend to play against. Playing against another person is really a lot more fun!</p></div>
+    </article>
+
+<article class="entry" id="jul29-robowizard-45">
+      <a href="#jul29-robowizard-45" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> RoboWizard</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Jul 29 18:03:38 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yay, I'm back! </p>
+<p> Paul, how can I make a Lasertron level to keep? I have a great 2-player map idea: the octogonal room, where your own bullets can kill you! </p>
+<p> Anyway, on to business. Is a full-version of BR2 or online version or BR3D far, far away? Or are you too busy with work to work on it?</p>
+      </div>
+      <div class="entry-response"><p>Welcome back! Unfortunately, there is no way to save a Lasertron level. If I have time, sometime I should rewrite the game. I could make it a lot better now. </p>
+<p> I've been very busy with other things, so I have not worked on the games much.</p></div>
+    </article>
+
+<article class="entry" id="jul31-steve-46">
+      <a href="#jul31-steve-46" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:stephenstuff@hotmail.com">Steve</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.freewebs.com/missiondumbledore" target="_blank">Mission: Dumbledore</a></dd>
+        <dd><dt>From:</dt> Oxford, UK</dd>
+        <dd><dt>Date:</dt> Sat Jul 31 04:29:34 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This is by far the best online game iv ever played. Absolutely amazing. Lookin forward to getting the full version!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Steve! I'm glad you like the gameplay.</p></div>
+    </article>
+
+<article class="entry" id="jul31-michael-47">
+      <a href="#jul31-michael-47" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ratlover_17@hotmail.com">Michael</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://s4.invisionfree.com/Smurfzonerenneme/" target="_blank">Smurfzonerenneme Message Board</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Sat Jul 31 18:30:32 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Broomsticks is so good, as always. I found this site how long ago? </p>
+<p> But we need to get more visitors!!!! And PaulR? Are you even there?<br>Mbr&gt; hello?</p>
+      </div>
+      <div class="entry-response"><p>Thanks Michael. </p>
+<p> Actually, there are a lot of visitors to the website. The demo version of Broomsticks still gets played more than 1000 times day. However, the guestbook really has died down.</p></div>
+    </article>
+
+<article class="entry" id="aug13-funny-48">
+      <a href="#aug13-funny-48" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@tatoostop.de">funny</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.tatoostop.de" target="_blank"></a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Aug 13 05:07:30 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I just surfed in this great place. I found a lot of interesting things all around. See you soon again.</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="aug20-jerrycorne-49">
+      <a href="#aug20-jerrycorne-49" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jerry_c@verizon.net">Jerry Cornell</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Maryland</dd>
+        <dd><dt>Date:</dt> Fri Aug 20 16:31:17 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really like your Broomsticks game. I want the full version but my parents won't let me have 10 bucks. Can you add the gold ball to the advanced verison?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep5-amber-50">
+      <a href="#sep5-amber-50" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:amberjames8@yahoo.com">Amber</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/amberjames8/Horseland_For_Kids.html" target="_blank">Horseland For Kids</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Sun Sep  5 21:38:18 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This is cool!!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="sep25-myra-51">
+      <a href="#sep25-myra-51" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:whitetigers01@iwon.com">Myra</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Fairborn, OH</dd>
+        <dd><dt>Date:</dt> Sat Sep 25 00:14:40 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>How do you get a copy of this demo that everyone is talking about??</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="oct7-httpgpiuni-52">
+      <a href="#oct7-httpgpiuni-52" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:gpi@gmx.net">http://gpi.unibe.ch</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://gpi.unibe.ch" target="_blank">http://gpi.unibe.ch</a></dd>
+        <dd><dt>From:</dt> http://gpi.unibe.ch</dd>
+        <dd><dt>Date:</dt> Thu Oct  7 05:22:56 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great homepage! Do you want identification of GPI-anchor signals by a Kohonen Self Organizing Map (Neural Network)? http://gpi.unibe.ch</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="oct7-httpgpiuni-53">
+      <a href="#oct7-httpgpiuni-53" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:gpi@gmx.net">http://gpi.unibe.ch</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://gpi.unibe.ch" target="_blank">http://gpi.unibe.ch</a></dd>
+        <dd><dt>From:</dt> http://gpi.unibe.ch</dd>
+        <dd><dt>Date:</dt> Thu Oct  7 05:43:07 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great homepage! Do you want identification of GPI-anchor signals by a Kohonen Self Organizing Map (Neural Network)? http://gpi.unibe.ch</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct18-paulrajlic-54">
+      <a href="#oct18-paulrajlic-54" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:prajlich@ncsa.uiuc.edu">Paul Rajlich</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://brighton.ncsa.uiuc.edu/~prajlich/" target="_blank">Paul Rajlich</a></dd>
+        <dd><dt>From:</dt> Illinois</dd>
+        <dd><dt>Date:</dt> Mon Oct 18 14:58:14 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey everybody, </p>
+<p> I'm releasing the Full Version of Broomsticks and Broomsticks 3D for free! Have fun! </p>
+<p> -Paul</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct21-brittany-55">
+      <a href="#oct21-brittany-55" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> brittany</dd>
+        <dd><dt>Homepage:</dt> quiditch</dd>
+        <dd><dt>From:</dt> u.s</dd>
+        <dd><dt>Date:</dt> Thu Oct 21 17:14:25 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="oct22-javed-56">
+      <a href="#oct22-javed-56" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:lampost98@gmail.com">Javed</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> somewhere.</dd>
+        <dd><dt>Date:</dt> Fri Oct 22 21:57:36 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hey paul i dont kno if u remember me but i signed this guestbook a lot like in the year 2000 when i was at skool. im now inthe 10th grade and yesterday i remembered this game and came back and played it for a while, and i remembered my childhood. well my early childhood. im glad to say ur game is still succesfful and good luck on ur future endeavors :)</p>
+      </div>
+      <div class="entry-response"><p>Welcome back! It's hard to believe that it has been that long since I first released this game. I'm glad you enjoyed it!</p></div>
+    </article>
+
+<article class="entry" id="oct27-esper-57">
+      <a href="#oct27-esper-57" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:NTabasan@comcast.net">Esper</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Philippines</dd>
+        <dd><dt>Date:</dt> Wed Oct 27 19:11:39 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>THIS IS AN AWSOME GAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 1 out of 10 (10 being the best) 100000000000000000000000000000</p>
+      </div>
+      <div class="entry-response"><p>Wow, glad you like it so much. Thanks!</p></div>
+    </article>
+
+<article class="entry" id="oct29-daniel-58">
+      <a href="#oct29-daniel-58" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:webmaster@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Oct 29 22:53:25 CDT 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul, That's cool that you are releasing the Full Version to everyone! I recently installed and have begun learning how to use Linux (dist: Red Hat Fedora Core 2) so now I can try the Linux version of Broomsticks 2 (I know it's the same as the Windows version but still! :-) )! What version of Linux do you use mainly Paul? Anyways, great work Paul, thanks!</p>
+      </div>
+      <div class="entry-response"><p>Hey Daniel, </p>
+<p> Nice to hear from you again! </p>
+<p> I mainly use Red Hat 9.0 and Red Hat 7.3.</p></div>
+    </article>
+
+<article class="entry" id="nov17-nadimkobei-59">
+      <a href="#nov17-nadimkobei-59" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:cyraqz@gmail.com">Nadim Kobeissi</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://cphere.net" target="_blank">Cphere.net</a></dd>
+        <dd><dt>From:</dt> Lebanon</dd>
+        <dd><dt>Date:</dt> Wed Nov 17 09:09:43 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hey paul!!! remember me? i posted on your guestbook 2 years ago! anyway, i just came back to your site again but noticed that there aint a mac version of broomsticks 2!! !! i need a mac version! :( please release it soon!</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="nov22-kenjigraci-60">
+      <a href="#nov22-kenjigraci-60" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:forza_et_theus@yahoo.com">Kenji Gracia</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.missdigitalworld.com/MDWContest/showpage/24?modelnr=153" target="_blank"></a></dd>
+        <dd><dt>From:</dt> Tijuana, Baja California, Mexico</dd>
+        <dd><dt>Date:</dt> Mon Nov 22 09:30:18 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>VOTINGS END November 29th 2004! Vote DAILY!!! http://www.missdigitalworld.com/MDWContest/showpage/24?modelnr=153 Copy and paste this link to your webadress bar, and clic on vote once you are there or,click to enter this site and click on the VOTE link. I study Digital Graphic Design at Tijuana, Baja California, Mexico. My model Stela Liung is running right now at the Miss Digital World contest, a 3dmodel beauty peagent. The number one model right now, from Chile, is getting a real lot of votes because she is very famous in her country, and she's getting a lot of vote because she can promote herself through radio, tv, newspapers and magazines, and i can't promote myself like that. I am asking for your support by votting. All you need to do is copy and past the link i have enclosed, and once there, click on the &quot;Vote&quot; link. It can't be more simpler. Please, copy and paste this link to your internet browser to vote for her! I am counting with you. -Kenji Gracia</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="dec6-rew-61">
+      <a href="#dec6-rew-61" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:r@r.com">rew</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://valium-vicodin.com" target="_blank"></a></dd>
+        <dd><dt>From:</dt> http://valium-vicodin.com</dd>
+        <dd><dt>Date:</dt> Mon Dec  6 16:04:52 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>online pharmacy no prescription valium valium online buy valium online valium side effects valium tablet valium effects cheap valium valium picture generic valium valium diazepam valium line valium pharmacy xanax valium information on valium valium prescription valium addiction valium vicodin valium overnight canada valium mexican valium online pharmacy valium valium withdrawl mexico valium valium overdose valium without prescription order valium valium dosage valium on line buy cheap valium online prescription valium valium withdrawal mortgage valium order valium online roche valium valium drug test drug valium as as good valerian valium valium dosages valium pill dj valium brand name valium discount valium valium for sale cheap online valium valium vs xanax off shore valium purchase valium valium info valium abuse history of valium description valium valium detox valium dose cat valium pregnancy valium suicide valium canadian online pharmacy valium snorting valium effects vicodin cheap vicodin picture vicodin generic vicodin diazepam vicodin line vicodin pharmacy vicodin xanax vicodin information vicodin prescription vicodin addiction vicodin vicodin vicodin mexican vicodin online pharmacy vicodin withdrawal vicodin mortgage vicodin order online vicodin roche vicodin drug test vicodin drug vicodin as as good valerian vicodin dosages vicodin mexican vicodin online pharmacy vicodin withdrawal vicodin mortgage vicodin order online vicodin roche vicodin drug test vicodin drug vicodin mortgage vicodin order online vicodin roche vicodin drug test vicodin drug vicodin phentermine pharmacy phentermine on line order phentermine online phentermine free shipping phentermine adipex phentermine online pharmacy phentermine for sale phentermine hcl phentermine weight loss buy cheap phentermine phentermine no prescription cheap phentermine free shipping lowest price phentermine phentermine hydrochloride phentermine 37.5mg cheap phentermine online phentermine pill phentermine 37.5 mg order phentermine phentermine online phentermine yellow phentermine overnight xenical hgh phentermine quit smoking phentermine forum phentermine low price danger of phentermine phentermine crohns cheapest phentermine online generic phentermine cheap phentermine diet pill online phentermine prescriptionfree cialis free sample cialis order cialis mix cialis and viagra comparison viagra levitra cialis cialis company cialis cialis cialis compare levitra viagra canadian cialis cialis levitra vs cialis mexico cialis dosage cialis information cialis tadalafil cialis pill cialis generic viagra buy cialis generic cialis uprima viagra cialis drug impotence cialis news cialis drug brand name cialis cheap generic cialis cialis review cialis for woman cialis price cialis tablet purchase cialis off shore cialis cialis story compare viagra to cialis on line cialis cialis 20mg cialis versus viagra best price on cialis cheapest cialis cialis soft tab cialis prescription</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="dec10-pol-62">
+      <a href="#dec10-pol-62" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:r@r.com">Pol</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Dec 10 06:10:14 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>free porn replica watches viagra casino free sex penis enlargement teen sex anal sexual enhancement dating single girls spyware xanax sex escorts hardcore sex breast enlargement personals xxx video xxx games fioricet lesbian sex movies &lt;a href=&quot;http://valium-vicodin.com/online/party poker online.html&quot;</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="dec13-lynx-63">
+      <a href="#dec13-lynx-63" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:lynx_lil_perfect_hottie@hotmail.com">Lynx</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Toronto</dd>
+        <dd><dt>Date:</dt> Mon Dec 13 17:13:19 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>It was fun playing this game. You should add more exciting things like a snitch. that would be fun to catch, and you should make it go all over the place, and make it harder to catch. You should also make more selections on the different players, and make different houses, like Griffindor and Ravenclaw and the other houses. NOW THAT WOULD BE A GAME!!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="dec15-alejandra-64">
+      <a href="#dec15-alejandra-64" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ykk_ale@mugglenet.com">Alejandra</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Guatemala</dd>
+        <dd><dt>Date:</dt> Wed Dec 15 11:21:41 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Wow, I am a big fan of Harry Potter and I like your broomsticks game</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="dec31-roxanna-65">
+      <a href="#dec31-roxanna-65" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:-----------------------------------------------">Roxanna</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://brighton.ncsa.uiuc.edu/~prajlich/broomsticks/sign.html" target="_blank">Broomsticks</a></dd>
+        <dd><dt>From:</dt> Rhode Island</dd>
+        <dd><dt>Date:</dt> Fri Dec 31 23:15:05 CST 2004</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ilove this site. It's so fun that I get so competitive while playing against the computer. I WROTE THIS A MINUTE after the ball dropped for 2005.Happy New Year!!!!!!! From, Roxanna</p>
+      </div>
+      
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

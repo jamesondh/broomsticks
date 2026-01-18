@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - may02</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry was-commented" id="may1-dude-0">
+      <a href="#may1-dude-0" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> DUDE</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed May  1 15:29:53 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>THIS SITE IS S GAY I HOPE U SAD FREAKS DIE COZ ORSINAL ROCKS</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="may1-dude-1">
+      <a href="#may1-dude-1" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> DUDE</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed May  1 15:31:55 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>THIS SITE IS S GAY I HOPE U SAD FREAKS DIE COZ ORSINAL ROCKS</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may2-luke-2">
+      <a href="#may2-luke-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:luke@zahadum.com">Luke</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> New York</dd>
+        <dd><dt>Date:</dt> Thu May  2 15:38:24 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>{aul, just got full version of br3d. My question's are, is there a way to activate NPC's, a way how the game will end (points or snitch), when do u think network play will come out, and how many secret brooms r their (i've found 3)</p>
+      </div>
+      <div class="entry-response"><p>Luke, </p>
+<p> what does NPC stand for? </p>
+<p> There are 3 secret brooms and an invisibility powerup. Right now, the game doesn't end, think of it as practice. I will have a computer opponent sometime in the near future. Network play is going to be later on.</p></div>
+    </article>
+
+<article class="entry" id="may2-matthewdav-3">
+      <a href="#may2-matthewdav-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu May  2 20:30:34 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>HIYA! I finally got The 3D GameMaker... Only to find that I'll still have to wait a while to get a new computer. =S Oh well... I'm trying to think of something else to make for Broomsticks, maybe even Br3D =D Any ideas? (Nothing grose, please!)</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may5-anon-4">
+      <a href="#may5-anon-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun May  5 09:42:20 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>....you go boy...</p>
+      </div>
+      <div class="entry-response"><p>:-)</p></div>
+    </article>
+
+<article class="entry" id="may6-luke-5">
+      <a href="#may6-luke-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:luke@zahadum.com">luke</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> NYC</dd>
+        <dd><dt>Date:</dt> Mon May  6 18:08:14 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I did it! I found all three brooms and the invisibility thingy! Woohoo!</p>
+      </div>
+      <div class="entry-response"><p>Excellent! :-)</p></div>
+    </article>
+
+<article class="entry" id="may6-malfoy-6">
+      <a href="#may6-malfoy-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:TJBODNAR@aol.com">Malfoy</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/malfoyshprpg" target="_blank">Malfoys Rpg</a></dd>
+        <dd><dt>From:</dt> Godric Hollow</dd>
+        <dd><dt>Date:</dt> Mon May  6 18:37:34 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Great Game! I love broomsticks. But i don't know how to get the program to run the grafics 4 broomsticks3d. Could you tell me how to?</p>
+      </div>
+      <div class="entry-response"><p>If the graphics for Broomsticks 3D are not working, then you probably need to download OpenGL drivers for your graphics card.</p></div>
+    </article>
+
+<article class="entry" id="may6-tedkendric-7">
+      <a href="#may6-tedkendric-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tkendrck@bellsouth.net">Ted Kendrick</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://users.ev1.net/~kryptcom/" target="_blank">DCU Animated</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon May  6 20:44:48 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This is a really cool site and check out the one up there. It's realoly neat if your a DCU fan! Broomsticks is really fun and I'm sorry I'm not making any more characters at the moment. I have found something else to do. By the way did I mention that Broomsticks is really fun? Good luck with the game Paul. P.S. Don't forget that the game is really fun!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Ted! I'm glad you still like the game! :-)</p></div>
+    </article>
+
+<article class="entry" id="may7-jacksoncap-8">
+      <a href="#may7-jacksoncap-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jak1021@hotmail.com">Jackson Capper</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue May  7 03:18:43 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi Paul, your game is excellent! But I was just curious, did you have to get any sort of permission from the Harry Potter book publishers to market such a game? It's very addictive. Your doing very well. Thanks! And well done!</p>
+      </div>
+      <div class="entry-response"><p>Thanks! </p>
+<p> I've been careful not to refer to any of the names or events from the Harry Potter series.</p></div>
+    </article>
+
+<article class="entry" id="may8-ds-9">
+      <a href="#may8-ds-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> D&gt;S</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed May  8 16:01:11 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I think the april entries and may are messed up! They are the same on each one. Are you going to postpone the deadline for the other contests???</p>
+      </div>
+      <div class="entry-response"><p>Yes, you are right. Thanks for noticing that. It is now fixed. </p>
+<p> Yes, I want more entries before I close the contests. Thanks for reminding me to extend the deadline.</p></div>
+    </article>
+
+<article class="entry" id="may8-matthewdav-10">
+      <a href="#may8-matthewdav-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed May  8 20:35:12 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi. I was just wondering... Where'd the rest of the April Messages go? And why isn't the most recent guestbook page known as May?</p>
+      </div>
+      <div class="entry-response"><p>The April link was bad. This is fixed now. Thanks for letting me know.</p></div>
+    </article>
+
+<article class="entry" id="may8-matthewdav-11">
+      <a href="#may8-matthewdav-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed May  8 22:42:41 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi, it's about Br3D... It screwed up the brightness. See, it closed down before it even started, and now the brightness is up by 128. Help!</p>
+      </div>
+      <div class="entry-response"><p>You mean that it made your desktop (Windows) brighter when it ended? Strange... were you able to fix this in &quot;Display Properties&quot;? Or is this something else...</p></div>
+    </article>
+
+<article class="entry" id="may9-jeremy-12">
+      <a href="#may9-jeremy-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jeremyvisser@telstra.com">Jeremy</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://jeremy.freeshell.org" target="_blank">EggWeb</a></dd>
+        <dd><dt>From:</dt> Hogwarts</dd>
+        <dd><dt>Date:</dt> Thu May  9 00:14:10 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I think Broomsticks (3D) is pretty cool. It's just that I live in Australia, so that I can't really afford the full version. There's a suggestion or two that I'd like to make for Broomsticks 3D: 1) If you explore the castle for more broomsticks, you should go into a &quot;walking mode.&quot; where you can use the mouse to look around and keyboard arrows to move (or mouse buttons.) 2) There should be bigger stands, a referee, and you should wait for the whistle before you can start. (I've only got the demo, so maybe this IS what it's like in the full.) 3) There should be a cheap ($2) and full ($10) version of the game. That way, I don't have to pay as much. Because I live in Oz, the value of the Aussie dollar is about half as much as the US (boo) dollar which works out me paying TWICE AS MUCH as the &quot;USians.&quot; PS: Don't try logging on to my website until August 2002: I'm working on it, and I'll have a link on it that goes here!</p>
+      </div>
+      <div class="entry-response"><p>Thanks, I'm glad you like the game. </p>
+<p> Thanks for the suggestions.</p></div>
+    </article>
+
+<article class="entry" id="may9-ness-13">
+      <a href="#may9-ness-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:x_mai2399@hotmail.com">Ness</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Lumbridge</dd>
+        <dd><dt>Date:</dt> Thu May  9 15:43:12 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>2 things. One, I got a virus from you with your name on it. I assumed it was a new game, cause I bought your old CD. My firewall caught it, and I think it was a kind of virus program that does that automatically, but still, thought I'd let you know. Two, I bought the old CD from you, when it had broomsticks and the 3d demo (which is still a great game). Is there anyway you could make updates available for download to people who buy your games?</p>
+      </div>
+      <div class="entry-response"><p>Hmmm... I'll look into it. Usually I am immune from viruses because I check my email on IRIX (a unix operating system for SGI machines). But, I will check it out. Thanks for letting me know. </p>
+<p> Definitely, that is a good idea and I plan to do that. The only problem with your old version is that the new version is completely different and so the download would be quite big.</p></div>
+    </article>
+
+<article class="entry" id="may9-daniel-14">
+      <a href="#may9-daniel-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu May  9 16:17:39 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>NOTE to persons above and everyone else: sometimes, for whatever reason, when you write a message, it does not show up on the guestbook for a while,,, but eventualy it comes on. PAUL: I know your busy but you said to remind you about posting the floorplan for broomsticks 3D. Thanks!!!</p>
+      </div>
+      <div class="entry-response"><p>If you hit the &quot;refresh&quot; button on your browser, then it should show up. </p>
+<p> Ah, thanks for reminding me. Click <a href="../broomsticks3d/maps.html">here</a>.</p></div>
+    </article>
+
+<article class="entry" id="may9-adamtuck-15">
+      <a href="#may9-adamtuck-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Adam Tuck</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu May  9 18:02:40 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may9-adamtuck-16">
+      <a href="#may9-adamtuck-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:adamtuck5050@hotmail.com">Adam Tuck</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Canada</dd>
+        <dd><dt>Date:</dt> Thu May  9 18:04:03 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey...I just ordered your CD from Ontario Canada. 'Bout when should I expect it? Like, 6-8 weeks or what?</p>
+      </div>
+      <div class="entry-response"><p>Adam, </p>
+<p> I got your order in the mail yesterday (Friday). I will send out the CD on Monday and so you should have it in a week or so.</p></div>
+    </article>
+
+<article class="entry" id="may9-daniel-17">
+      <a href="#may9-daniel-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu May  9 21:26:52 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul, i have not got to try broomsticks 3d yet except for the demo. And our computer is so old the download doesn't realy work so i'm hoping i'm one of the winners of the backgrounds contest so i can try the full version. Anyway i was going to ask if there are quaffles(red) in the game or just the snitch and black bludgerers? Also please keep it so you can still play a quidditch GAME. Not just find things in the castle. Finding the brooms does sound awesome though, do they make you go faster???</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> I'm sorry to say, but if the demo version does not work on your computer then the Full Version will not work either. Most of the time you can get it to work by getting the newest OpenGL drivers for your graphics card. However, if your computer is older then it may not even have a 3D graphics card or it may have one that does not support OpenGL. </p>
+<p> Yes, you can play a GAME and all of the balls are there. However, there is no opponent yet, so it is practice for what will come later. :-) </p>
+<p> Yes, each broomstick has a different max speed and acceleration. This means each broom has a certain speed and agility. For instance, in the Full Version there is one that is very fast but hard to control. :-) In both versions, there is one broom that is hard to find but is very fast and agile.</p></div>
+    </article>
+
+<article class="entry" id="may10-hpotter-18">
+      <a href="#may10-hpotter-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hhh@happy.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri May 10 00:36:06 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>dear paul,maybe you could sell broomsticks3d only on a disk for half price, that might be good...anyway i set it to no sky no feild and no sound so when i pressed b while playing,it would make a trail follow you HPOTTER</p>
+      </div>
+      <div class="entry-response"><p>Thanks for the idea. However, it would have to be more than half price. This is because the materials themselves and postage are what cost me money. Adding another game onto the CD doesn't cost me anything. </p>
+<p> Ah, so you discovered that. I didn't plan for that to happen, but when I discovered it I did not remove it because it is fun.</p></div>
+    </article>
+
+<article class="entry" id="may10-jacksoncap-19">
+      <a href="#may10-jacksoncap-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:jak1021@hotmail.com">Jackson Capper</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Fri May 10 08:01:37 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I was just reading through the guest book, Paul and was wondering if you had noticed the amount of Australians in here. I was also wondering if it was possible to order the full version from overseas.</p>
+      </div>
+      <div class="entry-response"><p>Jackson, </p>
+<p> yes, you are right. There are a lot of Australians in here. :-) </p>
+<p> Sure you can. I have sent copies of the game all over the world, and a good number to Australia. The only trick is sending me $10 US. PayPal can do this, but creating and verifying an international account can take a while (it is free though). The alternative is to get your hands on US dollars or a money order from the bank.</p></div>
+    </article>
+
+<article class="entry" id="may12-daniel-20">
+      <a href="#may12-daniel-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun May 12 17:09:07 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yea, i can put broomsticks 3d on my dad's computer since mine is so old!</p>
+      </div>
+      <div class="entry-response"><p>Excellent! :-)</p></div>
+    </article>
+
+<article class="entry" id="may13-alexiawhea-21">
+      <a href="#may13-alexiawhea-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:americangirl_01@hotmail.com">Alexia Wheaton</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> West Virginia</dd>
+        <dd><dt>Date:</dt> Mon May 13 19:41:36 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I love the site. It's awesome!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Alexia!</p></div>
+    </article>
+
+<article class="entry" id="may13-matthewdav-22">
+      <a href="#may13-matthewdav-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon May 13 20:17:36 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Ok, the problem's fixed now. See, it just said that it had performed an illigal operation and shut down. Then when it went back to the desktop it had changed the gamma settings. I was also using it on a computer that probably couldn't handle the game (A School One). Everything's fine now.</p>
+      </div>
+      <div class="entry-response"><p>Oh, ok.</p></div>
+    </article>
+
+<article class="entry" id="may13-matthewdav-23">
+      <a href="#may13-matthewdav-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> N/A</dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Mon May 13 20:22:51 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi. Got another question. How come in the full version of Broomsticks you can only choose out of six player sets? This may not be the case in newer versions, but I can't get all my character sets up at the same time. It's kinda bugging me. Also something which has my mind on hold is in the items sets. There are two blank spaces. I know that you have answered this before, but I can't be bothered to find the page you answered it on.</p>
+      </div>
+      <div class="entry-response"><p>In the newer version, there are more than 10 character sets. Have you tried editing the HTML file? You should be able to add an additional character set that way. </p>
+<p> Two blank spaces? I'm not sure if I remember that. It has been a while since I looked at the old version.</p></div>
+    </article>
+
+<article class="entry" id="may13-nicshelton-24">
+      <a href="#may13-nicshelton-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:none">nic shelton</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank"></a></dd>
+        <dd><dt>From:</dt> mississippi</dd>
+        <dd><dt>Date:</dt> Mon May 13 21:15:06 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>THIS ROCKS</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may13-nicshelton-25">
+      <a href="#may13-nicshelton-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> NIC SHELTON</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> MISSISSIPPI</dd>
+        <dd><dt>Date:</dt> Mon May 13 21:28:03 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>THIS GAME IS COOL.I THOUGHT IT WOULD BE BORING,BUT I WAS WRONG.IM SURETHE REAL THING WILL BE BETTER.IT WILL HAVE THE QUAFFLE AND SNITCH.IVE PLAYED QUIDITCH SOMEWHERE ELSE BUT IT JUST HAD A SNITCH ,AND NO BLUDGERS,QUAFFLES,OR GOOD RATINGS.I GIVE THIS A 9 OUT OF 10</p>
+      </div>
+      <div class="entry-response"><p>Thanks Nic!</p></div>
+    </article>
+
+<article class="entry" id="may14-anon-26">
+      <a href="#may14-anon-26" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue May 14 19:05:57 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Floorplan of broomsticks 3D??? Thanks!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="may14-matthewdav-27">
+      <a href="#may14-matthewdav-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue May 14 20:52:45 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi again. Sorry, my mistake... Three blank spaces in the items list. One next to the 'Red Ball', one next to the 'Black Ball', and one for the 'Gold Ball'. This may not be the case in newer versions, but I am still confused. Also, is there any way to change the skin for the... uh... 'Spheres' in Broomsticks 3D? At the moment, that would be all I could do! I can't do anything about the broom until I get the right software.</p>
+      </div>
+      <div class="entry-response"><p>Ah, ok, now I know what you are talking about: the items image. Those items have only one graphic, that is why there are blank spaces. The goalpost has 2 graphics, regular and highlighted. </p>
+<p> Sorry, but right now the spheres in Broomsticks3d are just a solid color, not a skin (texture). However, you can change the skins (textures) for the castle and the broom like you mentioned.</p></div>
+    </article>
+
+<article class="entry" id="may16-daniel-28">
+      <a href="#may16-daniel-28" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu May 16 18:32:13 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey paul i just thought of how you could make broomsticks even better!!! WHat you could do is have an option called &quot;wide screen field&quot; or something and on this when you are playing, the field is longer and higher than your screen(you can't see the goal posts). Then you could fly all the way to left,right,top, or bottom of the screen and the background would move(you can do this in other games). That way you have a larger area to explore without having a humongous screen. Do you understand??? Would this be easy to do? Thanks!!! ~~~Daniel</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> That is an interesting idea. However, it would be a problem for two player, because both players need to see where they are. :-)</p></div>
+    </article>
+
+<article class="entry" id="may17-zooggirl67-29">
+      <a href="#may17-zooggirl67-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> zooggirl6711</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Canada</dd>
+        <dd><dt>Date:</dt> Fri May 17 16:50:00 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Cool, game, love it!! :)</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="may18-nicola-30">
+      <a href="#may18-nicola-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Nicola</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> oklahoma</dd>
+        <dd><dt>Date:</dt> Sat May 18 21:14:17 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>What is this broomsticks 3d floorplan thing? Does it show all of the castle? That would be awesome! Could you put a picture of it for us to see? Thanks!</p>
+      </div>
+      <div class="entry-response"><p>Nicola, </p>
+<p> Go <a href="../broomsticks3d/maps.html">here</a>. It's the 3 major axis orthographic views, like you might see in a technical drawing or blueprint.</p></div>
+    </article>
+
+<article class="entry" id="may19-daniel-31">
+      <a href="#may19-daniel-31" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> oklahoma</dd>
+        <dd><dt>Date:</dt> Sun May 19 21:07:16 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>That floorplan is one of the coolest ones i have ever seen!!! And it's even cooler looking to me because i love looking at floorplans and i plan to be an archetect! Thanks for posting it! Oh and by the way, that flooeplan is awesome!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Daniel, I'm glad you like it! :-)</p></div>
+    </article>
+
+<article class="entry" id="may20-daniel-32">
+      <a href="#may20-daniel-32" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon May 20 19:22:46 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>In Broomsticks 3D, what happens when you get hit by a bludger? Do you go down to the ground like in regualer broomsticks?</p>
+      </div>
+      <div class="entry-response"><p>You get pushed downwards. If you are close to the ground, you might even be bounced a couple of times like a basketball. :-)</p></div>
+    </article>
+
+<article class="entry" id="may21-adam-33">
+      <a href="#may21-adam-33" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:adamtuck5050@hotmail.com">Adam</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Canada</dd>
+        <dd><dt>Date:</dt> Tue May 21 16:44:25 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I just recieved your Broomsticks CD, It's unbelievable! I love it! But I was wondering, it says that you can install Lasertron onto your computer. What are the advantages of this?</p>
+      </div>
+      <div class="entry-response"><p>Adam, </p>
+<p> I'm glad to hear that you are enjoying the <a href="full.html">Full Version</a>. There is no advantage really, except that you do not need to have the CD in the drive to play. Also, if you wanted you could change the game graphics. On the CD, the files are read-only.</p></div>
+    </article>
+
+<article class="entry" id="may22-mmaxime-34">
+      <a href="#may22-mmaxime-34" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:beauxbatons@narod.ru">M Maxime</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://beauxbatons.narod.ru" target="_blank">BEAUX BATONS</a></dd>
+        <dd><dt>From:</dt> Paris</dd>
+        <dd><dt>Date:</dt> Wed May 22 11:03:09 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Cool! I loved it! But why don't you mention quidditch or Rowling or Harry Potter?</p>
+      </div>
+      <div class="entry-response"><p>Thanks! My game is not official, so I cannot use those names.</p></div>
+    </article>
+
+<article class="entry" id="may23-mmaxime-35">
+      <a href="#may23-mmaxime-35" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:beauxbatons@narod.ru">M Maxime</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Paris France</dd>
+        <dd><dt>Date:</dt> Thu May 23 11:50:14 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oh yes! I downloaded a version of Broomsticks 3D, and you see, it's too light. I mean that the sky is white instead of blue and the broomstick is white instead of brown. Is it normal? I'd like to get the fuul version. If i pay, will i recieve it by poste? Please answer me on my e-mail.</p>
+      </div>
+      <div class="entry-response"><p>Interesting. I can't reproduce this problem, but at leat one other person has seen it (Matthew Davis). To help me out, what kind of graphics card do you have? </p>
+<p> Yes, you would receive it by mail. I send copies of the game all around the world.</p></div>
+    </article>
+
+<article class="entry" id="may23-matthewdav-36">
+      <a href="#may23-matthewdav-36" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu May 23 21:38:09 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I read 'M's message and I'm starting to think that there is a small glitch in the programming. It is rasing the gamma level itself. There might be something on some computers that do this. Is there a command in the programming that changes an option?</p>
+      </div>
+      <div class="entry-response"><p>Matthew, </p>
+<p> I'll look into this. What kind of graphics card do you have?</p></div>
+    </article>
+
+<article class="entry" id="may25-candacemel-37">
+      <a href="#may25-candacemel-37" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:ramelnama@tstt.net.tt">candace&amp;melissa</a></dd>
+        <dd><dt>Homepage:</dt> crazy stuff</dd>
+        <dd><dt>From:</dt> Trinidad</dd>
+        <dd><dt>Date:</dt> Sat May 25 00:22:16 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your website is really cool.We've learned so much about Harry Potter.We are very pleased.THank you&gt;! And I just don't get it,people actually like Daniel Radcliffe and rupert Grint!!!yuck!!(no offence guys)</p>
+      </div>
+      <div class="entry-response"><p>Did you come here from another site? UHPFC perhaps? Maybe you posted to the wrong guestbook. :-)</p></div>
+    </article>
+
+<article class="entry" id="may25-daniel-38">
+      <a href="#may25-daniel-38" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> OK</dd>
+        <dd><dt>Date:</dt> Sat May 25 15:35:38 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I know you want some more people to enter in the backgrounds contest, but could you please not delay it andymore? Does broomsticks 3d have background, and sound effects music? Are there other people helping you make broomsticks 3d? COOL SITE!!!</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> thanks for reminding me. Yes, I will end the backgrounds contest soon. </p>
+<p> Broomsticks 3D does not have sound yet, but it will. I'm working on it myself, but I am basing it on an opensource Quake3 clone engine (Titan).</p></div>
+    </article>
+
+<article class="entry" id="may26-siddharth-39">
+      <a href="#may26-siddharth-39" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:siddharthmishrasharna@hotmail.com">Siddharth</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> India</dd>
+        <dd><dt>Date:</dt> Sun May 26 10:30:22 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This game is really nice,Paul.I wish you could do so I could be on one computer and my friend could be on another and we could play like that.Please email me and tell me of your new updates.I liked Broomsticks Advanced very much.Please tell me of your new games and updates in this game.I liked your other game-Lasertron too.Bye now !</p>
+      </div>
+      <div class="entry-response"><p>Thanks Siddharth! I'm glad you like it. </p>
+<p> Yes, at some point I will add networking. The only problem is that Broomsticks is a fast-paced game, and so latency (lag) may be a problem. I did start on this a while back but wasn't too happy with it. It didn't work too well over a modem connection.</p></div>
+    </article>
+
+<article class="entry" id="may28-matthewdav-40">
+      <a href="#may28-matthewdav-40" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:006085@cooroorashs.qld.edu.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue May 28 22:55:28 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Um... About the graphics card... See, I used it from a school computer, and I don't think it has a graphics card. I'm not too sure about it. But yeah, it turns up the gamma rating like you'd change the brightness on a tv. Although it was easy to fix here, it may become a problem for others if they can't change their gamma settings. I'm sure it's a great game, but I simply can't play it because it refuses to operate. It says it performed an illigal operation and closed. If anyone else knows their computer colours (and if you experience the same gamma colour) you'll notice that it 'ups' the colour brightness by 128, but it doesn't affect the three primary colours; that's probably because only one colour is set to 255 and the remaining two are set at 'Numero Zero'. Long story short: I don't know what the graphics card is, but 'M' might! (PS: I'd be very suprised if this message gets a big response message from you. From 'M', not too suprised)</p>
+      </div>
+      <div class="entry-response"><p>Thanks for the info Matthew.</p></div>
+    </article>
+
+<article class="entry" id="may29-siddharth-41">
+      <a href="#may29-siddharth-41" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:siddharthmishrasharma@hotmail.com">Siddharth</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Russia</dd>
+        <dd><dt>Date:</dt> Wed May 29 07:21:44 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Sad you cant add networking.I have a friend here that rarely meets me,and then we often play Broomsticks Advanced.But we are sad because we cant do networking.Today when I opened to play Broomsticks,I had a nice surprise because I saw we could choose a number of black balls which wasnt available here.I cant buy the Full Version,sorry.I do not have American money and besides,If I had I wouldnt be able to because I'm not allowed to.</p>
+      </div>
+      <div class="entry-response"><p>I may look into it again in the future. So, there's still a chance! :-) </p>
+<p> Yep, once in a while I enable something new in the Advanced demo.</p></div>
+    </article>
+
+<article class="entry" id="may30-gerdferde-42">
+      <a href="#may30-gerdferde-42" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:profut@gmx.de">Gerd Ferde</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.bauherr-abc.de" target="_blank">Hausbau</a></dd>
+        <dd><dt>From:</dt> Germany</dd>
+        <dd><dt>Date:</dt> Thu May 30 06:45:23 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi, great site with many links and a lot of informations. Go on like this. All the best from Germany</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="may30-daniel-43">
+      <a href="#may30-daniel-43" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Daniel</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Thu May 30 20:33:16 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I hope that you will make the character and background contests a yearly event! About broomsticks 3d... sooner or later when you get to play against another opponent will there be a scoreboard? I think it would be cool if it WAS part of the background instead of something off screen. Also, on the full version, it would be cool if you could venture a little bit away from the castle. Like over The Lake. It wouldn't have to be too far though.</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> yes, that is a good idea (making the contests a yearly event). </p>
+<p> Yes, I do plan to have a scoreboard. Those are good suggestions. Thanks!</p></div>
+    </article>
+
+<article class="entry" id="may30-d-44">
+      <a href="#may30-d-44" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> D</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu May 30 20:34:42 CDT 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Did you say you are a computer programer? Do you make other things besides games? is the gaming part your hobbie and you do professional stuff at work?</p>
+      </div>
+      <div class="entry-response"><p>Yes, that is right and gaming is my hobby. My professional work is about high end virtual reality used for viewing scientific data. Check out my <a href="../">website</a>.</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

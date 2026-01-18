@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - dec03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="dec2-anon-0">
+      <a href="#dec2-anon-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Dec  2 19:19:58 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>To Daniel: When I change the name, it is still a ZIP file, and there is no .zip at the end! I am a computer amateur, so help me...</p>
+      </div>
+      <div class="entry-response"><p>Ah... maybe you need to enable the showing of filename extensions. Do this: </p>
+<p> In the folder, go to Tools-&gt;Folder Options-&gt;View. In there, uncheck the box next to &quot;Hide file extensions for known file types&quot;.</p></div>
+    </article>
+
+<article class="entry" id="dec5-cecelia-1">
+      <a href="#dec5-cecelia-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Cecelia</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Spokane</dd>
+        <dd><dt>Date:</dt> Fri Dec  5 13:08:04 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="dec5-http-2">
+      <a href="#dec5-http-2" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> http://</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Dec  5 18:30:53 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="dec6-anon-3">
+      <a href="#dec6-anon-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sat Dec  6 16:14:28 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Thanks, Paul, and I'm HaPpY!</p>
+<p> Snow hath cometh to my home, and the flakes are dropping! Anyway, um... anybody got a topic to talk about? </p>
+<p> (&gt;^_^)&gt; (sorry, everybody who doesn't like me &quot;expressing myself&quot;)</p>
+      </div>
+      <div class="entry-response"><p>Cool, I was guessing that was the problem. </p>
+<p> Sure, although the messageboard is a better place to start a topic.</p></div>
+    </article>
+
+<article class="entry" id="dec7-matthewdav-4">
+      <a href="#dec7-matthewdav-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Sun Dec  7 06:26:59 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>lol MS<br> Careful, or you'll get a lecture, like I did *rolls eyes*</p>
+<p> -Matt</p>
+<p> (btw, Paul, that &quot;wall&quot; looks amazing! I want a setup like that! =Þ)</p>
+      </div>
+      <div class="entry-response"><p>Let me clarify that it was not me that did the lecturing. :-) </p>
+<p> Thanks! If you want one like that, visit www.visbox.com. It's a bit pricey though. :-)</p></div>
+    </article>
+
+<article class="entry" id="dec7-keithblack-5">
+      <a href="#dec7-keithblack-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Goldeneyeks007@yahoo.com">Keith Blackwell</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Jim Thorpe</dd>
+        <dd><dt>Date:</dt> Sun Dec  7 10:19:45 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>awesomly cool neat</p>
+      </div>
+      <div class="entry-response"><p>Thanks Keith!</p></div>
+    </article>
+
+<article class="entry" id="dec11-klaus-6">
+      <a href="#dec11-klaus-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> klaus</dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.here32.de" target="_blank">mobil telefonieren</a></dd>
+        <dd><dt>From:</dt> UK</dd>
+        <dd><dt>Date:</dt> Thu Dec 11 07:05:18 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>great site, well done</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="dec13-james-7">
+      <a href="#dec13-james-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:demonsbreathboss@hotmail.com">James</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://demonsbreath.topcities.com" target="_blank">Demonsbreath</a></dd>
+        <dd><dt>From:</dt> A house</dd>
+        <dd><dt>Date:</dt> Sat Dec 13 08:13:19 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>What program do you use for making that 3D broomsticks game? I need to learn a new, good programming language (I just know HTML, DarkBASIC and Actionscript (the one for Flash) at the moment).</p>
+      </div>
+      <div class="entry-response"><p>It is based on a Quake3 clone (Titan) that was written in C++. In other words, I modified the source code of Titan using Visual Studio C++. </p>
+<p> If you want to become a pro programmer, I suggest Java or Python as a good start. It will be a lot of work, but well worth it.</p></div>
+    </article>
+
+<article class="entry" id="dec16-anon-8">
+      <a href="#dec16-anon-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Dec 16 20:14:02 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>&gt;To tune of &quot;Pomp &amp; Circumstance&quot;&lt;</p>
+<p> It's December, so update Paul! Please Update the calendar! </p>
+<p>9 days 'til X-Mas! Mexicans, though, start in Dec. 16 and end on Feb. 6... How weird...and lucky...</p>
+<p> Hello, Adrian! (Quote from Monk, watch it on Fri. nights on USA Network (US only?) at 10 PM (Eastern Time US)</p>
+      </div>
+      <div class="entry-response"><p>Ok, ok. I will... :-)</p></div>
+    </article>
+
+<article class="entry" id="dec23-anon-9">
+      <a href="#dec23-anon-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://somewhereibelong" target="_blank"></a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Dec 23 12:44:09 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>2 days 'til X-Mas!</p>
+<p>Happy Holidays!</p>
+<p>Paul, does the CD have the BR2 demo on it? Just curious... Curiouser and curiouser...</p>
+      </div>
+      <div class="entry-response"><p>Right now it does not, but I should probably put that on there too.</p></div>
+    </article>
+
+<article class="entry" id="dec30-daniel-10">
+      <a href="#dec30-daniel-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Tue Dec 30 21:35:03 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, when I run Broomsticks 3D a thin line is visible at the top of the broom image. This has happened for quite some time but I just never asked you about it. I've even tried editing the broom image but no matter what that line is always there. I don't think I had this problem before you added the better graphics like the hands on the broom, mountains, etc. Do you know why it is doing this?</p>
+<p>Does anyone else have this problem?</p>
+      </div>
+      <div class="entry-response"><p>Daniel, </p>
+<p> it is probably the texture mapping settings in the OpenGL code. My guess is that the bottom line is wrapping around to the top. Try editing the image and making the bottom couple of lines transparent. Also, if you run the game at a different resolution, the line may disappear.</p></div>
+    </article>
+
+<article class="entry" id="dec31-daniel-11">
+      <a href="#dec31-daniel-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Wed Dec 31 15:28:55 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Yep, making part of the bottom of the image transparent worked! Thanks!<br>And uh, it's nearly January and we're still on November ;-)<br>Happy New Year everyone!</p>
+      </div>
+      
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

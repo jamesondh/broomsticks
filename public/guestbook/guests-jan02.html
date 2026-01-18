@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - jan02</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="jan1-xavierjone-0">
+      <a href="#jan1-xavierjone-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thexmasta1@msn.com">Xavier Jones</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/thexmasta/wizardingnet.html" target="_blank">The Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Memphis, Tennessee, United States of America</dd>
+        <dd><dt>Date:</dt> Tue Jan  1 03:54:26 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey,all you Harry Potter fans!!! Please visit my website. It is a Harry Potter fansite/rpg with a lot of cool Harry Potter games and a professional web design. Oh, Have a Happy New Year!!!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan2-przemek-1">
+      <a href="#jan2-przemek-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Przemek</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Jan  2 05:58:17 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan2-mm-2">
+      <a href="#jan2-mm-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:mm@mm.com">mm</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.mm.com" target="_blank">mmmm</a></dd>
+        <dd><dt>From:</dt> hhhh</dd>
+        <dd><dt>Date:</dt> Wed Jan  2 09:03:47 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hhhhhh</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan2-goat-3">
+      <a href="#jan2-goat-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:goatiy@yahoo.com">Goat</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Ireland</dd>
+        <dd><dt>Date:</dt> Wed Jan  2 15:30:29 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Me Poem Hey this place is kewl it is not sqare! <br> Come here again to u I dare. <br> Diving and scoring <br> Anything but boring! <br> Broomsticks really rox. <br> It does not stink like socks!<br> Goodbye.</p>
+      </div>
+      <div class="entry-response"><p>Nice poem Goat! :-)</p></div>
+    </article>
+
+<article class="entry" id="jan3-nadimkobei-4">
+      <a href="#jan3-nadimkobei-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:smogon350@yahoo.com">nadim kobeissi</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> lebanon</dd>
+        <dd><dt>Date:</dt> Thu Jan  3 05:08:43 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>YOUR GAME DEMO IS TOPS! I WANT TO ORDER THE GAME, BUT I DONT HAVE A CREDIT CARD! PLZ REPLY BY E-MAIL!</p>
+      </div>
+      <div class="entry-response"><p>You can also order by regular mail. Details here: </p>
+<p> <a href="full.html">Get the Full Version</a></p></div>
+    </article>
+
+<article class="entry" id="jan4-elias-5">
+      <a href="#jan4-elias-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:469862341752">elias</a></dd>
+        <dd><dt>Homepage:</dt> dwreuhjkhjijhhjgfkrgzoufzuirhjurtirtiruih54rkuhjtlkl,blhjkbfhjtkgj</dd>
+        <dd><dt>From:</dt> tfgvbvjhfc</dd>
+        <dd><dt>Date:</dt> Fri Jan  4 12:27:32 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>fhfvs ckj sklfgmj okl ußijuon jikzgh gjihjp cjhujj7u zhzuhf ehhbuz dhuopopüvgre nm+üfaffvcfbhj muhji</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jan8-poop-6">
+      <a href="#jan8-poop-6" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sdwsfsfds">poop</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://bbbbbbbbbbb" target="_blank">bn</a></dd>
+        <dd><dt>From:</dt> bbbbbbbbbbbbbb</dd>
+        <dd><dt>Date:</dt> Tue Jan  8 21:35:08 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
+      </div>
+      
+    </article>
+
+<article class="entry was-commented" id="jan11-anon-7">
+      <a href="#jan11-anon-7" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:@fu.org"></a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://.com" target="_blank"></a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Fri Jan 11 08:07:08 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>shit shit shit shit shit shit shit shit</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan11-georgeandj-8">
+      <a href="#jan11-georgeandj-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:nickl@baytreeh.demon.co.uk">george and josh lewkowicz</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> England</dd>
+        <dd><dt>Date:</dt> Fri Jan 11 11:35:45 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Gio and I would just like to say LOOK AT OUR CHARACHTERS! We love the game, george is better than me which is !@?# We think our characters are the best there and deserve a medal (bar the Harden's guys they're absolutely awesome)</p>
+      </div>
+      <div class="entry-response"><p>Thanks for signing the guestbook guys and for contributing the characters. Good job, you do deserve a medal! :-)</p></div>
+    </article>
+
+<article class="entry" id="jan12-cassie-9">
+      <a href="#jan12-cassie-9" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:harrypotterules9@yahoo.com">cassie</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> louisiana</dd>
+        <dd><dt>Date:</dt> Sat Jan 12 21:05:12 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Broomsticks is soooo cool!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Cassie!</p></div>
+    </article>
+
+<article class="entry" id="jan13-sarapinzon-10">
+      <a href="#jan13-sarapinzon-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:saris20@hotmail.com">Sara Pinzon</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Colombia</dd>
+        <dd><dt>Date:</dt> Sun Jan 13 00:02:04 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hi, I like you game, is really cool, but it would be better if you has more levels.</p>
+      </div>
+      <div class="entry-response"><p>Thanks Sara! What do you mean by more levels? Different kinds of playing fields? In the Full Version you can do a bunch of different things that make the game more interesting!</p></div>
+    </article>
+
+<article class="entry" id="jan13-danny-11">
+      <a href="#jan13-danny-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:danny.bak@talk21.com">danny</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.dabon.com" target="_blank">dabon</a></dd>
+        <dd><dt>From:</dt> new york</dd>
+        <dd><dt>Date:</dt> Sun Jan 13 01:14:24 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this game is cool</p>
+      </div>
+      <div class="entry-response"><p>Thanks Danny!</p></div>
+    </article>
+
+<article class="entry was-commented" id="jan13-fuck-12">
+      <a href="#jan13-fuck-12" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:danny.bak@talk21.com">fuck</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://bromstiks shold be fuck" target="_blank">bromstiks are fuck</a></dd>
+        <dd><dt>From:</dt> washington</dd>
+        <dd><dt>Date:</dt> Sun Jan 13 01:17:32 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p></p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan14-andrea-13">
+      <a href="#jan14-andrea-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:usbananna@hotmail.com">Andrea</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan 14 16:50:36 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I am Andrea. I am a co-headmistress at the International School of Witchcraft, Wizardry, and Sorcery. Me and Headmistress O'Neil have been eyeing your online game and were wondering if we could please use it as our quidditch because obviously that would be the easiest way to play. Please respond. We will in no way shape or form take credit for the game</p>
+      </div>
+      <div class="entry-response"><p>Sure you can! Either link to this site: </p>
+<p> http://brighton.ncsa.uiuc.edu/broomsticks/ </p>
+<p> or if you want to host it yourselves, everything you need is in this zip file: </p>
+<p> http://brighton.ncsa.uiuc.edu/~prajlich/broomDemo.zip</p></div>
+    </article>
+
+<article class="entry" id="jan15-carly-14">
+      <a href="#jan15-carly-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sonlovewitya@aol.com">Carly</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Bradenton Florida</dd>
+        <dd><dt>Date:</dt> Tue Jan 15 18:07:35 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>the full version is really cool! Oh yeah, I love you kevin!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Carly! Who is Kevin? :-)</p></div>
+    </article>
+
+<article class="entry" id="jan16-heatherhun-15">
+      <a href="#jan16-heatherhun-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Heather Hunter</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Northern Ireland, Co. L'Derry</dd>
+        <dd><dt>Date:</dt> Wed Jan 16 14:41:48 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I really like ur game! Maybe u could add a bit though- ( Maybe a snitch?!) and then it would be even better! :) H</p>
+      </div>
+      <div class="entry-response"><p>Thanks Heather! That is in the <a href="full.html">Full Version</a>! However, I also occassionally enable the gold ball in the advanced demo!</p></div>
+    </article>
+
+<article class="entry" id="jan16-hannah-16">
+      <a href="#jan16-hannah-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hbgw24@hotmail.com">Hannah</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Wed Jan 16 22:29:30 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I Love your game it is soooooooooooooooo fun I hope this still here when I get enough money I really want to buy it!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Hannah! :-)</p></div>
+    </article>
+
+<article class="entry" id="jan17-ritaskeete-17">
+      <a href="#jan17-ritaskeete-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:not telling">rita skeeter</a></dd>
+        <dd><dt>Homepage:</dt> none</dd>
+        <dd><dt>From:</dt> New Zealand</dd>
+        <dd><dt>Date:</dt> Thu Jan 17 13:51:46 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This site rocks, especially Broomsticks. Keep it up!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Rita!</p></div>
+    </article>
+
+<article class="entry" id="jan18-hpotter-18">
+      <a href="#jan18-hpotter-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hhh@happy.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Jan 18 21:36:24 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear Paul, I sent you an email with my players 4.gif attached to it so please fix the color as soon as you can after you recive it thanks,oh yeah i have two email adresses, Please use the one i used to send the players.gif to you.HPOTTER :-) ~__~</p>
+      </div>
+      <div class="entry-response"><p>Ok, will do. Thanks for sending it!</p></div>
+    </article>
+
+<article class="entry" id="jan19-joshua-19">
+      <a href="#jan19-joshua-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:evilforcesg@yahoo.com">Joshua</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Singapore</dd>
+        <dd><dt>Date:</dt> Sat Jan 19 04:52:13 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey Paul , i LOVE ur game and wonder whether if the full version can be sent overseas like Singapore(Asia) ?</p>
+      </div>
+      <div class="entry-response"><p>Thanks Joshua! Yes, I have sent it all over the world and there is no extra charge (still $10 US).</p></div>
+    </article>
+
+<article class="entry" id="jan19-me-20">
+      <a href="#jan19-me-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:mine">me</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> penn</dd>
+        <dd><dt>Date:</dt> Sat Jan 19 14:45:37 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this game sux</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="jan20-chell-21">
+      <a href="#jan20-chell-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Chell</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Earth</dd>
+        <dd><dt>Date:</dt> Sun Jan 20 15:56:12 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hiyo. 1 Guestbook post a month keeps the doctors away. I just looked at the Broomsticks 3D Screenshots and was stunned. It reconfermed that I need the full versian to take a look at that demo! Are you using Java3D? What 3D Modeler? Sorry, bit excited. I could never make something that good... -Chell</p>
+      </div>
+      <div class="entry-response"><p>Chell, </p>
+<p> The renderer is a Quake3 clone written in C. Go to www.visbox.com/cq3a for more information. So, the awesome castle model is actually a Quake3 model by Scott Maclean.</p></div>
+    </article>
+
+<article class="entry" id="jan21-joshua-22">
+      <a href="#jan21-joshua-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Joshua</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan 21 01:01:00 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>does it means that i can buy it in Singapore or do i have to order it online with a credit card and wait for a few months ?</p>
+      </div>
+      <div class="entry-response"><p>You have to order it online, but you should have it in a week or two.</p></div>
+    </article>
+
+<article class="entry" id="jan21-googles-23">
+      <a href="#jan21-googles-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Googles</dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> Earth</dd>
+        <dd><dt>Date:</dt> Mon Jan 21 17:41:38 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hello Paul! Neat game, but i would like to see the gold ball enablement before i acctually purchase the game. :o))))))))))))))))))) Fun fun fun fun fun game! Very...uh...broomsticks! Googles</p>
+      </div>
+      <div class="entry-response"><p>Thanks Googles! </p>
+<p> I do enable it in the Advanced Demo once in a while, so make sure you check back.</p></div>
+    </article>
+
+<article class="entry" id="jan22-hermione-24">
+      <a href="#jan22-hermione-24" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:1Griffindor@hogwarts.com">Hermione</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> N&gt;E&gt;</dd>
+        <dd><dt>Date:</dt> Tue Jan 22 09:48:53 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Isn't this a rip off of Quidditch?</p>
+      </div>
+      <div class="entry-response"><p>It's like a simplified version of the game, which makes it playable as a computer game.</p></div>
+    </article>
+
+<article class="entry" id="jan22-tedkendric-25">
+      <a href="#jan22-tedkendric-25" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tkendrck@bellouth.net">Ted Kendrick</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Tue Jan 22 17:18:55 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, I am working on a new JLA set of Characters. It will be original. And your game is really neat! Tell me when Broomsticks 3D is finished! I'm really looking forword to it!</p>
+      </div>
+      <div class="entry-response"><p>I'm looking forward to seeing them! Thanks Ted, I'm glad you are having fun with the game!</p></div>
+    </article>
+
+<article class="entry" id="jan25-hpotter-26">
+      <a href="#jan25-hpotter-26" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:mwschooley@hotmail.com">HPOTTER</a></dd>
+        <dd><dt>Homepage:</dt> <a href="none" target="_blank">none</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Fri Jan 25 10:29:31 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Dear Paul I haven't recived my players gif in a while,have you been trying to find out what my other email adress is?if so this is it mwschooley@hotmail.com HPOTTER</p>
+      </div>
+      <div class="entry-response"><p>Thanks for reminding me. I've posted your characters in the <a href="characters.html">Characters Gallery</a>.</p></div>
+    </article>
+
+<article class="entry" id="jan28-anon-27">
+      <a href="#jan28-anon-27" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Jan 28 03:03:52 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>this is a great game but I am not telling you who I am.</p>
+      </div>
+      <div class="entry-response"><p>Thanks! Oh, ok. :-)</p></div>
+    </article>
+
+<article class="entry" id="jan29-kriswiz-28">
+      <a href="#jan29-kriswiz-28" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> Kris Wiz</dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.geocities.com/kriswiz27/enter.html" target="_blank">Hogwarts School of Witchcraft and Wizardry (It's not finished yet but)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Jan 29 23:22:25 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi Paul! I think your Broomsticks game is really really REALLY cool!!! I was wondering if it's okay if, for Quidditch on my site, I could link it to the Broomsticks page? I won't take any credit for it. Thanks! Have a great day!</p>
+      </div>
+      <div class="entry-response"><p>Thanks! Sure you can link to it!</p></div>
+    </article>
+
+<article class="entry" id="jan30-michaelk-29">
+      <a href="#jan30-michaelk-29" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:michael@hotmail.com">Michael K.</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.broomsticks.com" target="_blank">Broomsticks Official Website</a></dd>
+        <dd><dt>From:</dt> America</dd>
+        <dd><dt>Date:</dt> Wed Jan 30 07:38:34 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>This game is the best quidditch game on earth. You feel the tension and it's like you're hanging on a broomstick at Hogwarts. The site is: HTTP://WWW.VISBOX.COM/BROOMSTICKS Good Luck!!!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Michael!</p></div>
+    </article>
+
+<article class="entry" id="jan30-joe-30">
+      <a href="#jan30-joe-30" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:sirmagicguy89@hotmailcomj">Joe</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.angelfire.com/wizard/sirmagicguy/index.html" target="_blank">My homepage (not near finished yet)</a></dd>
+        <dd><dt>From:</dt> US</dd>
+        <dd><dt>Date:</dt> Wed Jan 30 09:26:30 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I put the demo on my website, I hope that's ok. I'm not taking credit for it. Hope to get my web site up looking smooth soon. Html is harder than I thought.</p>
+      </div>
+      <div class="entry-response"><p>Sure, that's fine with me. Thanks for using it on your site!</p></div>
+    </article>
+
+<article class="entry" id="jan31-nickperry-31">
+      <a href="#jan31-nickperry-31" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:Nickeej1@Hotmail.com">Nick Perry</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> California</dd>
+        <dd><dt>Date:</dt> Thu Jan 31 15:57:59 CST 2002</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I got the game about two years ago, I just dug it up and it's a blast!</p>
+      </div>
+      <div class="entry-response"><p>Thanks Nick! Hearing that makes my day! :-)</p></div>
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>

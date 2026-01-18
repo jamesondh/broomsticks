@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broomsticks Guestbook - nov03</title>
+  <style>
+:root {
+      --bg-color: #aaaacc;
+      --card-bg: #e5e5e5;
+      --border-color: #444444;
+      --text-color: #000;
+      --link-color: #0000cc;
+      --response-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 15px;
+      scroll-margin-top: 20px;
+    }
+
+    .entry:target {
+      outline: 3px solid #6666ff;
+      outline-offset: 2px;
+    }
+
+    .entry-meta {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .entry-meta dt {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .entry-meta dt::after {
+      content: " ";
+    }
+
+    .entry-meta dd {
+      display: inline;
+      margin: 0;
+    }
+
+    .entry-meta dd::after {
+      content: "";
+      display: block;
+    }
+
+    .entry-comments {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-comments p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-comments p:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-response {
+      font-style: italic;
+      color: var(--response-color);
+      border-left: 3px solid #888;
+      padding-left: 10px;
+      margin-top: 15px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .entry-response p {
+      margin: 0 0 10px 0;
+    }
+
+    .entry-response p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permalink {
+      float: right;
+      font-size: 0.8em;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .permalink:hover {
+      color: var(--link-color);
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .was-commented-indicator {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      color: #856404;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .entry.was-commented {
+      border-left: 4px solid #ffc107;
+    }
+
+    .inline-hidden {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .entry {
+        padding: 12px 15px;
+      }
+
+      .entry-meta dd {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/intro.gif" alt="Broomsticks by Paul Rajlich">
+      <h1>Guestbook</h1>
+    </header>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+
+    <main>
+<article class="entry" id="nov5-matthewdav-0">
+      <a href="#nov5-matthewdav-0" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Message Board)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Wed Nov  5 05:52:31 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hullo</p>
+<p> T`is a reminder message, although by the time you see this, you'll probably have already done the month thing ;)</p>
+<p> And is anyone annoyed that The Matrix Revolutions is rated R? =(</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov5-anon-1">
+      <a href="#nov5-anon-1" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Nov  5 17:14:48 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>=-(+)-=/\/\E+A| $/\/!+&lt;|-| is back! He's back! He is... oh, never mind.<br> Now, chicago(insert symbol thingy)lollie: two questions:<br> 1. If you are from Australia, then why is your alias chicago(where is that symbol from)lollie?<br>2. What do you mean about Matrix Revolutions? All of them has been rated R so far, right? If I'm wrong, then I'm hyper on sugar...<br> Paul, so... what's been happening during my (sob sob) absence?</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov5-anon-2">
+      <a href="#nov5-anon-2" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.usanetwork.com/series/monk" target="_blank">Check it out, mystery fans!!!</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Nov  5 17:19:47 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oh, yeah, Paul...<br> Update the Guestbook, guestbook, (hums something or other)<br> It's November, when I have a FOUR DAY \/\/EEKEND starting today! (sorry about caps), four days of half-days, and another 4-day weekend!<br> Mmm... turkey w/ gravy &amp; stuffing...</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov6-matthewdav-3">
+      <a href="#nov6-matthewdav-3" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Message Board)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Nov  6 03:16:16 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Metal Snitch, nice t`see ya around again!<br> I sent you an e-mail with the explanation to my nick.</p>
+<p> Don't forget to try out Broomsticks 2!! ^-^</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov6-matthewdav-4">
+      <a href="#nov6-matthewdav-4" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Message Board)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Thu Nov  6 03:27:36 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>And very quickly, I was annoyed by the matrix being rated R mainly because over here, all of the matrix movies have been rated M.</p>
+<p> Doesn't matter now though anyway, `cause The Matrix Revolutions is rated M too!! Yay!!!!</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov7-anon-5">
+      <a href="#nov7-anon-5" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://lar5.com/cube" target="_blank">To solve a Rubik's cube... go here</a></dd>
+        <dd><dt>From:</dt> the year 4444-home of RoboWizards, MetalSnitches, MekkaQuaffles, and TechnoBludgers</dd>
+        <dd><dt>Date:</dt> Fri Nov  7 19:00:03 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey, all!</p>
+<p> I'm back!(crowd shudders)<br> I have one thing to discuss:</p>
+<p> My BR3D (still not working) is... still not working. Explain, again, slowly, what the Windows 2000 Environment comment is...</p>
+      </div>
+      <div class="entry-response"><p>If you are using WinXP, you have OpenGL drivers, but br3d still does not work, right click on br3d.exe and somewhere in the settings there you can &quot;enabled Windows 98 compatibility mode&quot;.</p></div>
+    </article>
+
+<article class="entry" id="nov10-kimmy-6">
+      <a href="#nov10-kimmy-6" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:tomfeltonfreak4@aol.com">kimmy</a></dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> ohio</dd>
+        <dd><dt>Date:</dt> Mon Nov 10 00:33:48 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>hello great web site</p>
+      </div>
+      <div class="entry-response"><p>Thanks!</p></div>
+    </article>
+
+<article class="entry" id="nov16-hpmons-7">
+      <a href="#nov16-hpmons-7" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hpmons@hotmail.com">Hpmons</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://hpmons.tripod.com" target="_blank">Hpmons Harry Potter World</a></dd>
+        <dd><dt>From:</dt> England</dd>
+        <dd><dt>Date:</dt> Sun Nov 16 13:34:09 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Remember me? Well I forgot all about you, and then I was looking around, and found this again! Just downloaded the 3D Broomsticks - looks fantastic! Keep up the good work.</p>
+      </div>
+      <div class="entry-response"><p>I vaguely remember you, you posted on here more than a year ago, right? </p>
+<p> Thanks! I'm glad you like it...</p></div>
+    </article>
+
+<article class="entry" id="nov16-hpmons-8">
+      <a href="#nov16-hpmons-8" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:hpmons@hotmail.com">Hpmons</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://hpmons.tripod.com" target="_blank">Hpmons Harry Potter World</a></dd>
+        <dd><dt>From:</dt> England</dd>
+        <dd><dt>Date:</dt> Sun Nov 16 14:04:41 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Sorry for the repeat; but how on EARTH do you get faster bromms in the demo?! Ive looked EVERYWHERE.</p>
+      </div>
+      <div class="entry-response"><p>Still haven't found them? If not, send me email. I don't want to spoil the surprise by posting the info here...</p></div>
+    </article>
+
+<article class="entry was-commented" id="nov18-evgeniy-9">
+      <a href="#nov18-evgeniy-9" class="permalink" title="Link to this entry">#</a>
+      <div class="was-commented-indicator">Originally hidden in source</div>
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:evgeny@yahoo.com">Evgeniy</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.pilotgroup.net" target="_blank">Software development</a></dd>
+        <dd><dt>From:</dt> USA</dd>
+        <dd><dt>Date:</dt> Tue Nov 18 11:12:27 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Software development from Pilot Group: web and application software, web design. http://www.pilotgroup.net Software development</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov18-anon-10">
+      <a href="#nov18-anon-10" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Tue Nov 18 17:50:19 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, Paul, Paul! </p>
+<p> Still no November? Update, for the love of humanity, it's Nov. 18, over halfway through... </p>
+<p> What projects are you doing recently?</p>
+      </div>
+      <div class="entry-response"><p>I've been glancing at this guestbook occassionally, but am now finally getting around to updating it. :-) </p>
+<p> Recently I've been working a lot on high resolution displays. Go to my <a href="http://brighton.ncsa.uiuc.edu/~prajlich/">homepage</a>.</p></div>
+    </article>
+
+<article class="entry" id="nov19-daniel-11">
+      <a href="#nov19-daniel-11" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Wed Nov 19 22:06:39 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hi Paul,<br> I just thought that maybe you should add a script to the guestbook pages that makes all links (or off site links at least) open in a new window. It's not really nessessary I guess, but it would be a nice addition and would be easy enough to do.</p>
+      </div>
+      <div class="entry-response"><p>Yeah, I probably should do that, at least for posts from now on...</p></div>
+    </article>
+
+<article class="entry" id="nov20-shura-12">
+      <a href="#nov20-shura-12" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:shur@hotmail.ru">Shura</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://shur.hotmail.ru" target="_blank"></a></dd>
+        <dd><dt>From:</dt> Ukraine</dd>
+        <dd><dt>Date:</dt> Thu Nov 20 23:32:12 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I bought your disc &quot;Broomsticks&quot;, but in version 3D on top time and other menu no contact. Why? Sorry about my english, but I live in Ukraine and speak Russian and Ukrainian. And thanks about games!</p>
+      </div>
+      <div class="entry-response"><p>Shura, I'm glad you like the games. To be honest, I don't remember why there is a timer in the demo version, other than for the &quot;ads&quot; about the full version. I'm not sure what you mean about &quot;other menu no contact&quot;. Please explain...</p></div>
+    </article>
+
+<article class="entry" id="nov23-anon-13">
+      <a href="#nov23-anon-13" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Sun Nov 23 12:19:33 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Hey, hey, hey!</p>
+<p> chicago¤lollie, (I know it's Matt, but I like this better :) ) I did try BR2! I said so in a post back in a coon's age! (few weeks ago).</p>
+<p>Oh, Paul... Please update, I'm begging you... Oh, and if this works, I'm begging you for a new CD!</p>
+      </div>
+      <div class="entry-response"><p>I'm hoping to work on br2 again sometime soon. Will let you know...</p></div>
+    </article>
+
+<article class="entry" id="nov24-paul-14">
+      <a href="#nov24-paul-14" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> paul</dd>
+        <dd><dt>Homepage:</dt> <a href="http://brighton.ncsa.uiuc.edu/" target="_blank">test</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Mon Nov 24 15:29:54 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>testing</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov25-matthewdav-15">
+      <a href="#nov25-matthewdav-15" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Forum)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Nov 25 07:44:31 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>MS, hehe, yeah C¤l's a better name than MD =Þ<br> And yeah Paul, I think the guestbook still works ;)</p>
+<p> I dunno though, could be imagining things...</p>
+<p> And, again, I'll try to tone down my random posting. I seem to be treating it as a guestbook again... *rolls eyes* =Þ</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov25-matthewdav-16">
+      <a href="#nov25-matthewdav-16" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:chicagolollie@yahoo.com.au">Matthew Davis</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://chicagolollie.proboards20.com" target="_blank">CHICAGO¤lollie (Forum)</a></dd>
+        <dd><dt>From:</dt> Australia</dd>
+        <dd><dt>Date:</dt> Tue Nov 25 07:46:05 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Oh blarg it, I meant I'm treating it as a message board again! Not a guestbook, it already IS a guestbook, blarg!</p>
+<p> Must be that time of night... zzz...</p>
+<p> -Matt</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov25-hermioneju-17">
+      <a href="#nov25-hermioneju-17" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:wont tell you:dont want unwanted E-Mail">Hermione(Just kidding, this is Allison</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://journeytohogwarts.moonfruit.com/" target="_blank">Journey to Hogwarts</a></dd>
+        <dd><dt>From:</dt> Wilmington, Delaware, USA</dd>
+        <dd><dt>Date:</dt> Tue Nov 25 23:21:56 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>I still like the games that I can play, how do you make them up? I still like the games, like Harry Potter, Quidditch, Quodpot (read Quidditch Trough The Ages to find out about it), and your website and its games. All HP fans should find this website, and the one I changed to.</p>
+      </div>
+      <div class="entry-response"><p>Thanks! I'm glad you like the Broomsticks games.</p></div>
+    </article>
+
+<article class="entry" id="nov26-artem-18">
+      <a href="#nov26-artem-18" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:bred@narod.ru">Artem</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.wanted-posters.com" target="_blank">Posters</a></dd>
+        <dd><dt>From:</dt> kiev</dd>
+        <dd><dt>Date:</dt> Wed Nov 26 11:07:12 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Your site is very interesting and useful for me!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov26-anon-19">
+      <a href="#nov26-anon-19" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.azkaban.com" target="_blank">Need a peek at HP 3 movie?</a></dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Nov 26 18:11:11 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>BR3D works, thanks to your expertise!!! (Angelic Choir) </p>
+<p> I think, though, after playing the full version for the first time, the gold ball should be faster... </p>
+<p>=-(+)-=/\/\E+A| $/\/!+&lt;|-| signing off!</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov26-anon-20">
+      <a href="#nov26-anon-20" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Wed Nov 26 18:24:25 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Just a note: my favorite 3-D broom: the red one with scaley looking things, which I will call the Dragon Scale broom!</p>
+      </div>
+      <div class="entry-response"><p>Yes, that one is fun. It is fast but hard to control. :-)</p></div>
+    </article>
+
+<article class="entry" id="nov27-anon-21">
+      <a href="#nov27-anon-21" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Nov 27 12:17:26 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Paul, problem... again... but it's about skins. How do I change it? The skins11.zip can't change back into a &quot;File&quot;... If this makes no sense, just recommend anything...</p>
+      </div>
+      
+    </article>
+
+<article class="entry" id="nov27-anon-22">
+      <a href="#nov27-anon-22" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> </dd>
+        <dd><dt>Homepage:</dt> </dd>
+        <dd><dt>From:</dt> </dd>
+        <dd><dt>Date:</dt> Thu Nov 27 19:53:25 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>Wait, Paul... </p>
+<p> I was reading about the full version CD, and how will you get free BR3D upgrades? Also, are you making network play?</p>
+      </div>
+      <div class="entry-response"><p>I will make patches that you can download. </p>
+<p> Lately, I have been very busy with other things and so I have not been able to work on the network play...</p></div>
+    </article>
+
+<article class="entry" id="nov30-daniel-23">
+      <a href="#nov30-daniel-23" class="permalink" title="Link to this entry">#</a>
+      
+      <dl class="entry-meta">
+        <dd><dt>Name:</dt> <a href="mailto:thestaff@twwn.net">Daniel</a></dd>
+        <dd><dt>Homepage:</dt> <a href="http://www.twwn.net" target="_blank">The Wireless Wizarding Network</a></dd>
+        <dd><dt>From:</dt> Oklahoma</dd>
+        <dd><dt>Date:</dt> Sun Nov 30 08:08:16 CST 2003</dd>
+      </dl>
+      <div class="entry-comments">
+        <p>&quot;Paul, problem... again... but it's about skins. How do I change it? The skins11.zip can't change back into a &quot;File&quot;... If this makes no sense, just recommend anything...&quot;</p>
+<p> To edit a skin you first have to unzip all the files in the .zip. Then use any photoediting software to make your changes to the skin. When your done, zip all those files back together and make sure that .zip file isn't named the same thing as any other Broomstick 3D file. To use this skin while playing the game you have to make sure that it has the &quot;.zip&quot; at the end of its file name and that all other skin files do not. To remove the &quot;.zip&quot; from a file name just rename the file. Then when you run the game your new skin should be applied.</p>
+<p>Hope that covers anything. I haven't made a skin in a long time so if I missed something sorry.</p>
+      </div>
+      
+    </article>
+    </main>
+
+    <nav class="back-link">
+      <a href="guestbook.html">Back to top</a>
+    </nav>
+  </div>
+</body>
+</html>
