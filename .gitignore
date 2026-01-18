@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies & Build
 node_modules
 dist
 dist-ssr
@@ -22,3 +23,40 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temp files
+temp/
+
+# Java (archive/broomsticks1-java)
+*.class
+
+# C++ (archive/broomsticks2-cpp)
+*.o
+*.obj
+*.exe
+*.out
+*.dSYM/
+Debug/
+Release/
+
+# Xcode (archive/broomsticks-ios)
+xcuserdata/
+*.xcworkspace/
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.moved-aside
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Thumbnails (from archive)
+.xvpics/

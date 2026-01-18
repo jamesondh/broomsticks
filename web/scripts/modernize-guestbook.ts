@@ -1,7 +1,7 @@
 import { readdir, readFile, writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
-const INPUT_DIR = "./archive/guestbook";
+const INPUT_DIR = "../archive/guestbook";
 const OUTPUT_DIR = "./public/guestbook";
 const JSON_OUTPUT_PATH = "./public/guestbook/data/entries.json";
 
