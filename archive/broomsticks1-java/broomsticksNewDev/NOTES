@@ -1,0 +1,7 @@
+X make black balls slightly faster than players. Will make players
+pay attention to them more!
+
+- flash score after goal!
+  - keep track of last score time
+  - if within some amount, keep yellow
+- display players during controls description

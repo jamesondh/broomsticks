@@ -1,0 +1,19 @@
+# Broomsticks2 settings
+# lines starting with a # are comments
+
+# 1 = full, 0 = window
+fullscreen 1
+
+# 1 = 640x480, 2 = 800x600, 3 = 1024x768
+mode 2
+
+# number of balls
+red 100
+black 2
+
+# flight acceleration and top speed
+accel 2.0
+maxSpeed 6.0
+
+# score to win game
+winscore 1000

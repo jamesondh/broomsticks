@@ -1,0 +1,67 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: br2 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Paul\LOCALS~1\Temp\RSP1A6.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "c:\documents and settings\Paul\My Documents\SDL-1.2.7\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/br2.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\Ball.cxx"
+"C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx"
+"C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\brGraphics.cxx"
+"C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx"
+"C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\Person.cxx"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Paul\LOCALS~1\Temp\RSP1A6.tmp" 
+Creating temporary file "C:\DOCUME~1\Paul\LOCALS~1\Temp\RSP1A7.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/br2.pdb" /machine:I386 /out:"Release/br2.exe" 
+".\Release\Ball.obj"
+".\Release\br2.obj"
+".\Release\brGraphics.obj"
+".\Release\FlyingObject.obj"
+".\Release\Person.obj"
+".\SDLmain.lib"
+".\SDL.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\Paul\LOCALS~1\Temp\RSP1A7.tmp"
+<h3>Output Window</h3>
+Compiling...
+Ball.cxx
+br2.cxx
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(235) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(237) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(238) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(249) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(250) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(251) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(267) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(397) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\br2.cxx(401) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+brGraphics.cxx
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\brGraphics.cxx(131) : warning C4101: 'wx' : unreferenced local variable
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\brGraphics.cxx(131) : warning C4101: 'wy' : unreferenced local variable
+FlyingObject.cxx
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(5) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(6) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(33) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(34) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(48) : warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(55) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(60) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(65) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(68) : warning C4305: '+=' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Paul\My Documents\Broomsticks\broomsticks2-dev\FlyingObject.cxx(72) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+Person.cxx
+Linking...
+
+
+
+<h3>Results</h3>
+br2.exe - 0 error(s), 21 warning(s)
+</pre>
+</body>
+</html>

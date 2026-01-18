@@ -1,0 +1,23 @@
+todo:
+-----
+ADD goalposts to background?
+scale background to correct size (use sky1c.rgb)
+separate Ball and Player arrays
+
+idea: .exe compiled C++ that asks parameters and creates custom.html?
+
+full version:
+-------------
+decisions are made through set of webpages (choose size, etc)
+distribute using mini CD-R (business) 5000 for ~$5000, 1000 for ~$1250
+no need to download
+gold ball
+sound
+custom size
+custom speeds
+custom models
+more players
+extra balls
+custom duration
+networking??
+

@@ -1,0 +1,17 @@
+#Inventor V1.0 ascii
+
+Separator {
+  Separator {
+    Material {
+      emissiveColor 1.0 1.0 1.0
+    }
+    Texture2 {
+      filename "field.jpg"
+    }
+    Cube {
+      width	4.0
+      height    2.0	
+      depth	0.1
+    }
+  }
+} 
