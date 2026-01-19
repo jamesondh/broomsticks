@@ -1,0 +1,19 @@
+# Broomsticks2 settings for macOS windowed mode
+# Copy to archive/broomsticks2-cpp/settings.txt to use
+
+# 1 = full, 0 = window
+fullscreen 0
+
+# 1 = 640x480, 2 = 800x600, 3 = 1024x768
+mode 1
+
+# number of balls
+red 1
+black 2
+
+# flight acceleration and top speed
+accel 2.0
+maxSpeed 6.0
+
+# score to win game
+winscore 50

@@ -43,7 +43,7 @@ Release/
 xcuserdata/
 *.xcworkspace/
 DerivedData/
-build/
+archive/broomsticks-ios/build/
 *.pbxuser
 *.mode1v3
 *.mode2v3
