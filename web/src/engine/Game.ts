@@ -417,6 +417,7 @@ export class Game {
       countdownSeconds:
         this._state === "countdown" ? this.countdownSeconds : null,
       winner: this.winner,
+      possession: this.getTeamPossession(),
     };
   }
 

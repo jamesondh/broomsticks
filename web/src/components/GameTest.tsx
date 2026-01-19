@@ -16,6 +16,7 @@ export function GameTest() {
   const [gameState, setGameState] = useState<string>("menu");
   const [score, setScore] = useState({ left: 0, right: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showHitboxes, setShowHitboxes] = useState(false);
 
   // Initialize game and renderer
   useEffect(() => {
@@ -171,6 +172,15 @@ export function GameTest() {
     }
   };
 
+  const handleToggleHitboxes = () => {
+    const renderer = rendererRef.current;
+    if (renderer) {
+      const newValue = !showHitboxes;
+      setShowHitboxes(newValue);
+      renderer.setDebugHitboxes(newValue);
+    }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#1a1a1a" }}>
       {/* Control panel */}
@@ -188,6 +198,16 @@ export function GameTest() {
         </button>
         <button onClick={handleReset}>Reset to Menu</button>
         <button onClick={handleToggleAI}>Toggle P2 AI</button>
+
+        <span style={{ color: "#888" }}>|</span>
+        <label style={{ display: "flex", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+          <input
+            type="checkbox"
+            checked={showHitboxes}
+            onChange={handleToggleHitboxes}
+          />
+          <span style={{ fontSize: "12px" }}>Hitboxes</span>
+        </label>
 
         <span style={{ color: "#888" }}>|</span>
         <span style={{ fontSize: "12px", color: "#888" }}>UI Tests:</span>

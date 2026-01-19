@@ -127,6 +127,8 @@ export interface GameSnapshot {
   balls: BallState[];
   countdownSeconds: number | null;
   winner: Team | null;
+  /** Which team currently has possession of the red ball (for goal highlighting) */
+  possession: Team | null;
 }
 
 /**

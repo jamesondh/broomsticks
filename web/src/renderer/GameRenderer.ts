@@ -145,6 +145,11 @@ export class GameRenderer {
   private scoreFlash: ScoreFlash | null = null;
   private winScreen: WinScreen | null = null;
 
+  /** Debug graphics */
+  private debugLayer: Container | null = null;
+  private debugGraphics: Graphics | null = null;
+  private showDebugHitboxes: boolean = false;
+
   /** Game event unsubscribe function */
   private unsubscribeGame: (() => void) | null = null;
 
@@ -204,9 +209,15 @@ export class GameRenderer {
     // Mount canvas to container
     this.container.appendChild(this.app.canvas);
 
+    // Set up debug layer
+    this.debugLayer = new Container();
+    this.debugGraphics = new Graphics();
+    this.debugLayer.addChild(this.debugGraphics);
+
     // Set up layer hierarchy
     this.gameContainer.addChild(this.backgroundLayer);
     this.gameContainer.addChild(this.entityLayer);
+    this.gameContainer.addChild(this.debugLayer);
     this.gameContainer.addChild(this.uiLayer);
     this.app.stage.addChild(this.gameContainer);
 
@@ -579,8 +590,9 @@ export class GameRenderer {
       setTimeout(() => this.countdownOverlay?.hide(), 500);
     }
 
-    // Clear basket highlight when returning to playing
-    if (to === "playing") {
+    // Clear basket highlight when going to menu or countdown
+    // (possession-based highlighting is handled in render() for playing state)
+    if (to === "menu" || to === "countdown") {
       this.fieldSprite?.setHighlight(0);
     }
 
@@ -600,6 +612,17 @@ export class GameRenderer {
 
     // Update scoreboard
     this.scoreboard?.update(snapshot.score);
+
+    // Update basket highlight based on possession
+    // When a player has the ball, their TARGET goal (opponent's basket) lights up
+    // Team 0 (left) scores on RIGHT basket -> highlight state 1
+    // Team 1 (right) scores on LEFT basket -> highlight state 2
+    if (snapshot.possession !== null && snapshot.state === "playing") {
+      this.fieldSprite?.setHighlight(snapshot.possession === 0 ? 1 : 2);
+    } else if (snapshot.state !== "scored") {
+      // Clear highlight when no possession (except during scored state)
+      this.fieldSprite?.setHighlight(0);
+    }
 
     // Sync sprites with game state
     this.syncSprites(snapshot.players, snapshot.balls);
@@ -670,6 +693,80 @@ export class GameRenderer {
     for (let i = snapshot.balls.length; i < this.ballSprites.length; i++) {
       this.ballSprites[i].visible = false;
     }
+
+    // Render debug hitboxes if enabled
+    if (this.showDebugHitboxes) {
+      this.renderDebugHitboxes(snapshot.players, snapshot.balls);
+    }
+  }
+
+  /**
+   * Render debug hitboxes for players, balls, and goals.
+   */
+  private renderDebugHitboxes(
+    players: PersonState[],
+    balls: BallState[]
+  ): void {
+    if (!this.debugGraphics) return;
+
+    const g = this.debugGraphics;
+    g.clear();
+
+    // Draw goal zones (semi-transparent rectangles)
+    const goalY = DIMENSIONS.BASKET_Y;
+    const goalRadius = DIMENSIONS.GOAL_DETECTION_RADIUS;
+    const goalTop = goalY - goalRadius;
+    const goalHeight = goalRadius * 2;
+
+    // Left basket goal zone (team 1 scores when holder.x < BASKET_LEFT_X)
+    g.rect(0, goalTop, DIMENSIONS.BASKET_LEFT_X, goalHeight)
+      .fill({ color: 0x0000ff, alpha: 0.3 })
+      .stroke({ color: 0x0000ff, width: 2, alpha: 0.8 });
+
+    // Right basket goal zone (team 0 scores when holder.x > fieldWidth - offset - playerWidth)
+    const rightThreshold = this.fieldWidth - DIMENSIONS.BASKET_RIGHT_X_OFFSET - DIMENSIONS.PLAYER_WIDTH;
+    g.rect(rightThreshold, goalTop, this.fieldWidth - rightThreshold, goalHeight)
+      .fill({ color: 0xff0000, alpha: 0.3 })
+      .stroke({ color: 0xff0000, width: 2, alpha: 0.8 });
+
+    // Draw player collision boxes only (no catch radius box)
+    for (const player of players) {
+      const collisionWidth = DIMENSIONS.PLAYER_WIDTH - 4;
+      const collisionHeight = DIMENSIONS.PLAYER_HEIGHT - 4;
+      g.rect(player.x + 2, player.y + 2, collisionWidth, collisionHeight)
+        .stroke({
+          color: player.team === 0 ? 0xff6666 : 0x6666ff,
+          width: 2,
+          alpha: 0.8,
+        });
+    }
+
+    // Draw ball hitboxes
+    for (const ball of balls) {
+      if (!ball.alive) continue;
+
+      const width =
+        ball.type === "gold"
+          ? DIMENSIONS.GOLD_BALL_WIDTH
+          : DIMENSIONS.BALL_WIDTH;
+      const height =
+        ball.type === "gold"
+          ? DIMENSIONS.GOLD_BALL_HEIGHT
+          : DIMENSIONS.BALL_HEIGHT;
+
+      const color =
+        ball.type === "red"
+          ? 0xff0000
+          : ball.type === "gold"
+            ? 0xffd700
+            : 0x000000;
+
+      g.rect(ball.x, ball.y, width, height).stroke({
+        color,
+        width: 2,
+        alpha: 0.8,
+      });
+    }
   }
 
   /**
@@ -712,6 +809,23 @@ export class GameRenderer {
    */
   setBasketHighlight(state: number): void {
     this.fieldSprite?.setHighlight(state);
+  }
+
+  /**
+   * Toggle debug hitbox rendering.
+   */
+  setDebugHitboxes(enabled: boolean): void {
+    this.showDebugHitboxes = enabled;
+    if (!enabled && this.debugGraphics) {
+      this.debugGraphics.clear();
+    }
+  }
+
+  /**
+   * Get debug hitbox state.
+   */
+  getDebugHitboxes(): boolean {
+    return this.showDebugHitboxes;
   }
 
   /**
@@ -781,6 +895,10 @@ export class GameRenderer {
     this.countdownOverlay?.destroy();
     this.scoreFlash?.destroy();
     this.winScreen?.destroy();
+
+    // Clean up debug graphics
+    this.debugGraphics?.destroy();
+    this.debugLayer?.destroy();
 
     // Clear texture caches
     this.playerFrameTextures.clear();

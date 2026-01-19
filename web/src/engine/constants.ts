@@ -40,10 +40,10 @@ export const DIMENSIONS = {
   CATCH_RADIUS: 20,
   /** Radius for player-player collision */
   PLAYER_COLLISION_RADIUS: 28,
-  /** Radius for goal detection */
-  GOAL_DETECTION_RADIUS: 15,
-  /** Y position of basket opening */
-  BASKET_Y: 200,
+  /** Radius for goal detection (vertical tolerance) */
+  GOAL_DETECTION_RADIUS: 20,
+  /** Y position of basket opening (center of goal zone) */
+  BASKET_Y: 175,
   /** X position of left basket */
   BASKET_LEFT_X: 17,
   /** Offset from right edge for right basket */
