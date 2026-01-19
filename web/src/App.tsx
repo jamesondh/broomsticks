@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { GuestbookSearch } from "./components/GuestbookSearch";
 import { GameTest } from "./components/GameTest";
 import {
@@ -11,34 +11,83 @@ import { useSettings } from "./hooks/useSettings";
 import type { Team, Score } from "./engine/types";
 
 type Screen = "menu" | "game" | "settings" | "results" | "guestbook" | "test";
+type GuestbookTab = "search" | "highlights";
 
 interface GameResult {
   winner: Team;
   score: Score;
 }
 
-function getInitialScreen(): Screen {
-  if (typeof window !== "undefined") {
-    const hash = window.location.hash;
-    if (hash === "#guestbook") return "guestbook";
-    if (hash === "#test") return "test";
+interface ScreenState {
+  screen: Screen;
+  guestbookTab: GuestbookTab;
+}
+
+function getScreenFromPath(): ScreenState {
+  if (typeof window === "undefined") {
+    return { screen: "menu", guestbookTab: "search" };
   }
-  return "menu";
+
+  const pathname = window.location.pathname;
+
+  // Handle legacy hash routes - redirect to path-based routes
+  const hash = window.location.hash;
+  if (hash === "#guestbook") {
+    window.history.replaceState(null, "", "/guestbook/search");
+    return { screen: "guestbook", guestbookTab: "search" };
+  }
+  if (hash === "#test") {
+    window.history.replaceState(null, "", "/test");
+    return { screen: "test", guestbookTab: "search" };
+  }
+
+  // Path-based routing
+  if (pathname === "/guestbook/highlights") {
+    return { screen: "guestbook", guestbookTab: "highlights" };
+  }
+  if (pathname === "/guestbook/search" || pathname === "/guestbook") {
+    return { screen: "guestbook", guestbookTab: "search" };
+  }
+  if (pathname === "/test") {
+    return { screen: "test", guestbookTab: "search" };
+  }
+
+  return { screen: "menu", guestbookTab: "search" };
 }
 
 function App() {
-  const [screen, setScreen] = useState<Screen>(getInitialScreen);
+  const [screenState, setScreenState] = useState<ScreenState>(getScreenFromPath);
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
   const { settings, updateSettings, resetSettings } = useSettings();
 
-  const navigateTo = useCallback((newScreen: Screen) => {
-    setScreen(newScreen);
-    if (newScreen === "guestbook" || newScreen === "test") {
-      window.location.hash = newScreen;
-    } else {
-      window.location.hash = "";
-    }
+  const { screen, guestbookTab } = screenState;
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setScreenState(getScreenFromPath());
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
+  const navigateTo = useCallback((newScreen: Screen, tab?: GuestbookTab) => {
+    const newTab = tab || "search";
+    setScreenState({ screen: newScreen, guestbookTab: newTab });
+
+    // Update URL with pushState
+    let path = "/";
+    if (newScreen === "guestbook") {
+      path = `/guestbook/${newTab}`;
+    } else if (newScreen === "test") {
+      path = "/test";
+    }
+    window.history.pushState(null, "", path);
+  }, []);
+
+  const handleTabChange = useCallback((tab: GuestbookTab) => {
+    navigateTo("guestbook", tab);
+  }, [navigateTo]);
 
   const handlePlay = useCallback(() => {
     setGameResult(null);
@@ -69,7 +118,7 @@ function App() {
   // Guestbook screen
   if (screen === "guestbook") {
     return (
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <div style={{ padding: "10px", background: "#333", color: "white" }}>
           <button
             onClick={() => navigateTo("menu")}
@@ -77,7 +126,7 @@ function App() {
             Back to Game
           </button>
         </div>
-        <GuestbookSearch />
+        <GuestbookSearch activeTab={guestbookTab} onTabChange={handleTabChange} />
       </div>
     );
   }
@@ -158,7 +207,7 @@ function App() {
           }}
         >
           <a
-            href="#guestbook"
+            href="/guestbook/search"
             onClick={(e) => {
               e.preventDefault();
               navigateTo("guestbook");
@@ -168,7 +217,7 @@ function App() {
             Guestbook Archive
           </a>
           <a
-            href="#test"
+            href="/test"
             onClick={(e) => {
               e.preventDefault();
               navigateTo("test");

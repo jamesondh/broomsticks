@@ -1,15 +1,23 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useGuestbookSearch } from '../hooks/useGuestbookSearch';
 import { ARCHIVE_LINKS } from '../data/archiveLinks';
+import { GuestbookHighlights } from './GuestbookHighlights';
 import type { SearchResult } from '../types/guestbook';
 import './GuestbookSearch.css';
+
+type TabType = 'search' | 'highlights';
+
+interface GuestbookSearchProps {
+  activeTab: TabType;
+  onTabChange: (tab: TabType) => void;
+}
 
 function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength).trim() + '...';
 }
 
-export function GuestbookSearch() {
+export function GuestbookSearch({ activeTab, onTabChange }: GuestbookSearchProps) {
   const { search, results, isLoading, error, totalEntries, clearResults } = useGuestbookSearch();
   const [query, setQuery] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -64,82 +72,105 @@ export function GuestbookSearch() {
           <h1>Guestbook</h1>
         </header>
 
+        <div className="guestbook-search__tabs">
+          <button
+            className={`guestbook-search__tab ${activeTab === 'search' ? 'guestbook-search__tab--active' : ''}`}
+            onClick={() => onTabChange('search')}
+          >
+            Search
+          </button>
+          <button
+            className={`guestbook-search__tab ${activeTab === 'highlights' ? 'guestbook-search__tab--active' : ''}`}
+            onClick={() => onTabChange('highlights')}
+          >
+            Highlights
+          </button>
+        </div>
+
         <div className="guestbook-search__card">
-          <div className="guestbook-search__input-wrapper">
-            <input
-              type="text"
-              className="guestbook-search__input"
-              placeholder="Search by name, location, or message..."
-              value={query}
-              onChange={handleInputChange}
-              disabled={isLoading}
-            />
-          </div>
-
-          {isLoading && (
-            <div className="guestbook-search__loading">Loading entries...</div>
-          )}
-
-          {error && (
-            <div className="guestbook-search__error">{error}</div>
-          )}
-
-          {!isLoading && !error && (
+          {activeTab === 'search' && (
             <>
-              <div className="guestbook-search__stats">
-                {hasSearchQuery ? (
-                  `${results.length} result${results.length !== 1 ? 's' : ''} found`
-                ) : (
-                  `${totalEntries.toLocaleString()} total entries`
-                )}
+              <div className="guestbook-search__input-wrapper">
+                <input
+                  type="text"
+                  className="guestbook-search__input"
+                  placeholder="Search by name, location, or message..."
+                  value={query}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                />
               </div>
 
-              {hasSearchQuery && results.length === 0 && (
-                <div className="guestbook-search__no-results">
-                  No entries match your search.
-                </div>
+              {isLoading && (
+                <div className="guestbook-search__loading">Loading entries...</div>
               )}
 
-              {hasSearchQuery && results.length > 0 && (
-                <ul className="guestbook-search__results">
-                  {results.slice(0, 50).map((result) => (
-                    <li key={`${result.item.sourceFile}-${result.item.id}`} className="guestbook-search__result">
-                      <a href={getEntryUrl(result)} className="guestbook-search__result-link">
-                        {result.item.name || 'Anonymous'}
-                      </a>
-                      <div className="guestbook-search__result-meta">
-                        {result.item.from && <span>From: {result.item.from}</span>}
-                        {result.item.from && result.item.date && <span> &bull; </span>}
-                        {result.item.date && <span>{result.item.date}</span>}
-                      </div>
-                      {result.item.comments && (
-                        <div className="guestbook-search__result-preview">
-                          {truncate(result.item.comments, 150)}
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+              {error && (
+                <div className="guestbook-search__error">{error}</div>
               )}
 
-              {!hasSearchQuery && (
-                <div className="guestbook-search__archive">
-                  <p className="guestbook-search__notice">
-                    Sign Guestbook<br />
-                    <small>January, 2006: guestbook signing has been disabled due to abuse by spammers.</small>
-                  </p>
-                  <p>View Guestbook:</p>
-                  <ul className="guestbook-search__archive-list">
-                    {ARCHIVE_LINKS.map((link) => (
-                      <li key={link.filename}>
-                        <a href={`/guestbook/${link.filename}`}>View {link.label} entries</a>
-                        {link.count && ` (${link.count})`}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {!isLoading && !error && (
+                <>
+                  <div className="guestbook-search__stats">
+                    {hasSearchQuery ? (
+                      `${results.length} result${results.length !== 1 ? 's' : ''} found`
+                    ) : (
+                      `${totalEntries.toLocaleString()} total entries`
+                    )}
+                  </div>
+
+                  {hasSearchQuery && results.length === 0 && (
+                    <div className="guestbook-search__no-results">
+                      No entries match your search.
+                    </div>
+                  )}
+
+                  {hasSearchQuery && results.length > 0 && (
+                    <ul className="guestbook-search__results">
+                      {results.slice(0, 50).map((result) => (
+                        <li key={`${result.item.sourceFile}-${result.item.id}`} className="guestbook-search__result">
+                          <a href={getEntryUrl(result)} className="guestbook-search__result-link">
+                            {result.item.name || 'Anonymous'}
+                          </a>
+                          <div className="guestbook-search__result-meta">
+                            {result.item.from && <span>From: {result.item.from}</span>}
+                            {result.item.from && result.item.date && <span> &bull; </span>}
+                            {result.item.date && <span>{result.item.date}</span>}
+                          </div>
+                          {result.item.comments && (
+                            <div className="guestbook-search__result-preview">
+                              {truncate(result.item.comments, 150)}
+                            </div>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {!hasSearchQuery && (
+                    <div className="guestbook-search__archive">
+                      <p className="guestbook-search__notice">
+                        Sign Guestbook<br />
+                        <small>January, 2006: guestbook signing has been disabled due to abuse by spammers.</small>
+                      </p>
+                      <p>View Guestbook:</p>
+                      <ul className="guestbook-search__archive-list">
+                        {ARCHIVE_LINKS.map((link) => (
+                          <li key={link.filename}>
+                            <a href={`/guestbook/${link.filename}`}>View {link.label} entries</a>
+                            {link.count && ` (${link.count})`}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
               )}
             </>
+          )}
+
+          {activeTab === 'highlights' && (
+            <GuestbookHighlights />
           )}
         </div>
       </div>
