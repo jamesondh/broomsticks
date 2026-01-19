@@ -16,6 +16,7 @@ broomsticks/
 │   ├── broomsticks2-cpp/   # C++/SDL version (2003-2004)
 │   ├── broomsticks-ios/    # iOS/Cocos2D port (2011)
 │   └── guestbook/          # Original guestbook data
+├── docs/                   # Technical documentation
 ├── web/                    # Modern HTML5 port (Vite/React/TypeScript)
 │   ├── src/
 │   ├── public/
@@ -55,6 +56,17 @@ All versions share the same core game model:
 - `FlyingObject` base class - Movable object inheritance
 - Team-based scoring (Red vs Black)
 
+## Documentation
+
+Technical documentation lives in `docs/`:
+
+- `html5-port-mvp-plan.md` - 8-phase implementation plan for the web port
+- `gameplay-comparison.md` - Mechanics comparison across all three versions
+- `broomsticks1-java-variant-comparison.md` - Analysis of the 8 Java applet variants
+- `broomsticks-1-vs-2-comparison.md` - Technical comparison between Java and C++ versions
+- `broomsticks2-cpp-macos-build.md` - Building the C++ version on modern macOS
+- `interesting-guestbook-comments.md` - Curated guestbook comments from 2001-2005
+
 ## Web Development
 
 The modern web port is located in `web/`.
@@ -65,6 +77,7 @@ bun install              # Install dependencies
 bun run dev              # Start dev server
 bun run build            # Build for production
 bun run preview          # Preview production build
+bun run test             # Run unit tests (54 tests)
 bun run lint             # Run ESLint
 bun run build:guestbook  # Regenerate modernized guestbook JSON
 ```
@@ -73,4 +86,42 @@ bun run build:guestbook  # Regenerate modernized guestbook JSON
 
 - Bun (runtime/package manager)
 - Vite + React + TypeScript
+- Vitest for unit testing
 - Fuse.js for fuzzy search (guestbook)
+
+## HTML5 Port Progress
+
+The port follows an 8-phase implementation plan (see `docs/html5-port-mvp-plan.md`).
+
+### Phase 1: Core Engine ✅ COMPLETE
+
+The game engine is fully implemented in `web/src/engine/` with 54 unit tests passing:
+
+```
+web/src/engine/
+├── constants.ts          # Physics, dimensions, AI, scoring constants
+├── config.ts             # Game configuration with defaults
+├── types.ts              # TypeScript interfaces
+├── Game.ts               # Main game class with state machine
+├── entities/
+│   ├── FlyingObject.ts   # Base class for all moving entities
+│   ├── Person.ts         # Player entity (human/AI)
+│   └── Ball.ts           # Ball entity (red/black/gold types)
+├── systems/
+│   ├── Physics.ts        # Fixed timestep, gravity, bounds
+│   ├── Collision.ts      # Player-player, player-ball detection
+│   ├── Scoring.ts        # Goal detection, win conditions
+│   └── Input.ts          # Input abstraction layer
+└── engine.test.ts        # Comprehensive test suite
+```
+
+Key engine features:
+- Fixed 60Hz timestep with accumulator pattern
+- Delta-time physics ported from C++ version
+- Entity inheritance matching original architecture
+- Event system for state changes, goals, collisions
+- Configurable AI with difficulty levels
+
+### Next: Phase 2 (Single Player)
+
+Adds PixiJS rendering, sprites, audio, and React integration

@@ -19,6 +19,7 @@ broomsticks/
 │   ├── broomsticks2-cpp/   # C++/SDL (~1,400 lines)
 │   ├── broomsticks-ios/    # iOS/Cocos2D (~1,000 lines)
 │   └── guestbook/          # Original guestbook data
+├── docs/                   # Technical documentation
 └── web/                    # Modern HTML5 port
 ```
 
@@ -32,11 +33,37 @@ broomsticks/
 
 All versions share the same core architecture: `Person`, `Ball`, and `FlyingObject` classes with team-based gameplay (Red vs Black).
 
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [HTML5 Port Plan](docs/html5-port-mvp-plan.md) | 8-phase implementation plan for the web port |
+| [Gameplay Comparison](docs/gameplay-comparison.md) | Mechanics comparison across all three versions |
+| [Java Variant Comparison](docs/broomsticks1-java-variant-comparison.md) | Analysis of the 8 Java applet variants |
+| [Java vs C++ Comparison](docs/broomsticks-1-vs-2-comparison.md) | Technical comparison between versions |
+| [macOS Build Guide](docs/broomsticks2-cpp-macos-build.md) | Building the C++ version on modern macOS |
+| [Guestbook Highlights](docs/interesting-guestbook-comments.md) | Curated comments from 2001-2005 |
+
 ## Current Status
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - In progress
+- **HTML5 port** - Phase 1 complete (core engine with 54 tests passing)
+
+### HTML5 Port Progress
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1 | Core Engine | ✅ Complete |
+| 2 | Single Player (rendering, audio) | Pending |
+| 3 | Local Multiplayer | Pending |
+| 4 | Online Multiplayer | Pending |
+| 5 | 2v2 Mode & Passing | Pending |
+| 6 | GoldBall & Polish | Pending |
+| 7 | Quick Play Matchmaking | Pending |
+| 8 | Mobile & Capacitor | Pending |
+
+See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
 
 ## Development
 
@@ -46,6 +73,7 @@ bun install      # Install dependencies
 bun run dev      # Start dev server
 bun run build    # Build for production
 bun run preview  # Preview production build
+bun run test     # Run unit tests
 ```
 
 ## Credits
