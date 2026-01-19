@@ -89,11 +89,12 @@ export function GameTest() {
       if (!game || !renderer) return;
 
       // Update input for player 0 (human)
+      // Controls: WASD (W=up, A=left, S=dive/down, D=right)
       inputs.set(0, {
-        up: keyState["KeyW"] || keyState["KeyE"] || false,
-        down: keyState["KeyD"] || false,
-        left: keyState["KeyS"] || keyState["KeyA"] || false,
-        right: keyState["KeyF"] || keyState["KeyD"] || false,
+        up: keyState["KeyW"] || false,
+        down: keyState["KeyS"] || false,
+        left: keyState["KeyA"] || false,
+        right: keyState["KeyD"] || false,
         pass: false,
         timestamp: now,
       });
@@ -218,7 +219,7 @@ export function GameTest() {
 
       {/* Controls help */}
       <div style={{ padding: "5px 10px", background: "#2a2a2a", color: "#aaa", fontSize: "12px" }}>
-        P1: W/E=up, A/S=left, D/F=right | P2: Arrow keys | Press Start to begin
+        P1: WASD | P2: Arrow keys | Press Start to begin
       </div>
 
       {/* Game container */}

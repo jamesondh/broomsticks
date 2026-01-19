@@ -156,6 +156,9 @@ export class GameRenderer {
   /** ResizeObserver for container resize handling */
   private resizeObserver: ResizeObserver | null = null;
 
+  /** Bound resize handler (stored to allow proper removal) */
+  private boundHandleResize: (() => void) | null = null;
+
   /** Initialization promise */
   private initPromise: Promise<void> | null = null;
 
@@ -416,7 +419,8 @@ export class GameRenderer {
     this.resizeObserver.observe(this.container);
 
     // Also handle window resize for device pixel ratio changes
-    window.addEventListener("resize", this.handleResize.bind(this));
+    this.boundHandleResize = this.handleResize.bind(this);
+    window.addEventListener("resize", this.boundHandleResize);
   }
 
   /**
@@ -887,7 +891,10 @@ export class GameRenderer {
     }
 
     // Remove window resize listener
-    window.removeEventListener("resize", this.handleResize.bind(this));
+    if (this.boundHandleResize) {
+      window.removeEventListener("resize", this.boundHandleResize);
+      this.boundHandleResize = null;
+    }
 
     // Clean up UI components
     this.fieldSprite?.destroy();

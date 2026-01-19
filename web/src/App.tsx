@@ -4,18 +4,15 @@ import { GameTest } from './components/GameTest'
 
 type View = 'game' | 'guestbook'
 
-function App() {
-  const [view, setView] = useState<View>('game')
-
-  // Check URL hash for initial view
-  if (typeof window !== 'undefined') {
-    const hash = window.location.hash
-    if (hash === '#guestbook' && view !== 'guestbook') {
-      setView('guestbook')
-    } else if (hash === '#game' && view !== 'game') {
-      setView('game')
-    }
+function getInitialView(): View {
+  if (typeof window !== 'undefined' && window.location.hash === '#guestbook') {
+    return 'guestbook'
   }
+  return 'game'
+}
+
+function App() {
+  const [view, setView] = useState<View>(getInitialView)
 
   if (view === 'guestbook') {
     return (
