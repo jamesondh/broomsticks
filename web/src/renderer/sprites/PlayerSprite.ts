@@ -1,6 +1,14 @@
 import { Sprite, Texture } from "pixi.js";
 import type { PersonState, Team } from "../../engine/types";
-import { PLAYER_FRAMES } from "../AssetLoader";
+
+/**
+ * Player frame indices within each model's texture array.
+ * Layout: [team0-left, team0-right, team1-left, team1-right]
+ */
+const PLAYER_FRAME_INDEX = {
+  team0: { left: 0, right: 1 },
+  team1: { left: 2, right: 3 },
+} as const;
 
 /**
  * Renders a player sprite with direction-based frame selection.
@@ -48,8 +56,8 @@ export class PlayerSprite {
    * Get the correct texture frame based on team and direction.
    */
   private getFrameForDirection(dir: 1 | -1): Texture {
-    // Frame indices: 0=red-left, 1=red-right, 2=black-left, 3=black-right
-    const teamFrames = this.team === 0 ? PLAYER_FRAMES.team0 : PLAYER_FRAMES.team1;
+    // Frame indices: 0=team0-left, 1=team0-right, 2=team1-left, 3=team1-right
+    const teamFrames = this.team === 0 ? PLAYER_FRAME_INDEX.team0 : PLAYER_FRAME_INDEX.team1;
     const frameIndex = dir === -1 ? teamFrames.left : teamFrames.right;
     return this.frames[frameIndex];
   }

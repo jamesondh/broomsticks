@@ -68,9 +68,10 @@ export class GameRenderer {
     // Load assets
     this.assets = await loadAssets();
 
-    // Create field background
+    // Create field background with sky
     this.fieldSprite = new FieldSprite(
-      this.assets.field,
+      this.assets.sky,
+      null, // front overlay disabled for now
       this.assets.basketLeft,
       this.assets.basketRight,
       this.fieldWidth,
