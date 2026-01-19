@@ -1,7 +1,13 @@
 import { Application, Container, Sprite, Texture, Graphics, Assets, Rectangle } from "pixi.js";
-import type { Game } from "../engine/Game";
-import type { PersonState, BallState } from "../engine/types";
+import type { Game, GameEvent } from "../engine/Game";
+import type { PersonState, BallState, Team, Score } from "../engine/types";
 import { FIELD, DIMENSIONS } from "../engine/constants";
+import { BallSprite } from "./sprites/BallSprite";
+import { FieldSprite } from "./sprites/FieldSprite";
+import { Scoreboard } from "./ui/Scoreboard";
+import { CountdownOverlay } from "./ui/CountdownOverlay";
+import { ScoreFlash } from "./ui/ScoreFlash";
+import { WinScreen } from "./ui/WinScreen";
 
 /**
  * Sprite sheet configuration for extracting frames from sprite sheets.
@@ -17,6 +23,7 @@ interface SpriteSheetConfig {
   items: {
     cellWidth: number;
     cellHeight: number;
+    frameSize: number;
     ballBlackX: number;
     ballBlackY: number;
     ballRedX: number;
@@ -31,33 +38,35 @@ interface SpriteSheetConfig {
 }
 
 /**
- * Default sprite sheet configuration based on analysis of original assets.
- * players.gif: 8 columns (4 per team), 8 rows (models), 38x38px per frame
- * items.gif: grid layout with balls and baskets
+ * Default sprite sheet configuration based on original Java source.
+ * players.gif: 321x241, 40px cell grid with 1px padding, 39x39 actual frames
+ * Layout: Team 0 at x=1, Team 1 at x=161, 5 models per team
+ * items.gif: 81x161, grid layout with balls and baskets
  */
 const DEFAULT_SPRITE_CONFIG: SpriteSheetConfig = {
   players: {
-    frameWidth: 38,
-    frameHeight: 38,
+    frameWidth: 39,
+    frameHeight: 39,
     teamsPerRow: 2,
     directionsPerTeam: 4, // descending (2) + ascending (2)
-    modelsCount: 8,
+    modelsCount: 5, // 5 models per team (0-4 for team 0, 5-9 maps to 0-4 for team 1)
   },
   items: {
-    cellWidth: 20,
-    cellHeight: 38,
-    // Ball positions in items.gif (based on visual inspection)
-    ballBlackX: 0,
-    ballBlackY: 38, // Row 1
-    ballRedX: 0,
-    ballRedY: 0, // Use basket position as placeholder - red ball not separate
-    ballGoldX: 0,
-    ballGoldY: 152, // Bottom rows
-    // Basket positions
-    basketLeftX: 0,
-    basketLeftY: 0,
-    basketRightX: 20,
-    basketRightY: 0,
+    cellWidth: 40,
+    cellHeight: 40,
+    frameSize: 39,
+    // Ball positions from original Java: CropImageFilter(1, (n+1)*40+1, 39, 39)
+    ballBlackX: 1,
+    ballBlackY: 41, // Row 1: (0+1)*40+1 = 41
+    ballRedX: 1,
+    ballRedY: 81, // Row 2: (1+1)*40+1 = 81
+    ballGoldX: 1,
+    ballGoldY: 121, // Row 3 (estimated)
+    // Basket positions from original Java: CropImageFilter(1, 121, 39, 39) and (41, 121, 39, 39)
+    basketLeftX: 1,
+    basketLeftY: 121,
+    basketRightX: 41,
+    basketRightY: 121,
   },
 };
 
@@ -106,8 +115,6 @@ export class GameRenderer {
   /** Sprite references for updates */
   private playerSprites: Sprite[] = [];
   private ballSprites: Sprite[] = [];
-  private basketLeftSprite: Sprite | null = null;
-  private basketRightSprite: Sprite | null = null;
 
   /** Loaded textures */
   private textures: {
@@ -130,6 +137,16 @@ export class GameRenderer {
 
   /** Current scale factor */
   private scale: number = 1;
+
+  /** UI Components */
+  private fieldSprite: FieldSprite | null = null;
+  private scoreboard: Scoreboard | null = null;
+  private countdownOverlay: CountdownOverlay | null = null;
+  private scoreFlash: ScoreFlash | null = null;
+  private winScreen: WinScreen | null = null;
+
+  /** Game event unsubscribe function */
+  private unsubscribeGame: (() => void) | null = null;
 
   /** ResizeObserver for container resize handling */
   private resizeObserver: ResizeObserver | null = null;
@@ -181,6 +198,7 @@ export class GameRenderer {
       resolution,
       autoDensity: true,
       antialias: false, // Pixel art should not be antialiased
+      roundPixels: true, // Snap sprites to pixel grid
     });
 
     // Mount canvas to container
@@ -195,8 +213,11 @@ export class GameRenderer {
     // Load textures
     await this.loadTextures();
 
-    // Set up background
-    this.setupBackground();
+    // Set up background with new FieldSprite
+    this.setupField();
+
+    // Set up UI components
+    this.setupUI();
 
     // Set up resize handling
     if (this.autoResize) {
@@ -208,16 +229,74 @@ export class GameRenderer {
   }
 
   /**
+   * Set up field (background, baskets) using FieldSprite.
+   */
+  private setupField(): void {
+    this.fieldSprite = new FieldSprite({
+      width: this.fieldWidth,
+      height: this.fieldHeight,
+    });
+
+    // Set textures if available
+    if (this.textures.sky) {
+      this.fieldSprite.setBackgroundTexture(this.textures.sky);
+    }
+    if (this.textures.items) {
+      this.fieldSprite.setItemsTexture(this.textures.items);
+    }
+
+    this.fieldSprite.addTo(this.backgroundLayer);
+  }
+
+  /**
+   * Set up all UI components.
+   */
+  private setupUI(): void {
+    // Scoreboard
+    this.scoreboard = new Scoreboard({ fieldWidth: this.fieldWidth });
+    this.scoreboard.addTo(this.uiLayer);
+
+    // Countdown overlay
+    this.countdownOverlay = new CountdownOverlay({
+      fieldWidth: this.fieldWidth,
+      fieldHeight: this.fieldHeight,
+    });
+    this.countdownOverlay.addTo(this.uiLayer);
+
+    // Score flash
+    this.scoreFlash = new ScoreFlash({
+      fieldWidth: this.fieldWidth,
+      fieldHeight: this.fieldHeight,
+    });
+    this.scoreFlash.addTo(this.uiLayer);
+
+    // Win screen
+    this.winScreen = new WinScreen({
+      fieldWidth: this.fieldWidth,
+      fieldHeight: this.fieldHeight,
+    });
+    this.winScreen.addTo(this.uiLayer);
+  }
+
+  /**
    * Load all required textures.
    */
   private async loadTextures(): Promise<void> {
     try {
-      // Load sprite sheets
+      // Load sprite sheets (PNG format - GIF requires @pixi/gif extension)
       const [players, items, sky] = await Promise.all([
-        Assets.load<Texture>("/images/players.gif"),
-        Assets.load<Texture>("/images/items.gif"),
+        Assets.load<Texture>("/images/players.png"),
+        Assets.load<Texture>("/images/items.png"),
         Assets.load<Texture>("/images/sky1.jpg"),
       ]);
+
+      // Set nearest-neighbor scaling for pixel art (prevents blurriness)
+      if (players?.source) {
+        players.source.scaleMode = "nearest";
+      }
+      if (items?.source) {
+        items.source.scaleMode = "nearest";
+      }
 
       this.textures.players = players;
       this.textures.items = items;
@@ -234,42 +313,44 @@ export class GameRenderer {
 
   /**
    * Extract ball textures from items sprite sheet.
+   * The balls in items.png are ~16x16 pixels in the top-left of each 40x40 cell.
+   * Ball positions: black at y=41, red at y=81
    */
   private extractBallTextures(): void {
     if (!this.textures.items) return;
 
-    const config = DEFAULT_SPRITE_CONFIG.items;
+    // Ball sprites are ~16x16, positioned at top-left of their cells
+    // Extract just the ball portion, not the full 39x39 cell
+    const ballSize = 17; // Slightly larger to capture full ball with border
 
-    // Black ball - from row 1, col 0
+    // Black ball - row 1: starts at y=41
     this.ballTextures.set(
       "black",
       this.extractTextureRegion(
         this.textures.items,
-        config.ballBlackX,
-        config.ballBlackY,
-        DIMENSIONS.BALL_WIDTH,
-        DIMENSIONS.BALL_HEIGHT
+        1, // x position
+        41, // y position (row 1)
+        ballSize,
+        ballSize
       )
     );
 
-    // Red ball - for now use a tinted version or same as black
-    // The original items.gif doesn't have a separate red ball sprite
-    // We'll use the black ball and tint it in the sprite
+    // Red ball - row 2: starts at y=81
     this.ballTextures.set(
       "red",
-      this.ballTextures.get("black") ?? Texture.WHITE
-    );
-
-    // Gold ball - smaller, from bottom of items.gif
-    this.ballTextures.set(
-      "gold",
       this.extractTextureRegion(
         this.textures.items,
-        config.ballGoldX,
-        config.ballGoldY,
-        DIMENSIONS.GOLD_BALL_WIDTH,
-        DIMENSIONS.GOLD_BALL_HEIGHT
+        1,
+        81, // y position (row 2)
+        ballSize,
+        ballSize
       )
+    );
+
+    // Gold ball - use black ball texture, will be tinted gold
+    this.ballTextures.set(
+      "gold",
+      this.ballTextures.get("black") ?? Texture.WHITE
     );
   }
 
@@ -313,59 +394,6 @@ export class GameRenderer {
     // For now, we'll handle missing textures in the render methods
   }
 
-  /**
-   * Set up background sprites.
-   */
-  private setupBackground(): void {
-    // Add sky background if loaded
-    if (this.textures.sky) {
-      const sky = new Sprite(this.textures.sky);
-      sky.width = this.fieldWidth;
-      sky.height = this.fieldHeight;
-      this.backgroundLayer.addChild(sky);
-    }
-
-    // Add baskets
-    this.setupBaskets();
-  }
-
-  /**
-   * Set up basket sprites.
-   */
-  private setupBaskets(): void {
-    if (!this.textures.items) return;
-
-    const config = DEFAULT_SPRITE_CONFIG.items;
-
-    // Left basket
-    const leftBasketTexture = this.extractTextureRegion(
-      this.textures.items,
-      config.basketLeftX,
-      config.basketLeftY,
-      config.cellWidth,
-      config.cellHeight
-    );
-
-    this.basketLeftSprite = new Sprite(leftBasketTexture);
-    this.basketLeftSprite.x = DIMENSIONS.BASKET_LEFT_X - 10;
-    this.basketLeftSprite.y = DIMENSIONS.BASKET_Y - 20;
-    this.backgroundLayer.addChild(this.basketLeftSprite);
-
-    // Right basket
-    const rightBasketTexture = this.extractTextureRegion(
-      this.textures.items,
-      config.basketRightX,
-      config.basketRightY,
-      config.cellWidth,
-      config.cellHeight
-    );
-
-    this.basketRightSprite = new Sprite(rightBasketTexture);
-    this.basketRightSprite.x =
-      this.fieldWidth - DIMENSIONS.BASKET_RIGHT_X_OFFSET - 10;
-    this.basketRightSprite.y = DIMENSIONS.BASKET_Y - 20;
-    this.backgroundLayer.addChild(this.basketRightSprite);
-  }
 
   /**
    * Set up ResizeObserver for container resize handling.
@@ -423,10 +451,12 @@ export class GameRenderer {
 
   /**
    * Get player texture frame based on state.
+   * Based on original Java: CropImageFilter(n2*80 + n3*40 + 1, n*40 + 41, 39, 39)
+   * where n2 = vState (0=falling, 1=rising), n3 = hDir (0=right, 1=left)
    * @param team 0 = left (Team 1), 1 = right (Team 2)
-   * @param model Player model index (0-7)
+   * @param model Player model index (0-4 per team, or 0-9 total where 5-9 = team 1)
    * @param direction 0 = right, 1 = left
-   * @param ascending Whether moving upward
+   * @param ascending Whether moving upward (vState: 0=falling, 1=rising)
    */
   private getPlayerTexture(
     team: number,
@@ -439,30 +469,25 @@ export class GameRenderer {
     }
 
     const config = DEFAULT_SPRITE_CONFIG.players;
-    const cacheKey = `${team}-${model}-${direction}-${ascending ? 1 : 0}`;
+    // Map model to 0-4 range for each team
+    const modelInTeam = model % config.modelsCount;
+    const vState = ascending ? 1 : 0;
+    const hDir = direction;
+
+    const cacheKey = `${team}-${modelInTeam}-${hDir}-${vState}`;
 
     // Check cache
     if (this.playerFrameTextures.has(cacheKey)) {
       return this.playerFrameTextures.get(cacheKey)!;
     }
 
-    // Calculate frame position in sprite sheet
-    // Layout: Team1 descending (2), Team1 ascending (2), Team2 descending (2), Team2 ascending (2)
-    // Each row is a different model
-
-    // Column calculation:
-    // Team 0: cols 0-3 (descending 0-1, ascending 2-3)
-    // Team 1: cols 4-7 (descending 4-5, ascending 6-7)
-    const teamOffset = team * 4;
-    const ascendingOffset = ascending ? 2 : 0;
-    const directionOffset = direction; // 0 or 1 within the pair
-    const col = teamOffset + ascendingOffset + directionOffset;
-
-    // Row is the model
-    const row = model % config.modelsCount;
-
-    const x = col * config.frameWidth;
-    const y = row * config.frameHeight;
+    // Original Java extraction logic:
+    // Team 0 (models 0-4): x = vState*80 + hDir*40 + 1
+    // Team 1 (models 5-9): x = vState*80 + hDir*40 + 161
+    // y = modelInTeam * 40 + 41
+    const teamOffset = team === 0 ? 1 : 161;
+    const x = vState * 80 + hDir * 40 + teamOffset;
+    const y = modelInTeam * 40 + 41;
 
     const texture = this.extractTextureRegion(
       this.textures.players,
@@ -498,12 +523,83 @@ export class GameRenderer {
   }
 
   /**
+   * Bind to a game instance to receive events.
+   */
+  bindToGame(game: Game): void {
+    // Unsubscribe from previous game
+    if (this.unsubscribeGame) {
+      this.unsubscribeGame();
+    }
+
+    // Subscribe to game events
+    this.unsubscribeGame = game.on((event: GameEvent) => {
+      this.handleGameEvent(event, game);
+    });
+
+    // Set up win screen callback
+    if (this.winScreen) {
+      this.winScreen.setOnPlayAgain(() => {
+        game.returnToMenu();
+        this.winScreen?.hide();
+      });
+    }
+  }
+
+  /**
+   * Handle game events for UI updates.
+   */
+  private handleGameEvent(event: GameEvent, game: Game): void {
+    switch (event.type) {
+      case "stateChange":
+        this.handleStateChange(event.from, event.to, game);
+        break;
+      case "countdown":
+        this.countdownOverlay?.show(event.seconds);
+        break;
+      case "goal":
+        // Flash the score and highlight basket
+        this.scoreFlash?.show(event.event.team, event.event.points);
+        this.scoreboard?.highlightTeam(event.event.team);
+        // Highlight the basket (inverted: team 0 scores on right, team 1 on left)
+        this.fieldSprite?.setHighlight(event.event.team === 0 ? 1 : 2);
+        break;
+      case "gameOver":
+        this.winScreen?.show(event.winner, game.getScore());
+        break;
+    }
+  }
+
+  /**
+   * Handle game state changes.
+   */
+  private handleStateChange(from: string, to: string, _game: Game): void {
+    // Hide countdown when leaving countdown state
+    if (from === "countdown" && to === "playing") {
+      this.countdownOverlay?.showGo();
+      setTimeout(() => this.countdownOverlay?.hide(), 500);
+    }
+
+    // Clear basket highlight when returning to playing
+    if (to === "playing") {
+      this.fieldSprite?.setHighlight(0);
+    }
+
+    // Hide win screen when leaving game over
+    if (from === "gameOver") {
+      this.winScreen?.hide();
+    }
+  }
+
+  /**
    * Render the current game state.
    */
   render(game: Game): void {
     if (!this.initialized) return;
 
     const snapshot = game.getSnapshot();
+
+    // Update scoreboard
+    this.scoreboard?.update(snapshot.score);
 
     // Sync sprites with game state
     this.syncSprites(snapshot.players, snapshot.balls);
@@ -561,16 +657,61 @@ export class GameRenderer {
       const ballTexture = this.ballTextures.get(ball.type);
       if (ballTexture) {
         sprite.texture = ballTexture;
-        sprite.tint = ball.type === "red" ? 0xff0000 : 0xffffff;
+        // Gold ball uses black texture with gold tint
+        // Red ball uses red texture from sprite sheet (no tint needed)
+        sprite.tint = ball.type === "gold" ? 0xffd700 : 0xffffff;
       }
 
-      sprite.visible = ball.alive && !ball.caught;
+      // Ball stays visible when caught (it follows the player holding it)
+      sprite.visible = ball.alive;
     }
 
     // Hide unused ball sprites
     for (let i = snapshot.balls.length; i < this.ballSprites.length; i++) {
       this.ballSprites[i].visible = false;
     }
+  }
+
+  /**
+   * Show countdown with a specific number.
+   */
+  showCountdown(seconds: number): void {
+    this.countdownOverlay?.show(seconds);
+  }
+
+  /**
+   * Hide countdown overlay.
+   */
+  hideCountdown(): void {
+    this.countdownOverlay?.hide();
+  }
+
+  /**
+   * Show score flash.
+   */
+  showScoreFlash(team: Team, points?: number): void {
+    this.scoreFlash?.show(team, points);
+  }
+
+  /**
+   * Show win screen.
+   */
+  showWinScreen(winner: Team, score: Score): void {
+    this.winScreen?.show(winner, score);
+  }
+
+  /**
+   * Hide win screen.
+   */
+  hideWinScreen(): void {
+    this.winScreen?.hide();
+  }
+
+  /**
+   * Set basket highlight.
+   */
+  setBasketHighlight(state: number): void {
+    this.fieldSprite?.setHighlight(state);
   }
 
   /**
@@ -619,6 +760,12 @@ export class GameRenderer {
    * Destroy the renderer and clean up resources.
    */
   destroy(): void {
+    // Unsubscribe from game events
+    if (this.unsubscribeGame) {
+      this.unsubscribeGame();
+      this.unsubscribeGame = null;
+    }
+
     // Stop resize observer
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
@@ -628,9 +775,17 @@ export class GameRenderer {
     // Remove window resize listener
     window.removeEventListener("resize", this.handleResize.bind(this));
 
+    // Clean up UI components
+    this.fieldSprite?.destroy();
+    this.scoreboard?.destroy();
+    this.countdownOverlay?.destroy();
+    this.scoreFlash?.destroy();
+    this.winScreen?.destroy();
+
     // Clear texture caches
     this.playerFrameTextures.clear();
     this.ballTextures.clear();
+    BallSprite.clearCache();
 
     // Destroy PixiJS application
     this.app.destroy(true, { children: true, texture: true });

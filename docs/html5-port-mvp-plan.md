@@ -525,22 +525,41 @@ Assets located in:
 
 Implementation: `web/src/renderer/GameRenderer.ts` (640 lines)
 
-### 2.3 Sprite Implementation
+### 2.3 Sprite Implementation ✅
 
-- [ ] Implement `PlayerSprite` class
-  - Directional frame selection
-  - Ground idle detection
-  - Team color tinting (if using single sprite sheet)
-- [ ] Implement `BallSprite` class
-- [ ] Implement `FieldSprite` class (background, baskets)
+- [x] Implement `PlayerSprite` class
+  - Directional frame selection based on velocity
+  - Team-based model organization (0-4 per team)
+  - Cached texture extraction from sprite sheet
+- [x] Implement `BallSprite` class
+  - Support for black, red, gold ball types
+  - Red ball tinting from black ball texture
+- [x] Implement `FieldSprite` class (background, baskets)
+  - Sky background with fallback solid colors
+  - Basket sprites with highlight states
+  - Pole rendering with goal highlight
 
-### 2.4 UI Rendering (PixiJS)
+Implementation: `web/src/renderer/sprites/` (PlayerSprite.ts, BallSprite.ts, FieldSprite.ts)
 
-- [ ] Implement scoreboard display
-- [ ] Implement player info HUD (model, AI status)
-- [ ] Implement countdown overlay
-- [ ] Implement score flash effect
-- [ ] Implement win screen overlay
+### 2.4 UI Rendering (PixiJS) ✅
+
+- [x] Implement scoreboard display
+  - Team-colored score boxes with highlight on goal
+  - Title text centered
+- [x] Implement countdown overlay
+  - 3, 2, 1, GO! with scale animation
+  - Semi-transparent background
+- [x] Implement score flash effect
+  - "+10" animated text rising and fading
+  - Team-colored with easing animations
+- [x] Implement win screen overlay
+  - Winner announcement with team color
+  - Final score display
+  - Interactive "Play Again" button
+
+Implementation: `web/src/renderer/ui/` (Scoreboard.ts, CountdownOverlay.ts, ScoreFlash.ts, WinScreen.ts)
+
+Visual test page available at `web/src/components/GameTest.tsx` with controls for testing all UI components.
 
 ### 2.5 AI Implementation
 

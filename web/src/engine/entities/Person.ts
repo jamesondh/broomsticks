@@ -1,4 +1,4 @@
-import { DIMENSIONS, AI, AI_DIFFICULTY_MAP } from "../constants";
+import { DIMENSIONS, AI, AI_DIFFICULTY_MAP, PHYSICS } from "../constants";
 import type {
   Team,
   PersonState,
@@ -41,8 +41,6 @@ export class Person extends FlyingObject {
   /** Whether pass was requested */
   wantsToPass: boolean = false;
 
-  /** Timer for AI decisions */
-  private lastMoveTime: number = 0;
   /** Touch/destination-based movement target */
   private destX: number = 0;
   private destY: number = 0;
@@ -77,29 +75,24 @@ export class Person extends FlyingObject {
 
   /**
    * Update AI behavior.
+   * Called every frame - AI decides whether to act based on smart value.
    * @param balls Array of balls in play
    * @param teamBasket Whether this player's team has the ball (for offense/defense)
-   * @param now Current timestamp in milliseconds
+   * @param _now Current timestamp in milliseconds (unused, kept for API compatibility)
    * @param config Game configuration
    */
   updateAI(
     _balls: Ball[],
     teamBasket: boolean,
-    now: number,
+    _now: number,
     config: GameConfig
   ): void {
     if (!this.isRobot || !this.targetBall) return;
 
-    // Make decisions at fixed intervals
-    if (now - this.lastMoveTime < AI.DECISION_INTERVAL) return;
-    this.lastMoveTime = now;
-
-    // Calculate choice probability based on smart value
-    const choices = Math.floor(this.smart / 2) + 1;
-    const choice = Math.floor(Math.random() * choices);
-
-    // Only act on choice 0 (smarter AI = more likely to act)
-    if (choice !== 0) return;
+    // Simulate Java's signed modulo: random.nextInt() % smart
+    // Only rand === 0 triggers AI action (smarter AI = lower smart value = more likely to act)
+    const rand = Math.floor(Math.random() * this.smart * 2) - this.smart;
+    if (rand !== 0) return;
 
     if (teamBasket) {
       // Offensive: we have the ball, move toward goal
@@ -167,7 +160,7 @@ export class Person extends FlyingObject {
     if (!this.destOn) return false;
 
     // Update position
-    const scale = dt / 40;
+    const scale = dt / PHYSICS.ORIGINAL_FRAME_TIME;
     this.x += this.vx * scale;
     this.y += this.vy * scale;
     this.applyBounds();
@@ -295,7 +288,6 @@ export class Person extends FlyingObject {
     this.heldBallIndex = null;
     this.wantsToPass = false;
     this.destOn = false;
-    this.lastMoveTime = 0;
   }
 
   /**

@@ -50,8 +50,12 @@ export function checkDistanceCollision(
 /**
  * Check and handle all player-player collisions.
  * Lower player gets bumped when they collide.
+ * When bumped, the player drops any ball they're holding.
  */
-export function checkPlayerCollisions(players: Person[]): CollisionEvent[] {
+export function checkPlayerCollisions(
+  players: Person[],
+  balls: Ball[]
+): CollisionEvent[] {
   const events: CollisionEvent[] = [];
 
   for (let i = 0; i < players.length; i++) {
@@ -72,9 +76,13 @@ export function checkPlayerCollisions(players: Person[]): CollisionEvent[] {
         // Bump the lower player
         if (p1.y < p2.y) {
           p2.bump();
+          // Release any ball the bumped player is holding
+          releaseBall(p2, j, balls);
           events.push({ type: "player-player", bumpedPlayerIndex: j });
         } else if (p2.y < p1.y) {
           p1.bump();
+          // Release any ball the bumped player is holding
+          releaseBall(p1, i, balls);
           events.push({ type: "player-player", bumpedPlayerIndex: i });
         }
         // If same height, no bump
@@ -83,6 +91,20 @@ export function checkPlayerCollisions(players: Person[]): CollisionEvent[] {
   }
 
   return events;
+}
+
+/**
+ * Release any ball held by a player when they get bumped.
+ */
+function releaseBall(player: Person, playerIndex: number, balls: Ball[]): void {
+  if (player.heldBallIndex !== null) {
+    const ball = balls[player.heldBallIndex];
+    if (ball && ball.caughtByIndex === playerIndex) {
+      ball.caught = false;
+      ball.caughtByIndex = null;
+    }
+    player.heldBallIndex = null;
+  }
 }
 
 /**
@@ -145,8 +167,8 @@ export function runCollisionDetection(
 ): CollisionEvent[] {
   const events: CollisionEvent[] = [];
 
-  // Player vs player
-  events.push(...checkPlayerCollisions(players));
+  // Player vs player (also handles ball drop on bump)
+  events.push(...checkPlayerCollisions(players, balls));
 
   // Player vs ball
   events.push(...checkPlayerBallCollisions(players, balls));

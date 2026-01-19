@@ -76,12 +76,14 @@ export class FlyingObject {
   move(dt: number, config: GameConfig): void {
     const scale = dt / PHYSICS.ORIGINAL_FRAME_TIME;
 
-    this.x += this.vx * scale;
-    this.y += this.vy * scale;
+    // Use Math.floor for snappier, grid-aligned movement (matches original Java)
+    this.x = Math.floor(this.x + this.vx * scale);
+    this.y = Math.floor(this.y + this.vy * scale);
 
-    // Apply gravity if below terminal velocity
-    if (this.vy < config.terminalVelocity) {
-      this.vy += config.gravity * scale;
+    // Apply gravity unconditionally, then cap at terminal velocity
+    this.vy += config.gravity * scale;
+    if (this.vy > config.terminalVelocity) {
+      this.vy = config.terminalVelocity;
     }
 
     this.applyBounds();

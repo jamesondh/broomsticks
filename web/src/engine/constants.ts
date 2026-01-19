@@ -7,16 +7,16 @@ export const PHYSICS = {
   GRAVITY: 0.1,
   /** Acceleration applied when moving */
   ACCELERATION: 2.0,
-  /** Maximum horizontal/vertical speed */
-  MAX_SPEED: 6.0,
+  /** Maximum horizontal/vertical speed (matches original Java) */
+  MAX_SPEED: 4.0,
   /** Maximum falling speed (gravity caps here) */
   TERMINAL_VELOCITY: 2.0,
-  /** Fixed timestep in milliseconds (60 Hz) */
-  FIXED_TIMESTEP: 1000 / 60,
+  /** Fixed timestep in milliseconds (~33 Hz, matches original Java 30ms interval) */
+  FIXED_TIMESTEP: 30,
   /** Maximum delta time to prevent spiral of death */
   MAX_DELTA: 100,
-  /** Original frame time the physics was designed for (25 fps) */
-  ORIGINAL_FRAME_TIME: 40,
+  /** Original frame time the physics was designed for (30ms per update) */
+  ORIGINAL_FRAME_TIME: 30,
 } as const;
 
 /**

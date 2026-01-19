@@ -127,10 +127,27 @@ Key engine features:
 **Completed:**
 - ✅ 2.1 Asset Extraction - sprites, backgrounds, audio in `web/public/`
 - ✅ 2.2 PixiJS Renderer Setup - `web/src/renderer/GameRenderer.ts` with scaling, high-DPI
+- ✅ 2.3 Sprite Implementation - `web/src/renderer/sprites/`
+- ✅ 2.4 UI Rendering (PixiJS) - `web/src/renderer/ui/`
+
+```
+web/src/renderer/
+├── GameRenderer.ts       # Main renderer with game event binding
+├── sprites/
+│   ├── PlayerSprite.ts   # Player sprites with directional frames
+│   ├── BallSprite.ts     # Ball sprites (red/black/gold)
+│   └── FieldSprite.ts    # Background, baskets, poles
+├── ui/
+│   ├── Scoreboard.ts     # Score display with highlights
+│   ├── CountdownOverlay.ts # 3-2-1-GO countdown
+│   ├── ScoreFlash.ts     # +10 animation on goal
+│   └── WinScreen.ts      # Game over overlay
+└── index.ts
+```
+
+Visual test page: `web/src/components/GameTest.tsx` - run `bun run dev` to test
 
 **Remaining:**
-- 2.3 Sprite Implementation
-- 2.4 UI Rendering (PixiJS)
 - 2.5 AI Implementation
 - 2.6 Keyboard Input
 - 2.7 Audio System

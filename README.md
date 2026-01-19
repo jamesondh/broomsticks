@@ -48,20 +48,27 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - Phase 1 complete (core engine with 54 tests passing)
+- **HTML5 port** - Phase 1 complete, Phase 2 in progress (sprites and UI done)
 
 ### HTML5 Port Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Engine | ✅ Complete |
-| 2 | Single Player (rendering, audio) | 🔄 In Progress (2.1, 2.2 done) |
+| 2 | Single Player | 🔄 In Progress (2.1-2.4 done) |
 | 3 | Local Multiplayer | Pending |
 | 4 | Online Multiplayer | Pending |
 | 5 | 2v2 Mode & Passing | Pending |
 | 6 | GoldBall & Polish | Pending |
 | 7 | Quick Play Matchmaking | Pending |
 | 8 | Mobile & Capacitor | Pending |
+
+**Phase 2 Progress:**
+- ✅ 2.1 Asset Extraction
+- ✅ 2.2 PixiJS Renderer Setup
+- ✅ 2.3 Sprite Implementation (PlayerSprite, BallSprite, FieldSprite)
+- ✅ 2.4 UI Rendering (Scoreboard, Countdown, ScoreFlash, WinScreen)
+- ⏳ 2.5-2.10 Remaining (AI, Input, Audio, React, Settings, Particles)
 
 See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
 
