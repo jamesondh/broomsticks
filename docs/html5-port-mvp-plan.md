@@ -373,7 +373,7 @@ const MUTATORS = {
 
 - [x] Create `web/src/engine/` directory structure
 - [x] Set up TypeScript config for strict mode
-- [x] Add Vitest for unit testing
+- [x] Add bun test for unit testing
 - [x] Create `constants.ts` with all physics/dimension constants
 
 ```typescript
@@ -501,23 +501,29 @@ interface PlayerInput {
 
 **Goal**: Playable single-player game with AI opponent, rendering, and audio.
 
-### 2.1 Asset Extraction
+### 2.1 Asset Extraction ✅
 
-- [ ] Extract player sprites from Java/C++ versions
+- [x] Extract player sprites from Java/C++ versions
   - 4 directional frames per model
   - Multiple models (at least 5)
-- [ ] Extract ball sprites (red, black)
-- [ ] Extract field/background images
-- [ ] Extract basket/goal post sprites
-- [ ] Copy audio files from Java version
+- [x] Extract ball sprites (red, black)
+- [x] Extract field/background images
+- [x] Extract basket/goal post sprites
+- [x] Copy audio files from Java version
   - score.wav, catch.wav, bump.wav, win.wav
 
-### 2.2 PixiJS Renderer Setup
+Assets located in:
+- `web/public/images/` - players.gif, items.gif, sky1.jpg, field.jpg
+- `web/public/audio/` - score.wav, catch.wav, bump.wav, win.wav
 
-- [ ] Create `GameRenderer` class
-- [ ] Set up PixiJS Application with proper resolution handling
-- [ ] Implement dynamic canvas scaling (fit to container)
-- [ ] Implement high-DPI support (devicePixelRatio)
+### 2.2 PixiJS Renderer Setup ✅
+
+- [x] Create `GameRenderer` class
+- [x] Set up PixiJS Application with proper resolution handling
+- [x] Implement dynamic canvas scaling (fit to container)
+- [x] Implement high-DPI support (devicePixelRatio)
+
+Implementation: `web/src/renderer/GameRenderer.ts` (640 lines)
 
 ### 2.3 Sprite Implementation
 
@@ -1161,7 +1167,7 @@ async function loadAssets(): Promise<void> {
 
 ## Testing Strategy
 
-### Unit Tests (Vitest)
+### Unit Tests (bun test)
 
 ```typescript
 // Physics tests

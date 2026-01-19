@@ -86,7 +86,7 @@ bun run build:guestbook  # Regenerate modernized guestbook JSON
 
 - Bun (runtime/package manager)
 - Vite + React + TypeScript
-- Vitest for unit testing
+- bun test for unit testing
 - Fuse.js for fuzzy search (guestbook)
 
 ## HTML5 Port Progress
@@ -122,6 +122,18 @@ Key engine features:
 - Event system for state changes, goals, collisions
 - Configurable AI with difficulty levels
 
-### Next: Phase 2 (Single Player)
+### Phase 2: Single Player (In Progress)
 
-Adds PixiJS rendering, sprites, audio, and React integration
+**Completed:**
+- ✅ 2.1 Asset Extraction - sprites, backgrounds, audio in `web/public/`
+- ✅ 2.2 PixiJS Renderer Setup - `web/src/renderer/GameRenderer.ts` with scaling, high-DPI
+
+**Remaining:**
+- 2.3 Sprite Implementation
+- 2.4 UI Rendering (PixiJS)
+- 2.5 AI Implementation
+- 2.6 Keyboard Input
+- 2.7 Audio System
+- 2.8 React Integration
+- 2.9 Settings UI
+- 2.10 Particle Effects

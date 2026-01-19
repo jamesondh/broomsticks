@@ -55,7 +55,7 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Engine | ✅ Complete |
-| 2 | Single Player (rendering, audio) | Pending |
+| 2 | Single Player (rendering, audio) | 🔄 In Progress (2.1, 2.2 done) |
 | 3 | Local Multiplayer | Pending |
 | 4 | Online Multiplayer | Pending |
 | 5 | 2v2 Mode & Passing | Pending |
