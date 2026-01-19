@@ -501,47 +501,49 @@ interface PlayerInput {
 
 **Goal**: Playable single-player game with AI opponent, rendering, and audio.
 
+**Status**: ✅ **COMPLETE** - Full single-player game with PixiJS rendering, audio, and React UI.
+
 ### 2.1 Asset Extraction
 
-- [ ] Extract player sprites from Java/C++ versions
+- [x] Extract player sprites from Java/C++ versions
   - 4 directional frames per model
   - Multiple models (at least 5)
-- [ ] Extract ball sprites (red, black)
-- [ ] Extract field/background images
-- [ ] Extract basket/goal post sprites
-- [ ] Copy audio files from Java version
-  - score.wav, catch.wav, bump.wav, win.wav
+- [x] Extract ball sprites (red, black)
+- [x] Extract field/background images
+- [x] Extract basket/goal post sprites
+- [x] Copy audio files from Java version (converted to MP3)
+  - score.mp3, catch.mp3, bump.mp3, win.mp3, pop.mp3
 
 ### 2.2 PixiJS Renderer Setup
 
-- [ ] Create `GameRenderer` class
-- [ ] Set up PixiJS Application with proper resolution handling
-- [ ] Implement dynamic canvas scaling (fit to container)
-- [ ] Implement high-DPI support (devicePixelRatio)
+- [x] Create `GameRenderer` class
+- [x] Set up PixiJS Application with proper resolution handling
+- [x] Implement dynamic canvas scaling (fit to container)
+- [x] Implement high-DPI support (devicePixelRatio)
 
 ### 2.3 Sprite Implementation
 
-- [ ] Implement `PlayerSprite` class
+- [x] Implement `PlayerSprite` class
   - Directional frame selection
   - Ground idle detection
   - Team color tinting (if using single sprite sheet)
-- [ ] Implement `BallSprite` class
-- [ ] Implement `FieldSprite` class (background, baskets)
+- [x] Implement `BallSprite` class
+- [x] Implement `FieldSprite` class (background, baskets)
 
 ### 2.4 UI Rendering (PixiJS)
 
-- [ ] Implement scoreboard display
-- [ ] Implement player info HUD (model, AI status)
-- [ ] Implement countdown overlay
-- [ ] Implement score flash effect
-- [ ] Implement win screen overlay
+- [x] Implement scoreboard display
+- [x] Implement player info HUD (model, AI status)
+- [x] Implement countdown overlay
+- [x] Implement score flash effect
+- [x] Implement win screen overlay
 
 ### 2.5 AI Implementation
 
-- [ ] Port AI logic from C++ version
-- [ ] Implement 100ms decision interval (timer-based)
-- [ ] Implement difficulty levels (easy/medium/hard/expert)
-- [ ] Implement target ball selection
+- [x] Port AI logic from C++ version
+- [x] Implement 100ms decision interval (timer-based)
+- [x] Implement difficulty levels (easy/medium/hard/expert)
+- [x] Implement target ball selection
 
 ```typescript
 // AI decision logic
@@ -563,10 +565,10 @@ function makeAIDecision(player: Person, balls: Ball[], config: GameConfig): Play
 
 ### 2.6 Keyboard Input
 
-- [ ] Implement `KeyboardInput` class
-- [ ] Default bindings: WASD (P1), Arrows (P2)
-- [ ] Implement hybrid tap/hold with 150ms delay
-- [ ] Track key state with timestamps
+- [x] Implement `KeyboardInput` class
+- [x] Default bindings: WASD (P1), Arrows (P2)
+- [x] Implement hybrid tap/hold with 150ms delay
+- [x] Track key state with timestamps
 
 ```typescript
 class KeyboardInput {
@@ -586,28 +588,28 @@ class KeyboardInput {
 
 ### 2.7 Audio System
 
-- [ ] Implement `AudioManager` with Howler.js
-- [ ] Load all sound effects
-- [ ] Trigger sounds on events (score, catch, bump, win)
-- [ ] Implement volume control
-- [ ] Implement mute toggle
+- [x] Implement `AudioManager` with Howler.js
+- [x] Load all sound effects
+- [x] Trigger sounds on events (score, catch, bump, win)
+- [x] Implement volume control
+- [x] Implement mute toggle
 
 ### 2.8 React Integration
 
-- [ ] Create `GameCanvas` component (PixiJS mount)
-- [ ] Create `MainMenu` screen
-- [ ] Create `GameScreen` with canvas + HUD
-- [ ] Create `ResultsScreen` (winner, stats, play again)
-- [ ] Implement screen routing with state
+- [x] Create `GameCanvas` component (PixiJS mount)
+- [x] Create `MainMenu` screen
+- [x] Create `GameScreen` with canvas + HUD
+- [x] Create `ResultsScreen` (winner, stats, play again)
+- [x] Implement screen routing with state
 
 ### 2.9 Settings UI
 
-- [ ] Create `SettingsScreen` component
-- [ ] Implement difficulty selector
-- [ ] Implement ball count sliders
-- [ ] Implement win score input
-- [ ] Implement SFX toggle and volume
-- [ ] Persist settings to localStorage
+- [x] Create `SettingsScreen` component
+- [x] Implement difficulty selector
+- [x] Implement ball count sliders
+- [x] Implement win score input
+- [x] Implement SFX toggle and volume
+- [x] Persist settings to localStorage
 
 ### 2.10 Particle Effects
 
@@ -617,6 +619,8 @@ class KeyboardInput {
 - [ ] Add toggle in settings
 
 **Deliverable**: Fully playable single-player game against AI.
+
+**Note**: Particle effects deferred to Phase 6 (Polish).
 
 ---
 

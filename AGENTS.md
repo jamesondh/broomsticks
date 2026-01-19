@@ -122,6 +122,54 @@ Key engine features:
 - Event system for state changes, goals, collisions
 - Configurable AI with difficulty levels
 
-### Next: Phase 2 (Single Player)
+### Phase 2: Single Player ✅ COMPLETE
 
-Adds PixiJS rendering, sprites, audio, and React integration
+Full single-player game with PixiJS rendering, audio, and React integration:
+
+```
+web/src/
+├── renderer/
+│   ├── GameRenderer.ts        # Main PixiJS renderer
+│   ├── GameUI.ts              # In-game UI (scoreboard, countdown, overlays)
+│   ├── AssetLoader.ts         # Asset preloading with PIXI.Assets
+│   └── sprites/
+│       ├── PlayerSprite.ts    # Player with directional frames
+│       ├── BallSprite.ts      # Ball sprites (red/black/gold)
+│       └── FieldSprite.ts     # Background and baskets
+├── input/
+│   └── KeyboardInput.ts       # Keyboard input with tap/hold detection
+├── audio/
+│   ├── AudioManager.ts        # Howler.js wrapper (singleton)
+│   └── sounds.ts              # Sound definitions
+├── store/
+│   ├── gameStore.ts           # Screen navigation (Zustand)
+│   └── settingsStore.ts       # Persisted settings (Zustand + persist)
+├── components/
+│   ├── screens/
+│   │   ├── MainMenu.tsx       # Play/Settings buttons
+│   │   ├── GameScreen.tsx     # Full game integration
+│   │   ├── SettingsScreen.tsx # AI difficulty, ball counts, audio
+│   │   └── ResultsScreen.tsx  # Winner display, play again
+│   ├── game/
+│   │   └── GameCanvas.tsx     # PixiJS mount component
+│   └── ui/
+│       ├── Button.tsx
+│       ├── Slider.tsx
+│       └── Toggle.tsx
+└── hooks/
+    ├── useGame.ts             # Game instance management
+    └── useGameLoop.ts         # RAF loop with visibility handling
+```
+
+Key Phase 2 features:
+- PixiJS v8 rendering with high-DPI support
+- Spritesheet extraction for player directional frames
+- Howler.js audio with 5 sound effects (score, catch, bump, win, pop)
+- Zustand state management with localStorage persistence
+- Hybrid tap/hold keyboard input (150ms delay)
+- React screen router (menu, settings, playing, results)
+- Configurable settings: AI difficulty, ball counts, win score, audio
+
+### Next: Phase 3 (Local Multiplayer)
+
+Two players on same device with split keyboard controls (WASD + Arrow keys)

@@ -48,20 +48,28 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - Phase 1 complete (core engine with 54 tests passing)
+- **HTML5 port** - Phase 2 complete (playable single-player game)
 
 ### HTML5 Port Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Engine | ✅ Complete |
-| 2 | Single Player (rendering, audio) | Pending |
+| 2 | Single Player (rendering, audio) | ✅ Complete |
 | 3 | Local Multiplayer | Pending |
 | 4 | Online Multiplayer | Pending |
 | 5 | 2v2 Mode & Passing | Pending |
 | 6 | GoldBall & Polish | Pending |
 | 7 | Quick Play Matchmaking | Pending |
 | 8 | Mobile & Capacitor | Pending |
+
+### Play Now
+
+```bash
+cd web
+bun install      # Install dependencies (first time only)
+bun run dev      # Start dev server at localhost:5173
+```
 
 See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
 
@@ -70,11 +78,31 @@ See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
 ```bash
 cd web
 bun install      # Install dependencies
-bun run dev      # Start dev server
+bun run dev      # Start dev server at localhost:5173
 bun run build    # Build for production
 bun run preview  # Preview production build
-bun run test     # Run unit tests
+bun run test     # Run unit tests (54 tests)
+bun run lint     # Run ESLint
 ```
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Runtime | Bun |
+| Build | Vite |
+| UI | React + TypeScript |
+| Rendering | PixiJS v8 |
+| Audio | Howler.js |
+| State | Zustand |
+| Testing | Vitest |
+
+### Controls
+
+| Action | Keys |
+|--------|------|
+| Move | WASD or Arrow Keys |
+| Pause | Escape |
 
 ## Credits
 
