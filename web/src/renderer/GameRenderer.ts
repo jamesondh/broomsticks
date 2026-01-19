@@ -1,7 +1,7 @@
 import { Application, Container, Sprite, Texture, Graphics, Assets, Rectangle } from "pixi.js";
 import type { Game, GameEvent } from "../engine/Game";
 import type { PersonState, BallState, Team, Score } from "../engine/types";
-import { FIELD, DIMENSIONS } from "../engine/constants";
+import { FIELD, DIMENSIONS, getBallDimensions } from "../engine/constants";
 import { BallSprite } from "./sprites/BallSprite";
 import { FieldSprite } from "./sprites/FieldSprite";
 import { Scoreboard } from "./ui/Scoreboard";
@@ -566,7 +566,7 @@ export class GameRenderer {
   private handleGameEvent(event: GameEvent, game: Game): void {
     switch (event.type) {
       case "stateChange":
-        this.handleStateChange(event.from, event.to, game);
+        this.handleStateChange(event.from, event.to);
         break;
       case "countdown":
         this.countdownOverlay?.show(event.seconds);
@@ -587,7 +587,7 @@ export class GameRenderer {
   /**
    * Handle game state changes.
    */
-  private handleStateChange(from: string, to: string, _game: Game): void {
+  private handleStateChange(from: string, to: string): void {
     // Hide countdown when leaving countdown state
     if (from === "countdown" && to === "playing") {
       this.countdownOverlay?.showGo();
@@ -666,14 +666,7 @@ export class GameRenderer {
       const sprite = this.ballSprites[i];
 
       // Update position
-      const width =
-        ball.type === "gold"
-          ? DIMENSIONS.GOLD_BALL_WIDTH
-          : DIMENSIONS.BALL_WIDTH;
-      const height =
-        ball.type === "gold"
-          ? DIMENSIONS.GOLD_BALL_HEIGHT
-          : DIMENSIONS.BALL_HEIGHT;
+      const { width, height } = getBallDimensions(ball.type);
 
       sprite.x = ball.x + width / 2;
       sprite.y = ball.y + height / 2;
@@ -735,9 +728,10 @@ export class GameRenderer {
 
     // Draw player collision boxes only (no catch radius box)
     for (const player of players) {
-      const collisionWidth = DIMENSIONS.PLAYER_WIDTH - 4;
-      const collisionHeight = DIMENSIONS.PLAYER_HEIGHT - 4;
-      g.rect(player.x + 2, player.y + 2, collisionWidth, collisionHeight)
+      const shrink = DIMENSIONS.COLLISION_HITBOX_SHRINK;
+      const collisionWidth = DIMENSIONS.PLAYER_WIDTH - shrink;
+      const collisionHeight = DIMENSIONS.PLAYER_HEIGHT - shrink;
+      g.rect(player.x + shrink / 2, player.y + shrink / 2, collisionWidth, collisionHeight)
         .stroke({
           color: player.team === 0 ? 0xff6666 : 0x6666ff,
           width: 2,
@@ -749,14 +743,7 @@ export class GameRenderer {
     for (const ball of balls) {
       if (!ball.alive) continue;
 
-      const width =
-        ball.type === "gold"
-          ? DIMENSIONS.GOLD_BALL_WIDTH
-          : DIMENSIONS.BALL_WIDTH;
-      const height =
-        ball.type === "gold"
-          ? DIMENSIONS.GOLD_BALL_HEIGHT
-          : DIMENSIONS.BALL_HEIGHT;
+      const { width, height } = getBallDimensions(ball.type);
 
       const color =
         ball.type === "red"

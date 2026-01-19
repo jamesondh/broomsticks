@@ -1,6 +1,6 @@
 import { Sprite, Texture, Rectangle, Container, Graphics } from "pixi.js";
 import type { BallState, BallType } from "../../engine/types";
-import { DIMENSIONS } from "../../engine/constants";
+import { getBallDimensions } from "../../engine/constants";
 
 /**
  * Ball sprite configuration.
@@ -60,9 +60,9 @@ export class BallSprite {
     this.sprite.anchor.set(0.5);
 
     // Set size based on ball type
-    const isGold = type === "gold";
-    this.sprite.width = isGold ? DIMENSIONS.GOLD_BALL_WIDTH : DIMENSIONS.BALL_WIDTH;
-    this.sprite.height = isGold ? DIMENSIONS.GOLD_BALL_HEIGHT : DIMENSIONS.BALL_HEIGHT;
+    const { width, height } = getBallDimensions(type);
+    this.sprite.width = width;
+    this.sprite.height = height;
 
     // Apply tint based on ball type
     if (type === "red") {
@@ -110,11 +110,11 @@ export class BallSprite {
    * Generate a fallback texture when sprite sheet is unavailable.
    */
   private generateFallbackTexture(): Texture {
-    const size = this.type === "gold" ? 8 : 16;
+    const { width } = getBallDimensions(this.type);
     const color = this.type === "gold" ? 0xffd700 : this.type === "red" ? 0xff0000 : 0x000000;
 
     const graphics = new Graphics();
-    graphics.circle(size / 2, size / 2, size / 2);
+    graphics.circle(width / 2, width / 2, width / 2);
     graphics.fill({ color });
 
     // Convert graphics to texture
@@ -127,10 +127,7 @@ export class BallSprite {
    * Update sprite based on ball state.
    */
   update(state: BallState): void {
-    // Calculate size
-    const isGold = state.type === "gold";
-    const width = isGold ? DIMENSIONS.GOLD_BALL_WIDTH : DIMENSIONS.BALL_WIDTH;
-    const height = isGold ? DIMENSIONS.GOLD_BALL_HEIGHT : DIMENSIONS.BALL_HEIGHT;
+    const { width, height } = getBallDimensions(state.type);
 
     // Update position (center of sprite)
     this.sprite.x = state.x + width / 2;

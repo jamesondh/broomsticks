@@ -11,7 +11,6 @@ import {
   Game,
   createPhysicsState,
   calculatePhysicsSteps,
-  checkDistanceCollision,
   checkPlayerCollisions,
   checkPlayerBallCollisions,
   checkWinCondition,
@@ -308,22 +307,17 @@ describe("Person", () => {
 });
 
 describe("Collision System", () => {
-  it("detects distance collision", () => {
-    expect(checkDistanceCollision(100, 100, 110, 110, 20)).toBe(true);
-    expect(checkDistanceCollision(100, 100, 200, 200, 20)).toBe(false);
-  });
-
   it("detects player-player collision", () => {
     const bounds = createBounds();
     const p1 = new Person({ x: 100, y: 100, team: 0, bounds });
     const p2 = new Person({ x: 110, y: 100, team: 1, bounds });
 
-    const events = checkPlayerCollisions([p1, p2]);
+    const events = checkPlayerCollisions([p1, p2], []);
     expect(events.length).toBe(0); // Same height, no bump
 
     // p2 is lower, should be bumped
     p2.y = 110;
-    const events2 = checkPlayerCollisions([p1, p2]);
+    const events2 = checkPlayerCollisions([p1, p2], []);
     expect(events2.length).toBe(1);
     expect(events2[0].type).toBe("player-player");
     expect(events2[0].bumpedPlayerIndex).toBe(1);

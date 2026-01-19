@@ -9,7 +9,6 @@ export type { PhysicsState } from "./Physics";
 
 export {
   checkAABBCollision,
-  checkDistanceCollision,
   checkPlayerCollisions,
   checkPlayerBallCollisions,
   runCollisionDetection,

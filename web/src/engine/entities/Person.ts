@@ -76,17 +76,10 @@ export class Person extends FlyingObject {
   /**
    * Update AI behavior.
    * Called every frame - AI decides whether to act based on smart value.
-   * @param balls Array of balls in play
    * @param teamBasket Whether this player's team has the ball (for offense/defense)
-   * @param _now Current timestamp in milliseconds (unused, kept for API compatibility)
    * @param config Game configuration
    */
-  updateAI(
-    _balls: Ball[],
-    teamBasket: boolean,
-    _now: number,
-    config: GameConfig
-  ): void {
+  updateAI(teamBasket: boolean, config: GameConfig): void {
     if (!this.isRobot || !this.targetBall) return;
 
     // Simulate Java's signed modulo: random.nextInt() % smart
@@ -156,7 +149,7 @@ export class Person extends FlyingObject {
   /**
    * Update with destination-based movement (for touch controls).
    */
-  moveTowardDestination(dt: number, _config: GameConfig): boolean {
+  moveTowardDestination(dt: number): boolean {
     if (!this.destOn) return false;
 
     // Update position

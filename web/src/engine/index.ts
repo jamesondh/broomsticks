@@ -46,7 +46,6 @@ export {
   updateCaughtBallPositions,
   getInterpolatedPosition,
   checkAABBCollision,
-  checkDistanceCollision,
   checkPlayerCollisions,
   checkPlayerBallCollisions,
   runCollisionDetection,

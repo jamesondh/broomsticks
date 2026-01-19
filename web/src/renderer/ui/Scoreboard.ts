@@ -35,6 +35,9 @@ const DEFAULT_CONFIG: ScoreboardConfig = {
   fontSize: 12,
 };
 
+/** Margin from field edge for score boxes */
+const SCORE_BOX_MARGIN = 48;
+
 /**
  * Scoreboard UI component.
  * Displays scores for both teams with highlight on goal.
@@ -107,18 +110,25 @@ export class Scoreboard {
     this.draw();
   }
 
+  /** Get left box X position */
+  private get leftBoxX(): number {
+    return SCORE_BOX_MARGIN;
+  }
+
+  /** Get right box X position */
+  private get rightBoxX(): number {
+    return this.config.fieldWidth - SCORE_BOX_MARGIN - this.config.boxWidth;
+  }
+
   /**
    * Position all elements.
    */
   private positionElements(): void {
-    const leftX = 48;
-    const rightX = this.config.fieldWidth - 48 - this.config.boxWidth;
-
     // Text positions (with small padding)
-    this.leftText.x = leftX + 4;
+    this.leftText.x = this.leftBoxX + 4;
     this.leftText.y = this.config.y + 2;
 
-    this.rightText.x = rightX + 4;
+    this.rightText.x = this.rightBoxX + 4;
     this.rightText.y = this.config.y + 2;
 
     // Title centered
@@ -130,20 +140,17 @@ export class Scoreboard {
    * Draw the score boxes.
    */
   private draw(): void {
-    const leftX = 48;
-    const rightX = this.config.fieldWidth - 48 - this.config.boxWidth;
-
     // Left box
     this.leftBox.clear();
     const leftColor = this.highlight === 0 ? this.config.highlightColor : this.config.leftColor;
-    this.leftBox.rect(leftX, this.config.y, this.config.boxWidth, this.config.boxHeight);
+    this.leftBox.rect(this.leftBoxX, this.config.y, this.config.boxWidth, this.config.boxHeight);
     this.leftBox.fill({ color: leftColor });
     this.leftBox.stroke({ color: 0x000000, width: 1 });
 
     // Right box
     this.rightBox.clear();
     const rightColor = this.highlight === 1 ? this.config.highlightColor : this.config.rightColor;
-    this.rightBox.rect(rightX, this.config.y, this.config.boxWidth, this.config.boxHeight);
+    this.rightBox.rect(this.rightBoxX, this.config.y, this.config.boxWidth, this.config.boxHeight);
     this.rightBox.fill({ color: rightColor });
     this.rightBox.stroke({ color: 0x000000, width: 1 });
   }

@@ -1,4 +1,4 @@
-import { FIELD, TIMING } from "./constants";
+import { FIELD, TIMING, SPAWN } from "./constants";
 import { createConfig } from "./config";
 import type {
   GameConfig,
@@ -108,8 +108,8 @@ export class Game {
     // Player 1 (left team, human by default)
     this.players.push(
       new Person({
-        x: 100,
-        y: 200,
+        x: SPAWN.PLAYER1_X,
+        y: SPAWN.PLAYER1_Y,
         team: 0,
         model: 1,
         isRobot: false,
@@ -120,8 +120,8 @@ export class Game {
     // Player 2 (right team, can be AI)
     this.players.push(
       new Person({
-        x: fieldWidth - 120,
-        y: 200,
+        x: fieldWidth - SPAWN.PLAYER2_X_OFFSET,
+        y: SPAWN.PLAYER2_Y,
         team: 1,
         model: 4,
         isRobot: true,
@@ -145,7 +145,7 @@ export class Game {
         new Ball({
           type: "red",
           x: centerX,
-          y: 100 + i * 50,
+          y: SPAWN.RED_BALL_Y + i * SPAWN.RED_BALL_Y_SPACING,
           bounds: this.bounds,
         })
       );
@@ -157,7 +157,7 @@ export class Game {
         new Ball({
           type: "black",
           x: centerX,
-          y: 200 + i * 100,
+          y: SPAWN.BLACK_BALL_Y + i * SPAWN.BLACK_BALL_Y_SPACING,
           bounds: this.bounds,
         })
       );
@@ -318,11 +318,10 @@ export class Game {
 
     // Update AI
     const teamHasBall = this.getTeamPossession();
-    for (let i = 0; i < this.players.length; i++) {
-      const player = this.players[i];
+    for (const player of this.players) {
       if (player.isRobot) {
         const hasTheBall = teamHasBall === player.team;
-        player.updateAI(this.balls, hasTheBall, now, this.config);
+        player.updateAI(hasTheBall, this.config);
       }
     }
 

@@ -1,4 +1,4 @@
-import { PHYSICS } from "../constants";
+import { PHYSICS, DIMENSIONS } from "../constants";
 import type { GameConfig } from "../types";
 import type { Ball } from "../entities/Ball";
 import type { Person } from "../entities/Person";
@@ -76,7 +76,7 @@ export function updatePhysics(
   // Update players
   for (const player of players) {
     // Handle destination-based movement
-    if (!player.moveTowardDestination(dt, config)) {
+    if (!player.moveTowardDestination(dt)) {
       // Normal physics update
       player.move(dt, config);
     }
@@ -109,12 +109,12 @@ export function updateCaughtBallPositions(
     // Position ball relative to player based on facing direction
     if (holder.getFacingDirection() === 0) {
       // Facing right
-      ball.x = holder.x + 18;
+      ball.x = holder.x + DIMENSIONS.HELD_BALL_X_OFFSET_RIGHT;
     } else {
       // Facing left
-      ball.x = holder.x + 8;
+      ball.x = holder.x + DIMENSIONS.HELD_BALL_X_OFFSET_LEFT;
     }
-    ball.y = holder.y + 15;
+    ball.y = holder.y + DIMENSIONS.HELD_BALL_Y_OFFSET;
 
     // Match holder's velocity
     ball.vx = holder.vx;

@@ -25,8 +25,6 @@ export class Ball extends FlyingObject {
   caughtByIndex: number | null = null;
   /** Whether ball is active in play */
   alive: boolean = true;
-  /** Last caught state (for tracking changes) */
-  private lastCaught: boolean = false;
   /** Timer for autonomous movement decisions */
   private lastMoveTime: number = 0;
 
@@ -71,24 +69,22 @@ export class Ball extends FlyingObject {
    * Make random movement decision (balls have some autonomy).
    */
   private makeAutonomousDecision(): void {
-    const choices = 10;
-    const choice = Math.floor(Math.random() * choices);
+    const choice = Math.floor(Math.random() * AI.BALL_MOVEMENT_CHOICES);
 
     if (choice === 0) this.up();
     if (choice === 1) this.right();
     if (choice === 2) this.left();
 
     // Try to stay off the ground
-    if (this.y > this.bounds.maxY - 90) {
+    if (this.y > this.bounds.maxY - AI.BALL_GROUND_THRESHOLD) {
       this.up();
     }
   }
 
   /**
-   * Reset caught state and track last state.
+   * Reset caught state.
    */
   resetCaught(): void {
-    this.lastCaught = this.caught;
     this.caught = false;
     this.caughtByIndex = null;
   }
@@ -99,13 +95,6 @@ export class Ball extends FlyingObject {
   setCaught(playerIndex: number): void {
     this.caught = true;
     this.caughtByIndex = playerIndex;
-  }
-
-  /**
-   * Check if ball was just caught this frame.
-   */
-  wasCaughtThisFrame(): boolean {
-    return this.caught && !this.lastCaught;
   }
 
   /**
@@ -139,7 +128,6 @@ export class Ball extends FlyingObject {
     super.reset();
     this.caught = false;
     this.caughtByIndex = null;
-    this.lastCaught = false;
     this.alive = true;
     this.lastMoveTime = 0;
   }

@@ -66,17 +66,12 @@ export interface InputSource {
  */
 export class InputManager {
   private sources: Map<string, InputSource> = new Map();
-  private playerInputs: Map<number, PlayerInput[]> = new Map();
 
   /**
    * Register an input source for a player.
    */
   addSource(playerId: number, sourceId: string, source: InputSource): void {
     this.sources.set(`${playerId}:${sourceId}`, source);
-
-    if (!this.playerInputs.has(playerId)) {
-      this.playerInputs.set(playerId, []);
-    }
   }
 
   /**
@@ -144,7 +139,6 @@ export class InputManager {
       source.destroy?.();
     }
     this.sources.clear();
-    this.playerInputs.clear();
   }
 }
 

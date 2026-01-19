@@ -33,21 +33,6 @@ export function checkAABBCollision(
 }
 
 /**
- * Check distance-based collision (circular).
- */
-export function checkDistanceCollision(
-  ax: number,
-  ay: number,
-  bx: number,
-  by: number,
-  radius: number
-): boolean {
-  const dx = ax - bx;
-  const dy = ay - by;
-  return Math.abs(dx) < radius && Math.abs(dy) < radius;
-}
-
-/**
  * Check and handle all player-player collisions.
  * Lower player gets bumped when they collide.
  * When bumped, the player drops any ball they're holding.
@@ -63,11 +48,11 @@ export function checkPlayerCollisions(
       const p1 = players[i];
       const p2 = players[j];
 
-      // Use slightly smaller hitbox (w-4, h-4 from original)
+      // Use slightly smaller hitbox (w-shrink, h-shrink from original)
       const dx = p1.x - p2.x;
       const dy = p1.y - p2.y;
-      const collisionWidth = p1.width - 4;
-      const collisionHeight = p1.height - 4;
+      const collisionWidth = p1.width - DIMENSIONS.COLLISION_HITBOX_SHRINK;
+      const collisionHeight = p1.height - DIMENSIONS.COLLISION_HITBOX_SHRINK;
 
       if (
         Math.abs(dx) < collisionWidth &&
@@ -127,9 +112,9 @@ export function checkPlayerBallCollisions(
       if (!ball.alive) continue;
       if (ball.caught && ball.caughtByIndex === pi) continue; // Already holding
 
-      // Use center-offset collision detection (+8 offset from original)
-      const dx = player.x + 8 - ball.x;
-      const dy = player.y + 8 - ball.y;
+      // Use center-offset collision detection (offset from original)
+      const dx = player.x + DIMENSIONS.PLAYER_CENTER_OFFSET - ball.x;
+      const dy = player.y + DIMENSIONS.PLAYER_CENTER_OFFSET - ball.y;
       const radius = DIMENSIONS.CATCH_RADIUS;
 
       if (Math.abs(dx) < radius && Math.abs(dy) < radius) {

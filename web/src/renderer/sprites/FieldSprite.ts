@@ -177,16 +177,16 @@ export class FieldSprite {
 
     // Create left basket
     this.leftBasket = new Sprite(this.normalBasketTexture);
-    this.leftBasket.x = DIMENSIONS.BASKET_LEFT_X - 7;
-    this.leftBasket.y = DIMENSIONS.BASKET_Y - 21;
+    this.leftBasket.x = DIMENSIONS.BASKET_LEFT_X - DIMENSIONS.BASKET_SPRITE_X_OFFSET;
+    this.leftBasket.y = DIMENSIONS.BASKET_Y - DIMENSIONS.BASKET_SPRITE_Y_OFFSET;
     this.container.addChild(this.leftBasket);
 
     // Create right basket (flipped horizontally to face the other way)
     this.rightBasket = new Sprite(this.normalBasketTexture);
     this.rightBasket.scale.x = -1; // Flip horizontally
     // Position mirrored from left basket: right edge offset matches left edge offset
-    this.rightBasket.x = this.config.width - DIMENSIONS.BASKET_RIGHT_X_OFFSET + 7;
-    this.rightBasket.y = DIMENSIONS.BASKET_Y - 21;
+    this.rightBasket.x = this.config.width - DIMENSIONS.BASKET_RIGHT_X_OFFSET + DIMENSIONS.BASKET_SPRITE_X_OFFSET;
+    this.rightBasket.y = DIMENSIONS.BASKET_Y - DIMENSIONS.BASKET_SPRITE_Y_OFFSET;
     this.container.addChild(this.rightBasket);
 
     // Draw poles
@@ -197,7 +197,7 @@ export class FieldSprite {
    * Draw basket poles.
    */
   private drawPoles(): void {
-    const poleY = DIMENSIONS.BASKET_Y + 18; // Start at bottom of basket sprite (175 + 18 = 193)
+    const poleY = DIMENSIONS.BASKET_Y + DIMENSIONS.POLE_Y_OFFSET;
     const poleHeight = this.config.height - poleY - this.config.groundMargin + 20;
 
     // Left pole

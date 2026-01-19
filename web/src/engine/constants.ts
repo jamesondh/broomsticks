@@ -48,7 +48,36 @@ export const DIMENSIONS = {
   BASKET_LEFT_X: 17,
   /** Offset from right edge for right basket */
   BASKET_RIGHT_X_OFFSET: 17,
+  /** Player-player collision hitbox shrink (from original) */
+  COLLISION_HITBOX_SHRINK: 4,
+  /** Player center offset for ball collision detection (from original) */
+  PLAYER_CENTER_OFFSET: 8,
+  /** Ball X offset when holder faces right */
+  HELD_BALL_X_OFFSET_RIGHT: 18,
+  /** Ball X offset when holder faces left */
+  HELD_BALL_X_OFFSET_LEFT: 8,
+  /** Ball Y offset relative to holder */
+  HELD_BALL_Y_OFFSET: 15,
+  /** Basket sprite Y offset from BASKET_Y */
+  BASKET_SPRITE_Y_OFFSET: 21,
+  /** Basket sprite X offset */
+  BASKET_SPRITE_X_OFFSET: 7,
+  /** Pole start Y offset from basket bottom */
+  POLE_Y_OFFSET: 18,
 } as const;
+
+/**
+ * Get ball dimensions by type.
+ */
+export function getBallDimensions(type: "red" | "black" | "gold"): {
+  width: number;
+  height: number;
+} {
+  if (type === "gold") {
+    return { width: DIMENSIONS.GOLD_BALL_WIDTH, height: DIMENSIONS.GOLD_BALL_HEIGHT };
+  }
+  return { width: DIMENSIONS.BALL_WIDTH, height: DIMENSIONS.BALL_HEIGHT };
+}
 
 /**
  * Default field dimensions.
@@ -75,6 +104,32 @@ export const AI = {
   TARGETING_THRESHOLD: 100,
   /** Distance from goal before AI goes offensive */
   OFFENSIVE_DISTANCE: 50,
+  /** Number of random movement choices for ball autonomy */
+  BALL_MOVEMENT_CHOICES: 10,
+  /** Ground proximity threshold for ball to fly up */
+  BALL_GROUND_THRESHOLD: 90,
+} as const;
+
+/**
+ * Spawn position constants.
+ */
+export const SPAWN = {
+  /** Player 1 X position */
+  PLAYER1_X: 100,
+  /** Player 1 Y position */
+  PLAYER1_Y: 200,
+  /** Player 2 X offset from right edge */
+  PLAYER2_X_OFFSET: 120,
+  /** Player 2 Y position */
+  PLAYER2_Y: 200,
+  /** Red ball Y position */
+  RED_BALL_Y: 100,
+  /** Red ball Y spacing per additional ball */
+  RED_BALL_Y_SPACING: 50,
+  /** Black ball Y position */
+  BLACK_BALL_Y: 200,
+  /** Black ball Y spacing per additional ball */
+  BLACK_BALL_Y_SPACING: 100,
 } as const;
 
 /**
