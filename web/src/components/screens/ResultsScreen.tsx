@@ -15,29 +15,29 @@ const containerStyle: CSSProperties = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-  color: "#ffffff",
-  fontFamily: "system-ui, -apple-system, sans-serif",
+  background: "var(--color-bg-page)",
+  color: "var(--color-text-primary)",
+  fontFamily: "var(--font-family)",
 };
 
 const resultBoxStyle: CSSProperties = {
-  background: "rgba(0, 0, 0, 0.4)",
-  borderRadius: "16px",
+  background: "var(--color-bg-card)",
+  border: "1px solid var(--color-border)",
+  borderRadius: 0,
   padding: "48px 64px",
   textAlign: "center",
 };
 
 const winnerTitleStyle = (winner: Team): CSSProperties => ({
-  fontSize: "48px",
+  fontSize: "var(--font-size-3xl)",
   fontWeight: "bold",
   marginBottom: "8px",
-  color: winner === 0 ? "#e74c3c" : "#333",
-  textShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+  color: winner === 0 ? "var(--color-team-red)" : "var(--color-team-black)",
 });
 
 const winnerSubtitleStyle: CSSProperties = {
-  fontSize: "20px",
-  color: "#888",
+  fontSize: "var(--font-size-lg)",
+  color: "var(--color-text-secondary)",
   marginBottom: "32px",
 };
 
@@ -57,21 +57,21 @@ const teamScoreStyle: CSSProperties = {
 };
 
 const teamLabelStyle = (team: Team): CSSProperties => ({
-  fontSize: "14px",
+  fontSize: "var(--font-size-md)",
   textTransform: "uppercase",
   letterSpacing: "2px",
-  color: team === 0 ? "#e74c3c" : "#666",
+  color: team === 0 ? "var(--color-team-red)" : "var(--color-text-muted)",
 });
 
 const scoreNumberStyle = (isWinner: boolean): CSSProperties => ({
-  fontSize: "64px",
+  fontSize: "var(--font-size-4xl)",
   fontWeight: "bold",
-  color: isWinner ? "#fff" : "#555",
+  color: isWinner ? "var(--color-text-primary)" : "var(--color-text-secondary)",
 });
 
 const separatorStyle: CSSProperties = {
-  fontSize: "32px",
-  color: "#444",
+  fontSize: "var(--font-size-xl)",
+  color: "var(--color-text-muted)",
 };
 
 const buttonRowStyle: CSSProperties = {

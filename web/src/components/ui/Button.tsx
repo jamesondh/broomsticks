@@ -7,40 +7,39 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const baseStyle: CSSProperties = {
   border: "none",
-  borderRadius: "6px",
+  borderRadius: 0,
   cursor: "pointer",
   fontFamily: "inherit",
   fontWeight: "bold",
-  transition: "background-color 0.15s, opacity 0.15s",
 };
 
 const variantStyles: Record<string, CSSProperties> = {
   primary: {
-    backgroundColor: "#4a90d9",
-    color: "#ffffff",
+    backgroundColor: "var(--color-btn-primary)",
+    color: "var(--color-text-inverse)",
   },
   secondary: {
-    backgroundColor: "#555",
-    color: "#ffffff",
+    backgroundColor: "var(--color-btn-secondary)",
+    color: "var(--color-text-inverse)",
   },
   danger: {
-    backgroundColor: "#d94a4a",
-    color: "#ffffff",
+    backgroundColor: "var(--color-btn-danger)",
+    color: "var(--color-text-inverse)",
   },
 };
 
 const sizeStyles: Record<string, CSSProperties> = {
   small: {
     padding: "6px 12px",
-    fontSize: "12px",
+    fontSize: "var(--font-size-sm)",
   },
   medium: {
     padding: "10px 20px",
-    fontSize: "14px",
+    fontSize: "var(--font-size-md)",
   },
   large: {
     padding: "14px 28px",
-    fontSize: "18px",
+    fontSize: "var(--font-size-lg)",
   },
 };
 

@@ -12,22 +12,14 @@ const containerStyle: CSSProperties = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-  color: "#ffffff",
-  fontFamily: "system-ui, -apple-system, sans-serif",
-};
-
-const titleStyle: CSSProperties = {
-  fontSize: "64px",
-  fontWeight: "bold",
-  marginBottom: "8px",
-  textShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-  letterSpacing: "4px",
+  background: "var(--color-bg-page)",
+  color: "var(--color-text-primary)",
+  fontFamily: "var(--font-family)",
 };
 
 const subtitleStyle: CSSProperties = {
-  fontSize: "16px",
-  color: "#888",
+  fontSize: "var(--font-size-md)",
+  color: "var(--color-text-secondary)",
   marginBottom: "48px",
 };
 
@@ -43,16 +35,22 @@ const controlsHintStyle: CSSProperties = {
   bottom: "24px",
   left: "50%",
   transform: "translateX(-50%)",
-  color: "#666",
-  fontSize: "13px",
+  color: "var(--color-text-muted)",
+  fontSize: "var(--font-size-base)",
   textAlign: "center",
+};
+
+const logoStyle: CSSProperties = {
+  transform: "scale(2)",
+  imageRendering: "pixelated",
+  marginBottom: "48px", // Extra margin to compensate for scaled size
 };
 
 export function MainMenu({ onPlay, onSettings }: MainMenuProps) {
   return (
     <div style={containerStyle}>
-      <h1 style={titleStyle}>BROOMSTICKS</h1>
-      <p style={subtitleStyle}>A game by Paul Rajlich</p>
+      <img src="/images/intro.gif" alt="Broomsticks Logo" style={logoStyle} />
+      <p style={subtitleStyle}>Ported by Jameson Hodge</p>
 
       <div style={menuStyle}>
         <Button size="large" onClick={onPlay}>

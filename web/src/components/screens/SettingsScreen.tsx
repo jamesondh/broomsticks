@@ -15,15 +15,15 @@ const containerStyle: CSSProperties = {
   flexDirection: "column",
   alignItems: "center",
   height: "100%",
-  background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-  color: "#ffffff",
-  fontFamily: "system-ui, -apple-system, sans-serif",
+  background: "var(--color-bg-page)",
+  color: "var(--color-text-primary)",
+  fontFamily: "var(--font-family)",
   padding: "32px",
   overflow: "auto",
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "36px",
+  fontSize: "var(--font-size-2xl)",
   fontWeight: "bold",
   marginBottom: "32px",
 };
@@ -32,16 +32,19 @@ const sectionStyle: CSSProperties = {
   width: "100%",
   maxWidth: "400px",
   marginBottom: "24px",
+  background: "var(--color-bg-card)",
+  border: "1px solid var(--color-border)",
+  padding: "16px",
 };
 
 const sectionTitleStyle: CSSProperties = {
-  fontSize: "14px",
-  color: "#888",
+  fontSize: "var(--font-size-md)",
+  color: "var(--color-text-secondary)",
   textTransform: "uppercase",
   letterSpacing: "1px",
   marginBottom: "12px",
   paddingBottom: "8px",
-  borderBottom: "1px solid #333",
+  borderBottom: "1px solid var(--color-border-light)",
 };
 
 const optionRowStyle: CSSProperties = {
@@ -53,27 +56,27 @@ const difficultyButtonsStyle: CSSProperties = {
   gap: "8px",
 };
 
+const difficultyColors: Record<AIDifficulty, string> = {
+  easy: "var(--color-difficulty-easy)",
+  medium: "var(--color-difficulty-medium)",
+  hard: "var(--color-difficulty-hard)",
+  expert: "var(--color-difficulty-expert)",
+};
+
 const difficultyButtonStyle = (
   isSelected: boolean,
   difficulty: AIDifficulty
 ): CSSProperties => {
-  const colors: Record<AIDifficulty, string> = {
-    easy: "#4a9",
-    medium: "#49a",
-    hard: "#a94",
-    expert: "#a49",
-  };
   return {
     flex: 1,
     padding: "10px",
     border: "none",
-    borderRadius: "6px",
+    borderRadius: 0,
     cursor: "pointer",
     fontWeight: "bold",
-    fontSize: "13px",
-    background: isSelected ? colors[difficulty] : "#333",
-    color: isSelected ? "#fff" : "#888",
-    transition: "all 0.15s",
+    fontSize: "var(--font-size-base)",
+    background: isSelected ? difficultyColors[difficulty] : "var(--color-btn-inactive)",
+    color: isSelected ? "var(--color-text-inverse)" : "var(--color-text-muted)",
   };
 };
 
@@ -85,31 +88,15 @@ const toggleRowStyle: CSSProperties = {
 };
 
 const toggleLabelStyle: CSSProperties = {
-  color: "#ccc",
-  fontSize: "14px",
+  color: "var(--color-text-secondary)",
+  fontSize: "var(--font-size-md)",
 };
 
-const toggleButtonStyle = (isOn: boolean): CSSProperties => ({
-  width: "50px",
-  height: "26px",
-  borderRadius: "13px",
-  border: "none",
-  cursor: "pointer",
-  background: isOn ? "#4a90d9" : "#444",
-  position: "relative",
-  transition: "background 0.2s",
-});
-
-const toggleKnobStyle = (isOn: boolean): CSSProperties => ({
-  position: "absolute",
-  top: "3px",
-  left: isOn ? "27px" : "3px",
+const checkboxStyle: CSSProperties = {
   width: "20px",
   height: "20px",
-  borderRadius: "10px",
-  background: "#fff",
-  transition: "left 0.2s",
-});
+  cursor: "pointer",
+};
 
 const buttonRowStyle: CSSProperties = {
   display: "flex",
@@ -193,12 +180,12 @@ export function SettingsScreen({
         <div style={sectionTitleStyle}>Audio</div>
         <div style={toggleRowStyle}>
           <span style={toggleLabelStyle}>Sound Effects</span>
-          <button
-            style={toggleButtonStyle(settings.sfxEnabled)}
-            onClick={() => onUpdate({ sfxEnabled: !settings.sfxEnabled })}
-          >
-            <div style={toggleKnobStyle(settings.sfxEnabled)} />
-          </button>
+          <input
+            type="checkbox"
+            checked={settings.sfxEnabled}
+            onChange={() => onUpdate({ sfxEnabled: !settings.sfxEnabled })}
+            style={checkboxStyle}
+          />
         </div>
         {settings.sfxEnabled && (
           <div style={optionRowStyle}>

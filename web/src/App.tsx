@@ -119,9 +119,22 @@ function App() {
   if (screen === "guestbook") {
     return (
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-        <div style={{ padding: "10px", background: "#333", color: "white" }}>
+        <div style={{
+          padding: "10px",
+          background: "var(--color-bg-card)",
+          borderBottom: "1px solid var(--color-border)",
+        }}>
           <button
             onClick={() => navigateTo("menu")}
+            style={{
+              background: "var(--color-btn-secondary)",
+              color: "var(--color-text-inverse)",
+              border: "none",
+              borderRadius: 0,
+              padding: "6px 12px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
           >
             Back to Game
           </button>
@@ -139,9 +152,9 @@ function App() {
         <div
           style={{
             padding: "5px 10px",
-            background: "#222",
-            color: "#666",
-            fontSize: "11px",
+            background: "var(--color-bg-dark-subtle)",
+            color: "var(--color-text-muted)",
+            fontSize: "var(--font-size-xs)",
           }}
         >
           <a
@@ -150,7 +163,7 @@ function App() {
               e.preventDefault();
               navigateTo("menu");
             }}
-            style={{ color: "#888" }}
+            style={{ color: "var(--color-text-muted)" }}
           >
             Back to Main Menu
           </a>
@@ -199,9 +212,10 @@ function App() {
         <div
           style={{
             padding: "8px 16px",
-            background: "#111",
-            color: "#444",
-            fontSize: "11px",
+            background: "var(--color-bg-card)",
+            borderTop: "1px solid var(--color-border)",
+            color: "var(--color-text-secondary)",
+            fontSize: "var(--font-size-xs)",
             display: "flex",
             justifyContent: "space-between",
           }}
@@ -212,7 +226,7 @@ function App() {
               e.preventDefault();
               navigateTo("guestbook");
             }}
-            style={{ color: "#555" }}
+            style={{ color: "var(--color-link)" }}
           >
             Guestbook Archive
           </a>
@@ -222,7 +236,7 @@ function App() {
               e.preventDefault();
               navigateTo("test");
             }}
-            style={{ color: "#555" }}
+            style={{ color: "var(--color-link)" }}
           >
             Visual Test
           </a>

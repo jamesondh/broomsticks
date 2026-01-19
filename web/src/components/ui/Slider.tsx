@@ -22,16 +22,16 @@ const labelRowStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  color: "#ccc",
-  fontSize: "14px",
+  color: "var(--color-text-secondary)",
+  fontSize: "var(--font-size-md)",
 };
 
 const sliderStyle: CSSProperties = {
   width: "100%",
   height: "6px",
-  borderRadius: "3px",
+  borderRadius: 0,
   appearance: "none",
-  backgroundColor: "#444",
+  backgroundColor: "var(--color-border)",
   cursor: "pointer",
 };
 
@@ -53,7 +53,7 @@ export function Slider({
     <div style={{ ...containerStyle, ...style }}>
       <div style={labelRowStyle}>
         <span>{label}</span>
-        {showValue && <span style={{ color: "#4a90d9", fontWeight: "bold" }}>{displayValue}</span>}
+        {showValue && <span style={{ color: "var(--color-btn-primary)", fontWeight: "bold" }}>{displayValue}</span>}
       </div>
       <input
         {...props}

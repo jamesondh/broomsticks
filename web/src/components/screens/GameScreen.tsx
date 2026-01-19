@@ -18,13 +18,13 @@ const containerStyle: CSSProperties = {
   display: "flex",
   flexDirection: "column",
   height: "100%",
-  background: "#1a1a1a",
+  background: "var(--color-bg-dark)",
 };
 
 const hudStyle: CSSProperties = {
   padding: "10px 16px",
-  background: "#222",
-  color: "white",
+  background: "var(--color-bg-dark-subtle)",
+  color: "var(--color-text-inverse)",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -34,14 +34,14 @@ const scoreStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: "16px",
-  fontSize: "18px",
+  fontSize: "var(--font-size-lg)",
   fontWeight: "bold",
 };
 
 const teamScoreStyle = (team: Team): CSSProperties => ({
   padding: "4px 16px",
-  borderRadius: "4px",
-  background: team === 0 ? "#8b3a3a" : "#3a3a3a",
+  borderRadius: 0,
+  background: team === 0 ? "var(--color-team-red-bg)" : "var(--color-team-black-bg)",
   minWidth: "60px",
   textAlign: "center",
 });
@@ -58,11 +58,11 @@ const pauseOverlayStyle: CSSProperties = {
   alignItems: "center",
   justifyContent: "center",
   gap: "16px",
-  color: "white",
+  color: "var(--color-text-inverse)",
 };
 
 const pauseTitleStyle: CSSProperties = {
-  fontSize: "36px",
+  fontSize: "var(--font-size-2xl)",
   fontWeight: "bold",
   marginBottom: "16px",
 };
@@ -270,11 +270,11 @@ export function GameScreen({ settings, onBack, onGameOver }: GameScreenProps) {
 
         <div style={scoreStyle}>
           <div style={teamScoreStyle(0)}>{score.left}</div>
-          <span style={{ color: "#666" }}>-</span>
+          <span style={{ color: "var(--color-text-muted)" }}>-</span>
           <div style={teamScoreStyle(1)}>{score.right}</div>
         </div>
 
-        <div style={{ color: "#666", fontSize: "12px" }}>
+        <div style={{ color: "var(--color-text-muted)", fontSize: "var(--font-size-sm)" }}>
           First to {settings.winScore}
         </div>
       </div>
