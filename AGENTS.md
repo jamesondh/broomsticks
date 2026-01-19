@@ -132,7 +132,8 @@ Key engine features:
 - ✅ 2.5 AI Implementation - `web/src/engine/entities/Person.ts` (offensive/defensive AI, difficulty levels)
 - ✅ 2.6 Keyboard Input - `web/src/engine/systems/Input.ts` + `web/src/components/GameTest.tsx`
 - ✅ 2.7 Audio System - `web/src/audio/` (Howler.js, score/catch/bump/win sounds)
-- 🔄 2.8 React Integration - `web/src/components/GameTest.tsx` (partial - game loop and state working)
+- ✅ 2.8 React Integration - Full screen flow (MainMenu, GameScreen, SettingsScreen, ResultsScreen)
+- ✅ 2.9 Settings UI - Difficulty, ball counts, win score, audio settings with localStorage persistence
 
 ```
 web/src/renderer/
@@ -152,11 +153,24 @@ web/src/audio/
 ├── AudioManager.ts       # Howler.js wrapper with load/play/mute
 ├── sounds.ts             # Sound effect definitions
 └── index.ts
+
+web/src/components/
+├── screens/
+│   ├── MainMenu.tsx      # Title screen with Play/Settings
+│   ├── GameScreen.tsx    # Game canvas with HUD and pause
+│   ├── SettingsScreen.tsx # All game configuration options
+│   └── ResultsScreen.tsx # Win/lose with play again
+├── ui/
+│   ├── Button.tsx        # Reusable styled button
+│   └── Slider.tsx        # Reusable slider for settings
+└── GameTest.tsx          # Visual test page for development
+
+web/src/hooks/
+├── useSettings.ts        # Settings persistence to localStorage
+└── useGuestbookSearch.ts # Guestbook search functionality
 ```
 
-Visual test page: `web/src/components/GameTest.tsx` - run `bun run dev` to test
+Visual test page: `web/src/components/GameTest.tsx` - run `bun run dev` and visit `#test`
 
 **Remaining:**
-- 2.8 React Integration (full screens - MainMenu, GameScreen, ResultsScreen)
-- 2.9 Settings UI
 - 2.10 Particle Effects

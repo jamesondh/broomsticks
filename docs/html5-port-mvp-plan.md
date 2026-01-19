@@ -591,26 +591,30 @@ Implementation:
 
 Implementation: `web/src/audio/` (AudioManager.ts, sounds.ts, index.ts)
 
-### 2.8 React Integration (Partial)
+### 2.8 React Integration ✅
 
 - [x] Create `GameCanvas` component (PixiJS mount) - implemented in GameTest.tsx
 - [x] Game loop with requestAnimationFrame
 - [x] Game state tracking with React hooks
-- [ ] Create `MainMenu` screen
-- [ ] Create `GameScreen` with canvas + HUD (separate from test)
-- [ ] Create `ResultsScreen` (winner, stats, play again) - WinScreen UI exists
-- [ ] Implement screen routing with state
+- [x] Create `MainMenu` screen - `web/src/components/screens/MainMenu.tsx`
+- [x] Create `GameScreen` with canvas + HUD - `web/src/components/screens/GameScreen.tsx`
+- [x] Create `ResultsScreen` (winner, stats, play again) - `web/src/components/screens/ResultsScreen.tsx`
+- [x] Implement screen routing with state - `web/src/App.tsx`
 
-Implementation: `web/src/components/GameTest.tsx` - visual test page with full game integration
+Implementation:
+- `web/src/components/screens/` - MainMenu, GameScreen, SettingsScreen, ResultsScreen
+- `web/src/components/ui/` - Button, Slider shared components
+- `web/src/hooks/useSettings.ts` - Settings persistence hook
+- `web/src/App.tsx` - Screen state routing
 
-### 2.9 Settings UI
+### 2.9 Settings UI ✅
 
-- [ ] Create `SettingsScreen` component
-- [ ] Implement difficulty selector
-- [ ] Implement ball count sliders
-- [ ] Implement win score input
-- [ ] Implement SFX toggle and volume
-- [ ] Persist settings to localStorage
+- [x] Create `SettingsScreen` component - `web/src/components/screens/SettingsScreen.tsx`
+- [x] Implement difficulty selector (Easy/Medium/Hard/Expert)
+- [x] Implement ball count sliders (Red: 1-5, Black: 0-5)
+- [x] Implement win score input (10-100, step 10)
+- [x] Implement SFX toggle and volume (0-100%)
+- [x] Persist settings to localStorage via `useSettings` hook
 
 ### 2.10 Particle Effects
 

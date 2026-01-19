@@ -48,14 +48,14 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - Phase 1 complete, Phase 2 in progress (sprites and UI done)
+- **HTML5 port** - Phase 1 complete, Phase 2 nearly complete (full game playable with settings)
 
 ### HTML5 Port Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Engine | ✅ Complete |
-| 2 | Single Player | 🔄 In Progress (2.1-2.6 done, 2.8 partial) |
+| 2 | Single Player | 🔄 In Progress (2.1-2.9 done, 2.10 remaining) |
 | 3 | Local Multiplayer | Pending |
 | 4 | Online Multiplayer | Pending |
 | 5 | 2v2 Mode & Passing | Pending |
@@ -71,8 +71,8 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 - ✅ 2.5 AI Implementation (offensive/defensive modes, difficulty levels)
 - ✅ 2.6 Keyboard Input (WASD/Arrow keys, InputManager abstraction)
 - ✅ 2.7 Audio System (Howler.js, score/catch/bump/win sounds with mute toggle)
-- 🔄 2.8 React Integration (GameTest.tsx working, needs full screens)
-- ⏳ 2.9 Settings UI
+- ✅ 2.8 React Integration (MainMenu, GameScreen, SettingsScreen, ResultsScreen)
+- ✅ 2.9 Settings UI (difficulty, ball counts, win score, audio with localStorage)
 - ⏳ 2.10 Particle Effects
 
 See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
