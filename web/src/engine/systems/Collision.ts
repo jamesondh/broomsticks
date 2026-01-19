@@ -136,6 +136,8 @@ export function checkPlayerBallCollisions(
         if (ball.isBumper()) {
           // Black ball bumps player
           player.bump();
+          // Release any ball the bumped player is holding
+          releaseBall(player, pi, balls);
           events.push({
             type: "player-black-ball",
             bumpedPlayerIndex: pi,
