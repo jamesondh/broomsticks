@@ -561,69 +561,47 @@ Implementation: `web/src/renderer/ui/` (Scoreboard.ts, CountdownOverlay.ts, Scor
 
 Visual test page available at `web/src/components/GameTest.tsx` with controls for testing all UI components.
 
-### 2.5 AI Implementation
+### 2.5 AI Implementation ✅
 
-- [ ] Port AI logic from C++ version
-- [ ] Implement 100ms decision interval (timer-based)
-- [ ] Implement difficulty levels (easy/medium/hard/expert)
-- [ ] Implement target ball selection
+- [x] Port AI logic from C++ version
+- [x] Implement frame-based decision interval (smart value determines frequency)
+- [x] Implement difficulty levels (easy/medium/hard/expert via smart value)
+- [x] Implement target ball selection
 
-```typescript
-// AI decision logic
-function makeAIDecision(player: Person, balls: Ball[], config: GameConfig): PlayerInput {
-  const choices = Math.floor(player.smart / 2) + 1;
-  if (Math.random() * choices >= 1) {
-    return { up: false, down: false, left: false, right: false, pass: false };
-  }
+Implementation: `web/src/engine/entities/Person.ts` - `updateAI()`, `updateOffensiveAI()`, `updateDefensiveAI()` methods
 
-  // Offensive: has ball, move toward goal
-  if (player.heldBall) {
-    return calculateOffensiveMove(player);
-  }
+### 2.6 Keyboard Input ✅
 
-  // Defensive: chase target ball
-  return calculateDefensiveMove(player, player.target);
-}
-```
+- [x] Implement keyboard input handling
+- [x] Default bindings: WASD (P1), Arrows (P2)
+- [x] Track key state with keydown/keyup events
+- [x] Input abstraction layer with `InputManager` and `InputSource`
 
-### 2.6 Keyboard Input
+Implementation:
+- `web/src/engine/systems/Input.ts` - InputManager, InputSource interface, ManualInputSource
+- `web/src/components/GameTest.tsx` - WASD/Arrow key handling in game loop
 
-- [ ] Implement `KeyboardInput` class
-- [ ] Default bindings: WASD (P1), Arrows (P2)
-- [ ] Implement hybrid tap/hold with 150ms delay
-- [ ] Track key state with timestamps
+### 2.7 Audio System ✅
 
-```typescript
-class KeyboardInput {
-  private keyDownTime: Map<string, number> = new Map();
-  private readonly HOLD_DELAY = 150;
+- [x] Implement `AudioManager` with Howler.js
+- [x] Load all sound effects
+- [x] Trigger sounds on events (score, catch, bump, win)
+- [x] Implement volume control
+- [x] Implement mute toggle
 
-  isActive(key: string): boolean {
-    const downTime = this.keyDownTime.get(key);
-    if (!downTime) return false;
+Implementation: `web/src/audio/` (AudioManager.ts, sounds.ts, index.ts)
 
-    const elapsed = performance.now() - downTime;
-    // Immediate on first press, then continuous after delay
-    return elapsed < 50 || elapsed > this.HOLD_DELAY;
-  }
-}
-```
+### 2.8 React Integration (Partial)
 
-### 2.7 Audio System
-
-- [ ] Implement `AudioManager` with Howler.js
-- [ ] Load all sound effects
-- [ ] Trigger sounds on events (score, catch, bump, win)
-- [ ] Implement volume control
-- [ ] Implement mute toggle
-
-### 2.8 React Integration
-
-- [ ] Create `GameCanvas` component (PixiJS mount)
+- [x] Create `GameCanvas` component (PixiJS mount) - implemented in GameTest.tsx
+- [x] Game loop with requestAnimationFrame
+- [x] Game state tracking with React hooks
 - [ ] Create `MainMenu` screen
-- [ ] Create `GameScreen` with canvas + HUD
-- [ ] Create `ResultsScreen` (winner, stats, play again)
+- [ ] Create `GameScreen` with canvas + HUD (separate from test)
+- [ ] Create `ResultsScreen` (winner, stats, play again) - WinScreen UI exists
 - [ ] Implement screen routing with state
+
+Implementation: `web/src/components/GameTest.tsx` - visual test page with full game integration
 
 ### 2.9 Settings UI
 

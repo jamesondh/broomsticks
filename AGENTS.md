@@ -129,6 +129,10 @@ Key engine features:
 - ✅ 2.2 PixiJS Renderer Setup - `web/src/renderer/GameRenderer.ts` with scaling, high-DPI
 - ✅ 2.3 Sprite Implementation - `web/src/renderer/sprites/`
 - ✅ 2.4 UI Rendering (PixiJS) - `web/src/renderer/ui/`
+- ✅ 2.5 AI Implementation - `web/src/engine/entities/Person.ts` (offensive/defensive AI, difficulty levels)
+- ✅ 2.6 Keyboard Input - `web/src/engine/systems/Input.ts` + `web/src/components/GameTest.tsx`
+- ✅ 2.7 Audio System - `web/src/audio/` (Howler.js, score/catch/bump/win sounds)
+- 🔄 2.8 React Integration - `web/src/components/GameTest.tsx` (partial - game loop and state working)
 
 ```
 web/src/renderer/
@@ -143,14 +147,16 @@ web/src/renderer/
 │   ├── ScoreFlash.ts     # +10 animation on goal
 │   └── WinScreen.ts      # Game over overlay
 └── index.ts
+
+web/src/audio/
+├── AudioManager.ts       # Howler.js wrapper with load/play/mute
+├── sounds.ts             # Sound effect definitions
+└── index.ts
 ```
 
 Visual test page: `web/src/components/GameTest.tsx` - run `bun run dev` to test
 
 **Remaining:**
-- 2.5 AI Implementation
-- 2.6 Keyboard Input
-- 2.7 Audio System
-- 2.8 React Integration
+- 2.8 React Integration (full screens - MainMenu, GameScreen, ResultsScreen)
 - 2.9 Settings UI
 - 2.10 Particle Effects

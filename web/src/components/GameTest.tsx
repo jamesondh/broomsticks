@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Game } from "../engine/Game";
 import { GameRenderer } from "../renderer/GameRenderer";
+import { AudioManager } from "../audio";
 import type { PlayerInput } from "../engine/types";
 
 /**
@@ -11,12 +12,14 @@ export function GameTest() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Game | null>(null);
   const rendererRef = useRef<GameRenderer | null>(null);
+  const audioRef = useRef<AudioManager | null>(null);
   const animationRef = useRef<number>(0);
 
   const [gameState, setGameState] = useState<string>("menu");
   const [score, setScore] = useState({ left: 0, right: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
   const [showHitboxes, setShowHitboxes] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   // Initialize game and renderer
   useEffect(() => {
@@ -41,13 +44,33 @@ export function GameTest() {
       renderer.bindToGame(game);
       rendererRef.current = renderer;
 
-      // Track game state changes
+      // Create and load audio manager
+      const audio = new AudioManager({ volume: 0.7 });
+      await audio.load();
+      audioRef.current = audio;
+
+      // Track game state changes and play sounds
       game.on((event) => {
         if (event.type === "stateChange") {
           setGameState(event.to);
         }
         if (event.type === "goal") {
           setScore(game.getScore());
+          audio.play("score");
+        }
+        if (event.type === "collision") {
+          // Play appropriate sound based on collision type
+          if (event.event.type === "player-catch-ball") {
+            audio.play("catch");
+          } else if (
+            event.event.type === "player-player" ||
+            event.event.type === "player-black-ball"
+          ) {
+            audio.play("bump");
+          }
+        }
+        if (event.type === "gameOver") {
+          audio.play("win");
         }
       });
 
@@ -61,6 +84,7 @@ export function GameTest() {
         cancelAnimationFrame(animationRef.current);
       }
       rendererRef.current?.destroy();
+      audioRef.current?.destroy();
     };
   }, []);
 
@@ -182,6 +206,14 @@ export function GameTest() {
     }
   };
 
+  const handleToggleMute = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      const newMuted = audio.toggleMute();
+      setIsMuted(newMuted);
+    }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#1a1a1a" }}>
       {/* Control panel */}
@@ -209,6 +241,11 @@ export function GameTest() {
           />
           <span style={{ fontSize: "12px" }}>Hitboxes</span>
         </label>
+
+        <span style={{ color: "#888" }}>|</span>
+        <button onClick={handleToggleMute} style={{ minWidth: "60px" }}>
+          {isMuted ? "Unmute" : "Mute"}
+        </button>
 
         <span style={{ color: "#888" }}>|</span>
         <span style={{ fontSize: "12px", color: "#888" }}>UI Tests:</span>

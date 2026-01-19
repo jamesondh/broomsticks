@@ -55,7 +55,7 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Engine | ✅ Complete |
-| 2 | Single Player | 🔄 In Progress (2.1-2.4 done) |
+| 2 | Single Player | 🔄 In Progress (2.1-2.6 done, 2.8 partial) |
 | 3 | Local Multiplayer | Pending |
 | 4 | Online Multiplayer | Pending |
 | 5 | 2v2 Mode & Passing | Pending |
@@ -68,7 +68,12 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 - ✅ 2.2 PixiJS Renderer Setup
 - ✅ 2.3 Sprite Implementation (PlayerSprite, BallSprite, FieldSprite)
 - ✅ 2.4 UI Rendering (Scoreboard, Countdown, ScoreFlash, WinScreen)
-- ⏳ 2.5-2.10 Remaining (AI, Input, Audio, React, Settings, Particles)
+- ✅ 2.5 AI Implementation (offensive/defensive modes, difficulty levels)
+- ✅ 2.6 Keyboard Input (WASD/Arrow keys, InputManager abstraction)
+- ✅ 2.7 Audio System (Howler.js, score/catch/bump/win sounds with mute toggle)
+- 🔄 2.8 React Integration (GameTest.tsx working, needs full screens)
+- ⏳ 2.9 Settings UI
+- ⏳ 2.10 Particle Effects
 
 See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
 
