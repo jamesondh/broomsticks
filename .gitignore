@@ -29,6 +29,16 @@ temp/
 
 # Java (archive/broomsticks1-java)
 *.class
+# Build artifacts for running archived Java applets on modern systems
+archive/broomsticks1-java/*/AppletRunner.java
+# Sound files copied to variants that don't originally have them
+# (only broomsticks-devOld and broomsticksDevF have original snd/ folders)
+archive/broomsticks1-java/broomsticks/snd/
+archive/broomsticks1-java/broomsticksOld/snd/
+archive/broomsticks1-java/broomsticksNewDev/snd/
+archive/broomsticks1-java/broomsticksAdvanced/snd/
+archive/broomsticks1-java/broomsticksExpert/snd/
+archive/broomsticks1-java/broomsticksDemo/snd/
 
 # C++ (archive/broomsticks2-cpp)
 *.o

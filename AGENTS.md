@@ -64,6 +64,7 @@ Technical documentation lives in `docs/`:
 - `gameplay-comparison.md` - Mechanics comparison across all three versions
 - `broomsticks1-java-variant-comparison.md` - Analysis of the 8 Java applet variants
 - `broomsticks-1-vs-2-comparison.md` - Technical comparison between Java and C++ versions
+- `broomsticks1-java-macos-build.md` - Building the Java applet on modern macOS
 - `broomsticks2-cpp-macos-build.md` - Building the C++ version on modern macOS
 
 ## Web Development

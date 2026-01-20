@@ -41,8 +41,8 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 | [Gameplay Comparison](docs/gameplay-comparison.md) | Mechanics comparison across all three versions |
 | [Java Variant Comparison](docs/broomsticks1-java-variant-comparison.md) | Analysis of the 8 Java applet variants |
 | [Java vs C++ Comparison](docs/broomsticks-1-vs-2-comparison.md) | Technical comparison between versions |
-| [macOS Build Guide](docs/broomsticks2-cpp-macos-build.md) | Building the C++ version on modern macOS |
-| [Guestbook Highlights](docs/interesting-guestbook-comments.md) | Curated comments from 2001-2005 |
+| [Broomsticks 1 macOS Build Guide](docs/broomsticks1-java-macos-build.md) | Building the Java applet on modern macOS |
+| [Broomsticks 2 macOS Build Guide](docs/broomsticks2-cpp-macos-build.md) | Building the C++ version on modern macOS |
 
 ## Current Status
 
