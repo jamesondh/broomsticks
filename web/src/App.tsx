@@ -231,14 +231,12 @@ function App() {
             Guestbook Archive
           </a>
           <a
-            href="/test"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo("test");
-            }}
+            href="https://github.com/jamesondh/broomsticks"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ color: "var(--color-link)" }}
           >
-            Visual Test
+            GitHub
           </a>
         </div>
       )}
