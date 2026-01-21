@@ -1,0 +1,147 @@
+/* Broomsticks 2 - Retro Early 2000s Design System */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #aaaacc;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #000000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Settings Panel */
+#settings-panel {
+    background: #e5e5e5;
+    border: 1px solid #444444;
+    border-radius: 0;
+    padding: 20px;
+    width: 340px;
+}
+
+#settings-panel h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #000000;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.setting-row label {
+    width: 100px;
+    font-size: 13px;
+    color: #000000;
+}
+
+.setting-row select,
+.setting-row input[type="number"] {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #444444;
+    border-radius: 0;
+    background: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.setting-row input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+}
+
+.setting-row span {
+    width: 40px;
+    text-align: right;
+    font-size: 13px;
+}
+
+#playBtn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px 20px;
+    background: #4a90d9;
+    color: #ffffff;
+    border: none;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#playBtn:hover {
+    background: #3a80c9;
+}
+
+/* Game Container */
+#game-container {
+    display: none;
+}
+
+#game-container.active {
+    display: block;
+}
+
+#gameCanvas {
+    background-color: #000000;
+    border: 1px solid #444444;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Controls Info */
+#controls-info {
+    display: none;
+    background: #e5e5e5;
+    border: 1px solid #444444;
+    border-radius: 0;
+    padding: 12px 16px;
+    max-width: 640px;
+}
+
+#controls-info.active {
+    display: block;
+}
+
+.player-controls {
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #000000;
+}
+
+.player-controls:last-child {
+    margin-bottom: 0;
+}
+
+.player-controls strong {
+    color: #000000;
+}
+
+/* Hide settings when game is active */
+#settings-panel.hidden {
+    display: none;
+}

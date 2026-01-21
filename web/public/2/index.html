@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broomsticks 2 - HTML5 Port</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="settings-panel">
+            <h2>BROOMSTICKS 2 SETTINGS</h2>
+            <div class="setting-row">
+                <label for="redBalls">Red Balls</label>
+                <select id="redBalls">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label for="blackBalls">Black Balls</label>
+                <select id="blackBalls">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label for="accel">Acceleration</label>
+                <input type="range" id="accel" min="0.5" max="5" step="0.5" value="2">
+                <span id="accelValue">2.0</span>
+            </div>
+            <div class="setting-row">
+                <label for="maxSpeed">Max Speed</label>
+                <input type="range" id="maxSpeed" min="2" max="12" step="1" value="6">
+                <span id="maxSpeedValue">6</span>
+            </div>
+            <div class="setting-row">
+                <label for="winScore">Win Score</label>
+                <input type="number" id="winScore" min="10" max="1000" step="10" value="50">
+            </div>
+            <button id="playBtn">PLAY</button>
+        </div>
+        <div id="game-container">
+            <canvas id="gameCanvas" width="640" height="480"></canvas>
+        </div>
+        <div id="controls-info">
+            <div class="player-controls">
+                <strong>Player 1 (Red Team):</strong> E/S/F - move, 1 - model, 2 - pass, 4 - AI toggle
+            </div>
+            <div class="player-controls">
+                <strong>Player 2 (Black Team):</strong> Arrows - move, Enter - model, Shift - pass, Ctrl - AI toggle
+            </div>
+            <div class="player-controls">
+                <strong>Spacebar:</strong> Toggle 2-on-2 mode | <strong>ESC:</strong> Return to settings
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
