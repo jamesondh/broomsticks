@@ -7,7 +7,10 @@ const DEFAULT_SETTINGS = {
     blackBalls: 2,
     accel: 2.0,
     maxSpeed: 6,
-    winScore: 50
+    winScore: 50,
+    sky: 'sky',           // 'sky', 'sky1', 'sky2', 'sky3', 'sky4'
+    animFps: 4,           // Animation frames per second (C++ default: ~4fps = 250ms)
+    maxFps: 60            // Max game FPS (15-60)
 };
 
 export class Settings {

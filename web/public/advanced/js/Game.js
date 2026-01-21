@@ -63,6 +63,10 @@ export class Game {
         // Input state
         this.keysPressed = new Set();
 
+        // Grab sound debouncing (per-team state)
+        this.teamBasket = [false, false];
+        this.prevTeamBasket = [false, false];
+
         // Offscreen buffer for double buffering
         this.offCanvas = document.createElement('canvas');
         this.offCanvas.width = 628;
@@ -478,6 +482,10 @@ export class Game {
 
         this.currBasket = 0;
         this.goldSpawned = false;
+
+        // Reset grab sound debouncing state
+        this.teamBasket = [false, false];
+        this.prevTeamBasket = [false, false];
     }
 
     openWebsite() {
@@ -544,6 +552,9 @@ export class Game {
     }
 
     checkCaught() {
+        // Reset basket state for this frame
+        this.teamBasket[0] = false;
+        this.teamBasket[1] = false;
         this.currBasket = 0;
 
         // Check each player against each catchable ball
@@ -567,10 +578,12 @@ export class Game {
                         this.currBasket = 2;
                     }
 
-                    // Play grab sound (only once per catch)
-                    if (!ball._grabbed) {
+                    // Mark this team as holding a ball
+                    this.teamBasket[person.side] = true;
+
+                    // Play grab sound only on transition (Java line 821)
+                    if (!this.prevTeamBasket[person.side]) {
                         this.playSound('grab');
-                        ball._grabbed = true;
                     }
 
                     // Check if scoring
@@ -581,11 +594,13 @@ export class Game {
                         // Regular red ball scoring
                         this.checkRegularScore(person, ball);
                     }
-                } else {
-                    ball._grabbed = false;
                 }
             }
         }
+
+        // Save state for next frame (Java lines 847-848)
+        this.prevTeamBasket[0] = this.teamBasket[0];
+        this.prevTeamBasket[1] = this.teamBasket[1];
     }
 
     checkRegularScore(person, ball) {
@@ -631,7 +646,7 @@ export class Game {
             if (Math.abs(dy) < 20) {
                 person.score += this.settings.goldPoints;
                 ball.alive = false;
-                this.playSound('win');
+                // Win sound plays in gameOver() - don't play here (Java line 737)
                 this.gameOver();
             }
         }
@@ -642,7 +657,7 @@ export class Game {
             if (Math.abs(dy) < 20) {
                 person.score += this.settings.goldPoints;
                 ball.alive = false;
-                this.playSound('win');
+                // Win sound plays in gameOver() - don't play here (Java line 737)
                 this.gameOver();
             }
         }
@@ -659,7 +674,10 @@ export class Game {
         // Player collision: w and h thresholds (Java line 861)
         if (Math.abs(dx) < person.w && Math.abs(dy) < person.h) {
             // Lower player bumps higher player
-            this.playSound('bump');
+            // Only play bump if not near ground (Java line 862)
+            if (person.y < 347 - person.h - 50) {
+                this.playSound('bump');
+            }
             if (person.y < person2.y) {
                 person2.y = 1000;
             } else if (person2.y < person.y) {
@@ -676,7 +694,10 @@ export class Game {
             dx = person.x + 8 - ball.x;
             dy = person.y + 8 - ball.y;
             if (Math.abs(dx) < 20 && Math.abs(dy) < 20) {
-                this.playSound('bump');
+                // Only play bump if not near ground (Java line 882)
+                if (person.y < 347 - person.h - 50) {
+                    this.playSound('bump');
+                }
                 person.y = 1000;
             }
 
@@ -684,7 +705,10 @@ export class Game {
             dx = person2.x + 8 - ball.x;
             dy = person2.y + 8 - ball.y;
             if (Math.abs(dx) < 20 && Math.abs(dy) < 20) {
-                this.playSound('bump');
+                // Only play bump if not near ground (Java line 882)
+                if (person2.y < 347 - person2.h - 50) {
+                    this.playSound('bump');
+                }
                 person2.y = 1000;
             }
         }
@@ -997,18 +1021,18 @@ export class Game {
         const barWidth = 200;
         const len = Math.floor(barWidth * percent);
 
-        // Yellow fill showing elapsed time (grows as time passes)
+        // Yellow fill showing remaining time (shrinks as time passes, matching Java)
         ctx.fillStyle = this.yellow;
-        ctx.fillRect(midW - 100 + 11, 8, len, 14);
+        ctx.fillRect(midW - 100, 30, barWidth - len, 15);
 
         // Border
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(midW - 100 + 11, 8, barWidth, 14);
+        ctx.strokeRect(midW - 100, 30, barWidth, 15);
 
         // "time:" label
         ctx.fillStyle = '#000';
         ctx.font = '10px Helvetica, Arial, sans-serif';
-        ctx.fillText('gold:', midW - 15 + 11, 18);
+        ctx.fillText('time:', midW - 20, 43);
     }
 
     drawBorder(ctx) {

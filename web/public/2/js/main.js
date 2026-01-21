@@ -20,6 +20,11 @@ let accelValue;
 let maxSpeedSlider;
 let maxSpeedValue;
 let winScoreInput;
+let skySelect;
+let animFpsSlider;
+let animFpsValue;
+let maxFpsSlider;
+let maxFpsValue;
 
 function init() {
     // Get DOM elements
@@ -35,6 +40,11 @@ function init() {
     maxSpeedSlider = document.getElementById('maxSpeed');
     maxSpeedValue = document.getElementById('maxSpeedValue');
     winScoreInput = document.getElementById('winScore');
+    skySelect = document.getElementById('sky');
+    animFpsSlider = document.getElementById('animFps');
+    animFpsValue = document.getElementById('animFpsValue');
+    maxFpsSlider = document.getElementById('maxFps');
+    maxFpsValue = document.getElementById('maxFpsValue');
 
     // Initialize settings
     settings = new Settings();
@@ -64,6 +74,11 @@ function loadSettingsToUI() {
     maxSpeedSlider.value = cfg.maxSpeed;
     maxSpeedValue.textContent = cfg.maxSpeed;
     winScoreInput.value = cfg.winScore;
+    skySelect.value = cfg.sky;
+    animFpsSlider.value = cfg.animFps;
+    animFpsValue.textContent = cfg.animFps;
+    maxFpsSlider.value = cfg.maxFps;
+    maxFpsValue.textContent = cfg.maxFps;
 }
 
 function saveSettingsFromUI() {
@@ -72,6 +87,9 @@ function saveSettingsFromUI() {
     settings.set('accel', parseFloat(accelSlider.value));
     settings.set('maxSpeed', parseInt(maxSpeedSlider.value));
     settings.set('winScore', parseInt(winScoreInput.value));
+    settings.set('sky', skySelect.value);
+    settings.set('animFps', parseInt(animFpsSlider.value));
+    settings.set('maxFps', parseInt(maxFpsSlider.value));
 }
 
 function setupEventListeners() {
@@ -105,6 +123,22 @@ function setupEventListeners() {
         if (val > 1000) val = 1000;
         winScoreInput.value = val;
         settings.set('winScore', val);
+    });
+
+    skySelect.addEventListener('change', () => {
+        settings.set('sky', skySelect.value);
+    });
+
+    animFpsSlider.addEventListener('input', () => {
+        const val = parseInt(animFpsSlider.value);
+        animFpsValue.textContent = val;
+        settings.set('animFps', val);
+    });
+
+    maxFpsSlider.addEventListener('input', () => {
+        const val = parseInt(maxFpsSlider.value);
+        maxFpsValue.textContent = val;
+        settings.set('maxFps', val);
     });
 }
 

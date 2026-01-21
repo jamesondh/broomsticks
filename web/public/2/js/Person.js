@@ -15,6 +15,9 @@ export class Person extends FlyingObject {
         this.w = 38;
         this.h = 38;
 
+        // Animation settings (from C++ br2)
+        this.animDelay = 250; // ms per frame
+
         // Key bindings
         this.upKey = null;
         this.downKey = null;
@@ -59,6 +62,10 @@ export class Person extends FlyingObject {
 
     getSide() {
         return this.side;
+    }
+
+    setAnimDelay(delay) {
+        this.animDelay = delay;
     }
 
     getPassBall() {
@@ -188,13 +195,27 @@ export class Person extends FlyingObject {
         // Vertical state: 0 = falling/neutral, 1 = rising
         const v = this.vy < 0 ? 1 : 0;
 
-        // Sprite position in sheet:
-        // x = team*160 + v*80 + h*40 + 1
-        // y = model*40 + 41 (no animation frames in this version)
-        const spriteX = this.side * 160 + v * 80 + h * 40 + 1;
-        const spriteY = this.model * 40 + 41;
-
         if (this.game.playersImage) {
+            // Calculate animation frames from sprite sheet height (C++ formula)
+            // anims = (players->h - 41) / 200
+            const anims = Math.max(1, Math.floor((this.game.playersImage.height - 41) / 200));
+
+            // Calculate animation frame based on time
+            const now = performance.now();
+            let frame = Math.floor(now / this.animDelay) % anims;
+
+            // On ground: use static frame 0 (C++: y > height-20-39-15)
+            const groundThreshold = this.game.height - 20 - 39 - 15;
+            if (this.y > groundThreshold) {
+                frame = 0;
+            }
+
+            // Sprite position in sheet:
+            // x = team*160 + v*80 + h*40 + 1
+            // y = model*40*anims + 40*frame + 41 (with animation frames)
+            const spriteX = this.side * 160 + v * 80 + h * 40 + 1;
+            const spriteY = this.model * 40 * anims + 40 * frame + 41;
+
             ctx.drawImage(
                 this.game.playersImage,
                 spriteX, spriteY, 39, 39,
@@ -227,9 +248,9 @@ export class Person extends FlyingObject {
             ctx.fillRect(x + 40, y + 1, 35, 10);
             ctx.fillStyle = '#000000';
             ctx.fillRect(x + 41, y + 2, 33, 8);
-            // Skill bar fill (lower smart = more fill)
+            // Skill bar fill (lower smart = more fill, max 35-smart pixels)
             ctx.fillStyle = '#ff0000';
-            ctx.fillRect(x + 41, y + 2, 33 - this.smart, 8);
+            ctx.fillRect(x + 41, y + 2, 35 - this.smart, 8);
 
             ctx.fillStyle = '#ffffff';
             ctx.fillText(this.getKeyHint(), x + 80, y + 10);

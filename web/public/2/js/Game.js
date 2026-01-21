@@ -57,6 +57,7 @@ export class Game {
         // Scores
         this.teamScore = [0, 0];
         this.teamBasket = [0, 0]; // Which team has the ball
+        this.lastScoringSide = -1; // Which side scored (for highlight, -1 = none)
         this.timer = 0;
         this.winScore = 50;
 
@@ -64,6 +65,8 @@ export class Game {
         this.lastTime = 0;
         this.etime = 0;
         this.running = false;
+        this.maxFps = 60;
+        this.animDelay = 250; // ms per animation frame
 
         // Bind methods
         this.gameLoop = this.gameLoop.bind(this);
@@ -85,6 +88,9 @@ export class Game {
     }
 
     async loadAssets() {
+        const cfg = this.settings.getAll();
+        const skyName = cfg.sky || 'sky';
+
         const loadImage = (src) => {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -100,7 +106,7 @@ export class Game {
         const [players, items, sky, front, intro] = await Promise.all([
             loadImage('images/players.png'),
             loadImage('images/items.png'),
-            loadImage('images/sky.png'),
+            loadImage(`images/${skyName}.png`),
             loadImage('images/front.png'),
             loadImage('images/intro.png')
         ]);
@@ -108,16 +114,41 @@ export class Game {
         this.playersImage = players;
         this.itemsImage = items;
         this.skyImage = sky;
+        this.currentSky = skyName;
         this.frontImage = front;
         this.introImage = intro;
 
         console.log('Assets loaded');
     }
 
-    start() {
+    async loadSkyImage(skyName) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                this.skyImage = img;
+                this.currentSky = skyName;
+                resolve(img);
+            };
+            img.onerror = () => {
+                console.warn(`Failed to load: images/${skyName}.png`);
+                resolve(null);
+            };
+            img.src = `images/${skyName}.png`;
+        });
+    }
+
+    async start() {
         // Get settings
         const cfg = this.settings.getAll();
         this.winScore = cfg.winScore;
+        this.maxFps = cfg.maxFps || 60;
+        this.animDelay = 1000 / (cfg.animFps || 4); // Convert FPS to ms delay
+
+        // Load sky image if changed
+        const skyName = cfg.sky || 'sky';
+        if (this.currentSky !== skyName) {
+            await this.loadSkyImage(skyName);
+        }
 
         // Create balls
         this.balls = [];
@@ -148,6 +179,7 @@ export class Game {
         p1.setSide(0);
         p1.setAccel(cfg.accel);
         p1.setMaxSpeed(cfg.maxSpeed);
+        p1.setAnimDelay(this.animDelay);
         p1.setInfo(20, this.height - 15);
 
         // Player 2 (Black team, right side)
@@ -156,6 +188,7 @@ export class Game {
         p2.setSide(1);
         p2.setAccel(cfg.accel);
         p2.setMaxSpeed(cfg.maxSpeed);
+        p2.setAnimDelay(this.animDelay);
         p2.setInfo(this.width - 290, this.height - 15);
 
         // Player 3 (Red team, left side - for 2v2)
@@ -164,6 +197,7 @@ export class Game {
         p3.setSide(0);
         p3.setAccel(cfg.accel);
         p3.setMaxSpeed(cfg.maxSpeed);
+        p3.setAnimDelay(this.animDelay);
         p3.setInfo(20, this.height - 5);
 
         // Player 4 (Black team, right side - for 2v2)
@@ -172,6 +206,7 @@ export class Game {
         p4.setSide(1);
         p4.setAccel(cfg.accel);
         p4.setMaxSpeed(cfg.maxSpeed);
+        p4.setAnimDelay(this.animDelay);
         p4.setInfo(this.width - 290, this.height - 5);
 
         this.players = [p1, p2, p3, p4];
@@ -180,6 +215,7 @@ export class Game {
         // Reset scores
         this.teamScore = [0, 0];
         this.teamBasket = [0, 0];
+        this.lastScoringSide = -1;
         this.timer = 0;
 
         // Start game
@@ -199,8 +235,16 @@ export class Game {
     gameLoop(timestamp) {
         if (!this.running) return;
 
+        // FPS limiting
+        const targetFrameTime = 1000 / this.maxFps;
+        const elapsed = timestamp - this.lastTime;
+        if (elapsed < targetFrameTime) {
+            requestAnimationFrame(this.gameLoop);
+            return;
+        }
+
         // Calculate elapsed time
-        this.etime = timestamp - this.lastTime;
+        this.etime = elapsed;
         if (this.etime > 100) this.etime = 100; // Cap to prevent huge jumps
         this.lastTime = timestamp;
 
@@ -291,6 +335,7 @@ export class Game {
                             if (dyGoal < 20) {
                                 this.teamScore[p.getSide()] += 10;
                                 console.log(`Score! ${this.teamScore[0]} to ${this.teamScore[1]}`);
+                                this.lastScoringSide = p.getSide();
                                 this.timer = 15;
                                 ball.setX(this.midW);
 
@@ -545,8 +590,11 @@ export class Game {
     }
 
     drawScores(ctx) {
-        const highlightLeft = this.timer > 0 && this.teamBasket[0] ? 1 : 0;
-        const highlightRight = this.timer > 0 && this.teamBasket[1] ? 1 : 0;
+        // Use lastScoringSide for highlight (stored when goal happens)
+        // Side 0 (left/red team) scores into right basket, highlight left score box
+        // Side 1 (right/black team) scores into left basket, highlight right score box
+        const highlightLeft = this.timer > 0 && this.lastScoringSide === 0 ? 1 : 0;
+        const highlightRight = this.timer > 0 && this.lastScoringSide === 1 ? 1 : 0;
 
         // Left score box (Red team)
         ctx.fillStyle = this.black;

@@ -22,5 +22,31 @@ export default defineConfig({
         })
       },
     },
+    {
+      name: 'advanced-redirect',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/advanced' || req.url === '/advanced/') {
+            res.writeHead(302, { Location: '/advanced/index.html' })
+            res.end()
+            return
+          }
+          next()
+        })
+      },
+    },
+    {
+      name: '2-redirect',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/2' || req.url === '/2/') {
+            res.writeHead(302, { Location: '/2/index.html' })
+            res.end()
+            return
+          }
+          next()
+        })
+      },
+    },
   ],
 })
