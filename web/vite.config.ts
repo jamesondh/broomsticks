@@ -10,6 +10,21 @@ export default defineConfig({
       },
     }),
     {
+      name: 'spa-fallback',
+      configureServer(server) {
+        // Run early to intercept SPA routes before static file serving
+        server.middlewares.use((req, _res, next) => {
+          const url = req.url || ''
+          // SPA routes that should fall back to index.html
+          // Match /guestbook/* but not static files (those have extensions)
+          if (url.startsWith('/guestbook') && !url.includes('.')) {
+            req.url = '/'
+          }
+          next()
+        })
+      },
+    },
+    {
       name: 'demo-redirect',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {

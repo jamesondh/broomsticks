@@ -71,8 +71,8 @@ export class Game {
         // Track if settings changed that require asset reload
         this.settingsChanged = false;
 
-        // Original website URL
-        this.websiteUrl = 'https://www.visbox.com/broomsticks/';
+        // External URLs
+        this.githubUrl = 'https://github.com/jamesondh/broomsticks';
 
         // Colors (matching original)
         this.blue = '#0080ff';
@@ -449,9 +449,13 @@ export class Game {
                     this.player1.isRobot = false;
                     this.state = GameState.SETTINGS;
                 }
-                // Website link button
-                if (x > 186 && x < 506 && y > 341 && y < 371) {
-                    this.openWebsite();
+                // Guestbook button
+                if (x > 150 && x < 300 && y > 310 && y < 340) {
+                    window.location.href = '/guestbook';
+                }
+                // GitHub button
+                if (x > 370 && x < 520 && y > 310 && y < 340) {
+                    window.open(this.githubUrl, '_blank');
                 }
                 break;
 
@@ -545,7 +549,7 @@ export class Game {
     }
 
     openWebsite() {
-        window.open(this.websiteUrl, '_blank');
+        window.open(this.githubUrl, '_blank');
     }
 
     gameLoop(timestamp) {
@@ -917,19 +921,24 @@ export class Game {
         ctx.fillText('Click here for', 409, 194);
         ctx.fillText('two player', 409, 209);
 
-        // Guestbook text
-        ctx.fillText('Visit my guestbook by clicking below!', 209, 269);
+        // Attribution text
+        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 155, 269);
 
-        // Website link button
+        // Guestbook button
         ctx.fillStyle = this.green;
-        ctx.fillRect(164, 279, 320, 30);
+        ctx.fillRect(139, 279, 150, 30);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(164, 279, 320, 30);
+        ctx.strokeRect(139, 279, 150, 30);
         ctx.fillStyle = '#000';
-        ctx.fillText('Official Website: http://www.visbox.com/broomsticks/', 179, 299);
+        ctx.fillText('Guestbook', 179, 299);
 
-        // Copyright
-        ctx.fillText('Copyright (c) 2000-2011 Paul Rajlich, all rights reserved.', 179, 334);
+        // GitHub button
+        ctx.fillStyle = this.green;
+        ctx.fillRect(359, 279, 150, 30);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(359, 279, 150, 30);
+        ctx.fillStyle = '#000';
+        ctx.fillText('GitHub', 409, 299);
 
         // Intro image
         if (this.introImage) {

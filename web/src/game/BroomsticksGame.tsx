@@ -48,27 +48,29 @@ export function BroomsticksGame() {
   }, [updateScale]);
 
   return (
-    <div
-      id="game-container"
-      ref={containerRef}
-      style={{
-        position: 'relative',
-        width: '650px',
-        height: '430px',
-        transformOrigin: 'center center',
-      }}
-    >
-      <canvas
-        id="gameCanvas"
-        ref={canvasRef}
-        width={650}
-        height={430}
+    <div className="game-page">
+      <div
+        id="game-container"
+        ref={containerRef}
         style={{
-          display: 'block',
-          backgroundColor: 'white',
-          imageRendering: 'pixelated',
+          position: 'relative',
+          width: '650px',
+          height: '430px',
+          transformOrigin: 'center center',
         }}
-      />
+      >
+        <canvas
+          id="gameCanvas"
+          ref={canvasRef}
+          width={650}
+          height={430}
+          style={{
+            display: 'block',
+            backgroundColor: 'white',
+            imageRendering: 'pixelated',
+          }}
+        />
+      </div>
     </div>
   );
 }
