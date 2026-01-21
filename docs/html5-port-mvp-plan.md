@@ -1,5 +1,7 @@
 # Broomsticks HTML5 Port - Implementation Plan
 
+**NOTE: This spec has been deprecated and superseded by the [html5-simplified-port-mvp-plan.md](html5-simplified-port-mvp-plan.md) document.**
+
 A comprehensive phased implementation plan for porting Broomsticks to HTML5/TypeScript with PartyKit multiplayer.
 
 ## Table of Contents

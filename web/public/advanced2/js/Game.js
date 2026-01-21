@@ -9,6 +9,7 @@ import { Person } from './Person.js';
 export const GameState = {
     LOADING: 'loading',
     MODE_SELECT: 'mode_select',
+    SETTINGS: 'settings',
     RULES: 'rules',
     READY: 'ready',
     PLAYING: 'playing',
@@ -21,8 +22,54 @@ export class Game {
         this.ctx = canvas.getContext('2d');
         this.ctx.textRendering = 'geometricPrecision';
 
-        // Store settings
-        this.settings = settings;
+        // Store settings with defaults
+        this.settings = settings || {
+            dive: false,
+            accel: 2,
+            maxSpeed: 5,
+            redBalls: 1,
+            blackBalls: 2,
+            goldBalls: 1,
+            goldPoints: 150,
+            duration: 60,
+            winScore: 50,
+            playerImg: 'images/players.gif',
+            bgImg: 'images/sky1.jpg',
+            sound: true
+        };
+
+        // Settings options for in-game settings screen
+        this.settingsOptions = {
+            dive: [false, true],
+            accel: [1, 2, 3],
+            maxSpeed: [4, 5, 6, 7],
+            redBalls: [1, 2, 3],
+            blackBalls: [0, 1, 2, 3],
+            goldBalls: [0, 1, 2],
+            goldPoints: { min: 50, max: 500, step: 10 },
+            duration: { min: 5, max: 120, step: 5 },
+            winScore: { min: 10, max: 200, step: 10 },
+            playerImg: [
+                { value: 'images/players.gif', label: 'Default' },
+                { value: 'images/harden.gif', label: 'Harden' },
+                { value: 'images/ZeldaPLAYERS-ted.gif', label: 'Zelda' },
+                { value: 'images/playersJeronimus3.gif', label: 'Jeronimus' },
+                { value: 'images/playersSol.gif', label: 'Sol' },
+                { value: 'images/playersBen.gif', label: 'Ben' },
+                { value: 'images/playersDavis.gif', label: 'Davis' },
+                { value: 'images/playersDBZted.gif', label: 'Dragon Ball Z' },
+                { value: 'images/playersNess.gif', label: 'Ness' },
+                { value: 'images/playersXmas.gif', label: 'Christmas' }
+            ],
+            bgImg: [
+                { value: 'images/sky1.jpg', label: 'Sky 1' },
+                { value: 'images/castle1.0.jpg', label: 'Castle' }
+            ],
+            sound: [true, false]
+        };
+
+        // Track if settings changed that require asset reload
+        this.settingsChanged = false;
 
         // Original website URL
         this.websiteUrl = 'https://www.visbox.com/broomsticks/';
@@ -395,17 +442,21 @@ export class Game {
                 // Single player button
                 if (x > 150 && x < 270 && y > 205 && y < 255) {
                     this.player1.isRobot = true;
-                    this.state = GameState.RULES;
+                    this.state = GameState.SETTINGS;
                 }
                 // Two player button
                 if (x > 400 && x < 520 && y > 205 && y < 255) {
                     this.player1.isRobot = false;
-                    this.state = GameState.RULES;
+                    this.state = GameState.SETTINGS;
                 }
                 // Website link button
                 if (x > 186 && x < 506 && y > 341 && y < 371) {
                     this.openWebsite();
                 }
+                break;
+
+            case GameState.SETTINGS:
+                this.handleSettingsClick(x, y);
                 break;
 
             case GameState.RULES:
@@ -819,6 +870,9 @@ export class Game {
             case GameState.MODE_SELECT:
                 this.drawModeSelectScreen(ctx);
                 break;
+            case GameState.SETTINGS:
+                this.drawSettingsScreen(ctx);
+                break;
             case GameState.RULES:
                 this.drawRulesScreen(ctx);
                 break;
@@ -881,6 +935,196 @@ export class Game {
         if (this.introImage) {
             ctx.drawImage(this.introImage, 139, 39);
         }
+    }
+
+    drawSettingsScreen(ctx) {
+        ctx.fillStyle = '#000';
+        ctx.font = '16px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+
+        // Intro image
+        if (this.introImage) {
+            ctx.drawImage(this.introImage, 139, 19);
+        }
+
+        // Title
+        ctx.fillText('SETTINGS', 280, 140);
+
+        // Left column settings (x=60)
+        const leftX = 60;
+        const rightX = 340;
+        const startY = 165;
+        const lineHeight = 18;
+
+        // Left column
+        ctx.fillText(`Diving: ${this.settings.dive ? 'Yes' : 'No'}`, leftX, startY);
+        ctx.fillText(`Acceleration: ${this.settings.accel}`, leftX, startY + lineHeight);
+        ctx.fillText(`Max speed: ${this.settings.maxSpeed}`, leftX, startY + lineHeight * 2);
+        ctx.fillText(`Red balls: ${this.settings.redBalls}`, leftX, startY + lineHeight * 3);
+        ctx.fillText(`Black balls: ${this.settings.blackBalls}`, leftX, startY + lineHeight * 4);
+        ctx.fillText(`Gold balls: ${this.settings.goldBalls}`, leftX, startY + lineHeight * 5);
+
+        // Right column
+        ctx.fillText(`Gold points: < ${this.settings.goldPoints} >`, rightX, startY);
+        ctx.fillText(`Seconds to gold: < ${this.settings.duration} >`, rightX, startY + lineHeight);
+        ctx.fillText(`Score to win: < ${this.settings.winScore} >`, rightX, startY + lineHeight * 2);
+        ctx.fillText(`Sound: ${this.settings.sound ? 'On' : 'Off'}`, rightX, startY + lineHeight * 3);
+
+        // Player sprite setting
+        const playerOption = this.settingsOptions.playerImg.find(p => p.value === this.settings.playerImg);
+        const playerLabel = playerOption ? playerOption.label : 'Default';
+        ctx.fillText(`Player: < ${playerLabel} >`, rightX, startY + lineHeight * 4);
+
+        // Background setting
+        const bgOption = this.settingsOptions.bgImg.find(b => b.value === this.settings.bgImg);
+        const bgLabel = bgOption ? bgOption.label : 'Sky 1';
+        ctx.fillText(`Background: < ${bgLabel} >`, rightX, startY + lineHeight * 5);
+
+        // Continue button
+        ctx.fillStyle = this.green;
+        ctx.fillRect(204, 280, 230, 25);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(204, 280, 230, 25);
+        ctx.fillStyle = '#000';
+        ctx.fillText('Click here to continue.', 249, 297);
+
+        // Instructions
+        ctx.fillText('Click on settings to change them.', 210, 330);
+    }
+
+    handleSettingsClick(x, y) {
+        // Convert from main canvas to offscreen canvas coordinates
+        // Offscreen canvas is drawn at (11, 31) on main canvas
+        const offX = x - 11;
+        const offY = y - 31;
+
+        const leftX = 60;
+        const rightX = 340;
+        const startY = 165;
+        const lineHeight = 18;
+        const rowHeight = 16;
+
+        // Check left column clicks (cycle options)
+        // Diving
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY - rowHeight && offY < startY) {
+            const idx = this.settingsOptions.dive.indexOf(this.settings.dive);
+            this.settings.dive = this.settingsOptions.dive[(idx + 1) % this.settingsOptions.dive.length];
+        }
+        // Acceleration
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight - rowHeight && offY < startY + lineHeight) {
+            const idx = this.settingsOptions.accel.indexOf(this.settings.accel);
+            this.settings.accel = this.settingsOptions.accel[(idx + 1) % this.settingsOptions.accel.length];
+        }
+        // Max speed
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 2 - rowHeight && offY < startY + lineHeight * 2) {
+            const idx = this.settingsOptions.maxSpeed.indexOf(this.settings.maxSpeed);
+            this.settings.maxSpeed = this.settingsOptions.maxSpeed[(idx + 1) % this.settingsOptions.maxSpeed.length];
+        }
+        // Red balls
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 3 - rowHeight && offY < startY + lineHeight * 3) {
+            const idx = this.settingsOptions.redBalls.indexOf(this.settings.redBalls);
+            this.settings.redBalls = this.settingsOptions.redBalls[(idx + 1) % this.settingsOptions.redBalls.length];
+        }
+        // Black balls
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 4 - rowHeight && offY < startY + lineHeight * 4) {
+            const idx = this.settingsOptions.blackBalls.indexOf(this.settings.blackBalls);
+            this.settings.blackBalls = this.settingsOptions.blackBalls[(idx + 1) % this.settingsOptions.blackBalls.length];
+        }
+        // Gold balls
+        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 5 - rowHeight && offY < startY + lineHeight * 5) {
+            const idx = this.settingsOptions.goldBalls.indexOf(this.settings.goldBalls);
+            this.settings.goldBalls = this.settingsOptions.goldBalls[(idx + 1) % this.settingsOptions.goldBalls.length];
+        }
+
+        // Check right column clicks (numeric with < > or cycle)
+        // Gold points (< decrement, > increment)
+        if (offY > startY - rowHeight && offY < startY) {
+            const opt = this.settingsOptions.goldPoints;
+            if (offX > rightX - 10 && offX < rightX + 100) {
+                // Decrement
+                this.settings.goldPoints = Math.max(opt.min, this.settings.goldPoints - opt.step);
+            } else if (offX > rightX + 100 && offX < rightX + 200) {
+                // Increment
+                this.settings.goldPoints = Math.min(opt.max, this.settings.goldPoints + opt.step);
+            }
+        }
+        // Seconds to gold
+        if (offY > startY + lineHeight - rowHeight && offY < startY + lineHeight) {
+            const opt = this.settingsOptions.duration;
+            if (offX > rightX - 10 && offX < rightX + 110) {
+                this.settings.duration = Math.max(opt.min, this.settings.duration - opt.step);
+            } else if (offX > rightX + 110 && offX < rightX + 220) {
+                this.settings.duration = Math.min(opt.max, this.settings.duration + opt.step);
+            }
+        }
+        // Score to win
+        if (offY > startY + lineHeight * 2 - rowHeight && offY < startY + lineHeight * 2) {
+            const opt = this.settingsOptions.winScore;
+            if (offX > rightX - 10 && offX < rightX + 100) {
+                this.settings.winScore = Math.max(opt.min, this.settings.winScore - opt.step);
+            } else if (offX > rightX + 100 && offX < rightX + 200) {
+                this.settings.winScore = Math.min(opt.max, this.settings.winScore + opt.step);
+            }
+        }
+        // Sound
+        if (offX > rightX - 10 && offX < rightX + 150 && offY > startY + lineHeight * 3 - rowHeight && offY < startY + lineHeight * 3) {
+            const idx = this.settingsOptions.sound.indexOf(this.settings.sound);
+            this.settings.sound = this.settingsOptions.sound[(idx + 1) % this.settingsOptions.sound.length];
+        }
+        // Player sprite
+        if (offY > startY + lineHeight * 4 - rowHeight && offY < startY + lineHeight * 4) {
+            const opts = this.settingsOptions.playerImg;
+            const idx = opts.findIndex(p => p.value === this.settings.playerImg);
+            if (offX > rightX - 10 && offX < rightX + 80) {
+                // Previous
+                const newIdx = (idx - 1 + opts.length) % opts.length;
+                this.settings.playerImg = opts[newIdx].value;
+                this.settingsChanged = true;
+            } else if (offX > rightX + 80 && offX < rightX + 200) {
+                // Next
+                const newIdx = (idx + 1) % opts.length;
+                this.settings.playerImg = opts[newIdx].value;
+                this.settingsChanged = true;
+            }
+        }
+        // Background
+        if (offY > startY + lineHeight * 5 - rowHeight && offY < startY + lineHeight * 5) {
+            const opts = this.settingsOptions.bgImg;
+            const idx = opts.findIndex(b => b.value === this.settings.bgImg);
+            if (offX > rightX - 10 && offX < rightX + 100) {
+                // Previous
+                const newIdx = (idx - 1 + opts.length) % opts.length;
+                this.settings.bgImg = opts[newIdx].value;
+                this.settingsChanged = true;
+            } else if (offX > rightX + 100 && offX < rightX + 200) {
+                // Next
+                const newIdx = (idx + 1) % opts.length;
+                this.settings.bgImg = opts[newIdx].value;
+                this.settingsChanged = true;
+            }
+        }
+
+        // Continue button (offscreen canvas coords: x 204-434, y 280-305)
+        if (offX > 204 && offX < 434 && offY > 280 && offY < 305) {
+            this.transitionFromSettings();
+        }
+    }
+
+    async transitionFromSettings() {
+        // Reload assets if player or background changed
+        if (this.settingsChanged) {
+            await this.loadAssets();
+            this.settingsChanged = false;
+        }
+
+        // Reload sounds based on new setting
+        if (this.settings.sound && Object.keys(this.sounds).length === 0) {
+            this.loadSounds();
+        }
+
+        // Reinitialize game objects with new ball counts
+        this.initGameObjects();
+
+        this.state = GameState.RULES;
     }
 
     drawRulesScreen(ctx) {
