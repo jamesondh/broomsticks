@@ -37,7 +37,7 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 
 | Document | Description |
 |----------|-------------|
-| [HTML5 Port Plan](docs/html5-port-mvp-plan.md) | 8-phase implementation plan for the web port |
+| [HTML5 Port Plan](docs/html5-simplified-port-mvp-plan.md) | 5-phase implementation plan for the web port |
 | [Gameplay Comparison](docs/gameplay-comparison.md) | Mechanics comparison across all three versions |
 | [Java Variant Comparison](docs/broomsticks1-java-variant-comparison.md) | Analysis of the 8 Java applet variants |
 | [Java vs C++ Comparison](docs/broomsticks-1-vs-2-comparison.md) | Technical comparison between versions |
@@ -48,34 +48,26 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - Phase 1 complete, Phase 2 nearly complete (full game playable with settings)
+- **HTML5 port** - Playable game based on faithful Java version using vanilla Canvas port
 
 ### HTML5 Port Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| 1 | Core Engine | ✅ Complete |
-| 2 | Single Player | 🔄 In Progress (2.1-2.9 done, 2.10 remaining) |
-| 3 | Local Multiplayer | Pending |
-| 4 | Online Multiplayer | Pending |
-| 5 | 2v2 Mode & Passing | Pending |
-| 6 | GoldBall & Polish | Pending |
-| 7 | Quick Play Matchmaking | Pending |
-| 8 | Mobile & Capacitor | Pending |
+| 1 | Core Game | ✅ Complete |
+| 2 | Local Multiplayer (2-4 Players) | Pending |
+| 3 | Online Multiplayer (PartyKit) | Pending |
+| 4 | Mobile & Capacitor | Pending |
+| 5 | Polish (Optional) | Pending |
 
-**Phase 2 Progress:**
-- ✅ 2.1 Asset Extraction
-- ✅ 2.2 PixiJS Renderer Setup
-- ✅ 2.3 Sprite Implementation (PlayerSprite, BallSprite, FieldSprite)
-- ✅ 2.4 UI Rendering (Scoreboard, Countdown, ScoreFlash, WinScreen)
-- ✅ 2.5 AI Implementation (offensive/defensive modes, difficulty levels)
-- ✅ 2.6 Keyboard Input (WASD/Arrow keys, InputManager abstraction)
-- ✅ 2.7 Audio System (Howler.js, score/catch/bump/win sounds with mute toggle)
-- ✅ 2.8 React Integration (MainMenu, GameScreen, SettingsScreen, ResultsScreen)
-- ✅ 2.9 Settings UI (difficulty, ball counts, win score, audio with localStorage)
-- ⏳ 2.10 Particle Effects
+**Phase 1 Complete:**
+- ✅ Game code migrated to `src/game/`
+- ✅ Assets moved to `public/game/`
+- ✅ React wrapper (`BroomsticksGame.tsx`) with auto-scaling
+- ✅ Simplified routing (game at `/`, guestbook at `/guestbook/*`)
+- ✅ Removed PixiJS, Howler, and obsolete TypeScript engine
 
-See [Implementation Plan](docs/html5-port-mvp-plan.md) for details.
+See [Implementation Plan](docs/html5-simplified-port-mvp-plan.md) for details.
 
 ## Development
 

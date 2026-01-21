@@ -1,6 +1,6 @@
 # Broomsticks HTML5 Port - Simplified MVP Plan
 
-A streamlined implementation plan based on the faithful **advanced2** vanilla Canvas port, with multiplayer and mobile support.
+A streamlined implementation plan based on a faithful port of Broomsticks 1 using vanilla Canvas, with multiplayer and mobile support.
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ A streamlined implementation plan based on the faithful **advanced2** vanilla Ca
 
 ### Why advanced2?
 
-The advanced2 port in `web/public/advanced2/` captures the original Java feel:
+The advanced2 port (now in `web/src/game/`) captures the original Java feel:
 - 30ms physics timestep matching original applet
 - Double-buffered Canvas rendering (like Java's Graphics2D)
 - Exact collision thresholds and physics constants
@@ -54,14 +54,16 @@ web/
 │   │   ├── Person.js            # Player (human/AI)
 │   │   ├── Ball.js              # Red/black balls
 │   │   ├── GoldBall.js          # Gold ball with evasion AI
+│   │   ├── BroomsticksGame.tsx  # React wrapper for game canvas
+│   │   ├── game.css             # Game styles
+│   │   ├── index.ts             # Exports
 │   │   └── TouchControls.js     # Mobile touch input (Phase 4)
 │   │
 │   ├── multiplayer/             # Online multiplayer (Phase 3)
 │   │   ├── PartyClient.ts       # WebSocket client
 │   │   └── types.ts             # Message types
 │   │
-│   ├── pages/                   # React pages (minimal)
-│   │   ├── GamePage.tsx         # Mounts game canvas
+│   ├── pages/                   # React pages (Phase 3+)
 │   │   └── LobbyPage.tsx        # Online multiplayer lobby
 │   │
 │   ├── components/              # Keep existing
@@ -76,8 +78,9 @@ web/
 │   └── partykit.json
 │
 ├── public/
-│   ├── images/                  # Game sprites
-│   ├── snd/                     # Game sounds
+│   ├── game/                    # Game assets
+│   │   ├── images/              # Game sprites
+│   │   └── snd/                 # Game sounds
 │   └── guestbook/               # Guestbook data
 │
 └── capacitor.config.ts          # Mobile config (Phase 4)
@@ -116,50 +119,50 @@ web/
 
 ### 1.1 Move Game Code
 
-- [ ] Move `web/public/advanced2/js/*.js` to `web/src/game/`
-- [ ] Keep assets in `web/public/advanced2/images/` and `snd/`
-- [ ] Update import paths as needed
+- [x] Move `web/public/advanced2/js/*.js` to `web/src/game/`
+- [x] Move assets to `web/public/game/images/` and `snd/`
+- [x] Update import paths as needed
 
 ### 1.2 Create Minimal React Wrapper
 
-- [ ] Simplify `App.tsx` to route between:
-  - `/` - Home page with Play button and links
-  - `/play` - Game (mounts advanced2 canvas)
+- [x] Simplify `App.tsx` routing:
+  - `/` - Landing page shows game directly
   - `/guestbook/*` - Existing guestbook functionality
-- [ ] Create `GamePage.tsx`:
-  - Mount canvas element
-  - Instantiate Game class with settings
-  - Handle cleanup on unmount
+- [x] Create `BroomsticksGame.tsx`:
+  - Mounts canvas element
+  - Instantiates Game class
+  - Handles cleanup on unmount
+  - Auto-scales to window size
 
 ### 1.3 Remove Obsolete Code
 
-Delete:
-- `src/engine/` (TypeScript game engine)
-- `src/renderer/` (PixiJS renderer)
-- `src/audio/` (Howler.js - advanced2 has built-in audio)
-- `src/components/screens/` (MainMenu, GameScreen, SettingsScreen, ResultsScreen)
-- `src/components/ui/` (Button, Slider)
-- `src/components/GameTest.tsx`
-- `src/hooks/useSettings.ts`
+Deleted:
+- [x] `src/engine/` (TypeScript game engine)
+- [x] `src/renderer/` (PixiJS renderer)
+- [x] `src/audio/` (Howler.js - advanced2 has built-in audio)
+- [x] `src/components/screens/` (MainMenu, GameScreen, SettingsScreen, ResultsScreen)
+- [x] `src/components/ui/` (Button, Slider)
+- [x] `src/components/GameTest.tsx`
+- [x] `src/hooks/useSettings.ts`
 
 ### 1.4 Update Dependencies
 
-Remove from package.json:
-- `pixi.js`
-- `howler`
-- `@types/howler`
+Removed from package.json:
+- [x] `pixi.js`
+- [x] `howler`
+- [x] `@types/howler`
 
-Keep:
-- `react`, `react-dom`
-- `fuse.js` (guestbook search)
-- Vite, TypeScript, ESLint
+Kept:
+- [x] `react`, `react-dom`
+- [x] `fuse.js` (guestbook search)
+- [x] Vite, TypeScript, ESLint
 
 ### Verification
 
-- [ ] `bun run dev` starts app
-- [ ] Can navigate between home, play, guestbook
-- [ ] Game plays identically to current advanced2
-- [ ] Bundle size reduced (no PixiJS/Howler)
+- [x] `bun run dev` starts app
+- [x] Can navigate between home and guestbook
+- [ ] Game plays identically to original (manual testing)
+- [x] Bundle size reduced (no PixiJS/Howler)
 
 ---
 
