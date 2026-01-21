@@ -9,5 +9,18 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler']],
       },
     }),
+    {
+      name: 'demo-redirect',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/demo' || req.url === '/demo/') {
+            res.writeHead(302, { Location: '/demo/index.html' })
+            res.end()
+            return
+          }
+          next()
+        })
+      },
+    },
   ],
 })

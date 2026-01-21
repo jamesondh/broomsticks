@@ -41,9 +41,12 @@ const controlsHintStyle: CSSProperties = {
 };
 
 const logoStyle: CSSProperties = {
-  transform: "scale(2)",
+  width: "674px",        // 337px × 2
+  maxWidth: "100%",      // Prevents overflow on mobile
+  height: "auto",
   imageRendering: "pixelated",
-  marginBottom: "48px", // Extra margin to compensate for scaled size
+  marginBottom: "48px",
+  padding: "0 24px",
 };
 
 export function MainMenu({ onPlay, onSettings }: MainMenuProps) {
