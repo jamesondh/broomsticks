@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broomsticks Advanced</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="650" height="430"></canvas>
+
+        <div id="settingsOverlay" class="settings-overlay">
+            <div class="settings-panel">
+                <h2>BROOMSTICKS ADVANCED</h2>
+                <img id="settingsIntro" src="images/intro.gif" alt="Broomsticks">
+
+                <div class="settings-grid">
+                    <label for="dive">Allow diving:</label>
+                    <select id="dive">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    </select>
+
+                    <label for="accel">Acceleration:</label>
+                    <select id="accel">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <label for="maxspeed">Max speed:</label>
+                    <select id="maxspeed">
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+
+                    <label for="red">Red balls:</label>
+                    <select id="red">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <label for="black">Black balls:</label>
+                    <select id="black">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <label for="gold">Gold balls:</label>
+                    <select id="gold">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                    </select>
+
+                    <label for="goldval">Gold points:</label>
+                    <input type="number" id="goldval" value="150" min="0" max="999">
+
+                    <label for="duration">Seconds to gold:</label>
+                    <input type="number" id="duration" value="60" min="5" max="300">
+
+                    <label for="winscore">Score to win:</label>
+                    <input type="number" id="winscore" value="50" min="10" max="999">
+
+                    <label for="playerImg">Player sprites:</label>
+                    <select id="playerImg">
+                        <option value="images/players.gif">Default</option>
+                        <option value="images/harden.gif">Harden</option>
+                        <option value="images/ZeldaPLAYERS-ted.gif">Zelda</option>
+                        <option value="images/playersJeronimus3.gif">Jeronimus</option>
+                        <option value="images/playersSol.gif">Sol</option>
+                        <option value="images/playersBen.gif">Ben</option>
+                        <option value="images/playersDavis.gif">Davis</option>
+                        <option value="images/playersDBZted.gif">Dragon Ball Z</option>
+                        <option value="images/playersNess.gif">Ness</option>
+                        <option value="images/playersXmas.gif">Christmas</option>
+                    </select>
+
+                    <label for="bgImg">Sky background:</label>
+                    <select id="bgImg">
+                        <option value="images/sky1.jpg">Sky 1</option>
+                        <option value="images/castle1.0.jpg">Castle</option>
+                    </select>
+
+                    <label for="sound">Sound:</label>
+                    <select id="sound">
+                        <option value="on" selected>On</option>
+                        <option value="off">Off</option>
+                    </select>
+                </div>
+
+                <button id="startBtn" class="start-button">START GAME</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
