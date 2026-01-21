@@ -91,11 +91,11 @@ export class Person extends FlyingObject {
         // Use model + 5 for green team (side 1)
         const modelIndex = this.side === 0 ? this.model : this.model + 5;
 
-        if (this.game.playerImages &&
-            this.game.playerImages[modelIndex] &&
-            this.game.playerImages[modelIndex][vDir] &&
-            this.game.playerImages[modelIndex][vDir][hDir]) {
-            ctx.drawImage(this.game.playerImages[modelIndex][vDir][hDir], drawX, drawY);
+        if (this.game.assets.playerImages &&
+            this.game.assets.playerImages[modelIndex] &&
+            this.game.assets.playerImages[modelIndex][vDir] &&
+            this.game.assets.playerImages[modelIndex][vDir][hDir]) {
+            ctx.drawImage(this.game.assets.playerImages[modelIndex][vDir][hDir], drawX, drawY);
         } else {
             // Fallback: draw colored rectangle
             ctx.fillStyle = this.side === 0 ? '#0080ff' : '#00a400';

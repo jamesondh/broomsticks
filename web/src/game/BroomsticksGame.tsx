@@ -26,15 +26,25 @@ export function BroomsticksGame() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    // Apply scale BEFORE creating game to ensure getBoundingClientRect() is accurate
+    updateScale();
+
+    // Force layout reflow so CSS transform is fully applied before game init
+    void container.offsetHeight;
 
     // Initialize the game
     const game = new Game(canvas);
     gameRef.current = game;
-    game.init();
+
+    // Initialize asynchronously - game state transitions to MODE_SELECT when ready
+    (async () => {
+      await game.init();
+    })().catch(console.error);
 
     // Set up scaling
-    updateScale();
     window.addEventListener('resize', updateScale);
 
     // Cleanup on unmount

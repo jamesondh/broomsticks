@@ -51,8 +51,8 @@ export class Ball extends FlyingObject {
         const drawX = this.x - 11;
         const drawY = this.y - 31;
 
-        if (this.game.ballImages && this.game.ballImages[this.model]) {
-            ctx.drawImage(this.game.ballImages[this.model], drawX, drawY);
+        if (this.game.assets.ballImages && this.game.assets.ballImages[this.model]) {
+            ctx.drawImage(this.game.assets.ballImages[this.model], drawX, drawY);
         } else {
             // Fallback: draw colored circle
             ctx.beginPath();
