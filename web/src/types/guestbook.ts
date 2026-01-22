@@ -11,5 +11,4 @@ export interface SearchableEntry {
 
 export interface SearchResult {
   item: SearchableEntry;
-  score?: number;
 }

@@ -13,7 +13,6 @@ export const OFFSET_Y = 31;
 // Physics constants
 export const COLLISION_THRESHOLD = 20;
 export const GROUND_Y = 343;
-export const FIELD_HEIGHT = 25;
 export const UPDATE_INTERVAL = 30; // 30ms per update, matching original Java
 
 // Basket positions

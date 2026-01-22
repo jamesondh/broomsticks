@@ -2,10 +2,10 @@
 
 ## Overview
 
-This is a preservation and port project for Broomsticks, a game originally created by Paul Rajlich. The project has two main goals:
+Preservation and port project for Broomsticks, originally created by Paul Rajlich.
 
 1. **Preservation** - Archive the original source code and assets
-2. **Modernization** - Port the game to HTML5 with multiplayer and mobile support
+2. **Modernization** - Port to HTML5 with multiplayer and mobile support
 
 ## Repository Structure
 
@@ -16,16 +16,9 @@ broomsticks/
 │   ├── broomsticks2-cpp/   # C++/SDL version (2003-2004)
 │   ├── broomsticks-ios/    # iOS/Cocos2D port (2011)
 │   └── guestbook/          # Original guestbook data
+├── build/                  # Build artifacts (macOS builds)
 ├── docs/                   # Technical documentation
 ├── web/                    # Modern HTML5 port (Vite/React)
-│   ├── src/
-│   │   ├── game/           # Vanilla JS game engine
-│   │   ├── components/     # React components (guestbook)
-│   │   └── App.tsx         # Minimal router
-│   ├── public/
-│   │   ├── game/           # Game assets (images, sounds)
-│   │   └── guestbook/      # Guestbook data
-│   └── ...
 ├── AGENTS.md               # This file (CLAUDE.md symlinks here)
 ├── README.md
 └── LICENSE
@@ -83,7 +76,8 @@ bun run dev              # Start dev server
 bun run build            # Build for production
 bun run preview          # Preview production build
 bun run lint             # Run ESLint
-bun run build:guestbook  # Regenerate modernized guestbook JSON
+bun run test             # Run tests
+bun run build:guestbook  # Regenerate guestbook JSON from archived HTML
 ```
 
 ## Tech Stack (Web)
@@ -102,58 +96,98 @@ bun run build:guestbook  # Regenerate modernized guestbook JSON
 
 The port follows a simplified 5-phase implementation plan (see `docs/html5-simplified-port-mvp-plan.md`).
 
-### Why the Simplified Approach?
+### Why Vanilla JS?
 
-The original 8-phase plan used PixiJS/TypeScript (~5,000+ lines). The simplified plan uses the faithful vanilla Canvas port (~1,400 lines) now in `src/game/` which:
+The original 8-phase plan used PixiJS/TypeScript (~5,000+ lines). The current approach uses a faithful vanilla Canvas port (~1,900 lines across modular files) which:
 - Captures the original Java feel with 30ms physics timestep
 - Uses double-buffered Canvas rendering (like Java's Graphics2D)
-- Has exact collision thresholds and physics constants
-- Already includes AI, gold ball, configurable settings, and sound
+- Exact collision thresholds and physics constants from original
+- Includes AI, gold ball, configurable settings, sound, and pause menu
 
 ### Current Architecture
 
 ```
 web/src/
-├── game/                     # Vanilla JS game
-│   ├── Game.js               # Main game class (~1,000 lines)
+├── game/                     # Modular vanilla JS game engine
+│   ├── Game.js               # Main game class, state machine
+│   ├── GameRenderer.js       # All rendering (game, menus, overlays)
+│   ├── GameConstants.js      # Configuration and constants
+│   ├── InputHandler.js       # Keyboard input, pause menu
+│   ├── PhysicsManager.js     # Physics engine
+│   ├── AssetManager.js       # Asset loading
 │   ├── FlyingObject.js       # Base physics class
 │   ├── Person.js             # Player (human/AI)
 │   ├── Ball.js               # Red/black balls
 │   ├── GoldBall.js           # Gold ball with evasion AI
 │   ├── BroomsticksGame.tsx   # React wrapper for game canvas
-│   ├── game.css              # Game styles
+│   ├── game.css              # Minimal game styles
 │   └── index.ts              # Exports
 │
 ├── components/               # React components
 │   ├── GuestbookSearch.tsx   # Guestbook search UI
+│   ├── GuestbookSearch.css
 │   └── GuestbookHighlights.tsx
 │
 ├── hooks/
 │   └── useGuestbookSearch.ts # Guestbook search hook
 │
+├── data/                     # Static data
+│   ├── archiveLinks.ts       # Links to archive versions
+│   └── highlightedComments.ts
+│
+├── types/
+│   └── guestbook.ts          # TypeScript types
+│
+├── styles/
+│   ├── tokens.css            # Design tokens
+│   └── index.css             # Global styles
+│
 ├── App.tsx                   # Minimal router
 └── main.tsx
 
-web/public/game/
-├── images/                   # Game sprites
-└── snd/                      # Game sounds
+web/public/
+├── game/
+│   ├── images/               # Game sprites (15+ variants)
+│   └── snd/                  # Game sounds (AU/MP3)
+├── guestbook/                # Guestbook data (JSON + archived HTML)
+├── 2/                        # Legacy port of broomsticks2-cpp
+├── advanced/                 # Legacy port of broomsticks1-java/broomsticksAdvanced
+├── demo/                     # Legacy port of broomsticks1-java/broomDemo
+└── fonts/                    # MS Sans Serif Extended
 ```
+
+### Legacy Static Ports
+
+Early experimental HTML5 ports preserved in `web/public/`:
+
+| Port | Source | URL Path | Notes |
+|------|--------|----------|-------|
+| `2/` | `archive/broomsticks2-cpp/` | `/2/` | C++/SDL mechanics |
+| `demo/` | `archive/broomsticks1-java/broomDemo/` | `/demo/` | Java Demo variant |
+| `advanced/` | `archive/broomsticks1-java/broomsticksAdvanced/` | `/advanced/` | Java Advanced variant |
+
+The main app (`web/src/game/`) is a heavily modified version of the Advanced port, refactored into modular architecture with React integration, pause menu, settings overlay, and other enhancements.
 
 ### Phase Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Game | ✅ Complete |
-| 2 | Local Multiplayer (2-4 Players) | Pending |
+| 2 | Local Multiplayer (2-4 Players) | 🔄 In Progress |
 | 3 | Online Multiplayer (PartyKit) | Pending |
 | 4 | Mobile & Capacitor | Pending |
 | 5 | Polish (Optional) | Pending |
 
 ### Phase 1 Complete
 
-- ✅ 1.1 Game code moved from `public/advanced2/js/` to `src/game/`
-- ✅ 1.1 Assets moved to `public/game/`
-- ✅ 1.2 React wrapper created (`BroomsticksGame.tsx`) with auto-scaling
-- ✅ 1.2 `App.tsx` routing simplified (game at `/`, guestbook at `/guestbook/*`)
-- ✅ 1.3 Obsolete TypeScript engine code removed
-- ✅ 1.4 Dependencies updated (removed PixiJS, Howler)
+- ✅ Game code moved to `src/game/` and modularized
+- ✅ Assets in `public/game/`
+- ✅ React wrapper with auto-scaling
+- ✅ Routing: game at `/`, guestbook at `/guestbook/*`
+- ✅ Removed PixiJS, Howler, obsolete TypeScript engine
+
+### Phase 2 Progress
+
+- ✅ Pause menu (Escape/P key) with Resume/Quit
+- ✅ Game state machine (menu, playing, paused, game over)
+- Pending: WASD controls, Quick Start, 4-player mode, gamepad

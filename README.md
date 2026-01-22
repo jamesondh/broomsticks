@@ -15,12 +15,13 @@ This repository preserves all original source code and aims to bring the game to
 ```
 broomsticks/
 ├── archive/                # Original source code
-│   ├── broomsticks1-java/  # Java applet (~6,900 lines)
+│   ├── broomsticks1-java/  # Java applet (~6,900 lines, 8 variants)
 │   ├── broomsticks2-cpp/   # C++/SDL (~1,400 lines)
 │   ├── broomsticks-ios/    # iOS/Cocos2D (~1,000 lines)
-│   └── guestbook/          # Original guestbook data
+│   └── guestbook/          # Original guestbook HTML
+├── build/                  # Build artifacts (macOS builds)
 ├── docs/                   # Technical documentation
-└── web/                    # Modern HTML5 port
+└── web/                    # Modern HTML5 port (Vite/React)
 ```
 
 ## Archived Versions
@@ -44,28 +45,42 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 | [Broomsticks 1 macOS Build Guide](docs/broomsticks1-java-macos-build.md) | Building the Java applet on modern macOS |
 | [Broomsticks 2 macOS Build Guide](docs/broomsticks2-cpp-macos-build.md) | Building the C++ version on modern macOS |
 
+## Legacy Static Ports
+
+Early experimental HTML5 ports are preserved in `web/public/`:
+
+| Port | Source | Path |
+|------|--------|------|
+| **Broomsticks 2** | `archive/broomsticks2-cpp/` | `/2/` |
+| **Demo** | `archive/broomsticks1-java/broomDemo/` | `/demo/` |
+| **Advanced** | `archive/broomsticks1-java/broomsticksAdvanced/` | `/advanced/` |
+
+The main app (`web/src/game/`) is a heavily modified version of the Advanced port with modular architecture, React integration, and enhanced features.
+
 ## Current Status
 
 - **Source code archived** - All three original versions preserved
 - **Guestbook modernized** - Fuzzy search, deleted post visibility
-- **HTML5 port** - Playable game based on faithful Java version using vanilla Canvas port
+- **HTML5 port** - Playable at [broomsticks.xyz](https://broomsticks.xyz)
 
 ### HTML5 Port Progress
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Core Game | ✅ Complete |
-| 2 | Local Multiplayer (2-4 Players) | Pending |
+| 2 | Local Multiplayer (2-4 Players) | 🔄 In Progress |
 | 3 | Online Multiplayer (PartyKit) | Pending |
 | 4 | Mobile & Capacitor | Pending |
 | 5 | Polish (Optional) | Pending |
 
-**Phase 1 Complete:**
-- ✅ Game code migrated to `src/game/`
-- ✅ Assets moved to `public/game/`
-- ✅ React wrapper (`BroomsticksGame.tsx`) with auto-scaling
-- ✅ Simplified routing (game at `/`, guestbook at `/guestbook/*`)
-- ✅ Removed PixiJS, Howler, and obsolete TypeScript engine
+**Completed:**
+- ✅ Core game engine (modular vanilla JS)
+- ✅ React wrapper with auto-scaling
+- ✅ Settings overlay (balls, gold ball, win score)
+- ✅ Pause menu (Escape/P key)
+- ✅ Game state machine (menu, playing, paused, game over)
+
+**Up next:** WASD controls, Quick Start, 4-player local mode
 
 See [Implementation Plan](docs/html5-simplified-port-mvp-plan.md) for details.
 

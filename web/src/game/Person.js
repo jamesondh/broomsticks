@@ -101,7 +101,7 @@ export class Person extends FlyingObject {
             ctx.fillStyle = this.side === 0 ? '#0080ff' : '#00a400';
             ctx.fillRect(drawX, drawY, this.w, this.h);
             ctx.strokeStyle = '#000';
-            ctx.strokeRect(drawX, drawY, this.w, this.h);
+            ctx.strokeRect(drawX + 0.5, drawY + 0.5, this.w, this.h);
         }
     }
 }

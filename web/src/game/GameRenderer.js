@@ -167,7 +167,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(139, 174, 120, 50);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(139, 174, 120, 50);
+        ctx.strokeRect(139.5, 174.5, 120, 50);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
         ctx.fillText('Click here for', 159, 194);
@@ -177,7 +177,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(389, 174, 120, 50);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(389, 174, 120, 50);
+        ctx.strokeRect(389.5, 174.5, 120, 50);
         ctx.fillStyle = '#000';
         ctx.fillText('Click here for', 409, 194);
         ctx.fillText('two player', 409, 209);
@@ -186,7 +186,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(214, 259, 200, 30);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(214, 259, 200, 30);
+        ctx.strokeRect(214.5, 259.5, 200, 30);
         ctx.fillStyle = '#000';
         ctx.fillText('Visit the Guestbook', 264, 279);
 
@@ -252,7 +252,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(204, 280, 230, 25);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204, 280, 230, 25);
+        ctx.strokeRect(204.5, 280.5, 230, 25);
         ctx.fillStyle = '#000';
         ctx.fillText('Click here to continue.', 249, 297);
 
@@ -267,7 +267,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(204, 134, 230, 20);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204, 134, 230, 20);
+        ctx.strokeRect(204.5, 134.5, 230, 20);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
         ctx.fillText('Click here to continue.', 249, 149);
@@ -298,7 +298,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(204, 134, 230, 20);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204, 134, 230, 20);
+        ctx.strokeRect(204.5, 134.5, 230, 20);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
         ctx.fillText('Click here to start.', 264, 149);
@@ -356,7 +356,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(204, 134, 230, 20);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204, 134, 230, 20);
+        ctx.strokeRect(204.5, 134.5, 230, 20);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
         ctx.fillText('Game over. Click here to play again.', 214, 149);
@@ -370,7 +370,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(214, 319, 225, 20);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(214, 319, 225, 20);
+        ctx.strokeRect(214.5, 319.5, 225, 20);
         ctx.fillStyle = '#000';
         ctx.fillText('http://www.visbox.com/broomsticks/', 229, 334);
 
@@ -387,13 +387,13 @@ export class GameRenderer {
         ctx.fillStyle = scoreHighlight === 1 ? COLORS.gold : COLORS.blue;
         ctx.fillRect(48, 8, 100, 15);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(48, 8, 100, 15);
+        ctx.strokeRect(48.5, 8.5, 100, 15);
 
         // Player 2 score (green)
         ctx.fillStyle = scoreHighlight === 2 ? COLORS.gold : COLORS.green;
         ctx.fillRect(498, 8, 100, 15);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(498, 8, 100, 15);
+        ctx.strokeRect(498.5, 8.5, 100, 15);
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
@@ -420,7 +420,7 @@ export class GameRenderer {
 
         // Border
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(midW - 100, 30, barWidth, 15);
+        ctx.strokeRect(midW - 100 + 0.5, 30.5, barWidth, 15);
 
         // "time:" label
         ctx.fillStyle = '#000';
@@ -430,7 +430,7 @@ export class GameRenderer {
 
     drawBorder(ctx) {
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(10, 30, 629, 369);
+        ctx.strokeRect(10.5, 30.5, 629, 369);
     }
 
     drawTitle(ctx) {
@@ -468,7 +468,7 @@ export class GameRenderer {
         ctx.fillStyle = 'red';
         ctx.fillRect(60, 405, 35 - player1.smart, 10);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(60, 405, 34, 10);
+        ctx.strokeRect(60.5, 405.5, 34, 10);
     }
 
     drawPauseIcon(ctx) {
@@ -477,7 +477,7 @@ export class GameRenderer {
         ctx.fillStyle = '#888';
         ctx.fillRect(10, 8, 32, 15);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(10, 8, 32, 15);
+        ctx.strokeRect(10.5, 8.5, 32, 15);
 
         // Draw two vertical bars (classic pause symbol)
         ctx.fillStyle = '#000';
@@ -500,7 +500,7 @@ export class GameRenderer {
         ctx.fillStyle = '#ddd';
         ctx.fillRect(modalX, modalY, modalWidth, modalHeight);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(modalX, modalY, modalWidth, modalHeight);
+        ctx.strokeRect(modalX + 0.5, modalY + 0.5, modalWidth, modalHeight);
 
         // "PAUSED" title
         ctx.fillStyle = '#000';
@@ -513,7 +513,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(resumeX, resumeY, 100, 25);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(resumeX, resumeY, 100, 25);
+        ctx.strokeRect(resumeX + 0.5, resumeY + 0.5, 100, 25);
         ctx.fillStyle = '#000';
         ctx.fillText('Resume', resumeX + 25, resumeY + 17);
 
@@ -523,7 +523,7 @@ export class GameRenderer {
         ctx.fillStyle = COLORS.green;
         ctx.fillRect(menuX, menuY, 150, 25);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(menuX, menuY, 150, 25);
+        ctx.strokeRect(menuX + 0.5, menuY + 0.5, 150, 25);
         ctx.fillStyle = '#000';
         ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
     }
