@@ -149,17 +149,21 @@ export class InputHandler {
             case GameState.MODE_SELECT: {
                 const btns = BUTTONS.MODE_SELECT;
                 if (this.hitTest(btns.singlePlayer, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.player1.isRobot = true;
                     this.game.state = GameState.SETTINGS;
                 }
                 if (this.hitTest(btns.twoPlayer, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.player1.isRobot = false;
                     this.game.state = GameState.SETTINGS;
                 }
                 if (this.hitTest(btns.guestbook, x, y)) {
+                    this.game.assets.playSound('pop');
                     window.location.href = '/guestbook';
                 }
                 if (this.hitTest(btns.github, x, y)) {
+                    this.game.assets.playSound('pop');
                     window.open(GITHUB_URL, '_blank');
                 }
                 break;
@@ -171,18 +175,21 @@ export class InputHandler {
 
             case GameState.RULES:
                 if (this.hitTest(BUTTONS.RULES.continueBtn, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.state = GameState.READY;
                 }
                 break;
 
             case GameState.READY:
                 if (this.hitTest(BUTTONS.READY.startBtn, x, y)) {
+                    this.game.assets.playSound('ding');
                     this.game.startGame();
                 }
                 break;
 
             case GameState.PLAYING:
                 if (this.hitTest(BUTTONS.PLAYING.pauseIcon, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.pauseTime = Date.now();
                     this.game.state = GameState.PAUSED;
                 }
@@ -192,17 +199,20 @@ export class InputHandler {
                 const pausedBtns = BUTTONS.PAUSED;
                 // Pause icon click to unpause
                 if (this.hitTest(pausedBtns.pauseIcon, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.startTime += Date.now() - this.game.pauseTime;
                     this.game.state = GameState.PLAYING;
                     break;
                 }
                 // Resume button
                 if (this.hitTest(pausedBtns.resume, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.startTime += Date.now() - this.game.pauseTime;
                     this.game.state = GameState.PLAYING;
                 }
                 // Return to Menu button
                 if (this.hitTest(pausedBtns.returnToMenu, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.state = GameState.MODE_SELECT;
                     this.game.resetGameObjects();
                 }
@@ -212,10 +222,12 @@ export class InputHandler {
             case GameState.GAME_OVER: {
                 const gameOverBtns = BUTTONS.GAME_OVER;
                 if (this.hitTest(gameOverBtns.playAgain, x, y)) {
+                    this.game.assets.playSound('pop');
                     this.game.state = GameState.MODE_SELECT;
                     this.game.resetGameObjects();
                 }
                 if (this.hitTest(gameOverBtns.website, x, y)) {
+                    this.game.assets.playSound('pop');
                     window.open(GITHUB_URL, '_blank');
                 }
                 break;
@@ -247,12 +259,14 @@ export class InputHandler {
             const opts = settingsOptions[key];
             const idx = opts.indexOf(settings[key]);
             settings[key] = opts[(idx + 1) % opts.length];
+            this.game.assets.playSound('pop');
         };
 
         // Adjust numeric range
         const adjustRange = (key, dir) => {
             const opt = settingsOptions[key];
             settings[key] = Math.max(opt.min, Math.min(opt.max, settings[key] + dir * opt.step));
+            this.game.assets.playSound('pop');
         };
 
         // Cycle through list of {value, label} objects
@@ -262,6 +276,7 @@ export class InputHandler {
             const newIdx = (idx + dir + opts.length) % opts.length;
             settings[key] = opts[newIdx].value;
             this.game.settingsChanged = true;
+            this.game.assets.playSound('pop');
         };
 
         // Left column: cycle on click
@@ -305,6 +320,7 @@ export class InputHandler {
         const continueBtn = BUTTONS.SETTINGS.continueBtn;
         if (offX >= continueBtn.x && offX <= continueBtn.x + continueBtn.w &&
             offY >= continueBtn.y && offY <= continueBtn.y + continueBtn.h) {
+            this.game.assets.playSound('pop');
             this.game.transitionFromSettings();
         }
     }

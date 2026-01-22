@@ -73,7 +73,9 @@ export class AssetManager {
             score: new Audio('/game/snd/score.mp3'),
             grab: new Audio('/game/snd/grab.mp3'),
             bump: new Audio('/game/snd/bump.mp3'),
-            win: new Audio('/game/snd/win.mp3')
+            win: new Audio('/game/snd/win.mp3'),
+            pop: new Audio('/game/snd/pop.mp3'),
+            ding: new Audio('/game/snd/ding.mp3')
         };
 
         // Preload sounds
