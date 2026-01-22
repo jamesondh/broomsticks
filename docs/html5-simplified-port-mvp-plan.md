@@ -161,7 +161,7 @@ Kept:
 
 - [x] `bun run dev` starts app
 - [x] Can navigate between home and guestbook
-- [ ] Game plays identically to original (manual testing)
+- [x] Game plays identically to original (manual testing)
 - [x] Bundle size reduced (no PixiJS/Howler)
 
 ---
@@ -172,7 +172,7 @@ Kept:
 
 ### 2.1 Input Improvements
 
-- [ ] Add WASD as alternative P1 controls
+- [ ] Add WASD as primary P1 controls
 - [ ] Current bindings:
   - P1: E/S/F/D (up/left/down/right)
   - P2: Arrow keys
@@ -182,9 +182,9 @@ Kept:
 
 ### 2.2 Pause Functionality
 
-- [ ] Escape or P key to pause
-- [ ] Simple pause overlay with Resume/Quit options
-- [ ] Pause state in Game.js state machine
+- [x] Escape or P key to pause
+- [x] Simple pause overlay with Resume/Quit options
+- [x] Pause state in Game.js state machine
 
 ### 2.3 Quick Start Option
 

@@ -93,5 +93,6 @@ export const GameState = {
     RULES: 'rules',
     READY: 'ready',
     PLAYING: 'playing',
+    PAUSED: 'paused',
     GAME_OVER: 'game_over'
 };

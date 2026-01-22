@@ -43,8 +43,14 @@ export class GameRenderer {
         this.drawTitle(ctx);
 
         if (this.game.state === GameState.PLAYING) {
+            this.drawPauseIcon(ctx);
             this.drawControls(ctx);
             this.drawGoldTimer(ctx);
+        }
+
+        if (this.game.state === GameState.PAUSED) {
+            this.drawPauseIcon(ctx);
+            this.drawPauseScreen(ctx);
         }
     }
 
@@ -53,7 +59,7 @@ export class GameRenderer {
         const { assets, state, backToggle } = this.game;
 
         // Draw background
-        const showImageBackground = backToggle || state !== GameState.PLAYING;
+        const showImageBackground = backToggle || (state !== GameState.PLAYING && state !== GameState.PAUSED);
 
         if (showImageBackground && assets.backImage) {
             ctx.drawImage(assets.backImage, 0, 0);
@@ -133,6 +139,9 @@ export class GameRenderer {
                 this.drawReadyScreen(ctx);
                 break;
             case GameState.PLAYING:
+                this.drawGameplay(ctx);
+                break;
+            case GameState.PAUSED:
                 this.drawGameplay(ctx);
                 break;
             case GameState.GAME_OVER:
@@ -460,5 +469,62 @@ export class GameRenderer {
         ctx.fillRect(60, 405, 35 - player1.smart, 10);
         ctx.strokeStyle = '#000';
         ctx.strokeRect(60, 405, 34, 10);
+    }
+
+    drawPauseIcon(ctx) {
+        // Pause icon: x=8, y=8, 32x15 (matching score box height)
+        // Draw background
+        ctx.fillStyle = '#888';
+        ctx.fillRect(10, 8, 32, 15);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(10, 8, 32, 15);
+
+        // Draw two vertical bars (classic pause symbol)
+        ctx.fillStyle = '#000';
+        ctx.fillRect(22, 11, 2, 9);
+        ctx.fillRect(28, 11, 2, 9);
+    }
+
+    drawPauseScreen(ctx) {
+        // Semi-transparent overlay
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(OFFSET_X, OFFSET_Y, GAME_WIDTH, GAME_HEIGHT);
+
+        // Modal box dimensions
+        const modalWidth = 200;
+        const modalHeight = 120;
+        const modalX = (CANVAS_WIDTH - modalWidth) / 2;
+        const modalY = (CANVAS_HEIGHT - modalHeight) / 2;
+
+        // Modal background
+        ctx.fillStyle = '#ddd';
+        ctx.fillRect(modalX, modalY, modalWidth, modalHeight);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(modalX, modalY, modalWidth, modalHeight);
+
+        // "PAUSED" title
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+        ctx.fillText('PAUSED', modalX + 70, modalY + 30);
+
+        // Resume button
+        const resumeX = modalX + 50;
+        const resumeY = modalY + 45;
+        ctx.fillStyle = COLORS.green;
+        ctx.fillRect(resumeX, resumeY, 100, 25);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(resumeX, resumeY, 100, 25);
+        ctx.fillStyle = '#000';
+        ctx.fillText('Resume', resumeX + 25, resumeY + 17);
+
+        // Return to Menu button
+        const menuX = modalX + 25;
+        const menuY = modalY + 80;
+        ctx.fillStyle = COLORS.green;
+        ctx.fillRect(menuX, menuY, 150, 25);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(menuX, menuY, 150, 25);
+        ctx.fillStyle = '#000';
+        ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
     }
 }

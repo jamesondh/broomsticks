@@ -42,6 +42,7 @@ export class Game {
         // Gold ball timer
         this.startTime = 0;
         this.goldSpawned = false;
+        this.pauseTime = 0;
 
         // Game objects (arrays for configurable counts)
         this.balls = [];

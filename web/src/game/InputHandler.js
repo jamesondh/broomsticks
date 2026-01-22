@@ -32,8 +32,8 @@ export class InputHandler {
         const { player1, player2 } = this.game;
 
         // Prevent default for game keys
-        if (['ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'Enter', 'e', 'E', 's', 'S', 'f', 'F', 'd', 'D', '1', 'b', 'B', 'p', 'P'].includes(key) ||
-            ['ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown'].includes(code)) {
+        if (['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'Enter', 'e', 'E', 's', 'S', 'f', 'F', 'd', 'D', '1', 'b', 'B', 'p', 'P'].includes(key) ||
+            ['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown'].includes(code)) {
             e.preventDefault();
         }
 
@@ -101,6 +101,17 @@ export class InputHandler {
                 player1.smarter();
             }
         }
+
+        // Escape key: pause/resume
+        if (key === 'Escape') {
+            if (this.game.state === GameState.PLAYING) {
+                this.game.pauseTime = Date.now();
+                this.game.state = GameState.PAUSED;
+            } else if (this.game.state === GameState.PAUSED) {
+                this.game.startTime += Date.now() - this.game.pauseTime;
+                this.game.state = GameState.PLAYING;
+            }
+        }
     }
 
     handleKeyUp(e) {
@@ -153,6 +164,44 @@ export class InputHandler {
                 // Start button
                 if (x > 215 && x < 445 && y > 165 && y < 185) {
                     this.game.startGame();
+                }
+                break;
+
+            case GameState.PLAYING:
+                // Pause icon click (x=10-42, y=8-23)
+                if (x >= 10 && x <= 42 && y >= 8 && y <= 23) {
+                    this.game.pauseTime = Date.now();
+                    this.game.state = GameState.PAUSED;
+                }
+                break;
+
+            case GameState.PAUSED:
+                // Pause icon click to unpause (x=10-42, y=8-23)
+                if (x >= 10 && x <= 42 && y >= 8 && y <= 23) {
+                    this.game.startTime += Date.now() - this.game.pauseTime;
+                    this.game.state = GameState.PLAYING;
+                    break;
+                }
+
+                // Modal button positions (centered in 650x430 canvas)
+                // Resume button: x=275-375, y=200-225
+                // Return to Menu button: x=250-400, y=235-260
+                const modalX = (650 - 200) / 2;  // 225
+                const modalY = (430 - 120) / 2;  // 155
+                const resumeX = modalX + 50;     // 275
+                const resumeY = modalY + 45;     // 200
+                const menuX = modalX + 25;       // 250
+                const menuY = modalY + 80;       // 235
+
+                // Resume button
+                if (x >= resumeX && x <= resumeX + 100 && y >= resumeY && y <= resumeY + 25) {
+                    this.game.startTime += Date.now() - this.game.pauseTime;
+                    this.game.state = GameState.PLAYING;
+                }
+                // Return to Menu button
+                if (x >= menuX && x <= menuX + 150 && y >= menuY && y <= menuY + 25) {
+                    this.game.state = GameState.MODE_SELECT;
+                    this.game.resetGameObjects();
                 }
                 break;
 
