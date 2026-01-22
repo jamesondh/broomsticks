@@ -90,7 +90,7 @@ function App() {
               fontWeight: "bold",
             }}
           >
-            Back to Home
+            Back to Game
           </button>
         </div>
         <GuestbookSearch activeTab={guestbookTab} onTabChange={handleTabChange} />

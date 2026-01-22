@@ -98,7 +98,7 @@ export class GameRenderer {
             ctx.drawImage(leftBasket, 10, 159);
         }
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(17, 198, 3, 160);
+        ctx.strokeRect(17.5, 198.5, 3, 160);
         ctx.fillStyle = leftPoleColor;
         ctx.fillRect(18, 198, 2, 160);
 
@@ -110,7 +110,7 @@ export class GameRenderer {
             ctx.drawImage(rightBasket, 598, 159);
         }
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(605, 198, 3, 160);
+        ctx.strokeRect(605.5, 198.5, 3, 160);
         ctx.fillStyle = rightPoleColor;
         ctx.fillRect(606, 198, 2, 160);
     }
@@ -173,24 +173,21 @@ export class GameRenderer {
         ctx.fillText('Click here for', 409, 194);
         ctx.fillText('two player', 409, 209);
 
-        // Attribution text
-        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 155, 269);
-
-        // Guestbook button
+        // Guestbook button (centered, 200px wide)
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(139, 279, 150, 30);
+        ctx.fillRect(214, 259, 200, 30);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(139, 279, 150, 30);
+        ctx.strokeRect(214, 259, 200, 30);
         ctx.fillStyle = '#000';
-        ctx.fillText('Guestbook', 179, 299);
+        ctx.fillText('Visit the Guestbook', 264, 279);
 
-        // GitHub button
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(359, 279, 150, 30);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(359, 279, 150, 30);
+        // Attribution text (centered)
+        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 310);
+
+        // GitHub link (underlined text)
+        ctx.fillText('View Source on GitHub', 248, 330);
         ctx.fillStyle = '#000';
-        ctx.fillText('GitHub', 409, 299);
+        ctx.fillRect(248, 333, 118, 1);
 
         // Intro image
         if (assets.introImage) {
@@ -213,8 +210,8 @@ export class GameRenderer {
         ctx.fillText('SETTINGS', 280, 140);
 
         // Left column settings (x=60)
-        const leftX = 60;
-        const rightX = 340;
+        const leftX = 200;
+        const rightX = 320;
         const startY = 165;
         const lineHeight = 18;
 
@@ -430,7 +427,7 @@ export class GameRenderer {
     drawTitle(ctx) {
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Broomsticks Advanced by Paul Rajlich', 225, 20);
+        ctx.fillText('Broomsticks by Paul Rajlich', 255, 20);
     }
 
     drawControls(ctx) {

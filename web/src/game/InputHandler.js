@@ -1,6 +1,6 @@
 // InputHandler.js - Keyboard and mouse input handling for Broomsticks
 
-import { GameState, OFFSET_X, OFFSET_Y, SETTINGS_OPTIONS, GITHUB_URL } from './GameConstants.js';
+import { GameState, OFFSET_X, OFFSET_Y, GITHUB_URL } from './GameConstants.js';
 
 export class InputHandler {
     constructor(game, canvas) {
@@ -128,12 +128,12 @@ export class InputHandler {
                     this.game.player1.isRobot = false;
                     this.game.state = GameState.SETTINGS;
                 }
-                // Guestbook button
-                if (x > 150 && x < 300 && y > 310 && y < 340) {
+                // Guestbook button (centered, 200px wide)
+                if (x > 225 && x < 425 && y > 290 && y < 320) {
                     window.location.href = '/guestbook';
                 }
-                // GitHub button
-                if (x > 370 && x < 520 && y > 310 && y < 340) {
+                // GitHub link (underlined text)
+                if (x > 259 && x < 377 && y > 349 && y < 366) {
                     window.open(GITHUB_URL, '_blank');
                 }
                 break;
