@@ -37,12 +37,12 @@ export const GAME_FONT = '16px MS Sans Serif Extended, Helvetica, Arial, sans-se
 
 // Default game settings
 export const DEFAULT_SETTINGS = {
-    dive: false,
+    dive: true,
     accel: 2,
     maxSpeed: 5,
     redBalls: 1,
     blackBalls: 2,
-    goldBalls: 1,
+    goldBalls: 0,
     goldPoints: 150,
     duration: 60,
     winScore: 50,
@@ -94,4 +94,62 @@ export const GameState = {
     PLAYING: 'playing',
     PAUSED: 'paused',
     GAME_OVER: 'game_over'
+};
+
+// Pause modal dimensions (used by renderer and input handler)
+export const PAUSE_MODAL = {
+    width: 200,
+    height: 120,
+    get x() { return (CANVAS_WIDTH - this.width) / 2; },
+    get y() { return (CANVAS_HEIGHT - this.height) / 2; }
+};
+
+// Button definitions: coords are in offscreen canvas space unless marked otherwise
+// InputHandler applies OFFSET_X/OFFSET_Y for hit testing on offscreen buttons
+export const BUTTONS = {
+    MODE_SELECT: {
+        singlePlayer: { x: 139, y: 174, w: 120, h: 50 },
+        twoPlayer:    { x: 389, y: 174, w: 120, h: 50 },
+        guestbook:    { x: 214, y: 259, w: 200, h: 30 },
+        github:       { x: 248, y: 317, w: 118, h: 16 }
+    },
+    SETTINGS: {
+        continueBtn:  { x: 204, y: 280, w: 230, h: 25 }
+    },
+    RULES: {
+        continueBtn:  { x: 204, y: 134, w: 230, h: 20 }
+    },
+    READY: {
+        startBtn:     { x: 204, y: 134, w: 230, h: 20 }
+    },
+    PLAYING: {
+        pauseIcon:    { x: 10, y: 8, w: 32, h: 15, mainCanvas: true }
+    },
+    PAUSED: {
+        pauseIcon:    { x: 10, y: 8, w: 32, h: 15, mainCanvas: true },
+        resume:       { x: 50, y: 45, w: 100, h: 25, modalRelative: true },
+        returnToMenu: { x: 25, y: 80, w: 150, h: 25, modalRelative: true }
+    },
+    GAME_OVER: {
+        playAgain:    { x: 204, y: 134, w: 230, h: 20 },
+        website:      { x: 214, y: 319, w: 225, h: 20 }
+    }
+};
+
+// Settings screen layout (offscreen canvas coords)
+export const SETTINGS_LAYOUT = {
+    startY: 165,      // Y of first row text baseline
+    lineHeight: 18,   // Vertical spacing
+    rowHeight: 16,    // Clickable height per row
+    left: {
+        textX: 200,   // Text draw position
+        hitX: 190,    // Hitbox start (10px padding left of text)
+        hitW: 120,    // Hitbox width
+    },
+    right: {
+        textX: 320,   // Text draw position
+        hitX: 310,    // Hitbox start (10px padding left of text)
+        hitW: 210,    // Hitbox width
+        splitAt: 105, // Boundary for left/right click zones (relative to hitX)
+    },
 };

@@ -11,7 +11,10 @@ import {
     GROUND_Y,
     COLORS,
     GAME_FONT,
-    GITHUB_URL
+    GITHUB_URL,
+    BUTTONS,
+    PAUSE_MODAL,
+    SETTINGS_LAYOUT
 } from './GameConstants.js';
 
 export class GameRenderer {
@@ -162,41 +165,46 @@ export class GameRenderer {
 
     drawModeSelectScreen(ctx) {
         const { assets } = this.game;
+        const btns = BUTTONS.MODE_SELECT;
 
         // Single player button
+        const sp = btns.singlePlayer;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(139, 174, 120, 50);
+        ctx.fillRect(sp.x, sp.y, sp.w, sp.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(139.5, 174.5, 120, 50);
+        ctx.strokeRect(sp.x + 0.5, sp.y + 0.5, sp.w, sp.h);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Click here for', 159, 194);
-        ctx.fillText('single player', 159, 209);
+        ctx.fillText('Click here for', sp.x + 20, sp.y + 20);
+        ctx.fillText('single player', sp.x + 20, sp.y + 35);
 
         // Two player button
+        const tp = btns.twoPlayer;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(389, 174, 120, 50);
+        ctx.fillRect(tp.x, tp.y, tp.w, tp.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(389.5, 174.5, 120, 50);
+        ctx.strokeRect(tp.x + 0.5, tp.y + 0.5, tp.w, tp.h);
         ctx.fillStyle = '#000';
-        ctx.fillText('Click here for', 409, 194);
-        ctx.fillText('two player', 409, 209);
+        ctx.fillText('Click here for', tp.x + 20, tp.y + 20);
+        ctx.fillText('two player', tp.x + 20, tp.y + 35);
 
-        // Guestbook button (centered, 200px wide)
+        // Guestbook button
+        const gb = btns.guestbook;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(214, 259, 200, 30);
+        ctx.fillRect(gb.x, gb.y, gb.w, gb.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(214.5, 259.5, 200, 30);
+        ctx.strokeRect(gb.x + 0.5, gb.y + 0.5, gb.w, gb.h);
         ctx.fillStyle = '#000';
-        ctx.fillText('Visit the Guestbook', 264, 279);
+        ctx.fillText('Visit the Guestbook', gb.x + 50, gb.y + 20);
 
         // Attribution text (centered)
         ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 310);
 
         // GitHub link (underlined text)
-        ctx.fillText('View Source on GitHub', 248, 330);
+        const gh = btns.github;
+        ctx.fillText('View Source on GitHub', gh.x, gh.y + 13);
         ctx.fillStyle = '#000';
-        ctx.fillRect(248, 333, 118, 1);
+        ctx.fillRect(gh.x, gh.y + 16, gh.w, 1);
 
         // Intro image
         if (assets.introImage) {
@@ -206,6 +214,7 @@ export class GameRenderer {
 
     drawSettingsScreen(ctx) {
         const { assets, settings, settingsOptions } = this.game;
+        const { left, right, startY, lineHeight } = SETTINGS_LAYOUT;
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
@@ -218,43 +227,38 @@ export class GameRenderer {
         // Title
         ctx.fillText('SETTINGS', 280, 140);
 
-        // Left column settings (x=60)
-        const leftX = 200;
-        const rightX = 320;
-        const startY = 165;
-        const lineHeight = 18;
-
         // Left column
-        ctx.fillText(`Diving: ${settings.dive ? 'Yes' : 'No'}`, leftX, startY);
-        ctx.fillText(`Acceleration: ${settings.accel}`, leftX, startY + lineHeight);
-        ctx.fillText(`Max speed: ${settings.maxSpeed}`, leftX, startY + lineHeight * 2);
-        ctx.fillText(`Red balls: ${settings.redBalls}`, leftX, startY + lineHeight * 3);
-        ctx.fillText(`Black balls: ${settings.blackBalls}`, leftX, startY + lineHeight * 4);
-        ctx.fillText(`Gold balls: ${settings.goldBalls}`, leftX, startY + lineHeight * 5);
+        ctx.fillText(`Diving: ${settings.dive ? 'Yes' : 'No'}`, left.textX, startY);
+        ctx.fillText(`Acceleration: ${settings.accel}`, left.textX, startY + lineHeight);
+        ctx.fillText(`Max speed: ${settings.maxSpeed}`, left.textX, startY + lineHeight * 2);
+        ctx.fillText(`Red balls: ${settings.redBalls}`, left.textX, startY + lineHeight * 3);
+        ctx.fillText(`Black balls: ${settings.blackBalls}`, left.textX, startY + lineHeight * 4);
+        ctx.fillText(`Gold balls: ${settings.goldBalls}`, left.textX, startY + lineHeight * 5);
 
         // Right column
-        ctx.fillText(`Gold points: < ${settings.goldPoints} >`, rightX, startY);
-        ctx.fillText(`Seconds to gold: < ${settings.duration} >`, rightX, startY + lineHeight);
-        ctx.fillText(`Score to win: < ${settings.winScore} >`, rightX, startY + lineHeight * 2);
-        ctx.fillText(`Sound: ${settings.sound ? 'On' : 'Off'}`, rightX, startY + lineHeight * 3);
+        ctx.fillText(`Gold points: < ${settings.goldPoints} >`, right.textX, startY);
+        ctx.fillText(`Seconds to gold: < ${settings.duration} >`, right.textX, startY + lineHeight);
+        ctx.fillText(`Score to win: < ${settings.winScore} >`, right.textX, startY + lineHeight * 2);
+        ctx.fillText(`Sound: ${settings.sound ? 'On' : 'Off'}`, right.textX, startY + lineHeight * 3);
 
         // Player sprite setting
         const playerOption = settingsOptions.playerImg.find(p => p.value === settings.playerImg);
         const playerLabel = playerOption ? playerOption.label : 'Default';
-        ctx.fillText(`Player: < ${playerLabel} >`, rightX, startY + lineHeight * 4);
+        ctx.fillText(`Player: < ${playerLabel} >`, right.textX, startY + lineHeight * 4);
 
         // Background setting
         const bgOption = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
         const bgLabel = bgOption ? bgOption.label : 'Sky 1';
-        ctx.fillText(`Background: < ${bgLabel} >`, rightX, startY + lineHeight * 5);
+        ctx.fillText(`Background: < ${bgLabel} >`, right.textX, startY + lineHeight * 5);
 
         // Continue button
+        const cont = BUTTONS.SETTINGS.continueBtn;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(204, 280, 230, 25);
+        ctx.fillRect(cont.x, cont.y, cont.w, cont.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204.5, 280.5, 230, 25);
+        ctx.strokeRect(cont.x + 0.5, cont.y + 0.5, cont.w, cont.h);
         ctx.fillStyle = '#000';
-        ctx.fillText('Click here to continue.', 249, 297);
+        ctx.fillText('Click here to continue.', cont.x + 45, cont.y + 17);
 
         // Instructions
         ctx.fillText('Click on settings to change them.', 210, 330);
@@ -262,15 +266,16 @@ export class GameRenderer {
 
     drawRulesScreen(ctx) {
         const { assets, settings } = this.game;
+        const cont = BUTTONS.RULES.continueBtn;
 
         // Continue button
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(204, 134, 230, 20);
+        ctx.fillRect(cont.x, cont.y, cont.w, cont.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204.5, 134.5, 230, 20);
+        ctx.strokeRect(cont.x + 0.5, cont.y + 0.5, cont.w, cont.h);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Click here to continue.', 249, 149);
+        ctx.fillText('Click here to continue.', cont.x + 45, cont.y + 15);
 
         // Rules
         ctx.fillText('The rules of the game are:', 139, 209);
@@ -293,15 +298,16 @@ export class GameRenderer {
 
     drawReadyScreen(ctx) {
         const { assets, settings, player1 } = this.game;
+        const start = BUTTONS.READY.startBtn;
 
         // Start button
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(204, 134, 230, 20);
+        ctx.fillRect(start.x, start.y, start.w, start.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204.5, 134.5, 230, 20);
+        ctx.strokeRect(start.x + 0.5, start.y + 0.5, start.w, start.h);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Click here to start.', 264, 149);
+        ctx.fillText('Click here to start.', start.x + 60, start.y + 15);
 
         // Instructions
         ctx.fillText('It\'s easier to just click on the keys rather than hold them down.', 139, 299);
@@ -351,15 +357,17 @@ export class GameRenderer {
 
     drawGameOverScreen(ctx) {
         const { assets } = this.game;
+        const btns = BUTTONS.GAME_OVER;
 
         // Play again button
+        const pa = btns.playAgain;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(204, 134, 230, 20);
+        ctx.fillRect(pa.x, pa.y, pa.w, pa.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(204.5, 134.5, 230, 20);
+        ctx.strokeRect(pa.x + 0.5, pa.y + 0.5, pa.w, pa.h);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Game over. Click here to play again.', 214, 149);
+        ctx.fillText('Game over. Click here to play again.', pa.x + 10, pa.y + 15);
 
         // iOS app text
         ctx.fillText('NEW! Get Broomsticks for the iphone/ipad!', 214, 224);
@@ -367,12 +375,13 @@ export class GameRenderer {
 
         // Full version link text and button
         ctx.fillText('Like this game? Get the full version here!:', 214, 309);
+        const ws = btns.website;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(214, 319, 225, 20);
+        ctx.fillRect(ws.x, ws.y, ws.w, ws.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(214.5, 319.5, 225, 20);
+        ctx.strokeRect(ws.x + 0.5, ws.y + 0.5, ws.w, ws.h);
         ctx.fillStyle = '#000';
-        ctx.fillText('http://www.visbox.com/broomsticks/', 229, 334);
+        ctx.fillText('http://www.visbox.com/broomsticks/', ws.x + 15, ws.y + 15);
 
         if (assets.introImage) {
             ctx.drawImage(assets.introImage, 139, 39);
@@ -472,17 +481,17 @@ export class GameRenderer {
     }
 
     drawPauseIcon(ctx) {
-        // Pause icon: x=8, y=8, 32x15 (matching score box height)
+        const pi = BUTTONS.PLAYING.pauseIcon;
         // Draw background
         ctx.fillStyle = '#888';
-        ctx.fillRect(10, 8, 32, 15);
+        ctx.fillRect(pi.x, pi.y, pi.w, pi.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(10.5, 8.5, 32, 15);
+        ctx.strokeRect(pi.x + 0.5, pi.y + 0.5, pi.w, pi.h);
 
         // Draw two vertical bars (classic pause symbol)
         ctx.fillStyle = '#000';
-        ctx.fillRect(22, 11, 2, 9);
-        ctx.fillRect(28, 11, 2, 9);
+        ctx.fillRect(pi.x + 12, pi.y + 3, 2, 9);
+        ctx.fillRect(pi.x + 18, pi.y + 3, 2, 9);
     }
 
     drawPauseScreen(ctx) {
@@ -490,17 +499,14 @@ export class GameRenderer {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.fillRect(OFFSET_X, OFFSET_Y, GAME_WIDTH, GAME_HEIGHT);
 
-        // Modal box dimensions
-        const modalWidth = 200;
-        const modalHeight = 120;
-        const modalX = (CANVAS_WIDTH - modalWidth) / 2;
-        const modalY = (CANVAS_HEIGHT - modalHeight) / 2;
+        const modalX = PAUSE_MODAL.x;
+        const modalY = PAUSE_MODAL.y;
 
         // Modal background
         ctx.fillStyle = '#ddd';
-        ctx.fillRect(modalX, modalY, modalWidth, modalHeight);
+        ctx.fillRect(modalX, modalY, PAUSE_MODAL.width, PAUSE_MODAL.height);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(modalX + 0.5, modalY + 0.5, modalWidth, modalHeight);
+        ctx.strokeRect(modalX + 0.5, modalY + 0.5, PAUSE_MODAL.width, PAUSE_MODAL.height);
 
         // "PAUSED" title
         ctx.fillStyle = '#000';
@@ -508,22 +514,24 @@ export class GameRenderer {
         ctx.fillText('PAUSED', modalX + 70, modalY + 30);
 
         // Resume button
-        const resumeX = modalX + 50;
-        const resumeY = modalY + 45;
+        const resumeBtn = BUTTONS.PAUSED.resume;
+        const resumeX = modalX + resumeBtn.x;
+        const resumeY = modalY + resumeBtn.y;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(resumeX, resumeY, 100, 25);
+        ctx.fillRect(resumeX, resumeY, resumeBtn.w, resumeBtn.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(resumeX + 0.5, resumeY + 0.5, 100, 25);
+        ctx.strokeRect(resumeX + 0.5, resumeY + 0.5, resumeBtn.w, resumeBtn.h);
         ctx.fillStyle = '#000';
         ctx.fillText('Resume', resumeX + 25, resumeY + 17);
 
         // Return to Menu button
-        const menuX = modalX + 25;
-        const menuY = modalY + 80;
+        const menuBtn = BUTTONS.PAUSED.returnToMenu;
+        const menuX = modalX + menuBtn.x;
+        const menuY = modalY + menuBtn.y;
         ctx.fillStyle = COLORS.green;
-        ctx.fillRect(menuX, menuY, 150, 25);
+        ctx.fillRect(menuX, menuY, menuBtn.w, menuBtn.h);
         ctx.strokeStyle = '#000';
-        ctx.strokeRect(menuX + 0.5, menuY + 0.5, 150, 25);
+        ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
         ctx.fillStyle = '#000';
         ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
     }

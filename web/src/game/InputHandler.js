@@ -1,6 +1,6 @@
 // InputHandler.js - Keyboard and mouse input handling for Broomsticks
 
-import { GameState, OFFSET_X, OFFSET_Y, GITHUB_URL } from './GameConstants.js';
+import { GameState, OFFSET_X, OFFSET_Y, GITHUB_URL, BUTTONS, PAUSE_MODAL, SETTINGS_LAYOUT } from './GameConstants.js';
 
 export class InputHandler {
     constructor(game, canvas) {
@@ -118,6 +118,24 @@ export class InputHandler {
         this.keysPressed.delete(e.code);
     }
 
+    // Helper for hit testing against button definitions from BUTTONS
+    hitTest(btn, x, y) {
+        if (btn.mainCanvas) {
+            // Direct main canvas coords (e.g., pause icon)
+            return x >= btn.x && x <= btn.x + btn.w && y >= btn.y && y <= btn.y + btn.h;
+        }
+        if (btn.modalRelative) {
+            // Modal-relative coords (pause modal buttons)
+            const bx = PAUSE_MODAL.x + btn.x;
+            const by = PAUSE_MODAL.y + btn.y;
+            return x >= bx && x <= bx + btn.w && y >= by && y <= by + btn.h;
+        }
+        // Default: offscreen canvas coords, apply offset for main canvas hit test
+        const bx = btn.x + OFFSET_X;
+        const by = btn.y + OFFSET_Y;
+        return x >= bx && x <= bx + btn.w && y >= by && y <= by + btn.h;
+    }
+
     handleClick(e) {
         const rect = this.canvas.getBoundingClientRect();
         // Account for CSS transform scaling
@@ -128,94 +146,80 @@ export class InputHandler {
         const y = (e.clientY - rect.top) * scaleY;
 
         switch (this.game.state) {
-            case GameState.MODE_SELECT:
-                // Single player button
-                if (x > 150 && x < 270 && y > 205 && y < 255) {
+            case GameState.MODE_SELECT: {
+                const btns = BUTTONS.MODE_SELECT;
+                if (this.hitTest(btns.singlePlayer, x, y)) {
                     this.game.player1.isRobot = true;
                     this.game.state = GameState.SETTINGS;
                 }
-                // Two player button
-                if (x > 400 && x < 520 && y > 205 && y < 255) {
+                if (this.hitTest(btns.twoPlayer, x, y)) {
                     this.game.player1.isRobot = false;
                     this.game.state = GameState.SETTINGS;
                 }
-                // Guestbook button (centered, 200px wide)
-                if (x > 225 && x < 425 && y > 290 && y < 320) {
+                if (this.hitTest(btns.guestbook, x, y)) {
                     window.location.href = '/guestbook';
                 }
-                // GitHub link (underlined text)
-                if (x > 259 && x < 377 && y > 349 && y < 366) {
+                if (this.hitTest(btns.github, x, y)) {
                     window.open(GITHUB_URL, '_blank');
                 }
                 break;
+            }
 
             case GameState.SETTINGS:
                 this.handleSettingsClick(x, y);
                 break;
 
             case GameState.RULES:
-                // Continue button
-                if (x > 215 && x < 445 && y > 165 && y < 185) {
+                if (this.hitTest(BUTTONS.RULES.continueBtn, x, y)) {
                     this.game.state = GameState.READY;
                 }
                 break;
 
             case GameState.READY:
-                // Start button
-                if (x > 215 && x < 445 && y > 165 && y < 185) {
+                if (this.hitTest(BUTTONS.READY.startBtn, x, y)) {
                     this.game.startGame();
                 }
                 break;
 
             case GameState.PLAYING:
-                // Pause icon click (x=10-42, y=8-23)
-                if (x >= 10 && x <= 42 && y >= 8 && y <= 23) {
+                if (this.hitTest(BUTTONS.PLAYING.pauseIcon, x, y)) {
                     this.game.pauseTime = Date.now();
                     this.game.state = GameState.PAUSED;
                 }
                 break;
 
-            case GameState.PAUSED:
-                // Pause icon click to unpause (x=10-42, y=8-23)
-                if (x >= 10 && x <= 42 && y >= 8 && y <= 23) {
+            case GameState.PAUSED: {
+                const pausedBtns = BUTTONS.PAUSED;
+                // Pause icon click to unpause
+                if (this.hitTest(pausedBtns.pauseIcon, x, y)) {
                     this.game.startTime += Date.now() - this.game.pauseTime;
                     this.game.state = GameState.PLAYING;
                     break;
                 }
-
-                // Modal button positions (centered in 650x430 canvas)
-                // Resume button: x=275-375, y=200-225
-                // Return to Menu button: x=250-400, y=235-260
-                const modalX = (650 - 200) / 2;  // 225
-                const modalY = (430 - 120) / 2;  // 155
-                const resumeX = modalX + 50;     // 275
-                const resumeY = modalY + 45;     // 200
-                const menuX = modalX + 25;       // 250
-                const menuY = modalY + 80;       // 235
-
                 // Resume button
-                if (x >= resumeX && x <= resumeX + 100 && y >= resumeY && y <= resumeY + 25) {
+                if (this.hitTest(pausedBtns.resume, x, y)) {
                     this.game.startTime += Date.now() - this.game.pauseTime;
                     this.game.state = GameState.PLAYING;
                 }
                 // Return to Menu button
-                if (x >= menuX && x <= menuX + 150 && y >= menuY && y <= menuY + 25) {
+                if (this.hitTest(pausedBtns.returnToMenu, x, y)) {
                     this.game.state = GameState.MODE_SELECT;
                     this.game.resetGameObjects();
                 }
                 break;
+            }
 
-            case GameState.GAME_OVER:
-                // Play again button
-                if (x > 215 && x < 445 && y > 165 && y < 185) {
+            case GameState.GAME_OVER: {
+                const gameOverBtns = BUTTONS.GAME_OVER;
+                if (this.hitTest(gameOverBtns.playAgain, x, y)) {
                     this.game.state = GameState.MODE_SELECT;
                     this.game.resetGameObjects();
                 }
-                // Website link button
-                if (x > 236 && x < 461 && y > 381 && y < 401) {
+                if (this.hitTest(gameOverBtns.website, x, y)) {
                     window.open(GITHUB_URL, '_blank');
                 }
                 break;
+            }
         }
     }
 
@@ -223,118 +227,84 @@ export class InputHandler {
         const { settings, settingsOptions } = this.game;
 
         // Convert from main canvas to offscreen canvas coordinates
-        // Offscreen canvas is drawn at (11, 31) on main canvas
         const offX = x - OFFSET_X;
         const offY = y - OFFSET_Y;
 
-        const leftX = 60;
-        const rightX = 340;
-        const startY = 165;
-        const lineHeight = 18;
-        const rowHeight = 16;
+        const { left, right, startY, lineHeight, rowHeight } = SETTINGS_LAYOUT;
 
-        // Check left column clicks (cycle options)
-        // Diving
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY - rowHeight && offY < startY) {
-            const idx = settingsOptions.dive.indexOf(settings.dive);
-            settings.dive = settingsOptions.dive[(idx + 1) % settingsOptions.dive.length];
-        }
-        // Acceleration
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight - rowHeight && offY < startY + lineHeight) {
-            const idx = settingsOptions.accel.indexOf(settings.accel);
-            settings.accel = settingsOptions.accel[(idx + 1) % settingsOptions.accel.length];
-        }
-        // Max speed
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 2 - rowHeight && offY < startY + lineHeight * 2) {
-            const idx = settingsOptions.maxSpeed.indexOf(settings.maxSpeed);
-            settings.maxSpeed = settingsOptions.maxSpeed[(idx + 1) % settingsOptions.maxSpeed.length];
-        }
-        // Red balls
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 3 - rowHeight && offY < startY + lineHeight * 3) {
-            const idx = settingsOptions.redBalls.indexOf(settings.redBalls);
-            settings.redBalls = settingsOptions.redBalls[(idx + 1) % settingsOptions.redBalls.length];
-        }
-        // Black balls
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 4 - rowHeight && offY < startY + lineHeight * 4) {
-            const idx = settingsOptions.blackBalls.indexOf(settings.blackBalls);
-            settings.blackBalls = settingsOptions.blackBalls[(idx + 1) % settingsOptions.blackBalls.length];
-        }
-        // Gold balls
-        if (offX > leftX - 10 && offX < leftX + 150 && offY > startY + lineHeight * 5 - rowHeight && offY < startY + lineHeight * 5) {
-            const idx = settingsOptions.goldBalls.indexOf(settings.goldBalls);
-            settings.goldBalls = settingsOptions.goldBalls[(idx + 1) % settingsOptions.goldBalls.length];
-        }
+        // Helper: check if click is in row N (0-indexed)
+        const inRow = (n) => offY >= startY + lineHeight * n - rowHeight &&
+                             offY < startY + lineHeight * n;
 
-        // Check right column clicks (numeric with < > or cycle)
-        // Gold points (< decrement, > increment)
-        if (offY > startY - rowHeight && offY < startY) {
-            const opt = settingsOptions.goldPoints;
-            if (offX > rightX - 10 && offX < rightX + 100) {
-                // Decrement
-                settings.goldPoints = Math.max(opt.min, settings.goldPoints - opt.step);
-            } else if (offX > rightX + 100 && offX < rightX + 200) {
-                // Increment
-                settings.goldPoints = Math.min(opt.max, settings.goldPoints + opt.step);
-            }
-        }
-        // Seconds to gold
-        if (offY > startY + lineHeight - rowHeight && offY < startY + lineHeight) {
-            const opt = settingsOptions.duration;
-            if (offX > rightX - 10 && offX < rightX + 110) {
-                settings.duration = Math.max(opt.min, settings.duration - opt.step);
-            } else if (offX > rightX + 110 && offX < rightX + 220) {
-                settings.duration = Math.min(opt.max, settings.duration + opt.step);
-            }
-        }
-        // Score to win
-        if (offY > startY + lineHeight * 2 - rowHeight && offY < startY + lineHeight * 2) {
-            const opt = settingsOptions.winScore;
-            if (offX > rightX - 10 && offX < rightX + 100) {
-                settings.winScore = Math.max(opt.min, settings.winScore - opt.step);
-            } else if (offX > rightX + 100 && offX < rightX + 200) {
-                settings.winScore = Math.min(opt.max, settings.winScore + opt.step);
-            }
-        }
-        // Sound
-        if (offX > rightX - 10 && offX < rightX + 150 && offY > startY + lineHeight * 3 - rowHeight && offY < startY + lineHeight * 3) {
-            const idx = settingsOptions.sound.indexOf(settings.sound);
-            settings.sound = settingsOptions.sound[(idx + 1) % settingsOptions.sound.length];
-        }
-        // Player sprite
-        if (offY > startY + lineHeight * 4 - rowHeight && offY < startY + lineHeight * 4) {
-            const opts = settingsOptions.playerImg;
-            const idx = opts.findIndex(p => p.value === settings.playerImg);
-            if (offX > rightX - 10 && offX < rightX + 80) {
-                // Previous
-                const newIdx = (idx - 1 + opts.length) % opts.length;
-                settings.playerImg = opts[newIdx].value;
-                this.game.settingsChanged = true;
-            } else if (offX > rightX + 80 && offX < rightX + 200) {
-                // Next
-                const newIdx = (idx + 1) % opts.length;
-                settings.playerImg = opts[newIdx].value;
-                this.game.settingsChanged = true;
-            }
-        }
-        // Background
-        if (offY > startY + lineHeight * 5 - rowHeight && offY < startY + lineHeight * 5) {
-            const opts = settingsOptions.bgImg;
-            const idx = opts.findIndex(b => b.value === settings.bgImg);
-            if (offX > rightX - 10 && offX < rightX + 100) {
-                // Previous
-                const newIdx = (idx - 1 + opts.length) % opts.length;
-                settings.bgImg = opts[newIdx].value;
-                this.game.settingsChanged = true;
-            } else if (offX > rightX + 100 && offX < rightX + 200) {
-                // Next
-                const newIdx = (idx + 1) % opts.length;
-                settings.bgImg = opts[newIdx].value;
-                this.game.settingsChanged = true;
-            }
+        // Column hit detection
+        const inLeft = offX >= left.hitX && offX < left.hitX + left.hitW;
+        const inRight = offX >= right.hitX && offX < right.hitX + right.hitW;
+        const inRightDec = offX >= right.hitX && offX < right.hitX + right.splitAt;
+        const inRightInc = offX >= right.hitX + right.splitAt && offX < right.hitX + right.hitW;
+
+        // Cycle through array options
+        const cycleSetting = (key) => {
+            const opts = settingsOptions[key];
+            const idx = opts.indexOf(settings[key]);
+            settings[key] = opts[(idx + 1) % opts.length];
+        };
+
+        // Adjust numeric range
+        const adjustRange = (key, dir) => {
+            const opt = settingsOptions[key];
+            settings[key] = Math.max(opt.min, Math.min(opt.max, settings[key] + dir * opt.step));
+        };
+
+        // Cycle through list of {value, label} objects
+        const cycleList = (key, dir) => {
+            const opts = settingsOptions[key];
+            const idx = opts.findIndex(o => o.value === settings[key]);
+            const newIdx = (idx + dir + opts.length) % opts.length;
+            settings[key] = opts[newIdx].value;
+            this.game.settingsChanged = true;
+        };
+
+        // Left column: cycle on click
+        if (inLeft) {
+            if (inRow(0)) cycleSetting('dive');
+            if (inRow(1)) cycleSetting('accel');
+            if (inRow(2)) cycleSetting('maxSpeed');
+            if (inRow(3)) cycleSetting('redBalls');
+            if (inRow(4)) cycleSetting('blackBalls');
+            if (inRow(5)) cycleSetting('goldBalls');
         }
 
-        // Continue button (offscreen canvas coords: x 204-434, y 280-305)
-        if (offX > 204 && offX < 434 && offY > 280 && offY < 305) {
+        // Right column row 0-2: numeric range (dec/inc)
+        if (inRow(0)) {
+            if (inRightDec) adjustRange('goldPoints', -1);
+            if (inRightInc) adjustRange('goldPoints', +1);
+        }
+        if (inRow(1)) {
+            if (inRightDec) adjustRange('duration', -1);
+            if (inRightInc) adjustRange('duration', +1);
+        }
+        if (inRow(2)) {
+            if (inRightDec) adjustRange('winScore', -1);
+            if (inRightInc) adjustRange('winScore', +1);
+        }
+
+        // Right column row 3: sound (cycle)
+        if (inRight && inRow(3)) cycleSetting('sound');
+
+        // Right column row 4-5: lists (prev/next)
+        if (inRow(4)) {
+            if (inRightDec) cycleList('playerImg', -1);
+            if (inRightInc) cycleList('playerImg', +1);
+        }
+        if (inRow(5)) {
+            if (inRightDec) cycleList('bgImg', -1);
+            if (inRightInc) cycleList('bgImg', +1);
+        }
+
+        // Continue button (using shared BUTTONS definition)
+        const continueBtn = BUTTONS.SETTINGS.continueBtn;
+        if (offX >= continueBtn.x && offX <= continueBtn.x + continueBtn.w &&
+            offY >= continueBtn.y && offY <= continueBtn.y + continueBtn.h) {
             this.game.transitionFromSettings();
         }
     }
