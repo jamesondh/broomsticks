@@ -194,8 +194,8 @@ export const BUTTONS = {
         back: { x: 290, y: 280, w: 60, h: 20 }
     },
     LOBBY: {
-        start: { x: 264, y: 260, w: 100, h: 30 },
-        leave: { x: 290, y: 300, w: 60, h: 20 }
+        start: { x: 264, y: 285, w: 100, h: 30 },
+        leave: { x: 290, y: 325, w: 60, h: 20 }
     },
     PLAYING: {
         pauseIcon: { x: 10, y: 8, w: 32, h: 15, mainCanvas: true }
@@ -234,5 +234,35 @@ export const PREGAME_SETTINGS_LAYOUT = {
         winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 80 },
         playerImg: { leftStart: 0, leftEnd: 30, rightStart: 30, rightEnd: 80 },
         bgImg: { leftStart: 0, leftEnd: 25, rightStart: 25, rightEnd: 80 }
+    }
+};
+
+// Settings shown in online lobby (simulation-affecting only)
+export const LOBBY_SETTINGS = [
+    'dive', 'accel', 'maxSpeed',           // Row 1: physics
+    'redBalls', 'blackBalls', 'goldBalls', // Row 2: balls
+    'goldPoints', 'duration', 'winScore'   // Row 2-3: scoring
+];
+
+// Lobby settings layout (reuses PREGAME_SETTINGS_LAYOUT grid structure)
+export const LOBBY_SETTINGS_LAYOUT = {
+    startX: 150,       // X of first column
+    startY: 212,       // Y of first row text baseline
+    colWidth: 80,      // Width per column
+    lineHeight: 18,    // Vertical spacing
+    rowHeight: 16,     // Clickable height per row
+    cols: 4,           // Number of columns
+    rows: 3,           // Number of rows
+    // Settings arranged in grid: [row][col] - simulation-affecting only, no sound/playerImg/bgImg
+    grid: [
+        ['dive', 'accel', 'maxSpeed', null],
+        ['redBalls', 'blackBalls', 'goldBalls', 'goldPoints'],
+        ['duration', 'winScore', null, null]
+    ],
+    // Hitbox offsets for two-way < > controls (same as PREGAME)
+    twoWayHitboxes: {
+        goldPoints: { leftStart: 0, leftEnd: 60, rightStart: 60, rightEnd: 80 },
+        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 80 },
+        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 80 }
     }
 };

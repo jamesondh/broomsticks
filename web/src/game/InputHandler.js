@@ -11,6 +11,7 @@ import {
     BUTTONS,
     PAUSE_MODAL,
     PREGAME_SETTINGS_LAYOUT,
+    LOBBY_SETTINGS_LAYOUT,
     SETTINGS_OPTIONS
 } from './GameConstants.js';
 
@@ -452,6 +453,13 @@ export class InputHandler {
     }
 
     handleExpandedSettingsClick(x, y) {
+        this.handleSettingsGridClick(x, y, PREGAME_SETTINGS_LAYOUT);
+    }
+
+    // Reusable settings grid click handler
+    // layout: settings layout config (PREGAME_SETTINGS_LAYOUT or LOBBY_SETTINGS_LAYOUT)
+    // Returns true if a setting was changed, false otherwise
+    handleSettingsGridClick(x, y, layout) {
         const { settings } = this.game;
         const settingsOptions = SETTINGS_OPTIONS;
 
@@ -459,16 +467,16 @@ export class InputHandler {
         const offX = x - OFFSET_X;
         const offY = y - OFFSET_Y;
 
-        const { startX, startY, colWidth, lineHeight, rowHeight, grid, twoWayHitboxes } = PREGAME_SETTINGS_LAYOUT;
+        const { startX, startY, colWidth, lineHeight, rowHeight, grid, twoWayHitboxes } = layout;
 
         // Determine which row/col was clicked
         const col = Math.floor((offX - startX) / colWidth);
         const row = Math.floor((offY - (startY - rowHeight)) / lineHeight);
 
-        if (col < 0 || col >= 4 || row < 0 || row >= 3) return;
+        if (col < 0 || col >= layout.cols || row < 0 || row >= layout.rows) return false;
 
         const settingKey = grid[row][col];
-        if (!settingKey) return;
+        if (!settingKey) return false;
 
         // X position within the cell
         const cellX = offX - startX - col * colWidth;
@@ -499,7 +507,7 @@ export class InputHandler {
         };
 
         // Two-way settings use explicit arrow hitboxes
-        const twoWaySettings = ['goldPoints', 'duration', 'winScore', 'playerImg', 'bgImg'];
+        const twoWaySettings = Object.keys(twoWayHitboxes);
         if (twoWaySettings.includes(settingKey)) {
             const hitbox = twoWayHitboxes[settingKey];
 
@@ -510,7 +518,7 @@ export class InputHandler {
                 } else {
                     adjustRange(settingKey, -1);
                 }
-                return;
+                return true;
             }
 
             // Check if click is on right arrow (>)
@@ -520,11 +528,11 @@ export class InputHandler {
                 } else {
                     adjustRange(settingKey, 1);
                 }
-                return;
+                return true;
             }
 
             // Click was outside arrow hitboxes - ignore
-            return;
+            return false;
         }
 
         // Handle cycle settings (click anywhere in cell)
@@ -537,8 +545,10 @@ export class InputHandler {
             case 'blackBalls':
             case 'goldBalls':
                 cycleSetting(settingKey);
-                break;
+                return true;
         }
+
+        return false;
     }
 
     handleOnlineMenuClick(x, y) {
@@ -607,6 +617,17 @@ export class InputHandler {
     handleLobbyClick(x, y) {
         const btns = BUTTONS.LOBBY;
         const { networkMode, lobbyPlayers } = this.game;
+
+        // Settings grid (host only)
+        if (networkMode === NetworkMode.HOST) {
+            if (this.handleSettingsGridClick(x, y, LOBBY_SETTINGS_LAYOUT)) {
+                // Setting was changed, broadcast to clients
+                if (this.game.networkManager) {
+                    this.game.networkManager.broadcastSettings(this.game.settings);
+                }
+                return;
+            }
+        }
 
         // Start button (only for host with 2 players)
         if (this.hitTest(btns.start, x, y)) {

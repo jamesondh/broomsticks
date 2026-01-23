@@ -11,15 +11,30 @@ type ClientMessage =
   | { type: "join"; name: string }
   | { type: "ready" }
   | { type: "input"; input: InputState }
-  | { type: "gameStart" }
+  | { type: "gameStart"; settings?: GameSettings }
+  | { type: "settings"; settings: GameSettings }
   | { type: "state"; state: GameState }
   | { type: "leave" };
+
+// Game settings that affect simulation (must be synced)
+interface GameSettings {
+  dive: boolean;
+  accel: number;
+  maxSpeed: number;
+  redBalls: number;
+  blackBalls: number;
+  goldBalls: number;
+  goldPoints: number;
+  duration: number;
+  winScore: number;
+}
 
 type ServerMessage =
   | { type: "joined"; playerId: string; isHost: boolean; roomCode: string; players: PlayerInfo[] }
   | { type: "playerJoined"; player: PlayerInfo }
   | { type: "playerLeft"; playerId: string }
   | { type: "gameStart"; config: GameConfig }
+  | { type: "settings"; settings: GameSettings }
   | { type: "state"; state: GameState }
   | { type: "input"; playerId: string; input: InputState }
   | { type: "error"; message: string };
@@ -41,6 +56,7 @@ interface InputState {
 
 interface GameConfig {
   hostId: string;
+  settings?: GameSettings;
 }
 
 // Compact game state for network sync
@@ -129,7 +145,11 @@ export default class BroomsticksRoom implements Party.Server {
         break;
 
       case "gameStart":
-        this.handleGameStart(sender);
+        this.handleGameStart(sender, msg.settings);
+        break;
+
+      case "settings":
+        this.handleSettings(sender, msg.settings);
         break;
 
       case "state":
@@ -198,7 +218,7 @@ export default class BroomsticksRoom implements Party.Server {
     }
   }
 
-  handleGameStart(conn: Party.Connection) {
+  handleGameStart(conn: Party.Connection, settings?: GameSettings) {
     // Only host can start the game
     if (conn.id !== this.hostId) {
       conn.send(JSON.stringify({ type: "error", message: "Only host can start" } as ServerMessage));
@@ -212,13 +232,32 @@ export default class BroomsticksRoom implements Party.Server {
     }
 
     this.gameStarted = true;
-    console.log(`[${this.room.id}] Game started by host`);
+    console.log(`[${this.room.id}] Game started by host with settings:`, settings);
 
-    // Notify all players
+    // Notify all players with host settings
     this.broadcast(JSON.stringify({
       type: "gameStart",
-      config: { hostId: this.hostId }
+      config: {
+        hostId: this.hostId,
+        settings: settings
+      }
     } as ServerMessage));
+  }
+
+  handleSettings(conn: Party.Connection, settings: GameSettings) {
+    // Only host can broadcast settings
+    if (conn.id !== this.hostId) return;
+
+    // Don't allow settings changes after game started
+    if (this.gameStarted) return;
+
+    console.log(`[${this.room.id}] Host updated settings:`, settings);
+
+    // Forward settings to all clients (excluding host)
+    this.broadcast(
+      JSON.stringify({ type: "settings", settings: settings } as ServerMessage),
+      [conn.id]
+    );
   }
 
   handleState(conn: Party.Connection, state: GameState) {

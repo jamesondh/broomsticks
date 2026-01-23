@@ -3,6 +3,7 @@
 import {
     GameState,
     GameMode,
+    NetworkMode,
     AIDifficulty,
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
@@ -16,6 +17,8 @@ import {
     BUTTONS,
     PAUSE_MODAL,
     PREGAME_SETTINGS_LAYOUT,
+    LOBBY_SETTINGS_LAYOUT,
+    LOBBY_SETTINGS,
     DEBUG_HITBOXES
 } from './GameConstants.js';
 
@@ -298,62 +301,128 @@ export class GameRenderer {
     }
 
     drawExpandedSettings(ctx) {
+        this.drawSettingsGrid(ctx, PREGAME_SETTINGS_LAYOUT, false);
+    }
+
+    drawLobbySettings(ctx) {
+        const isHost = this.game.networkMode === NetworkMode.HOST;
+        const readOnly = !isHost;
+
+        // "Settings:" label
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+        ctx.fillText('Settings:', 150, 197);
+        if (readOnly) {
+            ctx.fillStyle = '#666';
+            ctx.fillText('(Host controls)', 220, 197);
+            ctx.fillStyle = '#000';
+        }
+
+        this.drawSettingsGrid(ctx, LOBBY_SETTINGS_LAYOUT, readOnly);
+    }
+
+    // Reusable settings grid renderer
+    // layout: settings layout config (PREGAME_SETTINGS_LAYOUT or LOBBY_SETTINGS_LAYOUT)
+    // readOnly: if true, hide < > arrows (for client view)
+    drawSettingsGrid(ctx, layout, readOnly) {
         const { settings, settingsOptions } = this.game;
-        const { startX, startY, colWidth, lineHeight, rowHeight, rows, cols } = PREGAME_SETTINGS_LAYOUT;
+        const { startX, startY, colWidth, lineHeight, rowHeight, rows, cols, grid, twoWayHitboxes } = layout;
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
 
-        // Row 0
-        ctx.fillText(`Diving: ${settings.dive ? 'Yes' : 'No'}`, startX, startY);
-        ctx.fillText(`Accel: ${settings.accel}`, startX + colWidth, startY);
-        ctx.fillText(`MaxSpd: ${settings.maxSpeed}`, startX + colWidth * 2, startY);
-        ctx.fillText(`Sound: ${settings.sound ? 'On' : 'Off'}`, startX + colWidth * 3, startY);
+        // Two-way settings that show < > arrows
+        const twoWaySettings = Object.keys(twoWayHitboxes);
 
-        // Row 1
-        ctx.fillText(`Red: ${settings.redBalls}`, startX, startY + lineHeight);
-        ctx.fillText(`Black: ${settings.blackBalls}`, startX + colWidth, startY + lineHeight);
-        ctx.fillText(`Gold: ${settings.goldBalls}`, startX + colWidth * 2, startY + lineHeight);
-        ctx.fillText(`GoldPts: < ${settings.goldPoints} >`, startX + colWidth * 3, startY + lineHeight);
+        // Render each cell in the grid
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const settingKey = grid[row][col];
+                if (!settingKey) continue;
 
-        // Row 2
-        ctx.fillText(`Time: < ${settings.duration} >`, startX, startY + lineHeight * 2);
-        ctx.fillText(`Win: < ${settings.winScore} >`, startX + colWidth, startY + lineHeight * 2);
+                const x = startX + col * colWidth;
+                const y = startY + row * lineHeight;
 
-        const playerOption = settingsOptions.playerImg.find(p => p.value === settings.playerImg);
-        const playerLabel = playerOption ? playerOption.label : 'Default';
-        ctx.fillText(`< ${playerLabel} >`, startX + colWidth * 2, startY + lineHeight * 2);
+                // Format the setting value
+                let text = this.formatSettingText(settingKey, settings, settingsOptions, twoWaySettings.includes(settingKey), readOnly);
+                ctx.fillText(text, x, y);
+            }
+        }
 
-        const bgOption = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
-        const bgLabel = bgOption ? bgOption.label : 'Sky 1';
-        ctx.fillText(`< ${bgLabel} >`, startX + colWidth * 3, startY + lineHeight * 2);
-
-        // Debug hitboxes for settings grid
-        if (DEBUG_HITBOXES) {
-            const { grid, twoWayHitboxes } = PREGAME_SETTINGS_LAYOUT;
-            // Settings that use left/right arrow controls (range and list types)
-            const twoWaySettings = ['goldPoints', 'duration', 'winScore', 'playerImg', 'bgImg'];
-
+        // Debug hitboxes for settings grid (only if not read-only)
+        if (DEBUG_HITBOXES && !readOnly) {
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < cols; col++) {
+                    const settingKey = grid[row][col];
+                    if (!settingKey) continue;
+
                     const cellX = startX + col * colWidth;
                     const cellY = startY - rowHeight + row * lineHeight;
-                    const settingKey = grid[row][col];
 
                     if (twoWaySettings.includes(settingKey)) {
-                        // Draw hitboxes for the actual < and > arrow positions
                         const hitbox = twoWayHitboxes[settingKey];
                         const leftWidth = hitbox.leftEnd - hitbox.leftStart;
                         const rightWidth = hitbox.rightEnd - hitbox.rightStart;
                         this.drawDebugHitbox(ctx, cellX + hitbox.leftStart, cellY, leftWidth, rowHeight);
                         this.drawDebugHitbox(ctx, cellX + hitbox.rightStart, cellY, rightWidth, rowHeight);
                     } else {
-                        // Draw single rectangle for cycle settings
                         this.drawDebugHitbox(ctx, cellX, cellY, colWidth, rowHeight);
                     }
                 }
             }
         }
+    }
+
+    // Format setting text with label and value
+    formatSettingText(key, settings, settingsOptions, isTwoWay, readOnly) {
+        const labels = {
+            dive: 'Diving',
+            accel: 'Accel',
+            maxSpeed: 'MaxSpd',
+            sound: 'Sound',
+            redBalls: 'Red',
+            blackBalls: 'Black',
+            goldBalls: 'Gold',
+            goldPoints: 'GoldPts',
+            duration: 'Time',
+            winScore: 'Win',
+            playerImg: '',
+            bgImg: ''
+        };
+
+        const label = labels[key] || key;
+        let value;
+
+        switch (key) {
+            case 'dive':
+                value = settings.dive ? 'Yes' : 'No';
+                break;
+            case 'sound':
+                value = settings.sound ? 'On' : 'Off';
+                break;
+            case 'playerImg': {
+                const opt = settingsOptions.playerImg.find(p => p.value === settings.playerImg);
+                value = opt ? opt.label : 'Default';
+                break;
+            }
+            case 'bgImg': {
+                const opt = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
+                value = opt ? opt.label : 'Sky 1';
+                break;
+            }
+            default:
+                value = settings[key];
+        }
+
+        // Two-way settings show < > arrows unless read-only
+        if (isTwoWay) {
+            if (readOnly) {
+                return label ? `${label}: ${value}` : `${value}`;
+            }
+            return label ? `${label}: < ${value} >` : `< ${value} >`;
+        }
+
+        return label ? `${label}: ${value}` : `${value}`;
     }
 
     drawOnlineMenu(ctx) {
@@ -504,44 +573,47 @@ export class GameRenderer {
     drawLobby(ctx) {
         const { assets, roomCode, lobbyPlayers, networkMode, networkError } = this.game;
         const btns = BUTTONS.LOBBY;
-        const isHost = networkMode === 'host';
+        const isHost = networkMode === NetworkMode.HOST;
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
 
         // Intro image
         if (assets.introImage) {
-            ctx.drawImage(assets.introImage, 139, 39);
+            ctx.drawImage(assets.introImage, 139, 12);
         }
 
         // Title
-        ctx.fillText('LOBBY', 290, 160);
+        ctx.fillText('LOBBY', 290, 130);
 
-        // Room code (large, copyable)
-        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
-        ctx.fillText(`Room: ${roomCode}`, 260, 195);
+        // Room code and Players side by side
+        ctx.font = '20px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText(`Room: ${roomCode}`, 150, 155);
         ctx.font = GAME_FONT;
 
-        // Players list
-        ctx.fillText('Players:', 250, 225);
-        let yOffset = 245;
+        // Players list (right side)
+        ctx.fillText('Players:', 380, 155);
+        let yOffset = 173;
         for (const player of lobbyPlayers) {
             const label = player.isHost ? `${player.name} (Host)` : player.name;
-            ctx.fillText(`- ${label}`, 260, yOffset);
+            ctx.fillText(`- ${label}`, 390, yOffset);
             yOffset += 18;
         }
 
         // Waiting for players message
         if (lobbyPlayers.length < 2) {
             ctx.fillStyle = '#666';
-            ctx.fillText('Waiting for opponent...', 250, yOffset + 10);
+            ctx.fillText('Waiting for opponent...', 390, yOffset);
             ctx.fillStyle = '#000';
         }
+
+        // Settings grid
+        this.drawLobbySettings(ctx);
 
         // Error message
         if (networkError) {
             ctx.fillStyle = '#c00';
-            ctx.fillText(networkError, 260, 320);
+            ctx.fillText(networkError, 260, 345);
             ctx.fillStyle = '#000';
         }
 

@@ -385,6 +385,7 @@ export class Game {
         this.networkManager.onPlayerLeft = (playerId) => this.onPlayerLeft(playerId);
         this.networkManager.onGameStart = (config) => this.onGameStart(config);
         this.networkManager.onStateReceived = (state) => this.applyNetworkState(state);
+        this.networkManager.onSettingsReceived = (settings) => this.onSettingsReceived(settings);
         this.networkManager.onError = (error) => this.onNetworkError(error);
     }
 
@@ -392,6 +393,22 @@ export class Game {
         console.log('[Game] Joined room:', msg.roomCode, 'as', msg.isHost ? 'host' : 'client');
         this.lobbyPlayers = msg.players;
         this.state = GameState.LOBBY;
+    }
+
+    onSettingsReceived(settings) {
+        // Client: apply host settings in lobby (real-time sync)
+        if (this.networkMode !== NetworkMode.CLIENT) return;
+
+        console.log('[Game] Applying host settings:', settings);
+        this.settings.dive = settings.dive;
+        this.settings.accel = settings.accel;
+        this.settings.maxSpeed = settings.maxSpeed;
+        this.settings.redBalls = settings.redBalls;
+        this.settings.blackBalls = settings.blackBalls;
+        this.settings.goldBalls = settings.goldBalls;
+        this.settings.goldPoints = settings.goldPoints;
+        this.settings.duration = settings.duration;
+        this.settings.winScore = settings.winScore;
     }
 
     onPlayerJoined(player) {
@@ -415,7 +432,22 @@ export class Game {
     onGameStart(config) {
         console.log('[Game] Game starting, host:', config.hostId);
 
-        // Initialize game objects for online play
+        // Client: apply host settings before initializing game objects
+        if (this.networkMode === NetworkMode.CLIENT && config.settings) {
+            console.log('[Game] Applying host settings:', config.settings);
+            // Merge simulation-affecting settings from host
+            this.settings.dive = config.settings.dive;
+            this.settings.accel = config.settings.accel;
+            this.settings.maxSpeed = config.settings.maxSpeed;
+            this.settings.redBalls = config.settings.redBalls;
+            this.settings.blackBalls = config.settings.blackBalls;
+            this.settings.goldBalls = config.settings.goldBalls;
+            this.settings.goldPoints = config.settings.goldPoints;
+            this.settings.duration = config.settings.duration;
+            this.settings.winScore = config.settings.winScore;
+        }
+
+        // Initialize game objects (now with synced settings)
         this.initGameObjects();
 
         // Online play: both players are human-controlled

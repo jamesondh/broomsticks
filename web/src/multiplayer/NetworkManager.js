@@ -35,6 +35,7 @@ export class NetworkManager {
         this.onPlayerLeft = null;
         this.onGameStart = null;
         this.onStateReceived = null;
+        this.onSettingsReceived = null;
         this.onError = null;
     }
 
@@ -157,6 +158,14 @@ export class NetworkManager {
                 }
                 break;
 
+            case 'settings':
+                // Client receives settings update from host (lobby)
+                if (!this.isHost && this.onSettingsReceived) {
+                    console.log('[NetworkManager] Received settings from host:', msg.settings);
+                    this.onSettingsReceived(msg.settings);
+                }
+                break;
+
             case 'error':
                 console.error('[NetworkManager] Error:', msg.message);
                 if (this.onError) {
@@ -205,7 +214,33 @@ export class NetworkManager {
     // Request game start (host only)
     requestGameStart() {
         if (this.isHost) {
-            this.send({ type: 'gameStart' });
+            // Send host's simulation-affecting settings to sync with client
+            const settings = this.extractSimulationSettings();
+            console.log('[NetworkManager] Sending gameStart with settings:', settings);
+            this.send({ type: 'gameStart', settings });
         }
+    }
+
+    // Host: broadcast settings to clients (for lobby settings sync)
+    broadcastSettings(settings) {
+        if (!this.isHost) return;
+        const simSettings = this.extractSimulationSettings();
+        console.log('[NetworkManager] Broadcasting settings:', simSettings);
+        this.send({ type: 'settings', settings: simSettings });
+    }
+
+    // Extract simulation-affecting settings for network sync
+    extractSimulationSettings() {
+        return {
+            dive: this.game.settings.dive,
+            accel: this.game.settings.accel,
+            maxSpeed: this.game.settings.maxSpeed,
+            redBalls: this.game.settings.redBalls,
+            blackBalls: this.game.settings.blackBalls,
+            goldBalls: this.game.settings.goldBalls,
+            goldPoints: this.game.settings.goldPoints,
+            duration: this.game.settings.duration,
+            winScore: this.game.settings.winScore
+        };
     }
 }
