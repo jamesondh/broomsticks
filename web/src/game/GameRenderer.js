@@ -2,6 +2,8 @@
 
 import {
     GameState,
+    GameMode,
+    AIDifficulty,
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
     GAME_WIDTH,
@@ -14,7 +16,9 @@ import {
     GITHUB_URL,
     BUTTONS,
     PAUSE_MODAL,
-    SETTINGS_LAYOUT
+    SETTINGS_LAYOUT,
+    PREGAME_SETTINGS_LAYOUT,
+    SETTINGS_OPTIONS
 } from './GameConstants.js';
 
 export class GameRenderer {
@@ -129,17 +133,32 @@ export class GameRenderer {
             case GameState.LOADING:
                 this.drawLoadingScreen(ctx);
                 break;
-            case GameState.MODE_SELECT:
-                this.drawModeSelectScreen(ctx);
+            case GameState.MAIN_MENU:
+                this.drawMainMenu(ctx);
                 break;
-            case GameState.SETTINGS:
-                this.drawSettingsScreen(ctx);
+            case GameState.HELP_MENU:
+                this.drawHelpMenu(ctx);
                 break;
             case GameState.RULES:
                 this.drawRulesScreen(ctx);
                 break;
-            case GameState.READY:
-                this.drawReadyScreen(ctx);
+            case GameState.CONTROLS:
+                this.drawControlsScreen(ctx);
+                break;
+            case GameState.PRE_GAME:
+                this.drawPreGame(ctx);
+                break;
+            case GameState.ONLINE_MENU:
+                this.drawOnlineMenu(ctx);
+                break;
+            case GameState.MATCHMAKING:
+                this.drawMatchmaking(ctx);
+                break;
+            case GameState.PRIVATE_ROOM_MENU:
+                this.drawPrivateRoomMenu(ctx);
+                break;
+            case GameState.LOBBY:
+                this.drawLobby(ctx);
                 break;
             case GameState.PLAYING:
                 this.drawGameplay(ctx);
@@ -163,58 +182,79 @@ export class GameRenderer {
         }
     }
 
-    drawModeSelectScreen(ctx) {
+    drawMainMenu(ctx) {
         const { assets } = this.game;
-        const btns = BUTTONS.MODE_SELECT;
+        const btns = BUTTONS.MAIN_MENU;
 
-        // Single player button
-        const sp = btns.singlePlayer;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(sp.x, sp.y, sp.w, sp.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(sp.x + 0.5, sp.y + 0.5, sp.w, sp.h);
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Click here for', sp.x + 20, sp.y + 20);
-        ctx.fillText('single player', sp.x + 20, sp.y + 35);
-
-        // Two player button
-        const tp = btns.twoPlayer;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(tp.x, tp.y, tp.w, tp.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(tp.x + 0.5, tp.y + 0.5, tp.w, tp.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Click here for', tp.x + 20, tp.y + 20);
-        ctx.fillText('two player', tp.x + 20, tp.y + 35);
-
-        // Guestbook button
-        const gb = btns.guestbook;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(gb.x, gb.y, gb.w, gb.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(gb.x + 0.5, gb.y + 0.5, gb.w, gb.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Visit the Guestbook', gb.x + 50, gb.y + 20);
-
-        // Attribution text (centered)
-        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 310);
-
-        // GitHub link (underlined text)
-        const gh = btns.github;
-        ctx.fillText('View Source on GitHub', gh.x, gh.y + 13);
-        ctx.fillStyle = '#000';
-        ctx.fillRect(gh.x, gh.y + 16, gh.w, 1);
 
         // Intro image
         if (assets.introImage) {
             ctx.drawImage(assets.introImage, 139, 39);
         }
+
+        // Single Player button
+        this.drawButton(ctx, btns.singlePlayer, 'Single Player');
+
+        // Local Multiplayer button
+        this.drawButton(ctx, btns.localMultiplayer, 'Local Multiplayer');
+
+        // Online button
+        this.drawButton(ctx, btns.online, 'Online');
+
+        // Help icon (top right)
+        const hi = btns.helpIcon;
+        ctx.fillStyle = '#888';
+        ctx.fillRect(hi.x, hi.y, hi.w, hi.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(hi.x + 0.5, hi.y + 0.5, hi.w, hi.h);
+        ctx.fillStyle = '#000';
+        ctx.font = '18px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText('?', hi.x + 10, hi.y + 22);
+        ctx.font = GAME_FONT;
+
+        // Attribution text
+        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 330);
+
+        // Footer links
+        const gb = btns.guestbook;
+        ctx.fillText('Guestbook', gb.x, gb.y + 15);
+        ctx.fillRect(gb.x, gb.y + 18, 75, 1);
+
+        const gh = btns.github;
+        ctx.fillText('GitHub', gh.x, gh.y + 15);
+        ctx.fillRect(gh.x, gh.y + 18, 48, 1);
     }
 
-    drawSettingsScreen(ctx) {
-        const { assets, settings, settingsOptions } = this.game;
-        const { left, right, startY, lineHeight } = SETTINGS_LAYOUT;
+    drawHelpMenu(ctx) {
+        const { assets } = this.game;
+        const btns = BUTTONS.HELP_MENU;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('HELP', 295, 160);
+
+        // Rules button
+        this.drawButton(ctx, btns.rules, 'Rules');
+
+        // Controls button
+        this.drawButton(ctx, btns.controls, 'Controls');
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
+    }
+
+    drawPreGame(ctx) {
+        const { assets, gameMode, aiDifficulty, playerCount, settingsExpanded, settings, settingsOptions } = this.game;
+        const btns = BUTTONS.PRE_GAME;
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
@@ -224,121 +264,274 @@ export class GameRenderer {
             ctx.drawImage(assets.introImage, 139, 19);
         }
 
-        // Title
-        ctx.fillText('SETTINGS', 280, 140);
+        // Title based on mode
+        const title = gameMode === GameMode.SINGLE ? 'SINGLE PLAYER' : 'LOCAL MULTIPLAYER';
+        ctx.fillText(title, gameMode === GameMode.SINGLE ? 255 : 235, 140);
 
-        // Left column
-        ctx.fillText(`Diving: ${settings.dive ? 'Yes' : 'No'}`, left.textX, startY);
-        ctx.fillText(`Acceleration: ${settings.accel}`, left.textX, startY + lineHeight);
-        ctx.fillText(`Max speed: ${settings.maxSpeed}`, left.textX, startY + lineHeight * 2);
-        ctx.fillText(`Red balls: ${settings.redBalls}`, left.textX, startY + lineHeight * 3);
-        ctx.fillText(`Black balls: ${settings.blackBalls}`, left.textX, startY + lineHeight * 4);
-        ctx.fillText(`Gold balls: ${settings.goldBalls}`, left.textX, startY + lineHeight * 5);
-
-        // Right column
-        ctx.fillText(`Gold points: < ${settings.goldPoints} >`, right.textX, startY);
-        ctx.fillText(`Seconds to gold: < ${settings.duration} >`, right.textX, startY + lineHeight);
-        ctx.fillText(`Score to win: < ${settings.winScore} >`, right.textX, startY + lineHeight * 2);
-        ctx.fillText(`Sound: ${settings.sound ? 'On' : 'Off'}`, right.textX, startY + lineHeight * 3);
-
-        // Player sprite setting
-        const playerOption = settingsOptions.playerImg.find(p => p.value === settings.playerImg);
-        const playerLabel = playerOption ? playerOption.label : 'Default';
-        ctx.fillText(`Player: < ${playerLabel} >`, right.textX, startY + lineHeight * 4);
-
-        // Background setting
-        const bgOption = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
-        const bgLabel = bgOption ? bgOption.label : 'Sky 1';
-        ctx.fillText(`Background: < ${bgLabel} >`, right.textX, startY + lineHeight * 5);
-
-        // Continue button
-        const cont = BUTTONS.SETTINGS.continueBtn;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(cont.x, cont.y, cont.w, cont.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(cont.x + 0.5, cont.y + 0.5, cont.w, cont.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Click here to continue.', cont.x + 45, cont.y + 17);
-
-        // Instructions
-        ctx.fillText('Click on settings to change them.', 210, 330);
-    }
-
-    drawRulesScreen(ctx) {
-        const { assets, settings } = this.game;
-        const cont = BUTTONS.RULES.continueBtn;
-
-        // Continue button
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(cont.x, cont.y, cont.w, cont.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(cont.x + 0.5, cont.y + 0.5, cont.w, cont.h);
-        ctx.fillStyle = '#000';
-        ctx.font = GAME_FONT;
-        ctx.fillText('Click here to continue.', cont.x + 45, cont.y + 15);
-
-        // Rules
-        ctx.fillText('The rules of the game are:', 139, 209);
-        ctx.fillText('1. When two players collide, the player that is lower is bumped.', 139, 229);
-        ctx.fillText('2. When a player collides with a black ball, the player is bumped.', 139, 244);
-        ctx.fillText('3. When a player gets close to the red ball, the player catches the ball.', 139, 259);
-        ctx.fillText('4. When a player puts the red ball in the opponent\'s hoop, 10 points are scored.', 139, 274);
-        ctx.fillText(`5. First player to score ${settings.winScore} points wins.`, 139, 289);
-
-        if (settings.goldBalls > 0) {
-            ctx.fillText(`6. Gold ball appears after ${settings.duration}s - worth ${settings.goldPoints} points!`, 139, 304);
+        // Mode-specific options
+        if (gameMode === GameMode.SINGLE) {
+            // Difficulty selector
+            ctx.fillText('Difficulty:', 170, 182);
+            this.drawToggleButton(ctx, btns.diffEasy, 'Easy', aiDifficulty === AIDifficulty.EASY);
+            this.drawToggleButton(ctx, btns.diffMedium, 'Medium', aiDifficulty === AIDifficulty.MEDIUM);
+            this.drawToggleButton(ctx, btns.diffHard, 'Hard', aiDifficulty === AIDifficulty.HARD);
+        } else {
+            // Player count selector
+            ctx.fillText('Players:', 200, 182);
+            this.drawToggleButton(ctx, btns.players2, '2', playerCount === 2);
+            this.drawToggleButton(ctx, btns.players4, '4', playerCount === 4);
         }
 
-        ctx.fillText('Have fun! If you haven\'t played against a friend, you haven\'t played! :-)', 139, 334);
+        // Settings toggle
+        const toggleText = settingsExpanded ? '▼ Settings' : '▶ Settings';
+        ctx.fillText(toggleText, btns.settingsToggle.x, btns.settingsToggle.y + 15);
 
+        // Expanded settings grid
+        if (settingsExpanded) {
+            this.drawExpandedSettings(ctx);
+        }
+
+        // START button
+        this.drawButton(ctx, btns.start, 'START');
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
+    }
+
+    drawExpandedSettings(ctx) {
+        const { settings, settingsOptions } = this.game;
+        const { startX, startY, colWidth, lineHeight } = PREGAME_SETTINGS_LAYOUT;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Row 0
+        ctx.fillText(`Diving: ${settings.dive ? 'Yes' : 'No'}`, startX, startY);
+        ctx.fillText(`Accel: ${settings.accel}`, startX + colWidth, startY);
+        ctx.fillText(`MaxSpd: ${settings.maxSpeed}`, startX + colWidth * 2, startY);
+        ctx.fillText(`Sound: ${settings.sound ? 'On' : 'Off'}`, startX + colWidth * 3, startY);
+
+        // Row 1
+        ctx.fillText(`Red: ${settings.redBalls}`, startX, startY + lineHeight);
+        ctx.fillText(`Black: ${settings.blackBalls}`, startX + colWidth, startY + lineHeight);
+        ctx.fillText(`Gold: ${settings.goldBalls}`, startX + colWidth * 2, startY + lineHeight);
+        ctx.fillText(`GoldPts: < ${settings.goldPoints} >`, startX + colWidth * 3, startY + lineHeight);
+
+        // Row 2
+        ctx.fillText(`Time: < ${settings.duration} >`, startX, startY + lineHeight * 2);
+        ctx.fillText(`Win: < ${settings.winScore} >`, startX + colWidth, startY + lineHeight * 2);
+
+        const playerOption = settingsOptions.playerImg.find(p => p.value === settings.playerImg);
+        const playerLabel = playerOption ? playerOption.label : 'Default';
+        ctx.fillText(`< ${playerLabel} >`, startX + colWidth * 2, startY + lineHeight * 2);
+
+        const bgOption = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
+        const bgLabel = bgOption ? bgOption.label : 'Sky 1';
+        ctx.fillText(`< ${bgLabel} >`, startX + colWidth * 3, startY + lineHeight * 2);
+    }
+
+    drawOnlineMenu(ctx) {
+        const { assets } = this.game;
+        const btns = BUTTONS.ONLINE_MENU;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
         if (assets.introImage) {
             ctx.drawImage(assets.introImage, 139, 39);
         }
+
+        // Title
+        ctx.fillText('ONLINE', 285, 160);
+
+        // Quick Match button
+        this.drawButton(ctx, btns.quickMatch, 'Quick Match');
+
+        // Private Room button
+        this.drawButton(ctx, btns.privateRoom, 'Private Room');
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
+
+        // Coming soon notice
+        ctx.fillStyle = '#666';
+        ctx.fillText('(Coming in Phase 3)', 260, 330);
     }
 
-    drawReadyScreen(ctx) {
-        const { assets, settings, player1 } = this.game;
-        const start = BUTTONS.READY.startBtn;
+    drawMatchmaking(ctx) {
+        const { assets } = this.game;
+        const btns = BUTTONS.MATCHMAKING;
 
-        // Start button
-        ctx.fillStyle = COLORS.green;
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('QUICK MATCH', 260, 160);
+
+        // Searching text with animated dots
+        const dots = '.'.repeat(Math.floor(Date.now() / 500) % 4);
+        ctx.fillText(`Searching for opponent${dots}`, 230, 195);
+
+        // Cancel button
+        this.drawButton(ctx, btns.cancel, 'Cancel');
+
+        // Mock notice
+        ctx.fillStyle = '#666';
+        ctx.fillText('(Mock UI - Phase 3)', 260, 330);
+    }
+
+    drawPrivateRoomMenu(ctx) {
+        const { assets } = this.game;
+        const btns = BUTTONS.PRIVATE_ROOM_MENU;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('PRIVATE ROOM', 255, 160);
+
+        // Create Room button
+        this.drawButton(ctx, btns.createRoom, 'Create Room');
+
+        // Join Room button
+        this.drawButton(ctx, btns.joinRoom, 'Join Room');
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
+
+        // Mock notice
+        ctx.fillStyle = '#666';
+        ctx.fillText('(Mock UI - Phase 3)', 260, 330);
+    }
+
+    drawLobby(ctx) {
+        const { assets } = this.game;
+        const btns = BUTTONS.LOBBY;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('LOBBY', 290, 160);
+
+        // Mock room code
+        ctx.fillText('Room Code: ABCD-1234', 245, 195);
+
+        // Players list
+        ctx.fillText('Players:', 280, 225);
+        ctx.fillText('• You (Host)', 260, 245);
+
+        // Start button (disabled look for mock)
+        const start = btns.start;
+        ctx.fillStyle = '#888';
         ctx.fillRect(start.x, start.y, start.w, start.h);
         ctx.strokeStyle = '#000';
         ctx.strokeRect(start.x + 0.5, start.y + 0.5, start.w, start.h);
         ctx.fillStyle = '#000';
+        ctx.fillText('Start', start.x + 30, start.y + 20);
+
+        // Leave link
+        this.drawBackButton(ctx, btns.leave, 'Leave');
+
+        // Mock notice
+        ctx.fillStyle = '#666';
+        ctx.fillText('(Mock UI - Phase 3)', 260, 340);
+    }
+
+    drawRulesScreen(ctx) {
+        const { assets, settings } = this.game;
+        const btns = BUTTONS.RULES;
+
+        ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Click here to start.', start.x + 60, start.y + 15);
 
-        // Instructions
-        ctx.fillText('It\'s easier to just click on the keys rather than hold them down.', 139, 299);
-        ctx.fillText('Click on your up key several times to start flying.', 174, 314);
-
-        if (!player1.isRobot) {
-            ctx.fillText('Blue Player', 89, 209);
-            ctx.fillText('use E, S, F keys', 89, 229);
-            if (settings.dive) {
-                ctx.fillText('use D to dive', 89, 244);
-                ctx.fillText('use 1 to switch player', 89, 259);
-            } else {
-                ctx.fillText('use 1 to switch player', 89, 244);
-            }
-        } else {
-            ctx.fillText('Computer Player', 89, 209);
-            ctx.fillText('use S and F to adjust skill', 89, 229);
-        }
-
-        ctx.fillText('Green Player', 389, 209);
-        ctx.fillText('use arrow keys', 389, 229);
-        if (settings.dive) {
-            ctx.fillText('use DOWN to dive', 389, 244);
-            ctx.fillText('use ENTER to switch player', 389, 259);
-        } else {
-            ctx.fillText('use ENTER to switch player', 389, 244);
-        }
-
+        // Intro image
         if (assets.introImage) {
             ctx.drawImage(assets.introImage, 139, 39);
         }
+
+        // Title
+        ctx.fillText('RULES', 290, 140);
+
+        // Rules
+        ctx.fillText('The rules of the game are:', 139, 169);
+        ctx.fillText('1. When two players collide, the player that is lower is bumped.', 139, 189);
+        ctx.fillText('2. When a player collides with a black ball, the player is bumped.', 139, 204);
+        ctx.fillText('3. When a player gets close to the red ball, the player catches the ball.', 139, 219);
+        ctx.fillText('4. When a player puts the red ball in the opponent\'s hoop, 10 points are scored.', 139, 234);
+        ctx.fillText(`5. First player to score ${settings.winScore} points wins.`, 139, 249);
+
+        if (settings.goldBalls > 0) {
+            ctx.fillText(`6. Gold ball appears after ${settings.duration}s - worth ${settings.goldPoints} points!`, 139, 264);
+        }
+
+        ctx.fillText('Have fun! If you haven\'t played against a friend, you haven\'t played! :-)', 139, 294);
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
+    }
+
+    drawControlsScreen(ctx) {
+        const { assets, settings, player1 } = this.game;
+        const btns = BUTTONS.CONTROLS;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('CONTROLS', 275, 140);
+
+        // Instructions
+        ctx.fillText('It\'s easier to just click on the keys rather than hold them down.', 139, 169);
+        ctx.fillText('Click on your up key several times to start flying.', 174, 189);
+
+        // Blue player controls
+        ctx.fillText('Blue Player', 89, 219);
+        ctx.fillText('use E, S, F keys', 89, 239);
+        if (settings.dive) {
+            ctx.fillText('use D to dive', 89, 254);
+            ctx.fillText('use 1 to switch player', 89, 269);
+        } else {
+            ctx.fillText('use 1 to switch player', 89, 254);
+        }
+
+        // Green player controls
+        ctx.fillText('Green Player', 389, 219);
+        ctx.fillText('use arrow keys', 389, 239);
+        if (settings.dive) {
+            ctx.fillText('use DOWN to dive', 389, 254);
+            ctx.fillText('use ENTER to switch player', 389, 269);
+        } else {
+            ctx.fillText('use ENTER to switch player', 389, 254);
+        }
+
+        // AI controls (if applicable)
+        ctx.fillText('In single player mode:', 200, 299);
+        ctx.fillText('use S and F to adjust AI skill', 200, 314);
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
     }
 
     drawGameplay(ctx) {
@@ -534,5 +727,45 @@ export class GameRenderer {
         ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
         ctx.fillStyle = '#000';
         ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
+    }
+
+    // Helper: draw standard green button
+    drawButton(ctx, btn, text) {
+        ctx.fillStyle = COLORS.green;
+        ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(btn.x + 0.5, btn.y + 0.5, btn.w, btn.h);
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+        // Center text (round to integer pixels for crisp rendering)
+        const textWidth = ctx.measureText(text).width;
+        const textX = Math.round(btn.x + (btn.w - textWidth) / 2);
+        const textY = Math.round(btn.y + btn.h / 2 + 5);
+        ctx.fillText(text, textX, textY);
+    }
+
+    // Helper: draw toggle button (highlighted when selected)
+    drawToggleButton(ctx, btn, text, selected) {
+        ctx.fillStyle = selected ? COLORS.gold : '#ccc';
+        ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(btn.x + 0.5, btn.y + 0.5, btn.w, btn.h);
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+        // Center text (round to integer pixels for crisp rendering)
+        const textWidth = ctx.measureText(text).width;
+        const textX = Math.round(btn.x + (btn.w - textWidth) / 2);
+        const textY = Math.round(btn.y + btn.h / 2 + 5);
+        ctx.fillText(text, textX, textY);
+    }
+
+    // Helper: draw back link (text link style)
+    drawBackButton(ctx, btn, text = '← Back') {
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+        ctx.fillText(text, btn.x, btn.y + 15);
+        // Underline
+        const textWidth = ctx.measureText(text).width;
+        ctx.fillRect(btn.x, btn.y + 18, textWidth, 1);
     }
 }

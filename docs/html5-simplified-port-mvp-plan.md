@@ -8,7 +8,14 @@ A streamlined implementation plan based on a faithful port of Broomsticks 1 usin
 - [Architecture](#architecture)
 - [Phase 1: Core Game (advanced2 Integration)](#phase-1-core-game-advanced2-integration)
 - [Phase 2: Local Multiplayer (2-4 Players)](#phase-2-local-multiplayer-2-4-players)
+  - [2.1 Menu Restructure](#21-menu-restructure)
+  - [2.2 AI Difficulty](#22-ai-difficulty)
+  - [2.3 Pause Functionality](#23-pause-functionality)
+  - [2.4 Input Improvements](#24-input-improvements)
+  - [2.5 4-Player Mode](#25-4-player-mode)
+  - [2.6 Gamepad Support](#26-gamepad-support-optional)
 - [Phase 3: Online Multiplayer](#phase-3-online-multiplayer)
+  - [3.6 Online Menu UI](#36-online-menu-ui)
 - [Phase 4: Mobile & Capacitor](#phase-4-mobile--capacitor)
 - [Phase 5: Polish (Optional)](#phase-5-polish-optional)
 
@@ -168,9 +175,156 @@ Kept:
 
 ## Phase 2: Local Multiplayer (2-4 Players)
 
-**Goal**: Support 2-player and 4-player local games.
+**Goal**: Support 2-player and 4-player local games with streamlined menu flow.
 
-### 2.1 Input Improvements
+### 2.1 Menu Restructure
+
+#### Problem
+
+Current flow has 4 screens before gameplay:
+```
+MODE_SELECT → SETTINGS → RULES → READY (controls) → PLAYING
+```
+This creates too much friction, especially for returning players.
+
+#### New Flow (2 clicks to play)
+
+**Main Menu**
+```
+┌─────────────────────────────────┐
+│         BROOMSTICKS             │
+│                                 │
+│     [ Single Player ]           │
+│     [ Local Multiplayer ]       │
+│     [ Online ]  →  submenu      │
+│                                 │
+│            [?] Help             │
+│                                 │
+│   Guestbook  •  GitHub          │
+└─────────────────────────────────┘
+```
+
+**Help Menu** (from ? icon)
+- Rules of the Game
+- Controls Reference
+
+**Single Player Pre-game**
+```
+┌─────────────────────────────────┐
+│       SINGLE PLAYER             │
+│                                 │
+│  Difficulty: [Easy|Med|Hard]    │
+│                                 │
+│  ▶ Settings (collapsed)         │
+│    • Ball counts, win score     │
+│    • Gold ball, sprites, etc.   │
+│                                 │
+│         [ START ]               │
+│                                 │
+│         [← Back]                │
+└─────────────────────────────────┘
+```
+
+**Local Multiplayer Pre-game**
+```
+┌─────────────────────────────────┐
+│      LOCAL MULTIPLAYER          │
+│                                 │
+│  Players: [2] [4]               │
+│                                 │
+│  ▶ Settings (collapsed)         │
+│                                 │
+│         [ START ]               │
+│                                 │
+│         [← Back]                │
+└─────────────────────────────────┘
+```
+
+#### Game States (Revised)
+
+Replace current states with:
+
+```javascript
+export const GameState = {
+    LOADING: 'loading',
+    MAIN_MENU: 'main_menu',           // was MODE_SELECT
+    HELP_MENU: 'help_menu',           // NEW: Rules/Controls access
+    RULES: 'rules',                   // moved here, optional
+    CONTROLS: 'controls',             // was READY, now optional
+    PRE_GAME: 'pre_game',             // NEW: replaces SETTINGS
+    ONLINE_MENU: 'online_menu',       // NEW: Quick Match / Private Room
+    MATCHMAKING: 'matchmaking',       // NEW: searching overlay
+    PRIVATE_ROOM_MENU: 'private_room_menu',  // NEW: Create/Join
+    LOBBY: 'lobby',                   // NEW: private room lobby
+    PLAYING: 'playing',
+    PAUSED: 'paused',
+    GAME_OVER: 'game_over'
+};
+```
+
+#### Flow Summary
+
+| Mode | Flow | Clicks to Play |
+|------|------|----------------|
+| Single Player | Main Menu → Pre-game → Start | 2 |
+| Local Multiplayer | Main Menu → Pre-game → Start | 2 |
+| Quick Match | Main Menu → Online → Quick Match → (auto) | 2 |
+| Private Room (host) | Main Menu → Online → Private → Create → Start | 4 |
+| Private Room (join) | Main Menu → Online → Private → Join → Enter code | 4 |
+| View Rules | Main Menu → Help → Rules | 2 |
+| View Controls | Main Menu → Help → Controls | 2 |
+
+#### Menu Implementation Tasks
+
+- [x] Update `GameConstants.js`:
+  - Add new game states
+  - Add `GameMode` enum: `SINGLE`, `LOCAL`, `ONLINE`
+  - Add `AIDifficulty` enum: `EASY`, `MEDIUM`, `HARD`
+  - Add `AI_DIFFICULTY_SETTINGS` for Easy/Medium/Hard
+  - Add `PREGAME_SETTINGS_LAYOUT` for expanded settings grid
+- [x] Update `Game.js`:
+  - Add `gameMode` property
+  - Add `aiDifficulty` property
+  - Add `playerCount` property (2 or 4 for local)
+  - Update state transitions for new flow
+  - Add `settingsExpanded` flag for collapsible settings
+  - Add `setGameMode()`, `setDifficulty()`, `setPlayerCount()`, `toggleSettingsExpanded()`
+  - Add `applyDifficulty()` and `startFromPreGame()`
+- [x] Refactor `GameRenderer.js`:
+  - `drawMainMenu()` - New main menu with mode buttons + help icon
+  - `drawHelpMenu()` - Rules/Controls selection
+  - `drawPreGame()` - Unified pre-game screen with inline settings
+  - `drawExpandedSettings()` - 4-column settings grid
+  - `drawOnlineMenu()` - Quick Match / Private Room submenu (UI only, Phase 3 networking)
+  - `drawMatchmaking()` - Searching overlay with cancel
+  - `drawPrivateRoomMenu()` - Create/Join selection
+  - `drawLobby()` - Mock room lobby
+  - Update `drawRulesScreen()` and add `drawControlsScreen()` (was READY)
+  - Add helper methods: `drawButton()`, `drawToggleButton()`, `drawBackButton()`
+- [x] Refactor `InputHandler.js`:
+  - Update `handleClick()` for new state handlers
+  - Add `handleMainMenuClick()`
+  - Add `handleHelpMenuClick()`
+  - Add `handleRulesClick()`, `handleControlsClick()`
+  - Add `handlePreGameClick()`
+  - Add `handleExpandedSettingsClick()` for 4-column grid
+  - Add `handleOnlineMenuClick()`, `handleMatchmakingClick()`, `handlePrivateRoomMenuClick()`, `handleLobbyClick()`
+
+### 2.2 AI Difficulty
+
+- [x] Add difficulty settings via `AI_DIFFICULTY_SETTINGS`:
+  - **Easy**: smart=30, reactionDelay=8
+  - **Medium**: smart=20, reactionDelay=4 (default)
+  - **Hard**: smart=10, reactionDelay=0
+- [x] Expose difficulty selection on Single Player pre-game screen
+
+### 2.3 Pause Functionality
+
+- [x] Escape or P key to pause
+- [x] Simple pause overlay with Resume/Quit options
+- [x] Pause state in Game.js state machine
+
+### 2.4 Input Improvements
 
 - [ ] Add WASD as primary P1 controls
 - [ ] Current bindings:
@@ -180,19 +334,7 @@ Kept:
   - P3: I/J/K/L + U (pass)
   - P4: Numpad 8/4/5/6 + 0 (pass)
 
-### 2.2 Pause Functionality
-
-- [x] Escape or P key to pause
-- [x] Simple pause overlay with Resume/Quit options
-- [x] Pause state in Game.js state machine
-
-### 2.3 Quick Start Option
-
-- [ ] "Quick Game" button that skips settings overlay
-- [ ] Sensible defaults: 2 red balls, no gold, 30 to win
-- [ ] Option to access full settings from quick game
-
-### 2.4 4-Player Mode
+### 2.5 4-Player Mode
 
 - [ ] Mode select: 1v1 or 2v2 (local)
 - [ ] 2 players per team (Red vs Black)
@@ -200,7 +342,7 @@ Kept:
 - [ ] Player positioning: 2 on each side of field
 - [ ] Teammate collision handling (pass-through or bump)
 
-### 2.5 Gamepad Support (Optional)
+### 2.6 Gamepad Support (Optional)
 
 - [ ] Gamepad API for up to 4 controllers
 - [ ] D-pad/left stick for movement
@@ -209,9 +351,19 @@ Kept:
 
 ### Verification
 
+- [x] Main menu displays with Single Player, Local Multiplayer, Online, Help
+- [x] Single player flow: Main Menu → Pre-game → Start (2 clicks)
+- [x] Local multiplayer flow: Main Menu → Pre-game → Start (2 clicks)
+- [x] Settings expand/collapse on pre-game screen
+- [x] Help menu shows Rules and Controls
+- [x] AI difficulty affects gameplay (Easy/Medium/Hard via smart/reactionDelay)
+- [x] Back buttons return to previous screen
+- [x] Online menu structure displays (UI only, networking in Phase 3):
+  - Quick Match shows searching overlay with Cancel
+  - Private Room → Create/Join submenu
+  - Lobby shows mock room code
 - [ ] WASD controls work for P1
-- [ ] Pause/resume works
-- [ ] Quick game button works
+- [x] Pause/resume works (returns to MAIN_MENU)
 - [ ] 4-player local game works with 4 keyboard zones
 - [ ] (Optional) Gamepad controls work
 
@@ -281,14 +433,118 @@ function generateRoomCode() {
 }
 ```
 
-### 3.6 Lobby UI
+### 3.6 Online Menu UI
 
-Create `LobbyPage.tsx`:
-- [ ] Mode selection: 1v1 or 2v2
-- [ ] "Create Room" → shows room code to share
-- [ ] "Join Room" → code input field
-- [ ] Team selection for 2v2 (Red or Black)
-- [ ] Player list showing who's connected
+The online menu structure is defined in Phase 2's menu restructure. Phase 3 connects actual networking to these screens.
+
+**Online Menu** (UI created in Phase 2)
+```
+┌─────────────────────────────────┐
+│          ONLINE                 │
+│                                 │
+│     [ Quick Match ]             │  ← Matchmaking (1v1, fixed settings)
+│     [ Private Room ]            │  ← Create/Join with codes
+│                                 │
+│         [← Back]                │
+└─────────────────────────────────┘
+```
+
+#### Quick Match (Matchmaking)
+
+- [ ] **1v1 only** - keeps queue population healthy
+- [ ] **Fixed competitive settings** - 2 red balls, no gold, first to 30
+- [ ] Simple overlay while searching:
+```
+┌─────────────────────────────────┐
+│                                 │
+│    Searching for opponent...    │
+│                                 │
+│          [ Cancel ]             │
+│                                 │
+└─────────────────────────────────┘
+```
+- [ ] When matched → brief "Found!" → auto-start game
+
+#### Private Room Submenu
+```
+┌─────────────────────────────────┐
+│       PRIVATE ROOM              │
+│                                 │
+│     [ Create Room ]             │
+│     [ Join Room ]               │
+│                                 │
+│         [← Back]                │
+└─────────────────────────────────┘
+```
+
+#### Private Room Lobby (Host)
+```
+┌─────────────────────────────────┐
+│      ROOM: ABCD                 │
+│    (share code with friend)     │
+│                                 │
+│  Players (auto-assigned teams): │
+│  🔴 Red Team    │ ⚫ Black Team │
+│  • You (host)   │ • (waiting)   │
+│                                 │
+│  Mode: [1v1] [2v2]              │
+│                                 │
+│  ▶ Settings (full control)      │
+│    • Ball counts, win score     │
+│    • Gold ball, etc.            │
+│                                 │
+│  [ START ] (when all joined)    │
+│         [← Leave]               │
+└─────────────────────────────────┘
+```
+
+#### Join Room Screen
+```
+┌─────────────────────────────────┐
+│        JOIN ROOM                │
+│                                 │
+│  Enter code: [____]             │
+│                                 │
+│         [ JOIN ]                │
+│         [← Back]                │
+└─────────────────────────────────┘
+```
+
+#### Private Room Lobby (Guest)
+```
+┌─────────────────────────────────┐
+│      ROOM: ABCD                 │
+│                                 │
+│  Players:                       │
+│  🔴 Red Team    │ ⚫ Black Team │
+│  • HostName     │ • You         │
+│                                 │
+│  Mode: 1v1                      │
+│  Settings: (view only)          │
+│                                 │
+│  Waiting for host to start...   │
+│         [← Leave]               │
+└─────────────────────────────────┘
+```
+
+#### Online Mode Comparison
+
+| Feature | Quick Match | Private Room |
+|---------|-------------|--------------|
+| Settings | Fixed competitive (2 red, no gold, 30 pts) | Host has full control |
+| Mode | 1v1 only | 1v1 or 2v2 |
+| Team assignment | Auto-balanced | Auto-balanced |
+| Room code | Hidden (auto-matched) | Visible (share with friends) |
+
+#### Lobby Implementation Tasks
+
+- [ ] Create `LobbyPage.tsx` or integrate into `GameRenderer.js`:
+  - `drawMatchmaking()` - searching overlay with cancel
+  - `drawPrivateRoomMenu()` - Create/Join selection
+  - `drawLobby()` - room code, player list, settings (host/guest variants)
+  - `drawJoinRoom()` - code entry screen
+- [ ] Connect PartyKit WebSocket to lobby state
+- [ ] Team auto-assignment on join
 - [ ] Ready-up system
 - [ ] Start game when all players ready
 

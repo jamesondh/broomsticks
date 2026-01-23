@@ -10,6 +10,9 @@ import { InputHandler } from './InputHandler.js';
 import { GameRenderer } from './GameRenderer.js';
 import {
     GameState,
+    GameMode,
+    AIDifficulty,
+    AI_DIFFICULTY_SETTINGS,
     GAME_WIDTH,
     GAME_HEIGHT,
     UPDATE_INTERVAL,
@@ -17,8 +20,8 @@ import {
     SETTINGS_OPTIONS
 } from './GameConstants.js';
 
-// Re-export GameState for backward compatibility
-export { GameState };
+// Re-export for backward compatibility
+export { GameState, GameMode, AIDifficulty };
 
 export class Game {
     constructor(canvas, settings) {
@@ -32,6 +35,12 @@ export class Game {
 
         // Track if settings changed that require asset reload
         this.settingsChanged = false;
+
+        // Game mode and pre-game configuration
+        this.gameMode = GameMode.SINGLE;
+        this.aiDifficulty = AIDifficulty.MEDIUM;
+        this.playerCount = 2;
+        this.settingsExpanded = false;
 
         // Game state
         this.state = GameState.LOADING;
@@ -96,7 +105,7 @@ export class Game {
 
         // Start game loop
         this.running = true;
-        this.state = GameState.MODE_SELECT;
+        this.state = GameState.MAIN_MENU;
         requestAnimationFrame(this.gameLoop);
     }
 
@@ -250,7 +259,39 @@ export class Game {
         this.resetGameObjects();
     }
 
-    async transitionFromSettings() {
+    setGameMode(mode) {
+        this.gameMode = mode;
+        if (mode === GameMode.SINGLE) {
+            this.player1.isRobot = true;
+            this.applyDifficulty();
+        } else {
+            this.player1.isRobot = false;
+        }
+    }
+
+    setDifficulty(difficulty) {
+        this.aiDifficulty = difficulty;
+        this.applyDifficulty();
+    }
+
+    applyDifficulty() {
+        const settings = AI_DIFFICULTY_SETTINGS[this.aiDifficulty];
+        if (settings && this.player1) {
+            this.player1.smart = settings.smart;
+            this.player1.reactionDelay = settings.reactionDelay;
+        }
+    }
+
+    setPlayerCount(count) {
+        this.playerCount = count;
+        // TODO: Phase 2 will implement 4-player mode
+    }
+
+    toggleSettingsExpanded() {
+        this.settingsExpanded = !this.settingsExpanded;
+    }
+
+    async startFromPreGame() {
         // Reload assets if player or background changed
         if (this.settingsChanged) {
             await this.assets.loadAssets();
@@ -265,7 +306,13 @@ export class Game {
         // Reinitialize game objects with new ball counts
         this.initGameObjects();
 
-        this.state = GameState.RULES;
+        // Apply difficulty if single player
+        if (this.gameMode === GameMode.SINGLE) {
+            this.applyDifficulty();
+        }
+
+        // Go directly to playing
+        this.startGame();
     }
 
     destroy() {

@@ -1,6 +1,18 @@
 // InputHandler.js - Keyboard and mouse input handling for Broomsticks
 
-import { GameState, OFFSET_X, OFFSET_Y, GITHUB_URL, BUTTONS, PAUSE_MODAL, SETTINGS_LAYOUT } from './GameConstants.js';
+import {
+    GameState,
+    GameMode,
+    AIDifficulty,
+    OFFSET_X,
+    OFFSET_Y,
+    GITHUB_URL,
+    BUTTONS,
+    PAUSE_MODAL,
+    SETTINGS_LAYOUT,
+    PREGAME_SETTINGS_LAYOUT,
+    SETTINGS_OPTIONS
+} from './GameConstants.js';
 
 export class InputHandler {
     constructor(game, canvas) {
@@ -146,45 +158,40 @@ export class InputHandler {
         const y = (e.clientY - rect.top) * scaleY;
 
         switch (this.game.state) {
-            case GameState.MODE_SELECT: {
-                const btns = BUTTONS.MODE_SELECT;
-                if (this.hitTest(btns.singlePlayer, x, y)) {
-                    this.game.assets.playSound('pop');
-                    this.game.player1.isRobot = true;
-                    this.game.state = GameState.SETTINGS;
-                }
-                if (this.hitTest(btns.twoPlayer, x, y)) {
-                    this.game.assets.playSound('pop');
-                    this.game.player1.isRobot = false;
-                    this.game.state = GameState.SETTINGS;
-                }
-                if (this.hitTest(btns.guestbook, x, y)) {
-                    this.game.assets.playSound('pop');
-                    window.location.href = '/guestbook';
-                }
-                if (this.hitTest(btns.github, x, y)) {
-                    this.game.assets.playSound('pop');
-                    window.open(GITHUB_URL, '_blank');
-                }
+            case GameState.MAIN_MENU:
+                this.handleMainMenuClick(x, y);
                 break;
-            }
 
-            case GameState.SETTINGS:
-                this.handleSettingsClick(x, y);
+            case GameState.HELP_MENU:
+                this.handleHelpMenuClick(x, y);
                 break;
 
             case GameState.RULES:
-                if (this.hitTest(BUTTONS.RULES.continueBtn, x, y)) {
-                    this.game.assets.playSound('pop');
-                    this.game.state = GameState.READY;
-                }
+                this.handleRulesClick(x, y);
                 break;
 
-            case GameState.READY:
-                if (this.hitTest(BUTTONS.READY.startBtn, x, y)) {
-                    this.game.assets.playSound('ding');
-                    this.game.startGame();
-                }
+            case GameState.CONTROLS:
+                this.handleControlsClick(x, y);
+                break;
+
+            case GameState.PRE_GAME:
+                this.handlePreGameClick(x, y);
+                break;
+
+            case GameState.ONLINE_MENU:
+                this.handleOnlineMenuClick(x, y);
+                break;
+
+            case GameState.MATCHMAKING:
+                this.handleMatchmakingClick(x, y);
+                break;
+
+            case GameState.PRIVATE_ROOM_MENU:
+                this.handlePrivateRoomMenuClick(x, y);
+                break;
+
+            case GameState.LOBBY:
+                this.handleLobbyClick(x, y);
                 break;
 
             case GameState.PLAYING:
@@ -213,7 +220,7 @@ export class InputHandler {
                 // Return to Menu button
                 if (this.hitTest(pausedBtns.returnToMenu, x, y)) {
                     this.game.assets.playSound('pop');
-                    this.game.state = GameState.MODE_SELECT;
+                    this.game.state = GameState.MAIN_MENU;
                     this.game.resetGameObjects();
                 }
                 break;
@@ -223,7 +230,7 @@ export class InputHandler {
                 const gameOverBtns = BUTTONS.GAME_OVER;
                 if (this.hitTest(gameOverBtns.playAgain, x, y)) {
                     this.game.assets.playSound('pop');
-                    this.game.state = GameState.MODE_SELECT;
+                    this.game.state = GameState.MAIN_MENU;
                     this.game.resetGameObjects();
                 }
                 if (this.hitTest(gameOverBtns.website, x, y)) {
@@ -235,24 +242,152 @@ export class InputHandler {
         }
     }
 
-    handleSettingsClick(x, y) {
-        const { settings, settingsOptions } = this.game;
+    handleMainMenuClick(x, y) {
+        const btns = BUTTONS.MAIN_MENU;
+
+        if (this.hitTest(btns.singlePlayer, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.setGameMode(GameMode.SINGLE);
+            this.game.state = GameState.PRE_GAME;
+        }
+        if (this.hitTest(btns.localMultiplayer, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.setGameMode(GameMode.LOCAL);
+            this.game.state = GameState.PRE_GAME;
+        }
+        if (this.hitTest(btns.online, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.setGameMode(GameMode.ONLINE);
+            this.game.state = GameState.ONLINE_MENU;
+        }
+        if (this.hitTest(btns.helpIcon, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.HELP_MENU;
+        }
+        if (this.hitTest(btns.guestbook, x, y)) {
+            this.game.assets.playSound('pop');
+            window.location.href = '/guestbook';
+        }
+        if (this.hitTest(btns.github, x, y)) {
+            this.game.assets.playSound('pop');
+            window.open(GITHUB_URL, '_blank');
+        }
+    }
+
+    handleHelpMenuClick(x, y) {
+        const btns = BUTTONS.HELP_MENU;
+
+        if (this.hitTest(btns.rules, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.RULES;
+        }
+        if (this.hitTest(btns.controls, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.CONTROLS;
+        }
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.MAIN_MENU;
+        }
+    }
+
+    handleRulesClick(x, y) {
+        const btns = BUTTONS.RULES;
+
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.HELP_MENU;
+        }
+    }
+
+    handleControlsClick(x, y) {
+        const btns = BUTTONS.CONTROLS;
+
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.HELP_MENU;
+        }
+    }
+
+    handlePreGameClick(x, y) {
+        const btns = BUTTONS.PRE_GAME;
+        const { gameMode, settingsExpanded } = this.game;
+
+        // Difficulty buttons (single player only)
+        if (gameMode === GameMode.SINGLE) {
+            if (this.hitTest(btns.diffEasy, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setDifficulty(AIDifficulty.EASY);
+            }
+            if (this.hitTest(btns.diffMedium, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setDifficulty(AIDifficulty.MEDIUM);
+            }
+            if (this.hitTest(btns.diffHard, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setDifficulty(AIDifficulty.HARD);
+            }
+        }
+
+        // Player count buttons (local multiplayer only)
+        if (gameMode === GameMode.LOCAL) {
+            if (this.hitTest(btns.players2, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setPlayerCount(2);
+            }
+            if (this.hitTest(btns.players4, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setPlayerCount(4);
+            }
+        }
+
+        // Settings toggle
+        if (this.hitTest(btns.settingsToggle, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.toggleSettingsExpanded();
+        }
+
+        // Handle expanded settings clicks
+        if (settingsExpanded) {
+            this.handleExpandedSettingsClick(x, y);
+        }
+
+        // Start button
+        if (this.hitTest(btns.start, x, y)) {
+            this.game.assets.playSound('ding');
+            this.game.startFromPreGame();
+        }
+
+        // Back button
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.settingsExpanded = false;
+            this.game.state = GameState.MAIN_MENU;
+        }
+    }
+
+    handleExpandedSettingsClick(x, y) {
+        const { settings } = this.game;
+        const settingsOptions = SETTINGS_OPTIONS;
 
         // Convert from main canvas to offscreen canvas coordinates
         const offX = x - OFFSET_X;
         const offY = y - OFFSET_Y;
 
-        const { left, right, startY, lineHeight, rowHeight } = SETTINGS_LAYOUT;
+        const { startX, startY, colWidth, lineHeight, rowHeight, grid } = PREGAME_SETTINGS_LAYOUT;
 
-        // Helper: check if click is in row N (0-indexed)
-        const inRow = (n) => offY >= startY + lineHeight * n - rowHeight &&
-                             offY < startY + lineHeight * n;
+        // Determine which row/col was clicked
+        const col = Math.floor((offX - startX) / colWidth);
+        const row = Math.floor((offY - (startY - rowHeight)) / lineHeight);
 
-        // Column hit detection
-        const inLeft = offX >= left.hitX && offX < left.hitX + left.hitW;
-        const inRight = offX >= right.hitX && offX < right.hitX + right.hitW;
-        const inRightDec = offX >= right.hitX && offX < right.hitX + right.splitAt;
-        const inRightInc = offX >= right.hitX + right.splitAt && offX < right.hitX + right.hitW;
+        if (col < 0 || col >= 4 || row < 0 || row >= 3) return;
+
+        const settingKey = grid[row][col];
+        if (!settingKey) return;
+
+        // Determine if this is a left or right click within the cell (for < > controls)
+        const cellX = offX - startX - col * colWidth;
+        const isLeftHalf = cellX < colWidth / 2;
 
         // Cycle through array options
         const cycleSetting = (key) => {
@@ -279,49 +414,87 @@ export class InputHandler {
             this.game.assets.playSound('pop');
         };
 
-        // Left column: cycle on click
-        if (inLeft) {
-            if (inRow(0)) cycleSetting('dive');
-            if (inRow(1)) cycleSetting('accel');
-            if (inRow(2)) cycleSetting('maxSpeed');
-            if (inRow(3)) cycleSetting('redBalls');
-            if (inRow(4)) cycleSetting('blackBalls');
-            if (inRow(5)) cycleSetting('goldBalls');
-        }
+        // Handle different setting types
+        switch (settingKey) {
+            // Cycle settings
+            case 'dive':
+            case 'accel':
+            case 'maxSpeed':
+            case 'sound':
+            case 'redBalls':
+            case 'blackBalls':
+            case 'goldBalls':
+                cycleSetting(settingKey);
+                break;
 
-        // Right column row 0-2: numeric range (dec/inc)
-        if (inRow(0)) {
-            if (inRightDec) adjustRange('goldPoints', -1);
-            if (inRightInc) adjustRange('goldPoints', +1);
-        }
-        if (inRow(1)) {
-            if (inRightDec) adjustRange('duration', -1);
-            if (inRightInc) adjustRange('duration', +1);
-        }
-        if (inRow(2)) {
-            if (inRightDec) adjustRange('winScore', -1);
-            if (inRightInc) adjustRange('winScore', +1);
-        }
+            // Range settings (< > controls)
+            case 'goldPoints':
+            case 'duration':
+            case 'winScore':
+                adjustRange(settingKey, isLeftHalf ? -1 : 1);
+                break;
 
-        // Right column row 3: sound (cycle)
-        if (inRight && inRow(3)) cycleSetting('sound');
-
-        // Right column row 4-5: lists (prev/next)
-        if (inRow(4)) {
-            if (inRightDec) cycleList('playerImg', -1);
-            if (inRightInc) cycleList('playerImg', +1);
+            // List settings (< > controls)
+            case 'playerImg':
+            case 'bgImg':
+                cycleList(settingKey, isLeftHalf ? -1 : 1);
+                break;
         }
-        if (inRow(5)) {
-            if (inRightDec) cycleList('bgImg', -1);
-            if (inRightInc) cycleList('bgImg', +1);
-        }
+    }
 
-        // Continue button (using shared BUTTONS definition)
-        const continueBtn = BUTTONS.SETTINGS.continueBtn;
-        if (offX >= continueBtn.x && offX <= continueBtn.x + continueBtn.w &&
-            offY >= continueBtn.y && offY <= continueBtn.y + continueBtn.h) {
+    handleOnlineMenuClick(x, y) {
+        const btns = BUTTONS.ONLINE_MENU;
+
+        if (this.hitTest(btns.quickMatch, x, y)) {
             this.game.assets.playSound('pop');
-            this.game.transitionFromSettings();
+            this.game.state = GameState.MATCHMAKING;
+        }
+        if (this.hitTest(btns.privateRoom, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.PRIVATE_ROOM_MENU;
+        }
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.MAIN_MENU;
+        }
+    }
+
+    handleMatchmakingClick(x, y) {
+        const btns = BUTTONS.MATCHMAKING;
+
+        if (this.hitTest(btns.cancel, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.ONLINE_MENU;
+        }
+    }
+
+    handlePrivateRoomMenuClick(x, y) {
+        const btns = BUTTONS.PRIVATE_ROOM_MENU;
+
+        if (this.hitTest(btns.createRoom, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.LOBBY;
+        }
+        if (this.hitTest(btns.joinRoom, x, y)) {
+            this.game.assets.playSound('pop');
+            // In Phase 3, this would show a room code input
+            this.game.state = GameState.LOBBY;
+        }
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.ONLINE_MENU;
+        }
+    }
+
+    handleLobbyClick(x, y) {
+        const btns = BUTTONS.LOBBY;
+
+        // Start button is disabled in mock UI
+        // if (this.hitTest(btns.start, x, y)) { ... }
+
+        if (this.hitTest(btns.leave, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.state = GameState.PRIVATE_ROOM_MENU;
         }
     }
 }
