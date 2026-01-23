@@ -59,14 +59,6 @@ export class InputHandler {
             this.game.backToggle = !this.game.backToggle;
         }
 
-        // P key: toggle single/two player
-        if (key === 'p' || key === 'P') {
-            player1.isRobot = !player1.isRobot;
-            if (!player1.isRobot) {
-                player1.velocityX = 0;
-            }
-        }
-
         // Player 2 controls (arrow keys)
         if (code === 'ArrowLeft') {
             player2.left();
@@ -100,16 +92,6 @@ export class InputHandler {
             }
             if (key === '1') {
                 player1.switchModel();
-            }
-        }
-
-        // AI skill adjustment (only in single player mode)
-        if (player1.isRobot) {
-            if (key === 's' || key === 'S') {
-                player1.dumber();
-            }
-            if (key === 'f' || key === 'F') {
-                player1.smarter();
             }
         }
 

@@ -301,9 +301,12 @@ export class Game {
         // Reinitialize game objects with new ball counts
         this.initGameObjects();
 
-        // Apply difficulty if single player
+        // Apply mode settings after objects are created
         if (this.gameMode === GameMode.SINGLE) {
+            this.player1.isRobot = true;
             this.applyDifficulty();
+        } else {
+            this.player1.isRobot = false;
         }
 
         // Go directly to playing

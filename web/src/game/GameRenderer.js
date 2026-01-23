@@ -549,10 +549,6 @@ export class GameRenderer {
             ctx.fillText('use ENTER to switch player', 389, 254);
         }
 
-        // AI controls (if applicable)
-        ctx.fillText('In single player mode:', 200, 299);
-        ctx.fillText('use S and F to adjust AI skill', 200, 314);
-
         // Back link
         this.drawBackButton(ctx, btns.back);
     }
@@ -657,14 +653,13 @@ export class GameRenderer {
         ctx.font = GAME_FONT;
 
         if (player1.isRobot) {
-            ctx.fillText('skill:', 30, 415);
-            this.drawSkill(ctx);
-            ctx.fillText('S and F', 100, 415);
-            ctx.fillText('P for two-player, B to change background', 200, 415);
+            // Single player mode - only green player controls shown
+            ctx.fillText('B to change background', 50, 415);
         } else {
+            // Local multiplayer - show blue player controls
             const diveKey = settings.dive ? ' D' : '';
             ctx.fillText(`E S F${diveKey} and 1`, 50, 415);
-            ctx.fillText('P for single-player, B to change background', 200, 415);
+            ctx.fillText('B to change background', 200, 415);
         }
 
         const downKey = settings.dive ? ' DOWN' : '';
