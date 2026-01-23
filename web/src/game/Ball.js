@@ -15,6 +15,7 @@ export class Ball extends FlyingObject {
         this.catchable = false; // Whether player can catch this ball
         this.isGoldBall = false;
         this.ballIndex = 0;     // Set by Game.js for deterministic random seeding
+        this.holder = null;     // Player holding this ball (null when free)
     }
 
     move() {

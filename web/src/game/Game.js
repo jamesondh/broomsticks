@@ -57,6 +57,9 @@ export class Game {
         this.goldSpawned = false;
         this.pauseTime = 0;
 
+        // Winner tracking for game over
+        this.winner = null;
+
         // Game objects (arrays for configurable counts)
         this.balls = [];
         this.players = [];
@@ -211,6 +214,7 @@ export class Game {
         for (const ball of this.balls) {
             ball.velocityX = 0;
             ball.velocityY = 0;
+            ball.holder = null;  // Clear holder on reset
 
             if (ball.isGoldBall) {
                 ball.x = midW;
@@ -230,6 +234,7 @@ export class Game {
 
         this.currBasket = 0;
         this.goldSpawned = false;
+        this.winner = null;
 
         // Reset grab sound debouncing state
         this.teamBasket = [false, false];
@@ -247,7 +252,7 @@ export class Game {
         const elapsed = timestamp - this.lastUpdateTime;
 
         if (this.state === GameState.PLAYING) {
-            // Online client mode: run FULL local simulation, server state corrects
+            // Online client mode: predict ONLY local player, interpolate remote entities
             if (this.networkMode === NetworkMode.CLIENT) {
                 if (elapsed >= this.updateInterval) {
                     this.tick++;
@@ -256,8 +261,8 @@ export class Game {
                     const input = this.input.getCurrentInput();
 
                     if (this.prediction) {
-                        // Run FULL simulation (all players, all balls)
-                        this.prediction.runFullSimulation(input);
+                        // Predict local player movement ONLY (no collisions, no scoring)
+                        this.prediction.predictLocalPlayer(input);
                     }
 
                     // Send input to host every tick
@@ -267,6 +272,11 @@ export class Game {
 
                     this.lastUpdateTime = timestamp;
                 }
+
+                // Interpolate remote entities every frame for smooth rendering
+                if (this.prediction) {
+                    this.prediction.interpolateRemoteEntities();
+                }
             } else {
                 // Offline or Host mode: run full physics
                 if (elapsed >= this.updateInterval) {
@@ -275,6 +285,10 @@ export class Game {
                     // Host: apply remote player input before physics
                     if (this.networkMode === NetworkMode.HOST) {
                         this.applyRemoteInput();
+                        // Acknowledge the client tick AFTER applying input
+                        if (this.networkManager) {
+                            this.networkManager.acknowledgeClientTick();
+                        }
                     }
 
                     this.physics.checkCollisions();
@@ -302,13 +316,30 @@ export class Game {
         for (const player of this.players) {
             player.move();
         }
+        // Reposition held balls AFTER player movement
+        this.repositionHeldBalls();
+
         for (const ball of this.balls) {
+            // Skip held balls - they're positioned by carrier
+            if (ball.holder) continue;
             ball.move();
         }
     }
 
-    gameOver() {
+    repositionHeldBalls() {
+        for (const ball of this.balls) {
+            if (!ball.holder) continue;
+            const person = ball.holder;
+            ball.x = person.velocityX > 0 ? person.x + 18 : person.x + 8;
+            ball.y = person.y + 15;
+            ball.velocityX = 0;
+            ball.velocityY = 0;
+        }
+    }
+
+    gameOver(winnerIndex = null) {
         this.state = GameState.GAME_OVER;
+        this.winner = winnerIndex;
         this.assets.playSound('win');
         this.resetGameObjects();
     }

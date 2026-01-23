@@ -1,5 +1,7 @@
-// ClientPrediction.js - Local-first client prediction with full simulation
-// Runs the entire game simulation locally, treating network updates as corrections
+// ClientPrediction.js - Host-authoritative client prediction with interpolation
+// Client predicts ONLY local player movement. Remote entities use snapshot interpolation.
+
+import { GameState } from '../game/GameConstants.js';
 
 /**
  * SmoothCorrector - Handles smooth exponential blending toward server state
@@ -25,12 +27,13 @@ class SmoothCorrector {
 }
 
 /**
- * ClientPrediction - Full local simulation with server reconciliation
+ * ClientPrediction - Local player prediction with snapshot interpolation
  *
- * Instead of only predicting the local player, this system:
- * 1. Runs the FULL game simulation locally (all players, all balls)
- * 2. Smoothly corrects toward server state when updates arrive
- * 3. Replays unacknowledged inputs after correction if needed
+ * Key principles:
+ * 1. Client predicts ONLY local player movement (no collisions, no scoring)
+ * 2. Remote entities (opponent, balls) use interpolation between server snapshots
+ * 3. Server is authoritative for ALL game outcomes (scoring, game over, collisions)
+ * 4. Client NEVER triggers game state changes - only accepts them from server
  */
 export class ClientPrediction {
     constructor(game) {
@@ -48,6 +51,11 @@ export class ClientPrediction {
         // Tick offset for authoritative tick calculation
         // authoritativeTick = localTick + tickOffset
         this.tickOffset = 0;
+
+        // Snapshot buffer for interpolation
+        this.snapshotBuffer = [];
+        this.maxSnapshots = 10;
+        this.interpolationDelay = 100; // 100ms render delay for smooth interpolation
     }
 
     /**
@@ -108,43 +116,219 @@ export class ClientPrediction {
     }
 
     /**
-     * Run full simulation for ALL entities - called every physics tick
-     * This is the core of local-first prediction
+     * Predict local player movement ONLY - called every physics tick
+     * Does NOT run collisions, scoring, or any authoritative game logic
      * @param {Object} localInput - Current input from local player
      */
-    runFullSimulation(localInput) {
-        // 1. Apply local input to local player
+    predictLocalPlayer(localInput) {
+        // 1. Apply input to local player (changes velocity)
         this.applyLocalInput(localInput);
         this.recordInput(this.game.tick, localInput);
 
-        // 2. Run full physics for ALL entities
-        this.runFullPhysics();
+        // 2. Move local player only (no collisions, no scoring)
+        const player = this.getLocalPlayer();
+        if (player) {
+            // Apply velocity to position
+            player.x += player.velocityX * player.speedFactor;
+            player.y += player.velocityY * player.speedFactor;
+
+            // Apply gravity
+            player.velocityY += 0.1;
+            if (player.velocityY > 2.0) player.velocityY = 2.0;
+
+            // Apply bounds
+            player.bounds();
+        }
+
+        // DO NOT call physics.checkCaught(), checkCollisions(), or move balls/remote player
+        // Those are all handled by the authoritative host
     }
 
     /**
-     * Run physics simulation for all game entities
-     * IMPORTANT: Must match exact order of host tick in Game.js:
-     * checkCollisions -> checkCaught -> checkGoldBallTimer -> moveFlyers
+     * Buffer a server snapshot for interpolation
+     * @param {Object} serverState - The state received from server
      */
-    runFullPhysics() {
-        // 1. Run collision checks BEFORE movement (matches host order)
-        this.game.physics.checkCollisions();
-        this.game.physics.checkCaught();
-        this.game.physics.checkGoldBallTimer();
+    bufferSnapshot(serverState) {
+        const snapshot = {
+            tick: serverState.tick,
+            timestamp: performance.now(),
+            players: serverState.players,
+            balls: serverState.balls,
+            currBasket: serverState.currBasket,
+            timer: serverState.timer,
+            goldSpawned: serverState.goldSpawned,
+            gameState: serverState.gameState,
+            winner: serverState.winner
+        };
 
-        // 2. Move all flyers AFTER collision checks (matches host moveFlyers())
-        // Move players (with robot AI disabled to prevent local AI execution)
-        for (const player of this.game.players) {
-            const wasRobot = player.isRobot;
-            player.isRobot = false;
-            player.move();
-            player.isRobot = wasRobot;
+        this.snapshotBuffer.push(snapshot);
+
+        // Keep buffer size limited
+        if (this.snapshotBuffer.length > this.maxSnapshots) {
+            this.snapshotBuffer.shift();
+        }
+    }
+
+    /**
+     * Interpolate remote entities between buffered snapshots
+     * Called every frame for smooth rendering
+     */
+    interpolateRemoteEntities() {
+        if (this.snapshotBuffer.length < 2) return;
+
+        // Find the render time (current time minus interpolation delay)
+        const renderTime = performance.now() - this.interpolationDelay;
+
+        // Find two snapshots to interpolate between
+        let before = null;
+        let after = null;
+
+        for (let i = 0; i < this.snapshotBuffer.length - 1; i++) {
+            if (this.snapshotBuffer[i].timestamp <= renderTime &&
+                this.snapshotBuffer[i + 1].timestamp >= renderTime) {
+                before = this.snapshotBuffer[i];
+                after = this.snapshotBuffer[i + 1];
+                break;
+            }
         }
 
-        // Move balls (will use seeded random once Phase 3 is implemented)
-        for (const ball of this.game.balls) {
-            ball.move();
+        // If no valid interpolation pair found, use latest snapshot
+        if (!before || !after) {
+            const latest = this.snapshotBuffer[this.snapshotBuffer.length - 1];
+            this.applySnapshotToRemoteEntities(latest);
+            return;
         }
+
+        // Calculate interpolation factor (0 to 1)
+        const timeDiff = after.timestamp - before.timestamp;
+        const t = timeDiff > 0 ? (renderTime - before.timestamp) / timeDiff : 0;
+
+        // Interpolate remote player
+        this.interpolateRemotePlayer(before, after, t);
+
+        // Interpolate balls
+        this.interpolateBalls(before, after, t);
+    }
+
+    /**
+     * Interpolate remote player position between two snapshots
+     */
+    interpolateRemotePlayer(before, after, t) {
+        const remotePlayer = this.getRemotePlayer();
+        if (!remotePlayer) return;
+
+        const remoteIndex = this.localPlayerIndex === 0 ? 1 : 0;
+        const beforeState = before.players[remoteIndex];
+        const afterState = after.players[remoteIndex];
+
+        if (!beforeState || !afterState) return;
+
+        // Linear interpolation
+        remotePlayer.x = beforeState.x + (afterState.x - beforeState.x) * t;
+        remotePlayer.y = beforeState.y + (afterState.y - beforeState.y) * t;
+
+        // Use latest velocity for extrapolation
+        remotePlayer.velocityX = afterState.vx;
+        remotePlayer.velocityY = afterState.vy;
+
+        // Sync authoritative state from latest
+        remotePlayer.score = afterState.score;
+        if (remotePlayer.model !== afterState.model) {
+            remotePlayer.model = afterState.model;
+        }
+    }
+
+    /**
+     * Interpolate ball positions between two snapshots
+     */
+    interpolateBalls(before, after, t) {
+        for (let i = 0; i < this.game.balls.length; i++) {
+            const ball = this.game.balls[i];
+            const beforeState = before.balls[i];
+            const afterState = after.balls[i];
+
+            if (!beforeState || !afterState) continue;
+
+            // If ball is held, position at carrier's interpolated position
+            if (afterState.holder !== null) {
+                const carrierIndex = afterState.holder;
+                const carrier = this.game.players[carrierIndex];
+                if (carrier) {
+                    // Ball follows carrier with offset
+                    ball.x = carrier.velocityX > 0 ? carrier.x + 18 : carrier.x + 8;
+                    ball.y = carrier.y + 15;
+                    ball.velocityX = 0;
+                    ball.velocityY = 0;
+                    ball.alive = afterState.alive;
+                    ball.holder = carrier;  // Track holder on client too
+                    continue;
+                }
+            }
+
+            // Clear holder for free balls
+            ball.holder = null;
+
+            // Normal interpolation for free balls
+            ball.x = beforeState.x + (afterState.x - beforeState.x) * t;
+            ball.y = beforeState.y + (afterState.y - beforeState.y) * t;
+
+            // Use latest velocity
+            ball.velocityX = afterState.vx;
+            ball.velocityY = afterState.vy;
+
+            // Sync alive state from latest
+            ball.alive = afterState.alive;
+        }
+    }
+
+    /**
+     * Apply a snapshot directly to remote entities (no interpolation)
+     */
+    applySnapshotToRemoteEntities(snapshot) {
+        // Apply to remote player
+        const remotePlayer = this.getRemotePlayer();
+        if (remotePlayer) {
+            const remoteIndex = this.localPlayerIndex === 0 ? 1 : 0;
+            const state = snapshot.players[remoteIndex];
+            if (state) {
+                remotePlayer.x = state.x;
+                remotePlayer.y = state.y;
+                remotePlayer.velocityX = state.vx;
+                remotePlayer.velocityY = state.vy;
+                remotePlayer.score = state.score;
+                if (remotePlayer.model !== state.model) {
+                    remotePlayer.model = state.model;
+                }
+            }
+        }
+
+        // Apply to balls
+        snapshot.balls.forEach((state, i) => {
+            const ball = this.game.balls[i];
+            if (ball && state) {
+                // If ball is held, position at carrier
+                if (state.holder !== null) {
+                    const carrier = this.game.players[state.holder];
+                    if (carrier) {
+                        ball.x = carrier.velocityX > 0 ? carrier.x + 18 : carrier.x + 8;
+                        ball.y = carrier.y + 15;
+                        ball.velocityX = 0;
+                        ball.velocityY = 0;
+                        ball.holder = carrier;
+                        ball.alive = state.alive;
+                        return;
+                    }
+                }
+
+                // Free ball
+                ball.holder = null;
+                ball.x = state.x;
+                ball.y = state.y;
+                ball.velocityX = state.vx;
+                ball.velocityY = state.vy;
+                ball.alive = state.alive;
+            }
+        });
     }
 
     /**
@@ -153,32 +337,29 @@ export class ClientPrediction {
      * @param {Object} serverState - The state received from the server
      */
     reconcile(serverState) {
-        if (!serverState.tick) return;
+        // Fix: handle tick 0 correctly (check for undefined/null, not falsy)
+        if (serverState.tick === undefined || serverState.tick === null) return;
 
         const serverTick = serverState.tick;
-        const ackClientTick = serverState.ackClientTick || 0;
         this.lastServerTick = serverTick;
 
         // Update tick offset for authoritative tick calculation
         // This ensures seeded random uses the same tick on client and host
         this.tickOffset = serverTick - this.game.tick;
 
-        // 1. Reconcile local player (snap/smooth to server position)
+        // 1. Buffer snapshot for interpolation
+        this.bufferSnapshot(serverState);
+
+        // 2. Reconcile local player (smooth only, no replay)
+        // Server state already includes effect of acknowledged inputs
+        // Just smoothly converge to server position
         this.reconcileLocalPlayer(serverState);
 
-        // 2. Replay unacknowledged inputs to re-predict from corrected state
-        this.replayInputs(ackClientTick);
-
-        // 3. Smooth correct remote player position
-        this.correctRemotePlayer(serverState);
-
-        // 4. Smooth correct ball positions
-        this.correctBalls(serverState);
-
-        // 5. Sync authoritative game state
+        // 3. Sync authoritative game state (currBasket, timer, gameState, winner)
         this.syncGameState(serverState);
 
-        // 6. Clean up acknowledged inputs (use ack, not serverTick)
+        // 4. Clean up old inputs (no longer needed for replay)
+        const ackClientTick = serverState.ackClientTick || 0;
         this.cleanupInputBuffer(ackClientTick);
     }
 
@@ -186,7 +367,7 @@ export class ClientPrediction {
      * Reconcile local player with server state
      * Uses relaxed thresholds to reduce jitter:
      * - Small errors (<15px): trust client, ignore
-     * - Medium errors (15-50px): smooth blend toward server
+     * - Medium errors (15-50px): smooth blend position only, keep client velocity
      * - Large errors (>50px): snap (collision/teleport events)
      * @param {Object} serverState - Server state
      */
@@ -209,11 +390,10 @@ export class ClientPrediction {
             player.velocityX = serverPlayerState.vx;
             player.velocityY = serverPlayerState.vy;
         } else if (totalError > 15) {
-            // Medium error: smooth blend toward server
+            // Medium error: smooth blend position only, keep client velocity
+            // DON'T overwrite velocity - let client maintain control for responsiveness
             player.x = this.corrector.correct(player.x, serverPlayerState.x, totalError);
             player.y = this.corrector.correct(player.y, serverPlayerState.y, totalError);
-            player.velocityX = serverPlayerState.vx;
-            player.velocityY = serverPlayerState.vy;
         }
         // Small errors (<15px): trust client prediction, don't correct
 
@@ -246,83 +426,36 @@ export class ClientPrediction {
             if (input) {
                 // Apply input (changes velocity)
                 this.applyLocalInput(input);
-                // Advance position by one step (player.move() applies velocity to position)
-                const wasRobot = player.isRobot;
-                player.isRobot = false;
-                player.move();
-                player.isRobot = wasRobot;
+
+                // Advance position by one step (same logic as predictLocalPlayer)
+                player.x += player.velocityX * player.speedFactor;
+                player.y += player.velocityY * player.speedFactor;
+                player.velocityY += 0.1;
+                if (player.velocityY > 2.0) player.velocityY = 2.0;
+                player.bounds();
             }
         }
     }
 
     /**
-     * Smooth correct remote player toward server position
-     * @param {Object} serverState - Server state
-     */
-    correctRemotePlayer(serverState) {
-        const remotePlayer = this.getRemotePlayer();
-        if (!remotePlayer) return;
-
-        const remoteIndex = this.localPlayerIndex === 0 ? 1 : 0;
-        const serverPlayerState = serverState.players[remoteIndex];
-        if (!serverPlayerState) return;
-
-        // Calculate error
-        const errorX = Math.abs(remotePlayer.x - serverPlayerState.x);
-        const errorY = Math.abs(remotePlayer.y - serverPlayerState.y);
-        const totalError = Math.sqrt(errorX * errorX + errorY * errorY);
-
-        // Apply smooth correction
-        remotePlayer.x = this.corrector.correct(remotePlayer.x, serverPlayerState.x, totalError);
-        remotePlayer.y = this.corrector.correct(remotePlayer.y, serverPlayerState.y, totalError);
-
-        // Directly update velocity (for accurate extrapolation next frame)
-        remotePlayer.velocityX = serverPlayerState.vx;
-        remotePlayer.velocityY = serverPlayerState.vy;
-
-        // Sync other authoritative state
-        remotePlayer.score = serverPlayerState.score;
-        if (remotePlayer.model !== serverPlayerState.model) {
-            remotePlayer.model = serverPlayerState.model;
-        }
-    }
-
-    /**
-     * Smooth correct ball positions toward server state
-     * @param {Object} serverState - Server state
-     */
-    correctBalls(serverState) {
-        serverState.balls.forEach((ballState, index) => {
-            const ball = this.game.balls[index];
-            if (!ball) return;
-
-            // Calculate error
-            const errorX = Math.abs(ball.x - ballState.x);
-            const errorY = Math.abs(ball.y - ballState.y);
-            const totalError = Math.sqrt(errorX * errorX + errorY * errorY);
-
-            // Apply smooth correction
-            ball.x = this.corrector.correct(ball.x, ballState.x, totalError);
-            ball.y = this.corrector.correct(ball.y, ballState.y, totalError);
-
-            // Directly update velocity
-            ball.velocityX = ballState.vx;
-            ball.velocityY = ballState.vy;
-
-            // Sync alive state for ALL balls (not just gold balls)
-            // This fixes the freeze bug where caught balls stay visible on client
-            ball.alive = ballState.alive;
-        });
-    }
-
-    /**
      * Sync authoritative game state from server
+     * Client NEVER triggers game outcomes - only accepts them from server
      * @param {Object} serverState - Server state
      */
     syncGameState(serverState) {
+        // Sync currBasket, timer, goldSpawned
         this.game.currBasket = serverState.currBasket;
         this.game.timer = serverState.timer;
         this.game.goldSpawned = serverState.goldSpawned;
+
+        // Accept authoritative game state from server
+        // This is the ONLY place where the client can transition to GAME_OVER
+        if (serverState.gameState === GameState.GAME_OVER && this.game.state !== GameState.GAME_OVER) {
+            this.game.winner = serverState.winner;
+            this.game.state = GameState.GAME_OVER;
+            this.game.assets.playSound('win');
+            this.game.resetGameObjects();
+        }
     }
 
     /**
@@ -346,6 +479,7 @@ export class ClientPrediction {
      */
     reset() {
         this.inputBuffer.clear();
+        this.snapshotBuffer = [];
         this.lastServerTick = 0;
         this.tickOffset = 0;
     }

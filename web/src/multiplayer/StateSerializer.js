@@ -24,7 +24,8 @@ export function serialize(game) {
         y: Math.round(ball.y * 10) / 10,
         vx: Math.round(ball.velocityX * 10) / 10,
         vy: Math.round(ball.velocityY * 10) / 10,
-        alive: ball.alive !== false // GoldBall has alive property
+        alive: ball.alive !== false, // GoldBall has alive property
+        holder: ball.holder ? ball.holder.side : null  // null, 0 (player1), or 1 (player2)
     }));
 
     return {
@@ -34,7 +35,9 @@ export function serialize(game) {
         balls,
         currBasket: game.currBasket,
         timer: game.timer,
-        goldSpawned: game.goldSpawned
+        goldSpawned: game.goldSpawned,
+        gameState: game.state,           // Authoritative game state ('playing', 'game_over', etc.)
+        winner: game.winner ?? null      // Player index who won (0 or 1), null if game in progress
     };
 }
 

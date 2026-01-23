@@ -75,9 +75,9 @@ export class PhysicsManager {
 
                 // Ball catch detection: 20px threshold (Java line 809)
                 if (Math.abs(dx) < COLLISION_THRESHOLD && Math.abs(dy) < COLLISION_THRESHOLD) {
-                    // Player is holding the ball
-                    ball.x = person.velocityX > 0 ? person.x + 18 : person.x + 8;
-                    ball.y = person.y + 15;
+                    // Mark ball as held by this player
+                    // Actual positioning happens in Game.repositionHeldBalls() after player movement
+                    ball.holder = person;
 
                     // Set basket highlight
                     if (person === player1) {
@@ -106,6 +106,17 @@ export class PhysicsManager {
             }
         }
 
+        // Clear holder for balls that are no longer being held
+        // A ball is free if no team is holding any ball (simplified: if teamBasket is all false)
+        for (const ball of balls) {
+            if (ball.catchable && ball.alive) {
+                // Check if this ball's holder is still valid
+                if (ball.holder && !this.game.teamBasket[ball.holder.side]) {
+                    ball.holder = null;
+                }
+            }
+        }
+
         // Save state for next frame (Java lines 847-848)
         this.game.prevTeamBasket[0] = this.game.teamBasket[0];
         this.game.prevTeamBasket[1] = this.game.teamBasket[1];
@@ -127,7 +138,7 @@ export class PhysicsManager {
 
                 // Check win condition (only if no gold balls configured)
                 if (settings.goldBalls === 0 && person.score >= settings.winScore) {
-                    this.game.gameOver();
+                    this.game.gameOver(person.side);
                 }
             }
         }
@@ -143,7 +154,7 @@ export class PhysicsManager {
                 this.game.assets.playSound('score');
 
                 if (settings.goldBalls === 0 && person.score >= settings.winScore) {
-                    this.game.gameOver();
+                    this.game.gameOver(person.side);
                 }
             }
         }
@@ -159,7 +170,7 @@ export class PhysicsManager {
                 person.score += settings.goldPoints;
                 ball.alive = false;
                 // Win sound plays in gameOver() - don't play here (Java line 737)
-                this.game.gameOver();
+                this.game.gameOver(person.side);
             }
         }
 
@@ -170,7 +181,7 @@ export class PhysicsManager {
                 person.score += settings.goldPoints;
                 ball.alive = false;
                 // Win sound plays in gameOver() - don't play here (Java line 737)
-                this.game.gameOver();
+                this.game.gameOver(person.side);
             }
         }
     }

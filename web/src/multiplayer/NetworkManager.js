@@ -31,6 +31,7 @@ export class NetworkManager {
 
         // Track last client tick received (for ack)
         this.lastClientTick = 0;
+        this.pendingClientTick = undefined;  // Store tick before processing
 
         // Callbacks for game events
         this.onJoined = null;
@@ -157,8 +158,9 @@ export class NetworkManager {
                 // Host receives input from client
                 if (this.isHost) {
                     this.remoteInput = msg.input;
+                    // Store tick as pending - will be acknowledged after processing
                     if (msg.tick !== undefined) {
-                        this.lastClientTick = msg.tick;
+                        this.pendingClientTick = msg.tick;
                     }
                 }
                 break;
@@ -211,6 +213,15 @@ export class NetworkManager {
     // Host: clear remote input (after processing)
     clearRemoteInputSwitch() {
         this.remoteInput.switch = false;
+    }
+
+    // Host: acknowledge client tick after processing input
+    // Called by Game.js after applyRemoteInput() to ensure correct ack timing
+    acknowledgeClientTick() {
+        if (this.pendingClientTick !== undefined) {
+            this.lastClientTick = this.pendingClientTick;
+            this.pendingClientTick = undefined;
+        }
     }
 
     // Request game start (host only)
