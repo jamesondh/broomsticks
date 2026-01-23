@@ -461,7 +461,7 @@ export class GameRenderer {
 
         // Room code text with blinking cursor
         ctx.fillStyle = '#000';
-        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.font = '32px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
         const displayCode = roomCodeInput.toUpperCase();
         const codeX = inputBox.x + inputBox.w / 2 - ctx.measureText(displayCode).width / 2;
         ctx.fillText(displayCode, codeX, inputBox.y + 26);
@@ -518,7 +518,7 @@ export class GameRenderer {
         ctx.fillText('LOBBY', 290, 160);
 
         // Room code (large, copyable)
-        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.font = '32px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
         ctx.fillText(`Room: ${roomCode}`, 260, 195);
         ctx.font = GAME_FONT;
 

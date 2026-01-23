@@ -2,6 +2,7 @@
 // Ported from Ball.java with corrected model mapping
 
 import { FlyingObject } from './FlyingObject.js';
+import { randomIntFor } from '../multiplayer/SeededRandom.js';
 
 export class Ball extends FlyingObject {
     constructor(game, model, x, y) {
@@ -13,15 +14,21 @@ export class Ball extends FlyingObject {
         this.alive = true;      // Whether ball is active/visible
         this.catchable = false; // Whether player can catch this ball
         this.isGoldBall = false;
+        this.ballIndex = 0;     // Set by Game.js for deterministic random seeding
     }
 
     move() {
         if (!this.alive) return;
 
-        // Random movement: simulating Java's signed modulo behavior
-        // Java's random.nextInt() % 20 produces -19 to 19, so 0,1,2 each have ~2.5% probability
-        // We simulate this by using a larger range and only acting on specific values
-        const rand = Math.floor(Math.random() * 40) - 20; // -20 to 19
+        // Get authoritative tick for deterministic random seeding
+        // Client uses tick + offset to match host's tick
+        const tick = this.game.prediction
+            ? this.game.prediction.getAuthoritativeTick()
+            : this.game.tick;
+
+        // Deterministic random movement using seeded random
+        // Seed: tick * entity offset ensures unique but deterministic per ball per tick
+        const rand = randomIntFor(tick, this.ballIndex, -20, 20);
 
         if (rand === 0) {
             this.up();
@@ -48,8 +55,9 @@ export class Ball extends FlyingObject {
 
         // Subtract offset (11, 31) to convert game coords to offscreen coords
         // This matches the Java's offgc.translate(-11, -31)
-        const drawX = this.x - 11;
-        const drawY = this.y - 31;
+        // Round to integers to prevent sub-pixel blur from anti-aliasing
+        const drawX = Math.round(this.x - 11);
+        const drawY = Math.round(this.y - 31);
 
         if (this.game.assets.ballImages && this.game.assets.ballImages[this.model]) {
             ctx.drawImage(this.game.assets.ballImages[this.model], drawX, drawY);

@@ -19,8 +19,10 @@ export class FlyingObject {
     }
 
     move() {
-        this.x = Math.floor(this.x + this.velocityX * this.speedFactor);
-        this.y = Math.floor(this.y + this.velocityY * this.speedFactor);
+        // Don't truncate to integers - keep fractional positions for smooth movement
+        // Rounding happens at draw time to prevent sub-pixel blur
+        this.x = this.x + this.velocityX * this.speedFactor;
+        this.y = this.y + this.velocityY * this.speedFactor;
 
         // Apply gravity
         this.velocityY += 0.1;

@@ -71,8 +71,9 @@ export class Person extends FlyingObject {
     draw(ctx) {
         // Subtract offset (11, 31) to convert game coords to offscreen coords
         // This matches the Java's offgc.translate(-11, -31)
-        const drawX = this.x - 11;
-        const drawY = this.y - 31;
+        // Round to integers to prevent sub-pixel blur from anti-aliasing
+        const drawX = Math.round(this.x - 11);
+        const drawY = Math.round(this.y - 31);
 
         // Determine which direction sprite to use based on velocity
         // n = horizontal direction: 0 = right, 1 = left

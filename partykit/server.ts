@@ -10,7 +10,7 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 type ClientMessage =
   | { type: "join"; name: string }
   | { type: "ready" }
-  | { type: "input"; input: InputState }
+  | { type: "input"; input: InputState; tick?: number }
   | { type: "gameStart" }
   | { type: "state"; state: GameState }
   | { type: "leave" };
@@ -21,7 +21,7 @@ type ServerMessage =
   | { type: "playerLeft"; playerId: string }
   | { type: "gameStart"; config: GameConfig }
   | { type: "state"; state: GameState }
-  | { type: "input"; playerId: string; input: InputState }
+  | { type: "input"; playerId: string; input: InputState; tick?: number }
   | { type: "error"; message: string };
 
 interface PlayerInfo {
@@ -137,7 +137,7 @@ export default class BroomsticksRoom implements Party.Server {
         break;
 
       case "input":
-        this.handleInput(sender, msg.input);
+        this.handleInput(sender, msg.input, msg.tick);
         break;
 
       case "leave":
@@ -232,7 +232,7 @@ export default class BroomsticksRoom implements Party.Server {
     );
   }
 
-  handleInput(conn: Party.Connection, input: InputState) {
+  handleInput(conn: Party.Connection, input: InputState, tick?: number) {
     // Clients send input to host
     if (conn.id === this.hostId) return;
 
@@ -242,7 +242,8 @@ export default class BroomsticksRoom implements Party.Server {
       hostConn.send(JSON.stringify({
         type: "input",
         playerId: conn.id,
-        input: input
+        input: input,
+        tick: tick
       } as ServerMessage));
     }
   }

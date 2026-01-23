@@ -71,9 +71,10 @@ export class InputHandler {
             this.game.backToggle = !this.game.backToggle;
         }
 
-        // Online client mode: send input to host instead of controlling local player
+        // Online client mode: don't apply direct player control
+        // Input is handled via per-tick polling in Game.js, sent to host
+        // Key press is still recorded in keysPressed for getCurrentInput() polling
         if (networkMode === NetworkMode.CLIENT && state === GameState.PLAYING) {
-            this.handleOnlineClientInput(key, code);
             return;
         }
 
@@ -171,27 +172,26 @@ export class InputHandler {
         }
     }
 
-    // Handle input for online client mode - send to host
-    handleOnlineClientInput(key, code) {
-        if (!this.game.networkManager) return;
-
-        // Track current input state
-        const input = {
-            left: code === 'ArrowLeft',
-            right: code === 'ArrowRight',
-            up: code === 'ArrowUp',
-            down: code === 'ArrowDown',
-            switch: key === 'Enter'
-        };
-
-        // Only send if there's actual input
-        if (input.left || input.right || input.up || input.down || input.switch) {
-            this.game.networkManager.sendInput(input);
-        }
-    }
-
     handleKeyUp(e) {
         this.keysPressed.delete(e.code);
+    }
+
+    /**
+     * Get current input state for continuous polling (used by client prediction)
+     * @returns {Object} Current input state {left, right, up, down, switch, hasInput}
+     */
+    getCurrentInput() {
+        return {
+            left: this.keysPressed.has('ArrowLeft'),
+            right: this.keysPressed.has('ArrowRight'),
+            up: this.keysPressed.has('ArrowUp'),
+            down: this.keysPressed.has('ArrowDown'),
+            switch: false, // Switch is handled as an instant action, not polled
+            hasInput: this.keysPressed.has('ArrowLeft') ||
+                      this.keysPressed.has('ArrowRight') ||
+                      this.keysPressed.has('ArrowUp') ||
+                      this.keysPressed.has('ArrowDown')
+        };
     }
 
     // Helper for hit testing against button definitions from BUTTONS

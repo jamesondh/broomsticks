@@ -5,8 +5,8 @@
 // Production: wss://broomsticks.{username}.partykit.dev/party/{roomCode}
 const PARTYKIT_HOST = import.meta.env.VITE_PARTYKIT_HOST || 'localhost:1999';
 
-// State broadcast interval (50ms = 20Hz)
-const STATE_BROADCAST_INTERVAL = 50;
+// State broadcast interval (33ms = 30Hz, matches physics tick rate)
+const STATE_BROADCAST_INTERVAL = 33;
 
 export class NetworkManager {
     constructor(game) {
@@ -28,6 +28,9 @@ export class NetworkManager {
             down: false,
             switch: false
         };
+
+        // Track last client tick received (for ack)
+        this.lastClientTick = 0;
 
         // Callbacks for game events
         this.onJoined = null;
@@ -154,6 +157,9 @@ export class NetworkManager {
                 // Host receives input from client
                 if (this.isHost) {
                     this.remoteInput = msg.input;
+                    if (msg.tick !== undefined) {
+                        this.lastClientTick = msg.tick;
+                    }
                 }
                 break;
 
@@ -186,15 +192,20 @@ export class NetworkManager {
         }
     }
 
-    // Client: send input state to host
-    sendInput(input) {
+    // Client: send input state to host with tick for reconciliation
+    sendInput(input, tick) {
         if (this.isHost) return;
-        this.send({ type: 'input', input: input });
+        this.send({ type: 'input', input: input, tick: tick });
     }
 
     // Host: get remote player's input
     getRemoteInput() {
         return this.remoteInput;
+    }
+
+    // Host: get last client tick received (for state ack)
+    getLastClientTick() {
+        return this.lastClientTick;
     }
 
     // Host: clear remote input (after processing)

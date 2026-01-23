@@ -1,5 +1,7 @@
 // StateSerializer.js - Game state serialization for network sync
 
+import { NetworkMode } from '../game/GameConstants.js';
+
 /**
  * Serialize game state into a compact object for network transfer.
  * Only includes data needed for rendering on the client side.
@@ -26,6 +28,8 @@ export function serialize(game) {
     }));
 
     return {
+        tick: game.tick,
+        ackClientTick: game.networkManager?.getLastClientTick() || 0,
         players,
         balls,
         currBasket: game.currBasket,
@@ -36,43 +40,17 @@ export function serialize(game) {
 
 /**
  * Apply received state to the game (client-side).
- * Updates positions, velocities, and game state.
+ * Delegates to the prediction system for smooth corrections.
  *
  * @param {Game} game - The game instance
  * @param {Object} state - State object from network
  */
 export function apply(game, state) {
-    // Update players
-    state.players.forEach((playerState, index) => {
-        const player = game.players[index];
-        if (player) {
-            player.x = playerState.x;
-            player.y = playerState.y;
-            player.velocityX = playerState.vx;
-            player.velocityY = playerState.vy;
-            player.score = playerState.score;
-            if (player.model !== playerState.model) {
-                player.model = playerState.model;
-            }
-        }
-    });
+    // Only apply on client
+    if (game.networkMode !== NetworkMode.CLIENT) return;
 
-    // Update balls
-    state.balls.forEach((ballState, index) => {
-        const ball = game.balls[index];
-        if (ball) {
-            ball.x = ballState.x;
-            ball.y = ballState.y;
-            ball.velocityX = ballState.vx;
-            ball.velocityY = ballState.vy;
-            if (ball.isGoldBall) {
-                ball.alive = ballState.alive;
-            }
-        }
-    });
-
-    // Update game state
-    game.currBasket = state.currBasket;
-    game.timer = state.timer;
-    game.goldSpawned = state.goldSpawned;
+    // Delegate to prediction system for smooth corrections
+    if (game.prediction) {
+        game.prediction.reconcile(state);
+    }
 }

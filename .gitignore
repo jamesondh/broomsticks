@@ -73,3 +73,6 @@ archive/broomsticks-ios/build/
 
 # Environment variables
 *.env
+
+# PartyKit
+partykit/.partykit

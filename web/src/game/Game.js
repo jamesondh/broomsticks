@@ -23,6 +23,7 @@ import {
 import { NetworkManager } from '../multiplayer/NetworkManager.js';
 import { serialize, apply } from '../multiplayer/StateSerializer.js';
 import { generatePlayerName } from '../multiplayer/names.js';
+import { ClientPrediction } from '../multiplayer/ClientPrediction.js';
 
 // Re-export for backward compatibility
 export { GameState, GameMode, AIDifficulty, NetworkMode };
@@ -92,6 +93,12 @@ export class Game {
         this.playerName = generatePlayerName();
         this.networkError = null;
 
+        // Tick counter for network synchronization
+        this.tick = 0;
+
+        // Client-side prediction system (full local simulation)
+        this.prediction = null;
+
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
     }
@@ -151,6 +158,11 @@ export class Game {
             const ball = new GoldBall(this, midW, 100 + i * 30);
             this.balls.push(ball);
         }
+
+        // Assign ball indices for deterministic random seeding
+        this.balls.forEach((ball, index) => {
+            ball.ballIndex = index;
+        });
 
         // Create players
         // Player 1 targets the first red ball
@@ -235,13 +247,31 @@ export class Game {
         const elapsed = timestamp - this.lastUpdateTime;
 
         if (this.state === GameState.PLAYING) {
-            // Online client mode: skip physics, just render (state comes from host)
+            // Online client mode: run FULL local simulation, server state corrects
             if (this.networkMode === NetworkMode.CLIENT) {
-                // Client only renders, state is applied via applyNetworkState
-                this.lastUpdateTime = timestamp;
-            } else {
-                // Offline or Host mode: run physics
                 if (elapsed >= this.updateInterval) {
+                    this.tick++;
+
+                    // Get current input state via polling
+                    const input = this.input.getCurrentInput();
+
+                    if (this.prediction) {
+                        // Run FULL simulation (all players, all balls)
+                        this.prediction.runFullSimulation(input);
+                    }
+
+                    // Send input to host every tick
+                    if (this.networkManager) {
+                        this.networkManager.sendInput(input, this.tick);
+                    }
+
+                    this.lastUpdateTime = timestamp;
+                }
+            } else {
+                // Offline or Host mode: run full physics
+                if (elapsed >= this.updateInterval) {
+                    this.tick++;
+
                     // Host: apply remote player input before physics
                     if (this.networkMode === NetworkMode.HOST) {
                         this.applyRemoteInput();
@@ -373,6 +403,10 @@ export class Game {
         this.lobbyPlayers = [];
         this.networkError = null;
 
+        // Initialize client-side prediction (full local simulation)
+        this.prediction = new ClientPrediction(this);
+        this.tick = 0;
+
         this.networkManager = new NetworkManager(this);
         this.setupNetworkCallbacks();
         this.networkManager.connect(this.roomCode, this.playerName);
@@ -446,6 +480,13 @@ export class Game {
         this.lobbyPlayers = [];
         this.roomCode = '';
         this.roomCodeInput = '';
+
+        // Clean up prediction system
+        if (this.prediction) {
+            this.prediction.reset();
+            this.prediction = null;
+        }
+        this.tick = 0;
     }
 
     requestStartGame() {

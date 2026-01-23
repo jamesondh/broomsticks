@@ -2,6 +2,7 @@
 // Ported from Java Advanced version
 
 import { Ball } from './Ball.js';
+import { randomIntFor } from '../multiplayer/SeededRandom.js';
 
 export class GoldBall extends Ball {
     constructor(game, x, y) {
@@ -22,13 +23,21 @@ export class GoldBall extends Ball {
     move() {
         if (!this.alive) return;
 
+        // Get authoritative tick for deterministic random seeding
+        const tick = this.game.prediction
+            ? this.game.prediction.getAuthoritativeTick()
+            : this.game.tick;
+
         // Evasion AI: flee from players within 100px
-        for (const player of this.game.players) {
+        // Use player index as part of seed to ensure deterministic per-player evasion
+        for (let i = 0; i < this.game.players.length; i++) {
+            const player = this.game.players[i];
             const dx = this.x - player.x;
             const dy = this.y - player.y;
 
             if (Math.abs(dx) < 100 && Math.abs(dy) < 100) {
-                const choice = Math.floor(Math.random() * this.smart);
+                // Seed: ballIndex * 100 + playerIndex ensures unique per ball/player pair
+                const choice = randomIntFor(tick, this.ballIndex * 100 + i, 0, this.smart);
                 if (choice === 0) {
                     // Move away from player
                     if (player.x < this.x) this.right();
