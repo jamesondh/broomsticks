@@ -91,6 +91,7 @@ export class Game {
         this.roomCodeInput = '';
         this.playerName = generatePlayerName();
         this.networkError = null;
+        this.hostPaused = false;  // Track if game was paused by host (for client UI)
 
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
@@ -446,6 +447,7 @@ export class Game {
         this.lobbyPlayers = [];
         this.roomCode = '';
         this.roomCodeInput = '';
+        this.hostPaused = false;
     }
 
     requestStartGame() {
@@ -457,7 +459,22 @@ export class Game {
     // Client: apply received state
     applyNetworkState(state) {
         if (this.networkMode !== NetworkMode.CLIENT) return;
-        apply(this, state);
+
+        const { gameState } = apply(this, state);
+
+        // Track if host paused the game
+        if (gameState === GameState.PAUSED) {
+            this.hostPaused = true;
+            this.state = GameState.PAUSED;
+        } else if (gameState === GameState.PLAYING) {
+            // Host resumed - clear hostPaused and ensure we're playing
+            this.hostPaused = false;
+            this.state = GameState.PLAYING;
+        } else if (gameState === GameState.GAME_OVER) {
+            // Game over - sync state
+            this.hostPaused = false;
+            this.state = GameState.GAME_OVER;
+        }
     }
 
     // Host: serialize state for broadcast

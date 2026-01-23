@@ -791,32 +791,51 @@ export class GameRenderer {
         ctx.strokeStyle = '#000';
         ctx.strokeRect(modalX + 0.5, modalY + 0.5, PAUSE_MODAL.width, PAUSE_MODAL.height);
 
-        // "PAUSED" title
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('PAUSED', modalX + 70, modalY + 30);
 
-        // Resume button
-        const resumeBtn = BUTTONS.PAUSED.resume;
-        const resumeX = modalX + resumeBtn.x;
-        const resumeY = modalY + resumeBtn.y;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(resumeX, resumeY, resumeBtn.w, resumeBtn.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(resumeX + 0.5, resumeY + 0.5, resumeBtn.w, resumeBtn.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Resume', resumeX + 25, resumeY + 17);
+        if (this.game.hostPaused) {
+            // Host paused modal - client cannot resume
+            ctx.fillText('HOST PAUSED', modalX + 50, modalY + 30);
+            ctx.fillStyle = '#666';
+            ctx.fillText('Waiting for host...', modalX + 45, modalY + 55);
 
-        // Return to Menu button
-        const menuBtn = BUTTONS.PAUSED.returnToMenu;
-        const menuX = modalX + menuBtn.x;
-        const menuY = modalY + menuBtn.y;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(menuX, menuY, menuBtn.w, menuBtn.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
+            // Only show "Exit to Menu" button (no Resume)
+            const menuBtn = BUTTONS.PAUSED.returnToMenu;
+            const menuX = modalX + menuBtn.x;
+            const menuY = modalY + menuBtn.y;
+            ctx.fillStyle = COLORS.green;
+            ctx.fillRect(menuX, menuY, menuBtn.w, menuBtn.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
+            ctx.fillStyle = '#000';
+            ctx.fillText('Exit to Menu', menuX + 30, menuY + 17);
+        } else {
+            // Normal pause modal with Resume + Return to Menu
+            ctx.fillText('PAUSED', modalX + 70, modalY + 30);
+
+            // Resume button
+            const resumeBtn = BUTTONS.PAUSED.resume;
+            const resumeX = modalX + resumeBtn.x;
+            const resumeY = modalY + resumeBtn.y;
+            ctx.fillStyle = COLORS.green;
+            ctx.fillRect(resumeX, resumeY, resumeBtn.w, resumeBtn.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(resumeX + 0.5, resumeY + 0.5, resumeBtn.w, resumeBtn.h);
+            ctx.fillStyle = '#000';
+            ctx.fillText('Resume', resumeX + 25, resumeY + 17);
+
+            // Return to Menu button
+            const menuBtn = BUTTONS.PAUSED.returnToMenu;
+            const menuX = modalX + menuBtn.x;
+            const menuY = modalY + menuBtn.y;
+            ctx.fillStyle = COLORS.green;
+            ctx.fillRect(menuX, menuY, menuBtn.w, menuBtn.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
+            ctx.fillStyle = '#000';
+            ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
+        }
     }
 
     // Helper: draw standard green button

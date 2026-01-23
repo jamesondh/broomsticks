@@ -30,7 +30,8 @@ export function serialize(game) {
         balls,
         currBasket: game.currBasket,
         timer: game.timer,
-        goldSpawned: game.goldSpawned
+        goldSpawned: game.goldSpawned,
+        gameState: game.state  // Include game state for pause/game over sync
     };
 }
 
@@ -75,4 +76,7 @@ export function apply(game, state) {
     game.currBasket = state.currBasket;
     game.timer = state.timer;
     game.goldSpawned = state.goldSpawned;
+
+    // Return gameState for caller to handle (e.g., for hostPaused tracking)
+    return { gameState: state.gameState };
 }

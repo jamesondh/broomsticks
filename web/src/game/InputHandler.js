@@ -126,12 +126,13 @@ export class InputHandler {
             if (code === 'Numpad0') player4.switchModel();
         }
 
-        // Escape key: pause/resume (only in offline/local modes)
-        if (key === 'Escape' && networkMode === NetworkMode.OFFLINE) {
+        // Escape key: pause/resume (offline or host only)
+        if (key === 'Escape' && (networkMode === NetworkMode.OFFLINE || networkMode === NetworkMode.HOST)) {
             if (this.game.state === GameState.PLAYING) {
                 this.game.pauseTime = Date.now();
                 this.game.state = GameState.PAUSED;
-            } else if (this.game.state === GameState.PAUSED) {
+            } else if (this.game.state === GameState.PAUSED && !this.game.hostPaused) {
+                // Can only resume if not paused by host (relevant for offline mode)
                 this.game.startTime += Date.now() - this.game.pauseTime;
                 this.game.state = GameState.PLAYING;
             }
@@ -262,16 +263,33 @@ export class InputHandler {
                 this.handleLobbyClick(x, y);
                 break;
 
-            case GameState.PLAYING:
-                if (this.hitTest(BUTTONS.PLAYING.pauseIcon, x, y)) {
+            case GameState.PLAYING: {
+                const { networkMode } = this.game;
+                // Only allow pause via icon for offline or host
+                if (this.hitTest(BUTTONS.PLAYING.pauseIcon, x, y) &&
+                    (networkMode === NetworkMode.OFFLINE || networkMode === NetworkMode.HOST)) {
                     this.game.assets.playSound('pop');
                     this.game.pauseTime = Date.now();
                     this.game.state = GameState.PAUSED;
                 }
                 break;
+            }
 
             case GameState.PAUSED: {
                 const pausedBtns = BUTTONS.PAUSED;
+
+                // If host paused, client can only exit to menu (not resume)
+                if (this.game.hostPaused) {
+                    if (this.hitTest(pausedBtns.returnToMenu, x, y)) {
+                        this.game.assets.playSound('pop');
+                        this.game.state = GameState.MAIN_MENU;
+                        this.game.resetGameObjects();
+                        this.game.leaveRoom();  // Disconnect from network
+                    }
+                    break;
+                }
+
+                // Normal pause handling (offline or host)
                 // Pause icon click to unpause
                 if (this.hitTest(pausedBtns.pauseIcon, x, y)) {
                     this.game.assets.playSound('pop');
@@ -290,6 +308,10 @@ export class InputHandler {
                     this.game.assets.playSound('pop');
                     this.game.state = GameState.MAIN_MENU;
                     this.game.resetGameObjects();
+                    // If online, leave the room
+                    if (this.game.networkMode !== NetworkMode.OFFLINE) {
+                        this.game.leaveRoom();
+                    }
                 }
                 break;
             }
@@ -300,6 +322,10 @@ export class InputHandler {
                     this.game.assets.playSound('pop');
                     this.game.state = GameState.MAIN_MENU;
                     this.game.resetGameObjects();
+                    // If online, leave the room
+                    if (this.game.networkMode !== NetworkMode.OFFLINE) {
+                        this.game.leaveRoom();
+                    }
                 }
                 if (this.hitTest(gameOverBtns.website, x, y)) {
                     this.game.assets.playSound('pop');
