@@ -13,12 +13,10 @@ import {
     GROUND_Y,
     COLORS,
     GAME_FONT,
-    GITHUB_URL,
     BUTTONS,
     PAUSE_MODAL,
-    SETTINGS_LAYOUT,
     PREGAME_SETTINGS_LAYOUT,
-    SETTINGS_OPTIONS
+    DEBUG_HITBOXES
 } from './GameConstants.js';
 
 export class GameRenderer {
@@ -210,21 +208,25 @@ export class GameRenderer {
         ctx.strokeStyle = '#000';
         ctx.strokeRect(hi.x + 0.5, hi.y + 0.5, hi.w, hi.h);
         ctx.fillStyle = '#000';
-        ctx.font = '18px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
-        ctx.fillText('?', hi.x + 10, hi.y + 22);
+        ctx.font = '16px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText('?', hi.x + 12, hi.y + 20);
         ctx.font = GAME_FONT;
 
         // Attribution text
-        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 330);
+        ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 325);
 
         // Footer links
         const gb = btns.guestbook;
         ctx.fillText('Guestbook', gb.x, gb.y + 15);
-        ctx.fillRect(gb.x, gb.y + 18, 75, 1);
+        ctx.fillRect(gb.x, gb.y + 18, gb.w - 3, 1);
 
         const gh = btns.github;
         ctx.fillText('GitHub', gh.x, gh.y + 15);
-        ctx.fillRect(gh.x, gh.y + 18, 48, 1);
+        ctx.fillRect(gh.x, gh.y + 18, gh.w - 3, 1);
+
+        // Debug hitboxes for footer links
+        this.drawDebugHitbox(ctx, gb.x, gb.y, gb.w, gb.h);
+        this.drawDebugHitbox(ctx, gh.x, gh.y, gh.w, gh.h);
     }
 
     drawHelpMenu(ctx) {
@@ -253,7 +255,7 @@ export class GameRenderer {
     }
 
     drawPreGame(ctx) {
-        const { assets, gameMode, aiDifficulty, playerCount, settingsExpanded, settings, settingsOptions } = this.game;
+        const { assets, gameMode, aiDifficulty, playerCount, settings, settingsOptions } = this.game;
         const btns = BUTTONS.PRE_GAME;
 
         ctx.fillStyle = '#000';
@@ -261,35 +263,29 @@ export class GameRenderer {
 
         // Intro image
         if (assets.introImage) {
-            ctx.drawImage(assets.introImage, 139, 19);
+            ctx.drawImage(assets.introImage, 139, 12);
         }
 
         // Title based on mode
         const title = gameMode === GameMode.SINGLE ? 'SINGLE PLAYER' : 'LOCAL MULTIPLAYER';
-        ctx.fillText(title, gameMode === GameMode.SINGLE ? 255 : 235, 140);
+        ctx.fillText(title, gameMode === GameMode.SINGLE ? 270 : 255, 130);
 
         // Mode-specific options
         if (gameMode === GameMode.SINGLE) {
             // Difficulty selector
-            ctx.fillText('Difficulty:', 170, 182);
+            ctx.fillText('Difficulty:', 180, 167);
             this.drawToggleButton(ctx, btns.diffEasy, 'Easy', aiDifficulty === AIDifficulty.EASY);
             this.drawToggleButton(ctx, btns.diffMedium, 'Medium', aiDifficulty === AIDifficulty.MEDIUM);
             this.drawToggleButton(ctx, btns.diffHard, 'Hard', aiDifficulty === AIDifficulty.HARD);
         } else {
             // Player count selector
-            ctx.fillText('Players:', 200, 182);
+            ctx.fillText('Players:', 240, 167);
             this.drawToggleButton(ctx, btns.players2, '2', playerCount === 2);
             this.drawToggleButton(ctx, btns.players4, '4', playerCount === 4);
         }
 
-        // Settings toggle
-        const toggleText = settingsExpanded ? '▼ Settings' : '▶ Settings';
-        ctx.fillText(toggleText, btns.settingsToggle.x, btns.settingsToggle.y + 15);
-
-        // Expanded settings grid
-        if (settingsExpanded) {
-            this.drawExpandedSettings(ctx);
-        }
+        // Settings grid
+        this.drawExpandedSettings(ctx);
 
         // START button
         this.drawButton(ctx, btns.start, 'START');
@@ -300,7 +296,7 @@ export class GameRenderer {
 
     drawExpandedSettings(ctx) {
         const { settings, settingsOptions } = this.game;
-        const { startX, startY, colWidth, lineHeight } = PREGAME_SETTINGS_LAYOUT;
+        const { startX, startY, colWidth, lineHeight, rowHeight, rows, cols } = PREGAME_SETTINGS_LAYOUT;
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
@@ -328,6 +324,33 @@ export class GameRenderer {
         const bgOption = settingsOptions.bgImg.find(b => b.value === settings.bgImg);
         const bgLabel = bgOption ? bgOption.label : 'Sky 1';
         ctx.fillText(`< ${bgLabel} >`, startX + colWidth * 3, startY + lineHeight * 2);
+
+        // Debug hitboxes for settings grid
+        if (DEBUG_HITBOXES) {
+            const { grid, twoWayHitboxes } = PREGAME_SETTINGS_LAYOUT;
+            // Settings that use left/right arrow controls (range and list types)
+            const twoWaySettings = ['goldPoints', 'duration', 'winScore', 'playerImg', 'bgImg'];
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const cellX = startX + col * colWidth;
+                    const cellY = startY - rowHeight + row * lineHeight;
+                    const settingKey = grid[row][col];
+
+                    if (twoWaySettings.includes(settingKey)) {
+                        // Draw hitboxes for the actual < and > arrow positions
+                        const hitbox = twoWayHitboxes[settingKey];
+                        const leftWidth = hitbox.leftEnd - hitbox.leftStart;
+                        const rightWidth = hitbox.rightEnd - hitbox.rightStart;
+                        this.drawDebugHitbox(ctx, cellX + hitbox.leftStart, cellY, leftWidth, rowHeight);
+                        this.drawDebugHitbox(ctx, cellX + hitbox.rightStart, cellY, rightWidth, rowHeight);
+                    } else {
+                        // Draw single rectangle for cycle settings
+                        this.drawDebugHitbox(ctx, cellX, cellY, colWidth, rowHeight);
+                    }
+                }
+            }
+        }
     }
 
     drawOnlineMenu(ctx) {
@@ -562,20 +585,6 @@ export class GameRenderer {
         ctx.font = GAME_FONT;
         ctx.fillText('Game over. Click here to play again.', pa.x + 10, pa.y + 15);
 
-        // iOS app text
-        ctx.fillText('NEW! Get Broomsticks for the iphone/ipad!', 214, 224);
-        ctx.fillText('Search for Broomsticks on the app store', 214, 239);
-
-        // Full version link text and button
-        ctx.fillText('Like this game? Get the full version here!:', 214, 309);
-        const ws = btns.website;
-        ctx.fillStyle = COLORS.green;
-        ctx.fillRect(ws.x, ws.y, ws.w, ws.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(ws.x + 0.5, ws.y + 0.5, ws.w, ws.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('http://www.visbox.com/broomsticks/', ws.x + 15, ws.y + 15);
-
         if (assets.introImage) {
             ctx.drawImage(assets.introImage, 139, 39);
         }
@@ -767,5 +776,13 @@ export class GameRenderer {
         // Underline
         const textWidth = ctx.measureText(text).width;
         ctx.fillRect(btn.x, btn.y + 18, textWidth, 1);
+    }
+
+    // Helper: draw debug hitbox outline (red rectangle)
+    drawDebugHitbox(ctx, x, y, w, h) {
+        if (!DEBUG_HITBOXES) return;
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x + 0.5, y + 0.5, w, h);
     }
 }

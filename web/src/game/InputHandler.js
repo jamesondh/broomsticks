@@ -9,7 +9,6 @@ import {
     GITHUB_URL,
     BUTTONS,
     PAUSE_MODAL,
-    SETTINGS_LAYOUT,
     PREGAME_SETTINGS_LAYOUT,
     SETTINGS_OPTIONS
 } from './GameConstants.js';
@@ -311,7 +310,7 @@ export class InputHandler {
 
     handlePreGameClick(x, y) {
         const btns = BUTTONS.PRE_GAME;
-        const { gameMode, settingsExpanded } = this.game;
+        const { gameMode } = this.game;
 
         // Difficulty buttons (single player only)
         if (gameMode === GameMode.SINGLE) {
@@ -341,16 +340,8 @@ export class InputHandler {
             }
         }
 
-        // Settings toggle
-        if (this.hitTest(btns.settingsToggle, x, y)) {
-            this.game.assets.playSound('pop');
-            this.game.toggleSettingsExpanded();
-        }
-
-        // Handle expanded settings clicks
-        if (settingsExpanded) {
-            this.handleExpandedSettingsClick(x, y);
-        }
+        // Handle settings clicks
+        this.handleExpandedSettingsClick(x, y);
 
         // Start button
         if (this.hitTest(btns.start, x, y)) {
@@ -361,7 +352,6 @@ export class InputHandler {
         // Back button
         if (this.hitTest(btns.back, x, y)) {
             this.game.assets.playSound('pop');
-            this.game.settingsExpanded = false;
             this.game.state = GameState.MAIN_MENU;
         }
     }
@@ -374,7 +364,7 @@ export class InputHandler {
         const offX = x - OFFSET_X;
         const offY = y - OFFSET_Y;
 
-        const { startX, startY, colWidth, lineHeight, rowHeight, grid } = PREGAME_SETTINGS_LAYOUT;
+        const { startX, startY, colWidth, lineHeight, rowHeight, grid, twoWayHitboxes } = PREGAME_SETTINGS_LAYOUT;
 
         // Determine which row/col was clicked
         const col = Math.floor((offX - startX) / colWidth);
@@ -385,9 +375,8 @@ export class InputHandler {
         const settingKey = grid[row][col];
         if (!settingKey) return;
 
-        // Determine if this is a left or right click within the cell (for < > controls)
+        // X position within the cell
         const cellX = offX - startX - col * colWidth;
-        const isLeftHalf = cellX < colWidth / 2;
 
         // Cycle through array options
         const cycleSetting = (key) => {
@@ -414,9 +403,37 @@ export class InputHandler {
             this.game.assets.playSound('pop');
         };
 
-        // Handle different setting types
+        // Two-way settings use explicit arrow hitboxes
+        const twoWaySettings = ['goldPoints', 'duration', 'winScore', 'playerImg', 'bgImg'];
+        if (twoWaySettings.includes(settingKey)) {
+            const hitbox = twoWayHitboxes[settingKey];
+
+            // Check if click is on left arrow (<)
+            if (cellX >= hitbox.leftStart && cellX <= hitbox.leftEnd) {
+                if (settingKey === 'playerImg' || settingKey === 'bgImg') {
+                    cycleList(settingKey, -1);
+                } else {
+                    adjustRange(settingKey, -1);
+                }
+                return;
+            }
+
+            // Check if click is on right arrow (>)
+            if (cellX >= hitbox.rightStart && cellX <= hitbox.rightEnd) {
+                if (settingKey === 'playerImg' || settingKey === 'bgImg') {
+                    cycleList(settingKey, 1);
+                } else {
+                    adjustRange(settingKey, 1);
+                }
+                return;
+            }
+
+            // Click was outside arrow hitboxes - ignore
+            return;
+        }
+
+        // Handle cycle settings (click anywhere in cell)
         switch (settingKey) {
-            // Cycle settings
             case 'dive':
             case 'accel':
             case 'maxSpeed':
@@ -425,19 +442,6 @@ export class InputHandler {
             case 'blackBalls':
             case 'goldBalls':
                 cycleSetting(settingKey);
-                break;
-
-            // Range settings (< > controls)
-            case 'goldPoints':
-            case 'duration':
-            case 'winScore':
-                adjustRange(settingKey, isLeftHalf ? -1 : 1);
-                break;
-
-            // List settings (< > controls)
-            case 'playerImg':
-            case 'bgImg':
-                cycleList(settingKey, isLeftHalf ? -1 : 1);
                 break;
         }
     }

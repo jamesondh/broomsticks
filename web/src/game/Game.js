@@ -40,7 +40,6 @@ export class Game {
         this.gameMode = GameMode.SINGLE;
         this.aiDifficulty = AIDifficulty.MEDIUM;
         this.playerCount = 2;
-        this.settingsExpanded = false;
 
         // Game state
         this.state = GameState.LOADING;
@@ -285,10 +284,6 @@ export class Game {
     setPlayerCount(count) {
         this.playerCount = count;
         // TODO: Phase 2 will implement 4-player mode
-    }
-
-    toggleSettingsExpanded() {
-        this.settingsExpanded = !this.settingsExpanded;
     }
 
     async startFromPreGame() {

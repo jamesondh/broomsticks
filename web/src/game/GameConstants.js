@@ -1,5 +1,8 @@
 // GameConstants.js - Centralized constants and configuration for Broomsticks
 
+// Debug flag - set to true to render red hitbox outlines
+export const DEBUG_HITBOXES = false;
+
 // Canvas dimensions
 export const CANVAS_WIDTH = 650;
 export const CANVAS_HEIGHT = 430;
@@ -117,9 +120,9 @@ export const AIDifficulty = {
 
 // AI difficulty settings (smart = lower is harder, reactionDelay = frames before responding)
 export const AI_DIFFICULTY_SETTINGS = {
-    easy:   { smart: 30, reactionDelay: 8 },
+    easy: { smart: 30, reactionDelay: 8 },
     medium: { smart: 20, reactionDelay: 4 },
-    hard:   { smart: 10, reactionDelay: 0 }
+    hard: { smart: 10, reactionDelay: 0 }
 };
 
 // Pause modal dimensions (used by renderer and input handler)
@@ -134,91 +137,72 @@ export const PAUSE_MODAL = {
 // InputHandler applies OFFSET_X/OFFSET_Y for hit testing on offscreen buttons
 export const BUTTONS = {
     MAIN_MENU: {
-        singlePlayer:    { x: 214, y: 140, w: 200, h: 35 },
+        singlePlayer: { x: 214, y: 140, w: 200, h: 35 },
         localMultiplayer: { x: 214, y: 185, w: 200, h: 35 },
-        online:          { x: 214, y: 230, w: 200, h: 35 },
-        helpIcon:        { x: 580, y: 20, w: 30, h: 30 },
-        guestbook:       { x: 180, y: 290, w: 120, h: 20 },
-        github:          { x: 320, y: 290, w: 120, h: 20 }
+        online: { x: 214, y: 230, w: 200, h: 35 },
+        helpIcon: { x: 580, y: 20, w: 30, h: 30 },
+        guestbook: { x: 240, y: 280, w: 55, h: 20 },
+        github: { x: 340, y: 280, w: 35, h: 20 }
     },
     HELP_MENU: {
-        rules:    { x: 214, y: 180, w: 200, h: 35 },
+        rules: { x: 214, y: 180, w: 200, h: 35 },
         controls: { x: 214, y: 225, w: 200, h: 35 },
-        back:     { x: 280, y: 290, w: 60, h: 20 }
+        back: { x: 290, y: 290, w: 60, h: 20 }
     },
     RULES: {
-        back: { x: 280, y: 320, w: 60, h: 20 }
+        back: { x: 290, y: 310, w: 60, h: 20 }
     },
     CONTROLS: {
-        back: { x: 280, y: 320, w: 60, h: 20 }
+        back: { x: 290, y: 320, w: 60, h: 20 }
     },
     PRE_GAME: {
         // Difficulty buttons (single player)
-        diffEasy:   { x: 244, y: 165, w: 60, h: 25 },
-        diffMedium: { x: 314, y: 165, w: 70, h: 25 },
-        diffHard:   { x: 394, y: 165, w: 60, h: 25 },
+        diffEasy: { x: 244, y: 150, w: 60, h: 25 },
+        diffMedium: { x: 314, y: 150, w: 70, h: 25 },
+        diffHard: { x: 394, y: 150, w: 60, h: 25 },
         // Player count buttons (local multiplayer)
-        players2: { x: 270, y: 165, w: 40, h: 25 },
-        players4: { x: 320, y: 165, w: 40, h: 25 },
-        // Settings toggle and start/back
-        settingsToggle: { x: 254, y: 205, w: 120, h: 20 },
-        start:          { x: 264, y: 310, w: 100, h: 30 },
-        back:           { x: 280, y: 345, w: 60, h: 20 }
+        players2: { x: 290, y: 150, w: 40, h: 25 },
+        players4: { x: 340, y: 150, w: 40, h: 25 },
+        // Start/back
+        start: { x: 264, y: 275, w: 100, h: 30 },
+        back: { x: 290, y: 310, w: 60, h: 20 }
     },
     ONLINE_MENU: {
-        quickMatch:  { x: 214, y: 180, w: 200, h: 35 },
+        quickMatch: { x: 214, y: 180, w: 200, h: 35 },
         privateRoom: { x: 214, y: 225, w: 200, h: 35 },
-        back:        { x: 280, y: 290, w: 60, h: 20 }
+        back: { x: 290, y: 290, w: 60, h: 20 }
     },
     MATCHMAKING: {
         cancel: { x: 264, y: 220, w: 100, h: 30 }
     },
     PRIVATE_ROOM_MENU: {
         createRoom: { x: 214, y: 180, w: 200, h: 35 },
-        joinRoom:   { x: 214, y: 225, w: 200, h: 35 },
-        back:       { x: 280, y: 290, w: 60, h: 20 }
+        joinRoom: { x: 214, y: 225, w: 200, h: 35 },
+        back: { x: 290, y: 290, w: 60, h: 20 }
     },
     LOBBY: {
         start: { x: 264, y: 260, w: 100, h: 30 },
-        leave: { x: 280, y: 300, w: 60, h: 20 }
+        leave: { x: 290, y: 300, w: 60, h: 20 }
     },
     PLAYING: {
         pauseIcon: { x: 10, y: 8, w: 32, h: 15, mainCanvas: true }
     },
     PAUSED: {
-        pauseIcon:    { x: 10, y: 8, w: 32, h: 15, mainCanvas: true },
-        resume:       { x: 50, y: 45, w: 100, h: 25, modalRelative: true },
-        returnToMenu: { x: 25, y: 80, w: 150, h: 25, modalRelative: true }
+        pauseIcon: { x: 10, y: 8, w: 32, h: 15, mainCanvas: true },
+        resume: { x: 50, y: 45, w: 90, h: 25, modalRelative: true },
+        returnToMenu: { x: 25, y: 80, w: 140, h: 25, modalRelative: true }
     },
     GAME_OVER: {
-        playAgain: { x: 204, y: 134, w: 230, h: 20 },
-        website:   { x: 214, y: 319, w: 225, h: 20 }
+        playAgain: { x: 204, y: 200, w: 230, h: 20 },
+        website: { x: 214, y: 319, w: 225, h: 20 }
     }
-};
-
-// Settings screen layout (offscreen canvas coords) - legacy, kept for reference
-export const SETTINGS_LAYOUT = {
-    startY: 165,      // Y of first row text baseline
-    lineHeight: 18,   // Vertical spacing
-    rowHeight: 16,    // Clickable height per row
-    left: {
-        textX: 200,   // Text draw position
-        hitX: 190,    // Hitbox start (10px padding left of text)
-        hitW: 120,    // Hitbox width
-    },
-    right: {
-        textX: 320,   // Text draw position
-        hitX: 310,    // Hitbox start (10px padding left of text)
-        hitW: 210,    // Hitbox width
-        splitAt: 105, // Boundary for left/right click zones (relative to hitX)
-    },
 };
 
 // Pre-game expanded settings layout (4-column grid)
 export const PREGAME_SETTINGS_LAYOUT = {
-    startX: 60,       // X of first column
-    startY: 240,      // Y of first row text baseline
-    colWidth: 140,    // Width per column
+    startX: 150,       // X of first column
+    startY: 212,      // Y of first row text baseline
+    colWidth: 80,    // Width per column
     lineHeight: 18,   // Vertical spacing
     rowHeight: 16,    // Clickable height per row
     cols: 4,          // Number of columns
@@ -228,5 +212,14 @@ export const PREGAME_SETTINGS_LAYOUT = {
         ['dive', 'accel', 'maxSpeed', 'sound'],
         ['redBalls', 'blackBalls', 'goldBalls', 'goldPoints'],
         ['duration', 'winScore', 'playerImg', 'bgImg']
-    ]
+    ],
+    // Hitbox offsets for two-way < > controls (relative to cell start)
+    // Each defines the x-offset where the < and > arrows are clickable
+    twoWayHitboxes: {
+        goldPoints: { leftStart: 0, leftEnd: 60, rightStart: 60, rightEnd: 80 },
+        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 80 },
+        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 80 },
+        playerImg: { leftStart: 0, leftEnd: 30, rightStart: 30, rightEnd: 80 },
+        bgImg: { leftStart: 0, leftEnd: 25, rightStart: 25, rightEnd: 80 }
+    }
 };
