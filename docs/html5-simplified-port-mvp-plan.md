@@ -326,11 +326,11 @@ export const GameState = {
 
 ### 2.4 Input Improvements
 
-- [ ] Add WASD as primary P1 controls
-- [ ] Current bindings:
+- [x] Add WASD as primary P1 controls
+- [x] Current bindings:
   - P1: E/S/F/D (up/left/down/right)
   - P2: Arrow keys
-- [ ] New bindings for 4-player:
+- [x] New bindings for 4-player:
   - P3: I/J/K/L + U (pass)
   - P4: Numpad 8/4/5/6 + 0 (pass)
 
@@ -375,11 +375,18 @@ export const GameState = {
 
 ### 3.1 PartyKit Server
 
-Create `partykit/server.ts`:
-- [ ] Room lifecycle (create, join, leave)
-- [ ] 4-character room codes (e.g., "ABCD")
-- [ ] Support 2-player (1v1) and 4-player (2v2) rooms
-- [ ] Game state synchronization
+Created `partykit/` directory with:
+- `partykit.json` - Server configuration
+- `server.ts` - Room management server
+- `package.json` - Dependencies (partykit ^0.0.111)
+- `tsconfig.json` - TypeScript configuration
+
+Implementation:
+- [x] Room lifecycle (create, join, leave)
+- [x] 4-character room codes (e.g., "ABCD")
+- [x] Support 2-player (1v1) rooms
+- [x] Game state synchronization
+- [ ] Support 4-player (2v2) rooms
 
 ### 3.2 Message Protocol
 
@@ -403,22 +410,35 @@ type ServerMessage =
 
 ### 3.3 Network Architecture (Keep Simple)
 
-- [ ] **Host/Client model**: First player is host
-- [ ] **Host responsibilities**:
+- [x] **Host/Client model**: First player is host
+- [x] **Host responsibilities**:
   - Runs game physics at 30ms timestep
   - Broadcasts state at 20Hz (50ms)
   - Authoritative for all game logic
-- [ ] **Client responsibilities**:
+- [x] **Client responsibilities**:
   - Sends inputs to host
   - Receives and renders state
   - No prediction initially (add later if needed)
 
 ### 3.4 Modify Game.js for Network
 
-- [ ] Add `NetworkMode` flag
-- [ ] Abstract input source (local keyboard vs network)
-- [ ] Support receiving remote player inputs
-- [ ] Serialize/deserialize game state
+Created `web/src/multiplayer/` module:
+- `NetworkManager.js` - WebSocket client, host broadcasts at 20Hz
+- `StateSerializer.js` - Compact state serialization/deserialization
+- `names.js` - Random player name generator (Adjective + Noun + Number)
+- `index.js` - Module exports
+
+Modified game files:
+- `GameConstants.js` - Added `NetworkMode` enum, `JOIN_ROOM` state
+- `Game.js` - Network properties, createRoom/joinRoom methods, modified gameLoop
+- `GameRenderer.js` - drawJoinRoom() with blinking cursor, updated drawLobby()
+- `InputHandler.js` - Room code keyboard input (A-Z, 2-9, Backspace, Enter)
+
+Implementation:
+- [x] Add `NetworkMode` flag
+- [x] Abstract input source (local keyboard vs network)
+- [x] Support receiving remote player inputs
+- [x] Serialize/deserialize game state
 
 ### 3.5 Room Code System
 
@@ -538,15 +558,15 @@ The online menu structure is defined in Phase 2's menu restructure. Phase 3 conn
 
 #### Lobby Implementation Tasks
 
-- [ ] Create `LobbyPage.tsx` or integrate into `GameRenderer.js`:
+- [x] Create `LobbyPage.tsx` or integrate into `GameRenderer.js`:
   - `drawMatchmaking()` - searching overlay with cancel
   - `drawPrivateRoomMenu()` - Create/Join selection
   - `drawLobby()` - room code, player list, settings (host/guest variants)
   - `drawJoinRoom()` - code entry screen
-- [ ] Connect PartyKit WebSocket to lobby state
-- [ ] Team auto-assignment on join
-- [ ] Ready-up system
-- [ ] Start game when all players ready
+- [x] Connect PartyKit WebSocket to lobby state
+- [ ] Team auto-assignment on join (deferred to 2v2)
+- [ ] Ready-up system (deferred)
+- [x] Start game when all players ready
 
 ### 3.7 4-Player Online (2v2)
 
@@ -558,12 +578,26 @@ The online menu structure is defined in Phase 2's menu restructure. Phase 3 conn
 
 ### Verification
 
-- [ ] Can create room and get code
-- [ ] Second player can join with code
-- [ ] Game syncs between both players
-- [ ] 2v2: 4 players can join same room
-- [ ] Team selection works
-- [ ] 4-player scoreboard displays correctly
+- [x] Can create room and get code
+- [x] Second player can join with code
+- [x] Game syncs between both players (host-authoritative)
+- [ ] 2v2: 4 players can join same room (future)
+- [ ] Team selection works (future)
+- [ ] 4-player scoreboard displays correctly (future)
+
+### Deployment
+
+To deploy the PartyKit server:
+
+```bash
+cd partykit
+npx partykit login    # Create account if needed
+npx partykit deploy   # Deploy server
+```
+
+The server URL will be: `wss://broomsticks.{username}.partykit.dev/party/{roomCode}`
+
+Update `VITE_PARTYKIT_HOST` in `.env` or the default in `NetworkManager.js`.
 
 ---
 

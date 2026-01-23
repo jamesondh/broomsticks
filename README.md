@@ -69,7 +69,7 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
 |-------|-------------|--------|
 | 1 | Core Game | ✅ Complete |
 | 2 | Local Multiplayer (2-4 Players) | 🔄 In Progress |
-| 3 | Online Multiplayer (PartyKit) | Pending |
+| 3 | Online Multiplayer (PartyKit) | 🔄 In Progress |
 | 4 | Mobile & Capacitor | Pending |
 | 5 | Polish (Optional) | Pending |
 
@@ -79,8 +79,13 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
 - ✅ Settings overlay (balls, gold ball, win score)
 - ✅ Pause menu (Escape/P key)
 - ✅ Game state machine (menu, playing, paused, game over)
+- ✅ Online multiplayer infrastructure (1v1 private rooms)
+  - PartyKit WebSocket server with room codes
+  - Host-authoritative network model (30ms physics, 20Hz broadcast)
+  - Room code input UI with 4-character codes
+  - NetworkManager, StateSerializer, random player names
 
-**Up next:** WASD controls, Quick Start, 4-player local mode
+**Up next:** Deploy PartyKit server, 4-player local mode, Quick Match
 
 See [Implementation Plan](docs/html5-simplified-port-mvp-plan.md) for details.
 
@@ -94,6 +99,18 @@ bun run build    # Build for production
 bun run preview  # Preview production build
 bun run test     # Run unit tests
 ```
+
+### PartyKit Server (Online Multiplayer)
+
+```bash
+cd partykit
+bun install               # Install dependencies
+npx partykit dev          # Start local dev server
+npx partykit login        # Login/create account
+npx partykit deploy       # Deploy to production
+```
+
+The server will be available at: `wss://broomsticks.{username}.partykit.dev/party/{roomCode}`
 
 ## Credits
 

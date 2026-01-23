@@ -70,3 +70,6 @@ archive/broomsticks-ios/build/
 
 # Thumbnails (from archive)
 .xvpics/
+
+# Environment variables
+*.env

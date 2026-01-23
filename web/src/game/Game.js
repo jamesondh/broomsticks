@@ -11,6 +11,7 @@ import { GameRenderer } from './GameRenderer.js';
 import {
     GameState,
     GameMode,
+    NetworkMode,
     AIDifficulty,
     AI_DIFFICULTY_SETTINGS,
     GAME_WIDTH,
@@ -19,9 +20,12 @@ import {
     DEFAULT_SETTINGS,
     SETTINGS_OPTIONS
 } from './GameConstants.js';
+import { NetworkManager } from '../multiplayer/NetworkManager.js';
+import { serialize, apply } from '../multiplayer/StateSerializer.js';
+import { generatePlayerName } from '../multiplayer/names.js';
 
 // Re-export for backward compatibility
-export { GameState, GameMode, AIDifficulty };
+export { GameState, GameMode, AIDifficulty, NetworkMode };
 
 export class Game {
     constructor(canvas, settings) {
@@ -77,6 +81,16 @@ export class Game {
         this.running = false;
         this.updateInterval = UPDATE_INTERVAL;
         this.destroyed = false;
+
+        // Network multiplayer state
+        this.networkManager = null;
+        this.networkMode = NetworkMode.OFFLINE;
+        this.localPlayerIndex = 1;  // 0 for host (player1/blue), 1 for client (player2/green)
+        this.lobbyPlayers = [];
+        this.roomCode = '';
+        this.roomCodeInput = '';
+        this.playerName = generatePlayerName();
+        this.networkError = null;
 
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
@@ -221,18 +235,29 @@ export class Game {
         const elapsed = timestamp - this.lastUpdateTime;
 
         if (this.state === GameState.PLAYING) {
-            // Only update game logic when enough time has passed (30ms)
-            if (elapsed >= this.updateInterval) {
-                this.physics.checkCollisions();
-                this.physics.checkCaught();
-                this.physics.checkGoldBallTimer();
-                this.moveFlyers();
-
-                if (this.timer > 0) {
-                    this.timer--;
-                }
-
+            // Online client mode: skip physics, just render (state comes from host)
+            if (this.networkMode === NetworkMode.CLIENT) {
+                // Client only renders, state is applied via applyNetworkState
                 this.lastUpdateTime = timestamp;
+            } else {
+                // Offline or Host mode: run physics
+                if (elapsed >= this.updateInterval) {
+                    // Host: apply remote player input before physics
+                    if (this.networkMode === NetworkMode.HOST) {
+                        this.applyRemoteInput();
+                    }
+
+                    this.physics.checkCollisions();
+                    this.physics.checkCaught();
+                    this.physics.checkGoldBallTimer();
+                    this.moveFlyers();
+
+                    if (this.timer > 0) {
+                        this.timer--;
+                    }
+
+                    this.lastUpdateTime = timestamp;
+                }
             }
         } else {
             this.lastUpdateTime = timestamp;
@@ -317,5 +342,143 @@ export class Game {
         this.destroyed = true;
         this.running = false;
         this.input.detach();
+        if (this.networkManager) {
+            this.networkManager.disconnect();
+        }
+    }
+
+    // ===== Network Multiplayer Methods =====
+
+    createRoom() {
+        this.roomCode = NetworkManager.generateRoomCode();
+        this.networkMode = NetworkMode.HOST;
+        this.localPlayerIndex = 0;  // Host is player 1 (blue)
+        this.lobbyPlayers = [];
+        this.networkError = null;
+
+        this.networkManager = new NetworkManager(this);
+        this.setupNetworkCallbacks();
+        this.networkManager.connect(this.roomCode, this.playerName);
+    }
+
+    joinRoom(code) {
+        if (!code || code.length !== 4) {
+            this.networkError = 'Invalid room code';
+            return;
+        }
+
+        this.roomCode = code.toUpperCase();
+        this.networkMode = NetworkMode.CLIENT;
+        this.localPlayerIndex = 1;  // Client is player 2 (green)
+        this.lobbyPlayers = [];
+        this.networkError = null;
+
+        this.networkManager = new NetworkManager(this);
+        this.setupNetworkCallbacks();
+        this.networkManager.connect(this.roomCode, this.playerName);
+    }
+
+    setupNetworkCallbacks() {
+        this.networkManager.onJoined = (msg) => this.onNetworkJoined(msg);
+        this.networkManager.onPlayerJoined = (player) => this.onPlayerJoined(player);
+        this.networkManager.onPlayerLeft = (playerId) => this.onPlayerLeft(playerId);
+        this.networkManager.onGameStart = (config) => this.onGameStart(config);
+        this.networkManager.onStateReceived = (state) => this.applyNetworkState(state);
+        this.networkManager.onError = (error) => this.onNetworkError(error);
+    }
+
+    onNetworkJoined(msg) {
+        console.log('[Game] Joined room:', msg.roomCode, 'as', msg.isHost ? 'host' : 'client');
+        this.lobbyPlayers = msg.players;
+        this.state = GameState.LOBBY;
+    }
+
+    onPlayerJoined(player) {
+        console.log('[Game] Player joined:', player.name);
+        this.lobbyPlayers.push(player);
+    }
+
+    onPlayerLeft(playerId) {
+        console.log('[Game] Player left:', playerId);
+        this.lobbyPlayers = this.lobbyPlayers.filter(p => p.id !== playerId);
+
+        // If we're in game and opponent left, return to menu
+        if (this.state === GameState.PLAYING || this.state === GameState.PAUSED) {
+            this.networkError = 'Opponent disconnected';
+            this.state = GameState.MAIN_MENU;
+            this.resetGameObjects();
+            this.leaveRoom();
+        }
+    }
+
+    onGameStart(config) {
+        console.log('[Game] Game starting, host:', config.hostId);
+
+        // Initialize game objects for online play
+        this.initGameObjects();
+
+        // Online play: both players are human-controlled
+        this.player1.isRobot = false;
+
+        // Start the game
+        this.startGame();
+    }
+
+    onNetworkError(error) {
+        console.error('[Game] Network error:', error);
+        this.networkError = error;
+
+        // If in lobby/join screens, stay there to show error
+        // If in game, return to menu
+        if (this.state === GameState.PLAYING || this.state === GameState.PAUSED) {
+            this.state = GameState.MAIN_MENU;
+            this.resetGameObjects();
+            this.leaveRoom();
+        }
+    }
+
+    leaveRoom() {
+        if (this.networkManager) {
+            this.networkManager.disconnect();
+            this.networkManager = null;
+        }
+        this.networkMode = NetworkMode.OFFLINE;
+        this.lobbyPlayers = [];
+        this.roomCode = '';
+        this.roomCodeInput = '';
+    }
+
+    requestStartGame() {
+        if (this.networkManager && this.networkMode === NetworkMode.HOST) {
+            this.networkManager.requestGameStart();
+        }
+    }
+
+    // Client: apply received state
+    applyNetworkState(state) {
+        if (this.networkMode !== NetworkMode.CLIENT) return;
+        apply(this, state);
+    }
+
+    // Host: serialize state for broadcast
+    serializeState() {
+        return serialize(this);
+    }
+
+    // Host: apply remote player input
+    applyRemoteInput() {
+        if (this.networkMode !== NetworkMode.HOST || !this.networkManager) return;
+
+        const input = this.networkManager.getRemoteInput();
+
+        // Apply input to player 2 (the client's player)
+        if (input.left) this.player2.left();
+        if (input.right) this.player2.right();
+        if (input.up) this.player2.up();
+        if (input.down) this.player2.down();
+        if (input.switch) {
+            this.player2.switchModel();
+            this.networkManager.clearRemoteInputSwitch();
+        }
     }
 }

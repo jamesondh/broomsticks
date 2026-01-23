@@ -98,10 +98,18 @@ export const GameState = {
     ONLINE_MENU: 'online_menu',
     MATCHMAKING: 'matchmaking',
     PRIVATE_ROOM_MENU: 'private_room_menu',
+    JOIN_ROOM: 'join_room',
     LOBBY: 'lobby',
     PLAYING: 'playing',
     PAUSED: 'paused',
     GAME_OVER: 'game_over'
+};
+
+// Network modes for online multiplayer
+export const NetworkMode = {
+    OFFLINE: 'offline',
+    HOST: 'host',
+    CLIENT: 'client'
 };
 
 // Game modes
@@ -179,6 +187,11 @@ export const BUTTONS = {
         createRoom: { x: 214, y: 180, w: 200, h: 35 },
         joinRoom: { x: 214, y: 225, w: 200, h: 35 },
         back: { x: 290, y: 290, w: 60, h: 20 }
+    },
+    JOIN_ROOM: {
+        codeInput: { x: 214, y: 180, w: 200, h: 35 },
+        join: { x: 264, y: 230, w: 100, h: 30 },
+        back: { x: 290, y: 280, w: 60, h: 20 }
     },
     LOBBY: {
         start: { x: 264, y: 260, w: 100, h: 30 },

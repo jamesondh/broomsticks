@@ -87,7 +87,7 @@ bun run build:guestbook  # Regenerate guestbook JSON from archived HTML
 | Game Engine | Vanilla JS | Faithful to original, simple |
 | Rendering | Canvas 2D | Matches Java's Graphics2D |
 | UI/Routing | React (minimal) | Just for navigation |
-| Multiplayer | PartyKit (planned) | Simple WebSocket rooms |
+| Multiplayer | PartyKit | WebSocket rooms with host-authoritative model |
 | Mobile | Capacitor (planned) | iOS/Android from web code |
 | Build | Vite + Bun | Fast, modern tooling |
 | Guestbook Search | Fuse.js | Fuzzy search |
@@ -109,10 +109,10 @@ The original 8-phase plan used PixiJS/TypeScript (~5,000+ lines). The current ap
 ```
 web/src/
 ├── game/                     # Modular vanilla JS game engine
-│   ├── Game.js               # Main game class, state machine
-│   ├── GameRenderer.js       # All rendering (game, menus, overlays)
-│   ├── GameConstants.js      # Configuration and constants
-│   ├── InputHandler.js       # Keyboard input, pause menu
+│   ├── Game.js               # Main game class, state machine, network integration
+│   ├── GameRenderer.js       # All rendering (game, menus, overlays, lobby)
+│   ├── GameConstants.js      # Configuration, constants, NetworkMode enum
+│   ├── InputHandler.js       # Keyboard input, pause menu, room code input
 │   ├── PhysicsManager.js     # Physics engine
 │   ├── AssetManager.js       # Asset loading
 │   ├── FlyingObject.js       # Base physics class
@@ -122,6 +122,12 @@ web/src/
 │   ├── BroomsticksGame.tsx   # React wrapper for game canvas
 │   ├── game.css              # Minimal game styles
 │   └── index.ts              # Exports
+│
+├── multiplayer/              # Online multiplayer (Phase 3)
+│   ├── NetworkManager.js     # WebSocket client for PartyKit
+│   ├── StateSerializer.js    # Game state serialization for network
+│   ├── names.js              # Random player name generator
+│   └── index.js              # Module exports
 │
 ├── components/               # React components
 │   ├── GuestbookSearch.tsx   # Guestbook search UI
@@ -144,6 +150,12 @@ web/src/
 │
 ├── App.tsx                   # Minimal router
 └── main.tsx
+
+partykit/                     # PartyKit multiplayer server
+├── server.ts                 # Room management, message routing
+├── partykit.json             # Server configuration
+├── package.json              # Dependencies
+└── tsconfig.json             # TypeScript config
 
 web/public/
 ├── game/
@@ -174,7 +186,7 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
 |-------|-------------|--------|
 | 1 | Core Game | ✅ Complete |
 | 2 | Local Multiplayer (2-4 Players) | 🔄 In Progress |
-| 3 | Online Multiplayer (PartyKit) | Pending |
+| 3 | Online Multiplayer (PartyKit) | 🔄 In Progress |
 | 4 | Mobile & Capacitor | Pending |
 | 5 | Polish (Optional) | Pending |
 
@@ -191,3 +203,16 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
 - ✅ Pause menu (Escape/P key) with Resume/Quit
 - ✅ Game state machine (menu, playing, paused, game over)
 - Pending: WASD controls, Quick Start, 4-player mode, gamepad
+
+### Phase 3 Progress (Online Multiplayer)
+
+- ✅ PartyKit server (`partykit/server.ts`) with room management
+- ✅ NetworkManager WebSocket client with host/client modes
+- ✅ StateSerializer for compact game state transmission
+- ✅ Random player name generator
+- ✅ Host-authoritative model (30ms physics, 20Hz state broadcast)
+- ✅ 4-character room codes (avoiding confusing chars: I, O, 0, 1)
+- ✅ JOIN_ROOM screen with code input and blinking cursor
+- ✅ Lobby UI showing room code and player list
+- ✅ Game.js network integration (createRoom, joinRoom, applyRemoteInput)
+- Pending: PartyKit deployment, Quick Match, 2v2 mode

@@ -155,6 +155,9 @@ export class GameRenderer {
             case GameState.PRIVATE_ROOM_MENU:
                 this.drawPrivateRoomMenu(ctx);
                 break;
+            case GameState.JOIN_ROOM:
+                this.drawJoinRoom(ctx);
+                break;
             case GameState.LOBBY:
                 this.drawLobby(ctx);
                 break;
@@ -432,15 +435,76 @@ export class GameRenderer {
 
         // Back link
         this.drawBackButton(ctx, btns.back);
+    }
 
-        // Mock notice
+    drawJoinRoom(ctx) {
+        const { assets, roomCodeInput, networkError } = this.game;
+        const btns = BUTTONS.JOIN_ROOM;
+
+        ctx.fillStyle = '#000';
+        ctx.font = GAME_FONT;
+
+        // Intro image
+        if (assets.introImage) {
+            ctx.drawImage(assets.introImage, 139, 39);
+        }
+
+        // Title
+        ctx.fillText('JOIN ROOM', 270, 160);
+
+        // Room code input box
+        const inputBox = btns.codeInput;
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(inputBox.x, inputBox.y, inputBox.w, inputBox.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(inputBox.x + 0.5, inputBox.y + 0.5, inputBox.w, inputBox.h);
+
+        // Room code text with blinking cursor
+        ctx.fillStyle = '#000';
+        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        const displayCode = roomCodeInput.toUpperCase();
+        const codeX = inputBox.x + inputBox.w / 2 - ctx.measureText(displayCode).width / 2;
+        ctx.fillText(displayCode, codeX, inputBox.y + 26);
+
+        // Blinking cursor
+        if (roomCodeInput.length < 4 && Math.floor(Date.now() / 500) % 2 === 0) {
+            const cursorX = codeX + ctx.measureText(displayCode).width + 2;
+            ctx.fillRect(cursorX, inputBox.y + 8, 2, 20);
+        }
+
+        ctx.font = GAME_FONT;
+
+        // Instructions
         ctx.fillStyle = '#666';
-        ctx.fillText('(Mock UI - Phase 3)', 260, 330);
+        ctx.fillText('Enter 4-character room code', 235, inputBox.y + inputBox.h + 20);
+
+        // Error message
+        if (networkError) {
+            ctx.fillStyle = '#c00';
+            ctx.fillText(networkError, 280, inputBox.y + inputBox.h + 40);
+        }
+
+        // Join button (enabled only when 4 chars entered)
+        if (roomCodeInput.length === 4) {
+            this.drawButton(ctx, btns.join, 'JOIN');
+        } else {
+            // Disabled button
+            ctx.fillStyle = '#888';
+            ctx.fillRect(btns.join.x, btns.join.y, btns.join.w, btns.join.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(btns.join.x + 0.5, btns.join.y + 0.5, btns.join.w, btns.join.h);
+            ctx.fillStyle = '#000';
+            ctx.fillText('JOIN', btns.join.x + 30, btns.join.y + 20);
+        }
+
+        // Back link
+        this.drawBackButton(ctx, btns.back);
     }
 
     drawLobby(ctx) {
-        const { assets } = this.game;
+        const { assets, roomCode, lobbyPlayers, networkMode, networkError } = this.game;
         const btns = BUTTONS.LOBBY;
+        const isHost = networkMode === 'host';
 
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
@@ -453,28 +517,51 @@ export class GameRenderer {
         // Title
         ctx.fillText('LOBBY', 290, 160);
 
-        // Mock room code
-        ctx.fillText('Room Code: ABCD-1234', 245, 195);
+        // Room code (large, copyable)
+        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText(`Room: ${roomCode}`, 260, 195);
+        ctx.font = GAME_FONT;
 
         // Players list
-        ctx.fillText('Players:', 280, 225);
-        ctx.fillText('• You (Host)', 260, 245);
+        ctx.fillText('Players:', 250, 225);
+        let yOffset = 245;
+        for (const player of lobbyPlayers) {
+            const label = player.isHost ? `${player.name} (Host)` : player.name;
+            ctx.fillText(`- ${label}`, 260, yOffset);
+            yOffset += 18;
+        }
 
-        // Start button (disabled look for mock)
+        // Waiting for players message
+        if (lobbyPlayers.length < 2) {
+            ctx.fillStyle = '#666';
+            ctx.fillText('Waiting for opponent...', 250, yOffset + 10);
+            ctx.fillStyle = '#000';
+        }
+
+        // Error message
+        if (networkError) {
+            ctx.fillStyle = '#c00';
+            ctx.fillText(networkError, 260, 320);
+            ctx.fillStyle = '#000';
+        }
+
+        // Start button (only for host, enabled when 2 players)
         const start = btns.start;
-        ctx.fillStyle = '#888';
-        ctx.fillRect(start.x, start.y, start.w, start.h);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(start.x + 0.5, start.y + 0.5, start.w, start.h);
-        ctx.fillStyle = '#000';
-        ctx.fillText('Start', start.x + 30, start.y + 20);
+        if (isHost && lobbyPlayers.length >= 2) {
+            this.drawButton(ctx, start, 'Start');
+        } else {
+            // Disabled button
+            ctx.fillStyle = '#888';
+            ctx.fillRect(start.x, start.y, start.w, start.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(start.x + 0.5, start.y + 0.5, start.w, start.h);
+            ctx.fillStyle = '#000';
+            const label = isHost ? 'Start' : 'Waiting...';
+            ctx.fillText(label, start.x + (isHost ? 30 : 15), start.y + 20);
+        }
 
         // Leave link
         this.drawBackButton(ctx, btns.leave, 'Leave');
-
-        // Mock notice
-        ctx.fillStyle = '#666';
-        ctx.fillText('(Mock UI - Phase 3)', 260, 340);
     }
 
     drawRulesScreen(ctx) {
@@ -531,9 +618,9 @@ export class GameRenderer {
 
         // Blue player controls
         ctx.fillText('Blue Player', 89, 219);
-        ctx.fillText('use E, S, F keys', 89, 239);
+        ctx.fillText('use W, A, S, D keys', 89, 239);
         if (settings.dive) {
-            ctx.fillText('use D to dive', 89, 254);
+            ctx.fillText('use S to dive', 89, 254);
             ctx.fillText('use 1 to switch player', 89, 269);
         } else {
             ctx.fillText('use 1 to switch player', 89, 254);
@@ -657,8 +744,7 @@ export class GameRenderer {
             ctx.fillText('B to change background', 50, 415);
         } else {
             // Local multiplayer - show blue player controls
-            const diveKey = settings.dive ? ' D' : '';
-            ctx.fillText(`E S F${diveKey} and 1`, 50, 415);
+            ctx.fillText('W A S D and 1', 50, 415);
             ctx.fillText('B to change background', 200, 415);
         }
 

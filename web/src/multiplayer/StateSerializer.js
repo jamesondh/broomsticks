@@ -1,0 +1,78 @@
+// StateSerializer.js - Game state serialization for network sync
+
+/**
+ * Serialize game state into a compact object for network transfer.
+ * Only includes data needed for rendering on the client side.
+ *
+ * @param {Game} game - The game instance
+ * @returns {Object} Compact state object
+ */
+export function serialize(game) {
+    const players = game.players.map(player => ({
+        x: Math.round(player.x * 10) / 10,
+        y: Math.round(player.y * 10) / 10,
+        vx: Math.round(player.velocityX * 10) / 10,
+        vy: Math.round(player.velocityY * 10) / 10,
+        score: player.score,
+        model: player.model
+    }));
+
+    const balls = game.balls.map(ball => ({
+        x: Math.round(ball.x * 10) / 10,
+        y: Math.round(ball.y * 10) / 10,
+        vx: Math.round(ball.velocityX * 10) / 10,
+        vy: Math.round(ball.velocityY * 10) / 10,
+        alive: ball.alive !== false // GoldBall has alive property
+    }));
+
+    return {
+        players,
+        balls,
+        currBasket: game.currBasket,
+        timer: game.timer,
+        goldSpawned: game.goldSpawned
+    };
+}
+
+/**
+ * Apply received state to the game (client-side).
+ * Updates positions, velocities, and game state.
+ *
+ * @param {Game} game - The game instance
+ * @param {Object} state - State object from network
+ */
+export function apply(game, state) {
+    // Update players
+    state.players.forEach((playerState, index) => {
+        const player = game.players[index];
+        if (player) {
+            player.x = playerState.x;
+            player.y = playerState.y;
+            player.velocityX = playerState.vx;
+            player.velocityY = playerState.vy;
+            player.score = playerState.score;
+            if (player.model !== playerState.model) {
+                player.model = playerState.model;
+            }
+        }
+    });
+
+    // Update balls
+    state.balls.forEach((ballState, index) => {
+        const ball = game.balls[index];
+        if (ball) {
+            ball.x = ballState.x;
+            ball.y = ballState.y;
+            ball.velocityX = ballState.vx;
+            ball.velocityY = ballState.vy;
+            if (ball.isGoldBall) {
+                ball.alive = ballState.alive;
+            }
+        }
+    });
+
+    // Update game state
+    game.currBasket = state.currBasket;
+    game.timer = state.timer;
+    game.goldSpawned = state.goldSpawned;
+}

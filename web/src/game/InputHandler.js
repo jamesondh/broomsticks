@@ -3,6 +3,7 @@
 import {
     GameState,
     GameMode,
+    NetworkMode,
     AIDifficulty,
     OFFSET_X,
     OFFSET_Y,
@@ -40,11 +41,22 @@ export class InputHandler {
     handleKeyDown(e) {
         const key = e.key;
         const code = e.code;
-        const { player1, player2 } = this.game;
+        const { player1, player2, state, networkMode } = this.game;
+
+        // Handle JOIN_ROOM state for room code input
+        if (state === GameState.JOIN_ROOM) {
+            this.handleJoinRoomKeyDown(e);
+            return;
+        }
 
         // Prevent default for game keys
-        if (['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'Enter', 'e', 'E', 's', 'S', 'f', 'F', 'd', 'D', '1', 'b', 'B', 'p', 'P'].includes(key) ||
-            ['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown'].includes(code)) {
+        // P1: WASD + 1, P2: arrows + Enter, P3: IJKL + U, P4: Numpad 8/4/5/6 + 0
+        if (['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'Enter',
+             'w', 'W', 'a', 'A', 's', 'S', 'd', 'D', '1',
+             'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'u', 'U',
+             'b', 'B', 'p', 'P'].includes(key) ||
+            ['Escape', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown',
+             'Numpad8', 'Numpad4', 'Numpad5', 'Numpad6', 'Numpad0'].includes(code)) {
             e.preventDefault();
         }
 
@@ -59,44 +71,63 @@ export class InputHandler {
             this.game.backToggle = !this.game.backToggle;
         }
 
+        // Online client mode: send input to host instead of controlling local player
+        if (networkMode === NetworkMode.CLIENT && state === GameState.PLAYING) {
+            this.handleOnlineClientInput(key, code);
+            return;
+        }
+
         // Player 2 controls (arrow keys)
-        if (code === 'ArrowLeft') {
-            player2.left();
-        }
-        if (code === 'ArrowRight') {
-            player2.right();
-        }
-        if (code === 'ArrowUp') {
-            player2.up();
-        }
-        if (code === 'ArrowDown') {
-            player2.down();
-        }
-        if (key === 'Enter') {
-            player2.switchModel();
+        // In online HOST mode, player 2 is controlled by remote input
+        if (networkMode !== NetworkMode.HOST) {
+            if (code === 'ArrowLeft') {
+                player2.left();
+            }
+            if (code === 'ArrowRight') {
+                player2.right();
+            }
+            if (code === 'ArrowUp') {
+                player2.up();
+            }
+            if (code === 'ArrowDown') {
+                player2.down();
+            }
+            if (key === 'Enter') {
+                player2.switchModel();
+            }
         }
 
-        // Player 1 controls (only if not AI)
+        // Player 1 controls (WASD - only if not AI)
         if (!player1.isRobot) {
-            if (key === 'e' || key === 'E') {
-                player1.up();
-            }
-            if (key === 's' || key === 'S') {
-                player1.left();
-            }
-            if (key === 'f' || key === 'F') {
-                player1.right();
-            }
-            if (key === 'd' || key === 'D') {
-                player1.down();
-            }
-            if (key === '1') {
-                player1.switchModel();
-            }
+            if (key === 'w' || key === 'W') player1.up();
+            if (key === 'a' || key === 'A') player1.left();
+            if (key === 's' || key === 'S') player1.down();
+            if (key === 'd' || key === 'D') player1.right();
+            if (key === '1') player1.switchModel();
         }
 
-        // Escape key: pause/resume
-        if (key === 'Escape') {
+        // Player 3 controls (IJKL - only if exists and not AI)
+        const player3 = this.game.players[2];
+        if (player3 && !player3.isRobot) {
+            if (key === 'i' || key === 'I') player3.up();
+            if (key === 'j' || key === 'J') player3.left();
+            if (key === 'k' || key === 'K') player3.down();
+            if (key === 'l' || key === 'L') player3.right();
+            if (key === 'u' || key === 'U') player3.switchModel();
+        }
+
+        // Player 4 controls (Numpad - only if exists and not AI)
+        const player4 = this.game.players[3];
+        if (player4 && !player4.isRobot) {
+            if (code === 'Numpad8') player4.up();
+            if (code === 'Numpad4') player4.left();
+            if (code === 'Numpad5') player4.down();
+            if (code === 'Numpad6') player4.right();
+            if (code === 'Numpad0') player4.switchModel();
+        }
+
+        // Escape key: pause/resume (only in offline/local modes)
+        if (key === 'Escape' && networkMode === NetworkMode.OFFLINE) {
             if (this.game.state === GameState.PLAYING) {
                 this.game.pauseTime = Date.now();
                 this.game.state = GameState.PAUSED;
@@ -104,6 +135,58 @@ export class InputHandler {
                 this.game.startTime += Date.now() - this.game.pauseTime;
                 this.game.state = GameState.PLAYING;
             }
+        }
+    }
+
+    // Handle keyboard input for JOIN_ROOM state (room code entry)
+    handleJoinRoomKeyDown(e) {
+        const key = e.key;
+
+        // Valid room code characters
+        const validChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+        if (key === 'Backspace') {
+            e.preventDefault();
+            if (this.game.roomCodeInput.length > 0) {
+                this.game.roomCodeInput = this.game.roomCodeInput.slice(0, -1);
+                this.game.networkError = null;
+            }
+        } else if (key === 'Enter') {
+            e.preventDefault();
+            if (this.game.roomCodeInput.length === 4) {
+                this.game.joinRoom(this.game.roomCodeInput);
+            }
+        } else if (key === 'Escape') {
+            e.preventDefault();
+            this.game.roomCodeInput = '';
+            this.game.networkError = null;
+            this.game.state = GameState.PRIVATE_ROOM_MENU;
+        } else if (key.length === 1) {
+            const upperKey = key.toUpperCase();
+            if (validChars.includes(upperKey) && this.game.roomCodeInput.length < 4) {
+                e.preventDefault();
+                this.game.roomCodeInput += upperKey;
+                this.game.networkError = null;
+            }
+        }
+    }
+
+    // Handle input for online client mode - send to host
+    handleOnlineClientInput(key, code) {
+        if (!this.game.networkManager) return;
+
+        // Track current input state
+        const input = {
+            left: code === 'ArrowLeft',
+            right: code === 'ArrowRight',
+            up: code === 'ArrowUp',
+            down: code === 'ArrowDown',
+            switch: key === 'Enter'
+        };
+
+        // Only send if there's actual input
+        if (input.left || input.right || input.up || input.down || input.switch) {
+            this.game.networkManager.sendInput(input);
         }
     }
 
@@ -169,6 +252,10 @@ export class InputHandler {
 
             case GameState.PRIVATE_ROOM_MENU:
                 this.handlePrivateRoomMenuClick(x, y);
+                break;
+
+            case GameState.JOIN_ROOM:
+                this.handleJoinRoomClick(x, y);
                 break;
 
             case GameState.LOBBY:
@@ -459,12 +546,13 @@ export class InputHandler {
 
         if (this.hitTest(btns.createRoom, x, y)) {
             this.game.assets.playSound('pop');
-            this.game.state = GameState.LOBBY;
+            this.game.createRoom();
         }
         if (this.hitTest(btns.joinRoom, x, y)) {
             this.game.assets.playSound('pop');
-            // In Phase 3, this would show a room code input
-            this.game.state = GameState.LOBBY;
+            this.game.roomCodeInput = '';
+            this.game.networkError = null;
+            this.game.state = GameState.JOIN_ROOM;
         }
         if (this.hitTest(btns.back, x, y)) {
             this.game.assets.playSound('pop');
@@ -472,14 +560,40 @@ export class InputHandler {
         }
     }
 
+    handleJoinRoomClick(x, y) {
+        const btns = BUTTONS.JOIN_ROOM;
+
+        // Join button (only if 4 chars entered)
+        if (this.hitTest(btns.join, x, y) && this.game.roomCodeInput.length === 4) {
+            this.game.assets.playSound('pop');
+            this.game.joinRoom(this.game.roomCodeInput);
+        }
+
+        // Back button
+        if (this.hitTest(btns.back, x, y)) {
+            this.game.assets.playSound('pop');
+            this.game.roomCodeInput = '';
+            this.game.networkError = null;
+            this.game.state = GameState.PRIVATE_ROOM_MENU;
+        }
+    }
+
     handleLobbyClick(x, y) {
         const btns = BUTTONS.LOBBY;
+        const { networkMode, lobbyPlayers } = this.game;
 
-        // Start button is disabled in mock UI
-        // if (this.hitTest(btns.start, x, y)) { ... }
+        // Start button (only for host with 2 players)
+        if (this.hitTest(btns.start, x, y)) {
+            if (networkMode === NetworkMode.HOST && lobbyPlayers.length >= 2) {
+                this.game.assets.playSound('ding');
+                this.game.requestStartGame();
+            }
+        }
 
+        // Leave button
         if (this.hitTest(btns.leave, x, y)) {
             this.game.assets.playSound('pop');
+            this.game.leaveRoom();
             this.game.state = GameState.PRIVATE_ROOM_MENU;
         }
     }

@@ -1,0 +1,11 @@
+{
+  "name": "broomsticks-partykit",
+  "private": true,
+  "scripts": {
+    "dev": "partykit dev",
+    "deploy": "partykit deploy"
+  },
+  "dependencies": {
+    "partykit": "^0.0.111"
+  }
+}
