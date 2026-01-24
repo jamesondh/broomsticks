@@ -100,11 +100,18 @@ export class InputHandler {
 
         // Player 1 controls (WASD - only if not AI)
         if (!player1.isRobot) {
-            if (key === 'w' || key === 'W') player1.up();
-            if (key === 'a' || key === 'A') player1.left();
-            if (key === 's' || key === 'S') player1.down();
-            if (key === 'd' || key === 'D') player1.right();
-            if (key === '1') player1.switchModel();
+            let hostInput = null;
+
+            if (key === 'w' || key === 'W') { player1.up(); hostInput = { up: true }; }
+            if (key === 'a' || key === 'A') { player1.left(); hostInput = { left: true }; }
+            if (key === 's' || key === 'S') { player1.down(); hostInput = { down: true }; }
+            if (key === 'd' || key === 'D') { player1.right(); hostInput = { right: true }; }
+            if (key === '1') { player1.switchModel(); hostInput = { switch: true }; }
+
+            // Send host input to clients (for client-side prediction)
+            if (hostInput && networkMode === NetworkMode.HOST && this.game.networkManager) {
+                this.game.networkManager.sendHostInput(hostInput, this.game.simTick);
+            }
         }
 
         // Player 3 controls (IJKL - only if exists and not AI)
@@ -173,7 +180,7 @@ export class InputHandler {
         }
     }
 
-    // Handle input for online client mode - send to host
+    // Handle input for online client mode - send to host with tick
     handleOnlineClientInput(key, code) {
         if (!this.game.networkManager) return;
 
@@ -188,7 +195,7 @@ export class InputHandler {
 
         // Only send if there's actual input
         if (input.left || input.right || input.up || input.down || input.switch) {
-            this.game.networkManager.sendInput(input);
+            this.game.networkManager.sendInput(input, this.game.simTick);
         }
     }
 

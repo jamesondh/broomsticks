@@ -26,8 +26,13 @@ export class NetworkManager {
             right: false,
             up: false,
             down: false,
-            switch: false
+            switch: false,
+            tick: undefined
         };
+
+        // Buffered input events for prediction (Phase 6/7)
+        this.hostInputBuffer = [];   // Host inputs received by client
+        this.localInputBuffer = [];  // Local inputs sent by client (for Phase 7 resimulation)
 
         // Callbacks for game events
         this.onJoined = null;
@@ -155,6 +160,23 @@ export class NetworkManager {
                 // Host receives input from client
                 if (this.isHost) {
                     this.remoteInput = msg.input;
+                    this.remoteInput.tick = msg.tick;  // Preserve tick for acknowledgment
+                    console.log('[Net] Host received input tick:', msg.tick, msg.input);
+                }
+                break;
+
+            case 'hostInput':
+                // Client receives host input (for prediction)
+                if (!this.isHost) {
+                    this.hostInputBuffer.push({
+                        tick: msg.tick,
+                        input: msg.input
+                    });
+                    console.log('[Net] Client received hostInput tick:', msg.tick, msg.input, 'buffer size:', this.hostInputBuffer.length);
+                    // Keep buffer size reasonable (~2 seconds at 30Hz)
+                    if (this.hostInputBuffer.length > 60) {
+                        this.hostInputBuffer.shift();
+                    }
                 }
                 break;
 
@@ -195,10 +217,25 @@ export class NetworkManager {
         }
     }
 
-    // Client: send input state to host
-    sendInput(input) {
+    // Client: send input state to host with tick timestamp
+    sendInput(input, tick) {
         if (this.isHost) return;
-        this.send({ type: 'input', input: input });
+
+        // Save to local history (for Phase 7 resimulation)
+        this.localInputBuffer.push({ tick, input });
+        if (this.localInputBuffer.length > 60) {
+            this.localInputBuffer.shift();
+        }
+
+        console.log('[Net] Sending input tick:', tick, input);
+        this.send({ type: 'input', input, tick });
+    }
+
+    // Host: send input to clients (for client-side prediction)
+    sendHostInput(input, tick) {
+        if (!this.isHost) return;
+        console.log('[Net] Host sending hostInput tick:', tick, input);
+        this.send({ type: 'hostInput', input, tick });
     }
 
     // Host: get remote player's input

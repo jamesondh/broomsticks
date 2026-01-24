@@ -27,6 +27,7 @@ export function serialize(game) {
 
     return {
         tick: game.simTick,  // Simulation tick for sync
+        lastProcessedInputTick: game.lastProcessedInputTick || 0,  // For client input acknowledgment (Phase 7)
         players,
         balls,
         currBasket: game.currBasket,

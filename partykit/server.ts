@@ -10,7 +10,8 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 type ClientMessage =
   | { type: "join"; name: string }
   | { type: "ready" }
-  | { type: "input"; input: InputState }
+  | { type: "input"; input: InputState; tick: number }
+  | { type: "hostInput"; input: InputState; tick: number }
   | { type: "gameStart"; settings?: GameSettings }
   | { type: "settings"; settings: GameSettings }
   | { type: "state"; state: GameState }
@@ -36,7 +37,8 @@ type ServerMessage =
   | { type: "gameStart"; config: GameConfig }
   | { type: "settings"; settings: GameSettings }
   | { type: "state"; state: GameState }
-  | { type: "input"; playerId: string; input: InputState }
+  | { type: "input"; playerId: string; input: InputState; tick: number }
+  | { type: "hostInput"; input: InputState; tick: number }
   | { type: "error"; message: string };
 
 interface PlayerInfo {
@@ -157,7 +159,11 @@ export default class BroomsticksRoom implements Party.Server {
         break;
 
       case "input":
-        this.handleInput(sender, msg.input);
+        this.handleInput(sender, msg.input, msg.tick);
+        break;
+
+      case "hostInput":
+        this.handleHostInput(sender, msg.input, msg.tick);
         break;
 
       case "leave":
@@ -271,19 +277,35 @@ export default class BroomsticksRoom implements Party.Server {
     );
   }
 
-  handleInput(conn: Party.Connection, input: InputState) {
+  handleInput(conn: Party.Connection, input: InputState, tick: number) {
     // Clients send input to host
     if (conn.id === this.hostId) return;
 
-    // Forward input to host only
+    // Forward input to host only (preserving tick for acknowledgment)
     const hostConn = this.room.getConnection(this.hostId!);
     if (hostConn) {
       hostConn.send(JSON.stringify({
         type: "input",
         playerId: conn.id,
-        input: input
+        input: input,
+        tick: tick
       } as ServerMessage));
     }
+  }
+
+  handleHostInput(conn: Party.Connection, input: InputState, tick: number) {
+    // Only host can send host inputs
+    if (conn.id !== this.hostId) return;
+
+    // Forward to all clients (excluding host)
+    this.broadcast(
+      JSON.stringify({
+        type: "hostInput",
+        input: input,
+        tick: tick
+      } as ServerMessage),
+      [conn.id]
+    );
   }
 
   handleLeave(conn: Party.Connection) {

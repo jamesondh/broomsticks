@@ -97,6 +97,9 @@ export class Game {
         // Simulation tick counter (for network sync)
         this.simTick = 0;
 
+        // Last processed input tick (for client input acknowledgment in Phase 7)
+        this.lastProcessedInputTick = 0;
+
         // Deterministic random seed (for online mode sync)
         this.randomSeed = 0;
 
@@ -544,6 +547,12 @@ export class Game {
         if (this.networkMode !== NetworkMode.HOST || !this.networkManager) return;
 
         const input = this.networkManager.getRemoteInput();
+
+        // Track the tick of the last processed input (for ack in state broadcast)
+        if (input.tick !== undefined) {
+            this.lastProcessedInputTick = input.tick;
+            console.log('[Game] Processing remote input tick:', input.tick, 'lastProcessedInputTick:', this.lastProcessedInputTick);
+        }
 
         // Apply input to player 2 (the client's player)
         if (input.left) this.player2.left();
