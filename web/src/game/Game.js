@@ -55,6 +55,7 @@ export class Game {
         this.startTime = 0;
         this.goldSpawned = false;
         this.pauseTime = 0;
+        this.goldSpawnTick = 0;
 
         // Game objects (arrays for configurable counts)
         this.balls = [];
@@ -178,6 +179,10 @@ export class Game {
         this.startTime = Date.now();
         this.goldSpawned = false;
         this.simTick = 0;  // Reset tick counter
+
+        // Calculate gold spawn tick (for online mode)
+        // duration is in seconds, UPDATE_INTERVAL is 30ms
+        this.goldSpawnTick = Math.floor((this.settings.duration * 1000) / UPDATE_INTERVAL);
     }
 
     resetGameObjects() {
@@ -452,6 +457,7 @@ export class Game {
             this.settings.goldPoints = config.settings.goldPoints;
             this.settings.duration = config.settings.duration;
             this.settings.winScore = config.settings.winScore;
+            this.goldSpawnTick = config.settings.goldSpawnTick;
         }
 
         // Initialize game objects (now with synced settings)

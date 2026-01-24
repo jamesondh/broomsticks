@@ -1,6 +1,6 @@
 // PhysicsManager.js - Collision detection and scoring for Broomsticks
 
-import { COLLISION_THRESHOLD, GROUND_Y, LEFT_BASKET_X, RIGHT_BASKET_X, BASKET_Y } from './GameConstants.js';
+import { COLLISION_THRESHOLD, GROUND_Y, LEFT_BASKET_X, RIGHT_BASKET_X, BASKET_Y, NetworkMode } from './GameConstants.js';
 
 export class PhysicsManager {
     constructor(game) {
@@ -176,14 +176,23 @@ export class PhysicsManager {
     }
 
     checkGoldBallTimer() {
-        const { settings, balls, goldSpawned, startTime } = this.game;
+        const { settings, balls, goldSpawned } = this.game;
 
         if (settings.goldBalls === 0 || goldSpawned) return;
 
-        const elapsed = Date.now() - startTime;
-        const duration = settings.duration * 1000;
+        let shouldSpawn = false;
 
-        if (elapsed >= duration) {
+        // Online mode: use tick-based timing for determinism
+        if (this.game.networkMode !== NetworkMode.OFFLINE) {
+            shouldSpawn = this.game.simTick >= this.game.goldSpawnTick;
+        } else {
+            // Offline mode: keep wall-clock timing for original feel
+            const elapsed = Date.now() - this.game.startTime;
+            const duration = settings.duration * 1000;
+            shouldSpawn = elapsed >= duration;
+        }
+
+        if (shouldSpawn) {
             // Spawn gold balls
             for (const ball of balls) {
                 if (ball.isGoldBall && !ball.alive) {

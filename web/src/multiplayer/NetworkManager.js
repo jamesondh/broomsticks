@@ -240,7 +240,8 @@ export class NetworkManager {
             goldBalls: this.game.settings.goldBalls,
             goldPoints: this.game.settings.goldPoints,
             duration: this.game.settings.duration,
-            winScore: this.game.settings.winScore
+            winScore: this.game.settings.winScore,
+            goldSpawnTick: Math.floor((this.game.settings.duration * 1000) / 30)
         };
     }
 }
