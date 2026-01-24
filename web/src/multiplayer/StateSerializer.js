@@ -43,44 +43,65 @@ export function serialize(game) {
  *
  * @param {Game} game - The game instance
  * @param {Object} state - State object from network
+ * @param {boolean} skipPositionUpdate - If true, skip position/velocity updates (for client-side prediction)
  */
-export function apply(game, state) {
-    // Store received tick for reconciliation (Phase 7)
-    // For now, just log it for debugging
+export function apply(game, state, skipPositionUpdate = false) {
+    // Log tick comparison for debugging
     if (state.tick !== undefined) {
         console.log(`[State] Received tick ${state.tick}, local tick ${game.simTick}`);
     }
 
-    // Update players
-    state.players.forEach((playerState, index) => {
-        const player = game.players[index];
-        if (player) {
-            player.x = playerState.x;
-            player.y = playerState.y;
-            player.velocityX = playerState.vx;
-            player.velocityY = playerState.vy;
-            player.score = playerState.score;
-            if (player.model !== playerState.model) {
-                player.model = playerState.model;
+    if (!skipPositionUpdate) {
+        // Update players
+        state.players.forEach((playerState, index) => {
+            const player = game.players[index];
+            if (player) {
+                player.x = playerState.x;
+                player.y = playerState.y;
+                player.velocityX = playerState.vx;
+                player.velocityY = playerState.vy;
+                player.score = playerState.score;
+                if (player.model !== playerState.model) {
+                    player.model = playerState.model;
+                }
             }
-        }
-    });
+        });
 
-    // Update balls
-    state.balls.forEach((ballState, index) => {
-        const ball = game.balls[index];
-        if (ball) {
-            ball.x = ballState.x;
-            ball.y = ballState.y;
-            ball.velocityX = ballState.vx;
-            ball.velocityY = ballState.vy;
-            if (ball.isGoldBall) {
+        // Update balls
+        state.balls.forEach((ballState, index) => {
+            const ball = game.balls[index];
+            if (ball) {
+                ball.x = ballState.x;
+                ball.y = ballState.y;
+                ball.velocityX = ballState.vx;
+                ball.velocityY = ballState.vy;
+                if (ball.isGoldBall) {
+                    ball.alive = ballState.alive;
+                }
+            }
+        });
+    } else {
+        // Even when skipping positions, sync scores from host
+        state.players.forEach((playerState, index) => {
+            const player = game.players[index];
+            if (player) {
+                player.score = playerState.score;
+                if (player.model !== playerState.model) {
+                    player.model = playerState.model;
+                }
+            }
+        });
+
+        // Sync gold ball alive state (catch events)
+        state.balls.forEach((ballState, index) => {
+            const ball = game.balls[index];
+            if (ball && ball.isGoldBall) {
                 ball.alive = ballState.alive;
             }
-        }
-    });
+        });
+    }
 
-    // Update game state
+    // Always sync game state
     game.currBasket = state.currBasket;
     game.timer = state.timer;
     game.goldSpawned = state.goldSpawned;

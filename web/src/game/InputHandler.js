@@ -184,7 +184,6 @@ export class InputHandler {
     handleOnlineClientInput(key, code) {
         if (!this.game.networkManager) return;
 
-        // Track current input state
         const input = {
             left: code === 'ArrowLeft',
             right: code === 'ArrowRight',
@@ -193,7 +192,15 @@ export class InputHandler {
             switch: key === 'Enter'
         };
 
-        // Only send if there's actual input
+        // Apply locally for instant feedback (prediction)
+        const player = this.game.player2;  // Client controls player 2
+        if (input.left) player.left();
+        if (input.right) player.right();
+        if (input.up) player.up();
+        if (input.down) player.down();
+        if (input.switch) player.switchModel();
+
+        // Send to host
         if (input.left || input.right || input.up || input.down || input.switch) {
             this.game.networkManager.sendInput(input, this.game.simTick);
         }

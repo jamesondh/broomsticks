@@ -279,7 +279,7 @@ export class NetworkManager {
             duration: this.game.settings.duration,
             winScore: this.game.settings.winScore,
             goldSpawnTick: Math.floor((this.game.settings.duration * 1000) / 30),
-            seed: this.game.randomSeed || Math.floor(Math.random() * 0xFFFFFFFF)
+            seed: this.game.randomSeed  // No fallback - seed must be set before calling this
         };
     }
 }

@@ -194,7 +194,8 @@ export class Game {
         this.goldSpawnTick = Math.floor((this.settings.duration * 1000) / UPDATE_INTERVAL);
 
         // Generate deterministic random seed for online games (host only)
-        if (this.networkMode === NetworkMode.HOST) {
+        // Only generate if not already set (e.g., by requestStartGame for online games)
+        if (this.networkMode === NetworkMode.HOST && this.randomSeed === 0) {
             this.randomSeed = Math.floor(Math.random() * 0xFFFFFFFF);
         }
     }
@@ -259,32 +260,29 @@ export class Game {
         const elapsed = timestamp - this.lastUpdateTime;
 
         if (this.state === GameState.PLAYING) {
-            // Online client mode: skip physics, just render (state comes from host)
-            if (this.networkMode === NetworkMode.CLIENT) {
-                // Client only renders, state is applied via applyNetworkState
-                this.lastUpdateTime = timestamp;
-            } else {
-                // Offline or Host mode: run physics
-                if (elapsed >= this.updateInterval) {
-                    // Increment tick counter
-                    this.simTick++;
+            if (elapsed >= this.updateInterval) {
+                // Increment tick counter (both host and client)
+                this.simTick++;
 
+                if (this.networkMode === NetworkMode.HOST) {
                     // Host: apply remote player input before physics
-                    if (this.networkMode === NetworkMode.HOST) {
-                        this.applyRemoteInput();
-                    }
-
-                    this.physics.checkCollisions();
-                    this.physics.checkCaught();
-                    this.physics.checkGoldBallTimer();
-                    this.moveFlyers();
-
-                    if (this.timer > 0) {
-                        this.timer--;
-                    }
-
-                    this.lastUpdateTime = timestamp;
+                    this.applyRemoteInput();
+                } else if (this.networkMode === NetworkMode.CLIENT) {
+                    // Client: apply buffered host inputs for prediction
+                    this.applyBufferedHostInput();
                 }
+
+                // All modes run physics (Phase 6: enables client-side prediction)
+                this.physics.checkCollisions();
+                this.physics.checkCaught();
+                this.physics.checkGoldBallTimer();
+                this.moveFlyers();
+
+                if (this.timer > 0) {
+                    this.timer--;
+                }
+
+                this.lastUpdateTime = timestamp;
             }
         } else {
             this.lastUpdateTime = timestamp;
@@ -512,6 +510,9 @@ export class Game {
 
     requestStartGame() {
         if (this.networkManager && this.networkMode === NetworkMode.HOST) {
+            // Generate seed now so it's included in the gameStart message
+            this.randomSeed = Math.floor(Math.random() * 0xFFFFFFFF);
+            console.log('[Game] Generated random seed:', this.randomSeed);
             this.networkManager.requestGameStart();
         }
     }
@@ -520,7 +521,15 @@ export class Game {
     applyNetworkState(state) {
         if (this.networkMode !== NetworkMode.CLIENT) return;
 
-        const { gameState } = apply(this, state);
+        // Phase 6: Skip position updates, let client predict
+        // Phase 7 will add reconciliation
+        const { gameState, tick } = apply(this, state, true);
+
+        // Log tick drift for debugging
+        const drift = this.simTick - tick;
+        if (Math.abs(drift) > 5) {
+            console.log(`[Client] Tick drift: ${drift} (local: ${this.simTick}, server: ${tick})`);
+        }
 
         // Track if host paused the game
         if (gameState === GameState.PAUSED) {
@@ -562,6 +571,26 @@ export class Game {
         if (input.switch) {
             this.player2.switchModel();
             this.networkManager.clearRemoteInputSwitch();
+        }
+    }
+
+    // Client: apply buffered host inputs for prediction (Phase 6)
+    applyBufferedHostInput() {
+        if (this.networkMode !== NetworkMode.CLIENT || !this.networkManager) return;
+
+        const buffer = this.networkManager.hostInputBuffer;
+
+        // Process inputs up to current tick
+        while (buffer.length > 0 && buffer[0].tick <= this.simTick) {
+            const event = buffer.shift();
+            const input = event.input;
+
+            // Apply to player 1 (host's player)
+            if (input.left) this.player1.left();
+            if (input.right) this.player1.right();
+            if (input.up) this.player1.up();
+            if (input.down) this.player1.down();
+            if (input.switch) this.player1.switchModel();
         }
     }
 }
