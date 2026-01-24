@@ -93,6 +93,9 @@ export class Game {
         this.networkError = null;
         this.hostPaused = false;  // Track if game was paused by host (for client UI)
 
+        // Simulation tick counter (for network sync)
+        this.simTick = 0;
+
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
     }
@@ -174,6 +177,7 @@ export class Game {
         this.player2.score = 0;
         this.startTime = Date.now();
         this.goldSpawned = false;
+        this.simTick = 0;  // Reset tick counter
     }
 
     resetGameObjects() {
@@ -243,6 +247,9 @@ export class Game {
             } else {
                 // Offline or Host mode: run physics
                 if (elapsed >= this.updateInterval) {
+                    // Increment tick counter
+                    this.simTick++;
+
                     // Host: apply remote player input before physics
                     if (this.networkMode === NetworkMode.HOST) {
                         this.applyRemoteInput();

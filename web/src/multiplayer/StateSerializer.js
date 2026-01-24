@@ -26,6 +26,7 @@ export function serialize(game) {
     }));
 
     return {
+        tick: game.simTick,  // Simulation tick for sync
         players,
         balls,
         currBasket: game.currBasket,
@@ -43,6 +44,12 @@ export function serialize(game) {
  * @param {Object} state - State object from network
  */
 export function apply(game, state) {
+    // Store received tick for reconciliation (Phase 7)
+    // For now, just log it for debugging
+    if (state.tick !== undefined) {
+        console.log(`[State] Received tick ${state.tick}, local tick ${game.simTick}`);
+    }
+
     // Update players
     state.players.forEach((playerState, index) => {
         const player = game.players[index];
@@ -77,6 +84,6 @@ export function apply(game, state) {
     game.timer = state.timer;
     game.goldSpawned = state.goldSpawned;
 
-    // Return gameState for caller to handle (e.g., for hostPaused tracking)
-    return { gameState: state.gameState };
+    // Return gameState and tick for caller to handle
+    return { gameState: state.gameState, tick: state.tick };
 }
