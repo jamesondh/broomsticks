@@ -12,6 +12,10 @@ export class FlyingObject {
         this.velocityY = 0;
         this.speedFactor = 1.0;
 
+        // Previous position for render interpolation
+        this.prevX = x;
+        this.prevY = y;
+
         // Use configurable physics from game settings
         this.accel = game.settings.accel;
         this.maxSpeed = game.settings.maxSpeed;
@@ -19,6 +23,10 @@ export class FlyingObject {
     }
 
     move() {
+        // Save previous position for render interpolation
+        this.prevX = this.x;
+        this.prevY = this.y;
+
         this.x = Math.floor(this.x + this.velocityX * this.speedFactor);
         this.y = Math.floor(this.y + this.velocityY * this.speedFactor);
 

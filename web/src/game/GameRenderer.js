@@ -715,14 +715,112 @@ export class GameRenderer {
     drawGameplay(ctx) {
         const { players, balls } = this.game;
 
-        // Draw players
+        // Draw players with interpolation
         for (const player of players) {
-            player.draw(ctx);
+            const pos = this.getInterpolatedPos(player);
+            this.drawPlayerAt(ctx, player, pos.x, pos.y);
         }
 
-        // Draw balls
+        // Draw balls with interpolation
         for (const ball of balls) {
-            ball.draw(ctx);
+            if (!ball.alive) continue;
+            const pos = this.getInterpolatedPos(ball);
+            this.drawBallAt(ctx, ball, pos.x, pos.y);
+        }
+    }
+
+    /**
+     * Get interpolated position for smooth rendering between physics ticks.
+     * Online mode interpolates for smooth 60fps; offline preserves original chunky feel.
+     */
+    getInterpolatedPos(obj) {
+        const alpha = this.game.renderAlpha || 0;
+
+        // Skip interpolation for offline (preserve original chunky feel)
+        if (this.game.networkMode === NetworkMode.OFFLINE) {
+            return { x: obj.x, y: obj.y };
+        }
+
+        // Skip if prevX/prevY not set
+        if (obj.prevX === undefined || obj.prevY === undefined) {
+            return { x: obj.x, y: obj.y };
+        }
+
+        // Skip interpolation for large jumps (teleports, respawns, boundary wraps)
+        const dx = Math.abs(obj.x - obj.prevX);
+        const dy = Math.abs(obj.y - obj.prevY);
+        if (dx > 50 || dy > 50) {
+            return { x: obj.x, y: obj.y };
+        }
+
+        return {
+            x: obj.prevX + (obj.x - obj.prevX) * alpha,
+            y: obj.prevY + (obj.y - obj.prevY) * alpha
+        };
+    }
+
+    /**
+     * Draw a player at a specific position (for interpolated rendering).
+     * Replicates Person.draw() logic but uses passed coordinates.
+     */
+    drawPlayerAt(ctx, player, x, y) {
+        // Subtract offset (11, 31) to convert game coords to offscreen coords
+        const drawX = x - 11;
+        const drawY = y - 31;
+
+        // Determine which direction sprite to use based on velocity
+        let hDir;
+        if (player.velocityX > 0) {
+            hDir = 0;
+        } else if (player.velocityX < 0) {
+            hDir = 1;
+        } else {
+            hDir = player.side;
+        }
+
+        // vDir: 0 = falling/neutral, 1 = rising
+        const vDir = player.velocityY >= 0 ? 0 : 1;
+
+        // Use model + 5 for green team (side 1)
+        const modelIndex = player.side === 0 ? player.model : player.model + 5;
+
+        const sprites = this.game.assets.playerImages;
+        if (sprites?.[modelIndex]?.[vDir]?.[hDir]) {
+            ctx.drawImage(sprites[modelIndex][vDir][hDir], drawX, drawY);
+        } else {
+            // Fallback: draw colored rectangle
+            ctx.fillStyle = player.side === 0 ? '#0080ff' : '#00a400';
+            ctx.fillRect(drawX, drawY, player.w, player.h);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(drawX + 0.5, drawY + 0.5, player.w, player.h);
+        }
+    }
+
+    /**
+     * Draw a ball at a specific position (for interpolated rendering).
+     * Replicates Ball.draw() logic but uses passed coordinates.
+     */
+    drawBallAt(ctx, ball, x, y) {
+        // Subtract offset (11, 31) to convert game coords to offscreen coords
+        const drawX = x - 11;
+        const drawY = y - 31;
+
+        if (this.game.assets.ballImages?.[ball.model]) {
+            ctx.drawImage(this.game.assets.ballImages[ball.model], drawX, drawY);
+        } else {
+            // Fallback: draw colored circle
+            ctx.beginPath();
+            ctx.arc(drawX + ball.w / 2, drawY + ball.h / 2, ball.w / 2, 0, Math.PI * 2);
+            let color;
+            switch (ball.model) {
+                case 0: color = '#ffff00'; break; // gold
+                case 1: color = '#000000'; break; // black
+                case 2: color = '#ff0000'; break; // red
+                default: color = '#ff0000';
+            }
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.closePath();
         }
     }
 

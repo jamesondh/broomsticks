@@ -58,6 +58,7 @@ All versions share the same core game model:
 Technical documentation lives in `docs/`:
 
 - `html5-simplified-port-mvp-plan.md` - 5-phase implementation plan for the web port (current)
+- `client-prediction-plan.md` - 8-phase plan for smooth online multiplayer (client-side prediction)
 - `html5-port-mvp-plan.md` - Original 8-phase plan (deprecated)
 - `gameplay-comparison.md` - Mechanics comparison across all three versions
 - `broomsticks1-java-variant-comparison.md` - Analysis of the 8 Java applet variants
@@ -215,4 +216,5 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
 - ✅ JOIN_ROOM screen with code input and blinking cursor
 - ✅ Lobby UI showing room code and player list
 - ✅ Game.js network integration (createRoom, joinRoom, applyRemoteInput)
+- ✅ Client-side prediction with rollback reconciliation (see `docs/client-prediction-plan.md`)
 - Pending: PartyKit deployment, Quick Match, 2v2 mode

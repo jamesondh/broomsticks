@@ -39,6 +39,7 @@ All versions share the same core architecture: `Person`, `Ball`, and `FlyingObje
 | Document | Description |
 |----------|-------------|
 | [HTML5 Port Plan](docs/html5-simplified-port-mvp-plan.md) | 5-phase implementation plan for the web port |
+| [Client Prediction Plan](docs/client-prediction-plan.md) | 8-phase plan for smooth online multiplayer |
 | [Gameplay Comparison](docs/gameplay-comparison.md) | Mechanics comparison across all three versions |
 | [Java Variant Comparison](docs/broomsticks1-java-variant-comparison.md) | Analysis of the 8 Java applet variants |
 | [Java vs C++ Comparison](docs/broomsticks-1-vs-2-comparison.md) | Technical comparison between versions |
@@ -84,6 +85,7 @@ The main app (`web/src/game/`) is a heavily modified version of the Advanced por
   - Host-authoritative network model (30ms physics, 20Hz broadcast)
   - Room code input UI with 4-character codes
   - NetworkManager, StateSerializer, random player names
+  - Client-side prediction with rollback reconciliation (see [plan](docs/client-prediction-plan.md))
 
 **Up next:** Deploy PartyKit server, 4-player local mode, Quick Match
 

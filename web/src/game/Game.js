@@ -97,6 +97,9 @@ export class Game {
         // Simulation tick counter (for network sync)
         this.simTick = 0;
 
+        // Render interpolation alpha (0.0 to 1.0, fraction of physics tick elapsed)
+        this.renderAlpha = 0;
+
         // Last processed input tick (for client input acknowledgment in Phase 7)
         this.lastProcessedInputTick = 0;
 
@@ -266,6 +269,10 @@ export class Game {
 
         const elapsed = timestamp - this.lastUpdateTime;
 
+        // Calculate interpolation alpha for smooth rendering (0.0 to 1.0)
+        // This represents how far we are between physics ticks
+        this.renderAlpha = Math.min(elapsed / this.updateInterval, 1.0);
+
         if (this.state === GameState.PLAYING) {
             if (elapsed >= this.updateInterval) {
                 // Increment tick counter (both host and client)
@@ -293,6 +300,9 @@ export class Game {
                 }
 
                 this.lastUpdateTime = timestamp;
+
+                // Reset alpha after physics step (next frame starts fresh)
+                this.renderAlpha = 0;
             }
         } else {
             this.lastUpdateTime = timestamp;
@@ -682,7 +692,6 @@ export class Game {
 
         if (predictedIndex === -1) {
             // No matching tick in history - too far behind, hard reset
-            console.log(`[Reconcile] No history for tick ${serverTick}, hard reset`);
             this.hardResetToState(authoritativeState);
             return;
         }
@@ -697,7 +706,6 @@ export class Game {
         }
 
         // Divergence detected - need to rollback and resimulate
-        console.log(`[Reconcile] Divergence ${divergence.toFixed(2)} at tick ${serverTick}, resimulating`);
 
         const targetTick = this.simTick;
 
@@ -767,6 +775,9 @@ export class Game {
                 player.velocityY = ps.vy;
                 player.score = ps.score;
                 player.model = ps.model;
+                // Set prevX/prevY to prevent interpolation artifacts after reconciliation
+                player.prevX = ps.x;
+                player.prevY = ps.y;
             }
         });
 
@@ -778,6 +789,9 @@ export class Game {
                 ball.y = bs.y;
                 ball.velocityX = bs.vx;
                 ball.velocityY = bs.vy;
+                // Set prevX/prevY to prevent interpolation artifacts after reconciliation
+                ball.prevX = bs.x;
+                ball.prevY = bs.y;
                 if (ball.isGoldBall) {
                     ball.alive = bs.alive;
                 }

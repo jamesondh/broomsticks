@@ -160,7 +160,6 @@ export class NetworkManager {
                     if (this.remoteInputQueue.length > 90) {
                         this.remoteInputQueue.shift();
                     }
-                    console.log('[Net] Host received input tick:', msg.tick, msg.input);
                 }
                 break;
 
@@ -170,7 +169,6 @@ export class NetworkManager {
                     const event = { tick: msg.tick, input: msg.input };
                     this.hostInputBuffer.push(event);
                     this.hostInputHistory.push(event);  // Permanent history for resimulation
-                    console.log('[Net] Client received hostInput tick:', msg.tick, msg.input, 'buffer size:', this.hostInputBuffer.length);
                     // Keep buffer sizes reasonable (~3 seconds at 30Hz)
                     if (this.hostInputBuffer.length > 60) {
                         this.hostInputBuffer.shift();
@@ -228,14 +226,12 @@ export class NetworkManager {
             this.localInputBuffer.shift();
         }
 
-        console.log('[Net] Sending input tick:', tick, input);
         this.send({ type: 'input', input, tick });
     }
 
     // Host: send input to clients (for client-side prediction)
     sendHostInput(input, tick) {
         if (!this.isHost) return;
-        console.log('[Net] Host sending hostInput tick:', tick, input);
         this.send({ type: 'hostInput', input, tick });
     }
 
