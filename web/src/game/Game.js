@@ -97,6 +97,9 @@ export class Game {
         // Simulation tick counter (for network sync)
         this.simTick = 0;
 
+        // Deterministic random seed (for online mode sync)
+        this.randomSeed = 0;
+
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
     }
@@ -140,6 +143,7 @@ export class Game {
         for (let i = 0; i < redBalls; i++) {
             const ball = new Ball(this, 2, midW, midH - 50 + i * 30);
             ball.catchable = true;
+            ball.entityId = i;
             this.balls.push(ball);
             this.redBalls.push(ball);
         }
@@ -148,12 +152,14 @@ export class Game {
         for (let i = 0; i < blackBalls; i++) {
             const ball = new Ball(this, 1, midW, midH + 50 + i * 30);
             ball.speedFactor = 1.5;
+            ball.entityId = redBalls + i;
             this.balls.push(ball);
         }
 
         // Create gold balls (special, initially hidden) - model 0
         for (let i = 0; i < goldBalls; i++) {
             const ball = new GoldBall(this, midW, 100 + i * 30);
+            ball.entityId = redBalls + blackBalls + i;
             this.balls.push(ball);
         }
 
@@ -183,6 +189,11 @@ export class Game {
         // Calculate gold spawn tick (for online mode)
         // duration is in seconds, UPDATE_INTERVAL is 30ms
         this.goldSpawnTick = Math.floor((this.settings.duration * 1000) / UPDATE_INTERVAL);
+
+        // Generate deterministic random seed for online games (host only)
+        if (this.networkMode === NetworkMode.HOST) {
+            this.randomSeed = Math.floor(Math.random() * 0xFFFFFFFF);
+        }
     }
 
     resetGameObjects() {
@@ -458,6 +469,7 @@ export class Game {
             this.settings.duration = config.settings.duration;
             this.settings.winScore = config.settings.winScore;
             this.goldSpawnTick = config.settings.goldSpawnTick;
+            this.randomSeed = config.settings.seed;
         }
 
         // Initialize game objects (now with synced settings)

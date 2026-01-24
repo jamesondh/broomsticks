@@ -2,6 +2,8 @@
 // Ported from Java Advanced version
 
 import { Ball } from './Ball.js';
+import { randInt } from './DeterministicRandom.js';
+import { NetworkMode } from './GameConstants.js';
 
 export class GoldBall extends Ball {
     constructor(game, x, y) {
@@ -23,12 +25,27 @@ export class GoldBall extends Ball {
         if (!this.alive) return;
 
         // Evasion AI: flee from players within 100px
-        for (const player of this.game.players) {
+        const players = this.game.players;
+        for (let i = 0; i < players.length; i++) {
+            const player = players[i];
             const dx = this.x - player.x;
             const dy = this.y - player.y;
 
             if (Math.abs(dx) < 100 && Math.abs(dy) < 100) {
-                const choice = Math.floor(Math.random() * this.smart);
+                let choice;
+                if (this.game.networkMode !== NetworkMode.OFFLINE) {
+                    // Online: deterministic random (channel 1+i for evasion per player)
+                    choice = randInt(
+                        this.game.randomSeed,
+                        this.game.simTick,
+                        this.entityId,
+                        1 + i,  // channel per player index
+                        this.smart
+                    );
+                } else {
+                    // Offline: original behavior
+                    choice = Math.floor(Math.random() * this.smart);
+                }
                 if (choice === 0) {
                     // Move away from player
                     if (player.x < this.x) this.right();

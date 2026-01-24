@@ -2,6 +2,8 @@
 // Ported from Ball.java with corrected model mapping
 
 import { FlyingObject } from './FlyingObject.js';
+import { randRange } from './DeterministicRandom.js';
+import { NetworkMode } from './GameConstants.js';
 
 export class Ball extends FlyingObject {
     constructor(game, model, x, y) {
@@ -13,6 +15,7 @@ export class Ball extends FlyingObject {
         this.alive = true;      // Whether ball is active/visible
         this.catchable = false; // Whether player can catch this ball
         this.isGoldBall = false;
+        this.entityId = 0;      // Set by Game.initGameObjects() for deterministic random
     }
 
     move() {
@@ -21,7 +24,21 @@ export class Ball extends FlyingObject {
         // Random movement: simulating Java's signed modulo behavior
         // Java's random.nextInt() % 20 produces -19 to 19, so 0,1,2 each have ~2.5% probability
         // We simulate this by using a larger range and only acting on specific values
-        const rand = Math.floor(Math.random() * 40) - 20; // -20 to 19
+        let rand;
+        if (this.game.networkMode !== NetworkMode.OFFLINE) {
+            // Online: deterministic random (channel 0 for ball wiggle)
+            rand = randRange(
+                this.game.randomSeed,
+                this.game.simTick,
+                this.entityId,
+                0,  // channel
+                -20,
+                19
+            );
+        } else {
+            // Offline: original behavior
+            rand = Math.floor(Math.random() * 40) - 20;
+        }
 
         if (rand === 0) {
             this.up();
