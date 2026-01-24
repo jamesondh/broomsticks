@@ -8,20 +8,21 @@
  * @returns {Object} Compact state object
  */
 export function serialize(game) {
+    // Use integer positions and fixed-point velocities (100x) for precise reconciliation
     const players = game.players.map(player => ({
-        x: Math.round(player.x * 10) / 10,
-        y: Math.round(player.y * 10) / 10,
-        vx: Math.round(player.velocityX * 10) / 10,
-        vy: Math.round(player.velocityY * 10) / 10,
+        x: Math.round(player.x),
+        y: Math.round(player.y),
+        vx: Math.round(player.velocityX * 100),
+        vy: Math.round(player.velocityY * 100),
         score: player.score,
         model: player.model
     }));
 
     const balls = game.balls.map(ball => ({
-        x: Math.round(ball.x * 10) / 10,
-        y: Math.round(ball.y * 10) / 10,
-        vx: Math.round(ball.velocityX * 10) / 10,
-        vy: Math.round(ball.velocityY * 10) / 10,
+        x: Math.round(ball.x),
+        y: Math.round(ball.y),
+        vx: Math.round(ball.velocityX * 100),
+        vy: Math.round(ball.velocityY * 100),
         alive: ball.alive !== false // GoldBall has alive property
     }));
 
@@ -52,14 +53,14 @@ export function apply(game, state, skipPositionUpdate = false) {
     }
 
     if (!skipPositionUpdate) {
-        // Update players
+        // Update players (decode fixed-point velocities)
         state.players.forEach((playerState, index) => {
             const player = game.players[index];
             if (player) {
                 player.x = playerState.x;
                 player.y = playerState.y;
-                player.velocityX = playerState.vx;
-                player.velocityY = playerState.vy;
+                player.velocityX = playerState.vx / 100;
+                player.velocityY = playerState.vy / 100;
                 player.score = playerState.score;
                 if (player.model !== playerState.model) {
                     player.model = playerState.model;
@@ -67,14 +68,14 @@ export function apply(game, state, skipPositionUpdate = false) {
             }
         });
 
-        // Update balls
+        // Update balls (decode fixed-point velocities)
         state.balls.forEach((ballState, index) => {
             const ball = game.balls[index];
             if (ball) {
                 ball.x = ballState.x;
                 ball.y = ballState.y;
-                ball.velocityX = ballState.vx;
-                ball.velocityY = ballState.vy;
+                ball.velocityX = ballState.vx / 100;
+                ball.velocityY = ballState.vy / 100;
                 if (ball.isGoldBall) {
                     ball.alive = ballState.alive;
                 }

@@ -100,8 +100,15 @@ export class Game {
         // Last processed input tick (for client input acknowledgment in Phase 7)
         this.lastProcessedInputTick = 0;
 
+        // Client: last authoritative tick applied (ignore duplicates/out-of-order)
+        this.lastAuthoritativeTick = -1;
+
         // Deterministic random seed (for online mode sync)
         this.randomSeed = 0;
+
+        // State history for rollback reconciliation (online client only)
+        this.stateHistory = [];
+        this.maxHistoryLength = 90;  // ~3 seconds at 30 ticks/sec
 
         // Bind game loop
         this.gameLoop = this.gameLoop.bind(this);
@@ -277,6 +284,9 @@ export class Game {
                 this.physics.checkCaught();
                 this.physics.checkGoldBallTimer();
                 this.moveFlyers();
+
+                // Save state for rollback reconciliation (client only)
+                this.saveStateToHistory();
 
                 if (this.timer > 0) {
                     this.timer--;
@@ -517,30 +527,56 @@ export class Game {
         }
     }
 
-    // Client: apply received state
+    // Client: apply received state with rollback reconciliation
     applyNetworkState(state) {
         if (this.networkMode !== NetworkMode.CLIENT) return;
 
-        // Phase 6: Skip position updates, let client predict
-        // Phase 7 will add reconciliation
-        const { gameState, tick } = apply(this, state, true);
-
-        // Log tick drift for debugging
-        const drift = this.simTick - tick;
-        if (Math.abs(drift) > 5) {
-            console.log(`[Client] Tick drift: ${drift} (local: ${this.simTick}, server: ${tick})`);
+        // Host broadcasts at 20Hz; duplicates/out-of-order snapshots are possible.
+        // Re-applying the same tick repeatedly causes visible jitter.
+        if (typeof state.tick === 'number' && state.tick <= this.lastAuthoritativeTick) {
+            return;
+        }
+        if (typeof state.tick === 'number') {
+            this.lastAuthoritativeTick = state.tick;
         }
 
-        // Track if host paused the game
+        // Phase 7: Apply scores/model immediately, reconcile positions
+        const { gameState, tick } = apply(this, state, true);
+
+        // Build authoritative state for reconciliation (decode fixed-point velocities)
+        const authoritativeState = {
+            tick: state.tick,
+            players: state.players.map(p => ({
+                x: p.x,
+                y: p.y,
+                vx: p.vx / 100,
+                vy: p.vy / 100,
+                score: p.score,
+                model: p.model
+            })),
+            balls: state.balls.map(b => ({
+                x: b.x,
+                y: b.y,
+                vx: b.vx / 100,
+                vy: b.vy / 100,
+                alive: b.alive
+            })),
+            currBasket: state.currBasket,
+            timer: state.timer,
+            goldSpawned: state.goldSpawned
+        };
+
+        // Reconcile with server state
+        this.reconcileWithServer(authoritativeState);
+
+        // Handle game state changes
         if (gameState === GameState.PAUSED) {
             this.hostPaused = true;
             this.state = GameState.PAUSED;
         } else if (gameState === GameState.PLAYING) {
-            // Host resumed - clear hostPaused and ensure we're playing
             this.hostPaused = false;
             this.state = GameState.PLAYING;
         } else if (gameState === GameState.GAME_OVER) {
-            // Game over - sync state
             this.hostPaused = false;
             this.state = GameState.GAME_OVER;
         }
@@ -555,22 +591,23 @@ export class Game {
     applyRemoteInput() {
         if (this.networkMode !== NetworkMode.HOST || !this.networkManager) return;
 
-        const input = this.networkManager.getRemoteInput();
+        const events = this.networkManager.consumeRemoteInputs();
+        if (events.length === 0) return;
 
-        // Track the tick of the last processed input (for ack in state broadcast)
-        if (input.tick !== undefined) {
-            this.lastProcessedInputTick = input.tick;
-            console.log('[Game] Processing remote input tick:', input.tick, 'lastProcessedInputTick:', this.lastProcessedInputTick);
-        }
+        // Tap-based controls: apply each input event once.
+        for (const event of events) {
+            const input = event.input;
 
-        // Apply input to player 2 (the client's player)
-        if (input.left) this.player2.left();
-        if (input.right) this.player2.right();
-        if (input.up) this.player2.up();
-        if (input.down) this.player2.down();
-        if (input.switch) {
-            this.player2.switchModel();
-            this.networkManager.clearRemoteInputSwitch();
+            // Track the tick of the last processed input (for ack in state broadcast)
+            if (event.tick !== undefined) {
+                this.lastProcessedInputTick = Math.max(this.lastProcessedInputTick, event.tick);
+            }
+
+            if (input.left) this.player2.left();
+            if (input.right) this.player2.right();
+            if (input.up) this.player2.up();
+            if (input.down) this.player2.down();
+            if (input.switch) this.player2.switchModel();
         }
     }
 
@@ -586,6 +623,205 @@ export class Game {
             const input = event.input;
 
             // Apply to player 1 (host's player)
+            if (input.left) this.player1.left();
+            if (input.right) this.player1.right();
+            if (input.up) this.player1.up();
+            if (input.down) this.player1.down();
+            if (input.switch) this.player1.switchModel();
+        }
+    }
+
+    // ===== Rollback Reconciliation Methods (Phase 7) =====
+
+    /**
+     * Save current state to history for later comparison.
+     * Only saves when in CLIENT mode.
+     */
+    saveStateToHistory() {
+        if (this.networkMode !== NetworkMode.CLIENT) return;
+
+        const snapshot = {
+            tick: this.simTick,
+            players: this.players.map(p => ({
+                x: p.x,
+                y: p.y,
+                vx: p.velocityX,
+                vy: p.velocityY,
+                score: p.score,
+                model: p.model
+            })),
+            balls: this.balls.map(b => ({
+                x: b.x,
+                y: b.y,
+                vx: b.velocityX,
+                vy: b.velocityY,
+                alive: b.alive !== false
+            })),
+            currBasket: this.currBasket,
+            timer: this.timer,
+            goldSpawned: this.goldSpawned
+        };
+
+        this.stateHistory.push(snapshot);
+
+        // Trim history to prevent memory growth
+        if (this.stateHistory.length > this.maxHistoryLength) {
+            this.stateHistory.shift();
+        }
+    }
+
+    /**
+     * Reconcile local prediction with authoritative server state.
+     * If divergence exceeds threshold, restore and resimulate.
+     */
+    reconcileWithServer(authoritativeState) {
+        const serverTick = authoritativeState.tick;
+
+        // Find our predicted state at the server's tick
+        const predictedIndex = this.stateHistory.findIndex(s => s.tick === serverTick);
+
+        if (predictedIndex === -1) {
+            // No matching tick in history - too far behind, hard reset
+            console.log(`[Reconcile] No history for tick ${serverTick}, hard reset`);
+            this.hardResetToState(authoritativeState);
+            return;
+        }
+
+        const predictedState = this.stateHistory[predictedIndex];
+        const divergence = this.calculateDivergence(predictedState, authoritativeState);
+
+        if (divergence < 1.0) {
+            // Prediction was accurate enough, just trim old history
+            this.stateHistory = this.stateHistory.slice(predictedIndex + 1);
+            return;
+        }
+
+        // Divergence detected - need to rollback and resimulate
+        console.log(`[Reconcile] Divergence ${divergence.toFixed(2)} at tick ${serverTick}, resimulating`);
+
+        const targetTick = this.simTick;
+
+        // Restore to authoritative state
+        this.restoreState(authoritativeState);
+        this.simTick = serverTick;
+
+        // Rebuild history from corrected baseline to avoid "No history" loops.
+        this.stateHistory = [];
+        this.saveStateToHistory();
+
+        // Resimulate from serverTick+1 to targetTick
+        while (this.simTick < targetTick) {
+            this.simTick++;
+
+            // Apply inputs for this tick
+            this.applyInputsForTick(this.simTick);
+
+            // Run physics
+            this.physics.checkCollisions();
+            this.physics.checkCaught();
+            this.physics.checkGoldBallTimer();
+            this.moveFlyers();
+
+            this.saveStateToHistory();
+        }
+    }
+
+    /**
+     * Calculate maximum position divergence between predicted and authoritative states.
+     */
+    calculateDivergence(predicted, authoritative) {
+        let maxDelta = 0;
+
+        // Compare player positions
+        for (let i = 0; i < predicted.players.length && i < authoritative.players.length; i++) {
+            const pp = predicted.players[i];
+            const ap = authoritative.players[i];
+            const dx = Math.abs(pp.x - ap.x);
+            const dy = Math.abs(pp.y - ap.y);
+            maxDelta = Math.max(maxDelta, dx, dy);
+        }
+
+        // Compare ball positions
+        for (let i = 0; i < predicted.balls.length && i < authoritative.balls.length; i++) {
+            const pb = predicted.balls[i];
+            const ab = authoritative.balls[i];
+            const dx = Math.abs(pb.x - ab.x);
+            const dy = Math.abs(pb.y - ab.y);
+            maxDelta = Math.max(maxDelta, dx, dy);
+        }
+
+        return maxDelta;
+    }
+
+    /**
+     * Restore game entities to a snapshot state.
+     */
+    restoreState(state) {
+        // Restore players
+        state.players.forEach((ps, index) => {
+            const player = this.players[index];
+            if (player) {
+                player.x = ps.x;
+                player.y = ps.y;
+                player.velocityX = ps.vx;
+                player.velocityY = ps.vy;
+                player.score = ps.score;
+                player.model = ps.model;
+            }
+        });
+
+        // Restore balls
+        state.balls.forEach((bs, index) => {
+            const ball = this.balls[index];
+            if (ball) {
+                ball.x = bs.x;
+                ball.y = bs.y;
+                ball.velocityX = bs.vx;
+                ball.velocityY = bs.vy;
+                if (ball.isGoldBall) {
+                    ball.alive = bs.alive;
+                }
+            }
+        });
+
+        // Restore game state
+        this.currBasket = state.currBasket;
+        this.timer = state.timer;
+        this.goldSpawned = state.goldSpawned;
+    }
+
+    /**
+     * Full reset to authoritative state (when too far out of sync).
+     */
+    hardResetToState(state) {
+        this.restoreState(state);
+        this.simTick = state.tick;
+        // Seed history at the authoritative tick so subsequent snapshots can reconcile.
+        this.stateHistory = [];
+        this.saveStateToHistory();
+    }
+
+    /**
+     * Apply stored inputs for a specific tick during resimulation.
+     */
+    applyInputsForTick(tick) {
+        if (!this.networkManager) return;
+
+        // Apply local inputs (client's own inputs)
+        const localInputs = this.networkManager.localInputBuffer.filter(e => e.tick === tick);
+        for (const event of localInputs) {
+            const input = event.input;
+            if (input.left) this.player2.left();
+            if (input.right) this.player2.right();
+            if (input.up) this.player2.up();
+            if (input.down) this.player2.down();
+            if (input.switch) this.player2.switchModel();
+        }
+
+        // Apply host inputs
+        const hostInputs = this.networkManager.hostInputHistory.filter(e => e.tick === tick);
+        for (const event of hostInputs) {
+            const input = event.input;
             if (input.left) this.player1.left();
             if (input.right) this.player1.right();
             if (input.up) this.player1.up();

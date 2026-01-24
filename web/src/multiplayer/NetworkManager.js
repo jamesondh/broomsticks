@@ -20,18 +20,14 @@ export class NetworkManager {
         // State broadcast interval (host only)
         this.broadcastInterval = null;
 
-        // Remote player input (host only)
-        this.remoteInput = {
-            left: false,
-            right: false,
-            up: false,
-            down: false,
-            switch: false,
-            tick: undefined
-        };
+        // Remote player input events (host only)
+        // Note: Inputs are tap-based (impulses), not held state.
+        // We treat each received message as a one-shot event to apply once.
+        this.remoteInputQueue = [];
 
         // Buffered input events for prediction (Phase 6/7)
-        this.hostInputBuffer = [];   // Host inputs received by client
+        this.hostInputBuffer = [];   // Host inputs received by client (consumed during prediction)
+        this.hostInputHistory = [];  // Permanent host input history for resimulation
         this.localInputBuffer = [];  // Local inputs sent by client (for Phase 7 resimulation)
 
         // Callbacks for game events
@@ -159,8 +155,11 @@ export class NetworkManager {
             case 'input':
                 // Host receives input from client
                 if (this.isHost) {
-                    this.remoteInput = msg.input;
-                    this.remoteInput.tick = msg.tick;  // Preserve tick for acknowledgment
+                    this.remoteInputQueue.push({ tick: msg.tick, input: msg.input });
+                    // Keep queue reasonable (~3 seconds worth of keydowns)
+                    if (this.remoteInputQueue.length > 90) {
+                        this.remoteInputQueue.shift();
+                    }
                     console.log('[Net] Host received input tick:', msg.tick, msg.input);
                 }
                 break;
@@ -168,14 +167,16 @@ export class NetworkManager {
             case 'hostInput':
                 // Client receives host input (for prediction)
                 if (!this.isHost) {
-                    this.hostInputBuffer.push({
-                        tick: msg.tick,
-                        input: msg.input
-                    });
+                    const event = { tick: msg.tick, input: msg.input };
+                    this.hostInputBuffer.push(event);
+                    this.hostInputHistory.push(event);  // Permanent history for resimulation
                     console.log('[Net] Client received hostInput tick:', msg.tick, msg.input, 'buffer size:', this.hostInputBuffer.length);
-                    // Keep buffer size reasonable (~2 seconds at 30Hz)
+                    // Keep buffer sizes reasonable (~3 seconds at 30Hz)
                     if (this.hostInputBuffer.length > 60) {
                         this.hostInputBuffer.shift();
+                    }
+                    if (this.hostInputHistory.length > 90) {
+                        this.hostInputHistory.shift();
                     }
                 }
                 break;
@@ -223,7 +224,7 @@ export class NetworkManager {
 
         // Save to local history (for Phase 7 resimulation)
         this.localInputBuffer.push({ tick, input });
-        if (this.localInputBuffer.length > 60) {
+        if (this.localInputBuffer.length > 90) {
             this.localInputBuffer.shift();
         }
 
@@ -239,13 +240,11 @@ export class NetworkManager {
     }
 
     // Host: get remote player's input
-    getRemoteInput() {
-        return this.remoteInput;
-    }
-
-    // Host: clear remote input (after processing)
-    clearRemoteInputSwitch() {
-        this.remoteInput.switch = false;
+    consumeRemoteInputs() {
+        if (!this.isHost) return [];
+        const inputs = this.remoteInputQueue;
+        this.remoteInputQueue = [];
+        return inputs;
     }
 
     // Request game start (host only)
