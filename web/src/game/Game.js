@@ -755,8 +755,17 @@ export class Game {
         for (const event of events) {
             const input = event.input;
 
-            // Track the tick of the last processed input (for ack in state broadcast)
+            // Diagnostic 1B: Track tick spread and late client inputs
             if (event.tick !== undefined) {
+                // Record the spread between client tick and host tick
+                netDiag.recordClientInputTickSpread(event.tick, this.simTick);
+
+                // Check if input is late (arrived after host already simulated past that tick)
+                if (event.tick < this.simTick) {
+                    netDiag.recordLateClientInput(event.tick, this.simTick);
+                }
+
+                // Track the tick of the last processed input (for ack in state broadcast)
                 this.lastProcessedInputTick = Math.max(this.lastProcessedInputTick, event.tick);
             }
 

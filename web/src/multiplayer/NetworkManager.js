@@ -40,6 +40,11 @@ export class NetworkManager {
         this.onStateReceived = null;
         this.onSettingsReceived = null;
         this.onError = null;
+
+        // Ping/pong RTT tracking (Diagnostic 1A)
+        this.pingInterval = null;
+        this.pingId = 0;
+        this.pendingPings = new Map();  // id -> sendTime
     }
 
     // Generate a 4-character room code
@@ -72,6 +77,8 @@ export class NetworkManager {
             this.connected = true;
             // Send join message
             this.send({ type: 'join', name: playerName });
+            // Start ping interval for RTT measurement (Diagnostic 1A)
+            this.startPingInterval();
         };
 
         this.ws.onmessage = (event) => {
@@ -94,6 +101,7 @@ export class NetworkManager {
 
     disconnect() {
         this.stopBroadcast();
+        this.stopPingInterval();
         if (this.ws) {
             this.send({ type: 'leave' });
             this.ws.close();
@@ -182,6 +190,12 @@ export class NetworkManager {
                     this.hostInputBuffer.push(event);
                     this.hostInputHistory.push(event);  // Permanent history for resimulation
                     netDiag.recordHostInputReceived(msg.tick, this.hostInputBuffer.length);
+
+                    // Diagnostic 1B: Check for late host input
+                    if (this.game && msg.tick < this.game.simTick) {
+                        netDiag.recordLateHostInput(msg.tick, this.game.simTick);
+                    }
+
                     // Keep buffer sizes reasonable (~3 seconds at 30Hz)
                     if (this.hostInputBuffer.length > 60) {
                         netDiag.recordBufferOverflow('hostInputBuffer');
@@ -192,6 +206,11 @@ export class NetworkManager {
                         this.hostInputHistory.shift();
                     }
                 }
+                break;
+
+            case 'pong':
+                // RTT measurement response (Diagnostic 1A)
+                this.handlePong(msg);
                 break;
 
             case 'settings':
@@ -295,5 +314,51 @@ export class NetworkManager {
             goldSpawnTick: Math.floor((this.game.settings.duration * 1000) / 30),
             seed: this.game.randomSeed  // No fallback - seed must be set before calling this
         };
+    }
+
+    // ===== Ping/Pong RTT Measurement (Diagnostic 1A) =====
+
+    startPingInterval() {
+        this.stopPingInterval();
+        // Send ping every 1 second
+        this.pingInterval = setInterval(() => {
+            this.sendPing();
+        }, 1000);
+        // Send first ping immediately
+        this.sendPing();
+    }
+
+    stopPingInterval() {
+        if (this.pingInterval) {
+            clearInterval(this.pingInterval);
+            this.pingInterval = null;
+        }
+        this.pendingPings.clear();
+    }
+
+    sendPing() {
+        if (!this.connected) return;
+
+        const id = ++this.pingId;
+        const t = performance.now();
+        this.pendingPings.set(id, t);
+        this.send({ type: 'ping', id, t });
+
+        // Clean up old pending pings (older than 10 seconds)
+        const cutoff = t - 10000;
+        for (const [oldId, oldTime] of this.pendingPings.entries()) {
+            if (oldTime < cutoff) {
+                this.pendingPings.delete(oldId);
+            }
+        }
+    }
+
+    handlePong(msg) {
+        const sendTime = this.pendingPings.get(msg.id);
+        if (sendTime !== undefined) {
+            const rttMs = performance.now() - sendTime;
+            this.pendingPings.delete(msg.id);
+            netDiag.recordRtt(rttMs);
+        }
     }
 }

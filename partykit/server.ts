@@ -15,6 +15,7 @@ type ClientMessage =
   | { type: "gameStart"; settings?: GameSettings }
   | { type: "settings"; settings: GameSettings }
   | { type: "state"; state: GameState }
+  | { type: "ping"; id: number; t: number }
   | { type: "leave" };
 
 // Game settings that affect simulation (must be synced)
@@ -39,6 +40,7 @@ type ServerMessage =
   | { type: "state"; state: GameState }
   | { type: "input"; playerId: string; input: InputState; tick: number }
   | { type: "hostInput"; input: InputState; tick: number }
+  | { type: "pong"; id: number; t: number }
   | { type: "error"; message: string };
 
 interface PlayerInfo {
@@ -164,6 +166,15 @@ export default class BroomsticksRoom implements Party.Server {
 
       case "hostInput":
         this.handleHostInput(sender, msg.input, msg.tick);
+        break;
+
+      case "ping":
+        // Diagnostic 1A: Echo back pong with same id and t
+        sender.send(JSON.stringify({
+          type: "pong",
+          id: msg.id,
+          t: msg.t
+        } as ServerMessage));
         break;
 
       case "leave":

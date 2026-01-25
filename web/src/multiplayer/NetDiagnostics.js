@@ -142,6 +142,18 @@ export class NetDiagnostics {
         this.longFrameCount = 0;  // frames >= 2*UPDATE_INTERVAL
         this.frameSampleTick = 0;  // sample every N ticks
 
+        // === RTT / Ping-Pong (Diagnostic 1A) ===
+        this.rttStats = new RollingStats();
+        this.lastRtt = 0;
+        this.rttJitterStats = new RollingStats();  // abs diff between consecutive RTTs
+
+        // === Late Input Counters (Diagnostic 1B) ===
+        this.lateHostInputCount = 0;    // Client: host inputs arriving after sim tick
+        this.lateHostInputByTicks = new RollingStats();  // How many ticks late
+        this.lateClientInputCount = 0;  // Host: client inputs arriving after sim tick
+        this.lateClientInputByTicks = new RollingStats();  // How many ticks late
+        this.clientInputTickSpread = new RollingStats();  // Host: spread between client tick and host tick
+
         // Ring buffer for detailed event history (optional export)
         this.eventHistory = new RingBuffer(RING_BUFFER_SIZE);
 
@@ -239,6 +251,18 @@ export class NetDiagnostics {
 
         this.physicsStepStats.clear();
         this.longFrameCount = 0;
+
+        // RTT
+        this.rttStats.clear();
+        this.lastRtt = 0;
+        this.rttJitterStats.clear();
+
+        // Late inputs
+        this.lateHostInputCount = 0;
+        this.lateHostInputByTicks.clear();
+        this.lateClientInputCount = 0;
+        this.lateClientInputByTicks.clear();
+        this.clientInputTickSpread.clear();
 
         this.eventHistory.clear();
     }
@@ -448,6 +472,84 @@ export class NetDiagnostics {
         }
     }
 
+    // ===== RTT / Ping-Pong (Diagnostic 1A) =====
+
+    /**
+     * Record RTT from ping/pong round trip
+     */
+    recordRtt(rttMs) {
+        if (!this.enabled) return;
+
+        this.rttStats.add(rttMs);
+
+        // Calculate jitter (abs diff between consecutive RTTs)
+        if (this.lastRtt > 0) {
+            const jitter = Math.abs(rttMs - this.lastRtt);
+            this.rttJitterStats.add(jitter);
+        }
+        this.lastRtt = rttMs;
+
+        this.eventHistory.push({
+            type: 'rtt',
+            time: Date.now(),
+            rttMs
+        });
+    }
+
+    // ===== Late Input Counters (Diagnostic 1B) =====
+
+    /**
+     * Record late host input (client side)
+     * Called when hostInput arrives with tick < game.simTick
+     */
+    recordLateHostInput(inputTick, simTick) {
+        if (!this.enabled || this.role !== 'client') return;
+
+        const lateByTicks = simTick - inputTick;
+        this.lateHostInputCount++;
+        this.lateHostInputByTicks.add(lateByTicks);
+
+        this.eventHistory.push({
+            type: 'late_host_input',
+            time: Date.now(),
+            inputTick,
+            simTick,
+            lateByTicks
+        });
+    }
+
+    /**
+     * Record late client input (host side)
+     * Called when client input arrives with tick < game.simTick
+     */
+    recordLateClientInput(clientTick, hostSimTick) {
+        if (!this.enabled || this.role !== 'host') return;
+
+        const lateByTicks = hostSimTick - clientTick;
+        this.lateClientInputCount++;
+        this.lateClientInputByTicks.add(lateByTicks);
+
+        this.eventHistory.push({
+            type: 'late_client_input',
+            time: Date.now(),
+            clientTick,
+            hostSimTick,
+            lateByTicks
+        });
+    }
+
+    /**
+     * Record client input tick spread (host side)
+     * Measures the difference between client's tick and host's current tick
+     * Useful for understanding tick synchronization even before step 3
+     */
+    recordClientInputTickSpread(clientTick, hostSimTick) {
+        if (!this.enabled || this.role !== 'host') return;
+
+        const spread = hostSimTick - clientTick;
+        this.clientInputTickSpread.add(spread);
+    }
+
     // ===== Reporting =====
 
     /**
@@ -460,6 +562,8 @@ export class NetDiagnostics {
         const snapshotHz = this.snapshotCount / sessionDurationSec;
         const rollbacksPerMin = (this.rollbackCount / sessionDurationSec) * 60;
         const hardResetsPerMin = (this.hardResetCount / sessionDurationSec) * 60;
+        const lateHostInputsPerMin = (this.lateHostInputCount / sessionDurationSec) * 60;
+        const lateClientInputsPerMin = (this.lateClientInputCount / sessionDurationSec) * 60;
 
         const report = {
             // Context
@@ -477,9 +581,20 @@ export class NetDiagnostics {
             snapshotInterval: this.snapshotIntervalStats.getStats(),
             burstCount: this.burstCount,
 
+            // RTT (Diagnostic 1A)
+            rtt: this.rttStats.getStats(),
+            rttJitter: this.rttJitterStats.getStats(),
+
             // Input
             ackDelayMs: this.ackDelayMsStats.getStats(),
             ackDelayTicks: this.ackDelayTicksStats.getStats(),
+
+            // Late Inputs (Diagnostic 1B)
+            lateHostInputsPerMin: Math.round(lateHostInputsPerMin * 10) / 10,
+            lateHostInputByTicks: this.lateHostInputByTicks.getStats(),
+            lateClientInputsPerMin: Math.round(lateClientInputsPerMin * 10) / 10,
+            lateClientInputByTicks: this.lateClientInputByTicks.getStats(),
+            clientInputTickSpread: this.clientInputTickSpread.getStats(),
 
             // Prediction
             divergence: this.divergenceStats.getStats(),
@@ -519,6 +634,21 @@ export class NetDiagnostics {
         console.log(`  snapshotHz: ${report.snapshotHz}`);
         console.log(`  interval: avg=${report.snapshotInterval.avg}ms p95=${report.snapshotInterval.p95}ms max=${report.snapshotInterval.max}ms`);
         console.log(`  bursts (>100ms): ${report.burstCount}`);
+
+        console.log('=== RTT (ping/pong) ===');
+        console.log(`  rttMs: avg=${report.rtt.avg} p95=${report.rtt.p95} max=${report.rtt.max}`);
+        console.log(`  rttJitter: avg=${report.rttJitter.avg} p95=${report.rttJitter.p95} max=${report.rttJitter.max}`);
+
+        console.log('=== Late Inputs ===');
+        if (this.role === 'client') {
+            console.log(`  lateHostInputs/min: ${report.lateHostInputsPerMin}`);
+            console.log(`  lateByTicks: avg=${report.lateHostInputByTicks.avg} p95=${report.lateHostInputByTicks.p95} max=${report.lateHostInputByTicks.max}`);
+        }
+        if (this.role === 'host') {
+            console.log(`  lateClientInputs/min: ${report.lateClientInputsPerMin}`);
+            console.log(`  lateByTicks: avg=${report.lateClientInputByTicks.avg} p95=${report.lateClientInputByTicks.p95} max=${report.lateClientInputByTicks.max}`);
+            console.log(`  clientTickSpread: avg=${report.clientInputTickSpread.avg} p95=${report.clientInputTickSpread.p95} max=${report.clientInputTickSpread.max}`);
+        }
 
         if (this.role === 'client') {
             console.log('=== Input RTT ===');
@@ -561,8 +691,18 @@ export class NetDiagnostics {
 
         this.snapshotIntervalStats.clear();
 
+        // RTT stats
+        this.rttStats.clear();
+        this.rttJitterStats.clear();
+        // Note: keep lastRtt for jitter calculation across reports
+
         this.ackDelayMsStats.clear();
         this.ackDelayTicksStats.clear();
+
+        // Late input stats
+        this.lateHostInputByTicks.clear();
+        this.lateClientInputByTicks.clear();
+        this.clientInputTickSpread.clear();
 
         this.divergenceStats.clear();
         this.divergenceByType.players.clear();
