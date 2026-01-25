@@ -436,6 +436,10 @@ export class InputHandler {
                 this.game.assets.playSound('pop');
                 this.game.setDifficulty(AIDifficulty.HARD);
             }
+            if (this.hitTest(btns.diffExpert, x, y)) {
+                this.game.assets.playSound('pop');
+                this.game.setDifficulty(AIDifficulty.EXPERT);
+            }
         }
 
         // Player count buttons (local multiplayer only)

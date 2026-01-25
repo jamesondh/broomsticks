@@ -279,10 +279,11 @@ export class GameRenderer {
         // Mode-specific options
         if (gameMode === GameMode.SINGLE) {
             // Difficulty selector
-            ctx.fillText('Difficulty:', 180, 167);
+            ctx.fillText('Difficulty:', 160, 167);
             this.drawToggleButton(ctx, btns.diffEasy, 'Easy', aiDifficulty === AIDifficulty.EASY);
             this.drawToggleButton(ctx, btns.diffMedium, 'Medium', aiDifficulty === AIDifficulty.MEDIUM);
             this.drawToggleButton(ctx, btns.diffHard, 'Hard', aiDifficulty === AIDifficulty.HARD);
+            this.drawToggleButton(ctx, btns.diffExpert, 'Expert', aiDifficulty === AIDifficulty.EXPERT);
         } else {
             // Player count selector
             ctx.fillText('Players:', 240, 167);
@@ -311,10 +312,10 @@ export class GameRenderer {
         // "Settings:" label
         ctx.fillStyle = '#000';
         ctx.font = GAME_FONT;
-        ctx.fillText('Settings:', 150, 197);
+        ctx.fillText('Settings:', 165, 200);
         if (readOnly) {
             ctx.fillStyle = '#666';
-            ctx.fillText('(Host controls)', 220, 197);
+            ctx.fillText('(Host controls)', 210, 200);
             ctx.fillStyle = '#000';
         }
 
@@ -377,17 +378,17 @@ export class GameRenderer {
     formatSettingText(key, settings, settingsOptions, isTwoWay, readOnly) {
         const labels = {
             dive: 'Diving',
-            accel: 'Accel',
-            maxSpeed: 'MaxSpd',
+            accel: 'Acceleration',
+            maxSpeed: 'Max Speed',
             sound: 'Sound',
             redBalls: 'Red',
             blackBalls: 'Black',
             goldBalls: 'Gold',
-            goldPoints: 'GoldPts',
+            goldPoints: 'Gold Points',
             duration: 'Time',
             winScore: 'Win',
-            playerImg: '',
-            bgImg: ''
+            playerImg: 'Sprites',
+            bgImg: 'BG'
         };
 
         const label = labels[key] || key;
@@ -438,7 +439,7 @@ export class GameRenderer {
         }
 
         // Title
-        ctx.fillText('ONLINE', 285, 160);
+        ctx.fillText('ONLINE', 296, 160);
 
         // Quick Match button
         this.drawButton(ctx, btns.quickMatch, 'Quick Match');
@@ -448,10 +449,6 @@ export class GameRenderer {
 
         // Back link
         this.drawBackButton(ctx, btns.back);
-
-        // Coming soon notice
-        ctx.fillStyle = '#666';
-        ctx.fillText('(Coming in Phase 3)', 260, 330);
     }
 
     drawMatchmaking(ctx) {
@@ -494,7 +491,7 @@ export class GameRenderer {
         }
 
         // Title
-        ctx.fillText('PRIVATE ROOM', 255, 160);
+        ctx.fillText('PRIVATE ROOM', 275, 160);
 
         // Create Room button
         this.drawButton(ctx, btns.createRoom, 'Create Room');
@@ -519,7 +516,7 @@ export class GameRenderer {
         }
 
         // Title
-        ctx.fillText('JOIN ROOM', 270, 160);
+        ctx.fillText('JOIN ROOM', 285, 160);
 
         // Room code input box
         const inputBox = btns.codeInput;
@@ -530,7 +527,7 @@ export class GameRenderer {
 
         // Room code text with blinking cursor
         ctx.fillStyle = '#000';
-        ctx.font = '24px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.font = '32px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
         const displayCode = roomCodeInput.toUpperCase();
         const codeX = inputBox.x + inputBox.w / 2 - ctx.measureText(displayCode).width / 2;
         ctx.fillText(displayCode, codeX, inputBox.y + 26);
@@ -563,7 +560,7 @@ export class GameRenderer {
             ctx.strokeStyle = '#000';
             ctx.strokeRect(btns.join.x + 0.5, btns.join.y + 0.5, btns.join.w, btns.join.h);
             ctx.fillStyle = '#000';
-            ctx.fillText('JOIN', btns.join.x + 30, btns.join.y + 20);
+            ctx.fillText('JOIN', btns.join.x + 38, btns.join.y + 20);
         }
 
         // Back link
@@ -584,26 +581,26 @@ export class GameRenderer {
         }
 
         // Title
-        ctx.fillText('LOBBY', 290, 130);
+        ctx.fillText('LOBBY', 299, 120);
 
         // Room code and Players side by side
-        ctx.font = '20px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
-        ctx.fillText(`Room: ${roomCode}`, 150, 155);
+        ctx.font = '32px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText(`Room: ${roomCode}`, 175, 165);
         ctx.font = GAME_FONT;
 
         // Players list (right side)
-        ctx.fillText('Players:', 380, 155);
-        let yOffset = 173;
+        ctx.fillText('Players:', 340, 145);
+        let yOffset = 165;
         for (const player of lobbyPlayers) {
             const label = player.isHost ? `${player.name} (Host)` : player.name;
-            ctx.fillText(`- ${label}`, 390, yOffset);
+            ctx.fillText(`- ${label}`, 332, yOffset);
             yOffset += 18;
         }
 
         // Waiting for players message
         if (lobbyPlayers.length < 2) {
             ctx.fillStyle = '#666';
-            ctx.fillText('Waiting for opponent...', 390, yOffset);
+            ctx.fillText('Waiting for opponent...', 340, yOffset);
             ctx.fillStyle = '#000';
         }
 
@@ -629,7 +626,7 @@ export class GameRenderer {
             ctx.strokeRect(start.x + 0.5, start.y + 0.5, start.w, start.h);
             ctx.fillStyle = '#000';
             const label = isHost ? 'Start' : 'Waiting...';
-            ctx.fillText(label, start.x + (isHost ? 30 : 15), start.y + 20);
+            ctx.fillText(label, start.x + (isHost ? 38 : 15), start.y + 20);
         }
 
         // Leave link
@@ -682,11 +679,11 @@ export class GameRenderer {
         }
 
         // Title
-        ctx.fillText('CONTROLS', 275, 140);
+        ctx.fillText('CONTROLS', 285, 150);
 
         // Instructions
-        ctx.fillText('It\'s easier to just click on the keys rather than hold them down.', 139, 169);
-        ctx.fillText('Click on your up key several times to start flying.', 174, 189);
+        ctx.fillText('It\'s easier to just click on the keys rather than hold them down.', 139, 179);
+        ctx.fillText('Click on your up key several times to start flying.', 174, 199);
 
         // Blue player controls
         ctx.fillText('Blue Player', 89, 219);
@@ -982,7 +979,7 @@ export class GameRenderer {
             ctx.fillText('Exit to Menu', menuX + 30, menuY + 17);
         } else {
             // Normal pause modal with Resume + Return to Menu
-            ctx.fillText('PAUSED', modalX + 70, modalY + 30);
+            ctx.fillText('PAUSED', modalX + 80, modalY + 30);
 
             // Resume button
             const resumeBtn = BUTTONS.PAUSED.resume;
@@ -1004,7 +1001,7 @@ export class GameRenderer {
             ctx.strokeStyle = '#000';
             ctx.strokeRect(menuX + 0.5, menuY + 0.5, menuBtn.w, menuBtn.h);
             ctx.fillStyle = '#000';
-            ctx.fillText('Return to Menu', menuX + 25, menuY + 17);
+            ctx.fillText('Return to Menu', menuX + 30, menuY + 17);
         }
     }
 

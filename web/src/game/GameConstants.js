@@ -69,13 +69,13 @@ export const SETTINGS_OPTIONS = {
         { value: '/game/images/players.gif', label: 'Default' },
         { value: '/game/images/harden.gif', label: 'Harden' },
         { value: '/game/images/ZeldaPLAYERS-ted.gif', label: 'Zelda' },
-        { value: '/game/images/playersJeronimus3.gif', label: 'Jeronimus' },
+        { value: '/game/images/playersJeronimus3.gif', label: 'Jeron' },
         { value: '/game/images/playersSol.gif', label: 'Sol' },
         { value: '/game/images/playersBen.gif', label: 'Ben' },
         { value: '/game/images/playersDavis.gif', label: 'Davis' },
-        { value: '/game/images/playersDBZted.gif', label: 'Dragon Ball Z' },
+        { value: '/game/images/playersDBZted.gif', label: 'DBZ' },
         { value: '/game/images/playersNess.gif', label: 'Ness' },
-        { value: '/game/images/playersXmas.gif', label: 'Christmas' }
+        { value: '/game/images/playersXmas.gif', label: 'Xmas' }
     ],
     bgImg: [
         { value: '/game/images/sky1.jpg', label: 'Sky 1' },
@@ -123,14 +123,16 @@ export const GameMode = {
 export const AIDifficulty = {
     EASY: 'easy',
     MEDIUM: 'medium',
-    HARD: 'hard'
+    HARD: 'hard',
+    EXPERT: 'expert'
 };
 
 // AI difficulty settings (smart = lower is harder, reactionDelay = frames before responding)
 export const AI_DIFFICULTY_SETTINGS = {
     easy: { smart: 30, reactionDelay: 8 },
     medium: { smart: 20, reactionDelay: 4 },
-    hard: { smart: 10, reactionDelay: 0 }
+    hard: { smart: 10, reactionDelay: 0 },
+    expert: { smart: 1, reactionDelay: 0 }
 };
 
 // Pause modal dimensions (used by renderer and input handler)
@@ -161,13 +163,14 @@ export const BUTTONS = {
         back: { x: 290, y: 310, w: 60, h: 20 }
     },
     CONTROLS: {
-        back: { x: 290, y: 320, w: 60, h: 20 }
+        back: { x: 290, y: 290, w: 60, h: 20 }
     },
     PRE_GAME: {
         // Difficulty buttons (single player)
-        diffEasy: { x: 244, y: 150, w: 60, h: 25 },
-        diffMedium: { x: 314, y: 150, w: 70, h: 25 },
-        diffHard: { x: 394, y: 150, w: 60, h: 25 },
+        diffEasy: { x: 214, y: 150, w: 50, h: 25 },
+        diffMedium: { x: 274, y: 150, w: 55, h: 25 },
+        diffHard: { x: 339, y: 150, w: 50, h: 25 },
+        diffExpert: { x: 399, y: 150, w: 55, h: 25 },
         // Player count buttons (local multiplayer)
         players2: { x: 290, y: 150, w: 40, h: 25 },
         players4: { x: 340, y: 150, w: 40, h: 25 },
@@ -190,12 +193,12 @@ export const BUTTONS = {
     },
     JOIN_ROOM: {
         codeInput: { x: 214, y: 180, w: 200, h: 35 },
-        join: { x: 264, y: 230, w: 100, h: 30 },
-        back: { x: 290, y: 280, w: 60, h: 20 }
+        join: { x: 264, y: 250, w: 100, h: 30 },
+        back: { x: 290, y: 290, w: 60, h: 20 }
     },
     LOBBY: {
-        start: { x: 264, y: 285, w: 100, h: 30 },
-        leave: { x: 290, y: 325, w: 60, h: 20 }
+        start: { x: 264, y: 277, w: 100, h: 30 },
+        leave: { x: 300, y: 315, w: 60, h: 20 }
     },
     PLAYING: {
         pauseIcon: { x: 10, y: 8, w: 32, h: 15, mainCanvas: true }
@@ -213,9 +216,9 @@ export const BUTTONS = {
 
 // Pre-game expanded settings layout (4-column grid)
 export const PREGAME_SETTINGS_LAYOUT = {
-    startX: 150,       // X of first column
+    startX: 114,       // X of first column
     startY: 212,      // Y of first row text baseline
-    colWidth: 80,    // Width per column
+    colWidth: 100,    // Width per column
     lineHeight: 18,   // Vertical spacing
     rowHeight: 16,    // Clickable height per row
     cols: 4,          // Number of columns
@@ -229,11 +232,11 @@ export const PREGAME_SETTINGS_LAYOUT = {
     // Hitbox offsets for two-way < > controls (relative to cell start)
     // Each defines the x-offset where the < and > arrows are clickable
     twoWayHitboxes: {
-        goldPoints: { leftStart: 0, leftEnd: 60, rightStart: 60, rightEnd: 80 },
-        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 80 },
-        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 80 },
-        playerImg: { leftStart: 0, leftEnd: 30, rightStart: 30, rightEnd: 80 },
-        bgImg: { leftStart: 0, leftEnd: 25, rightStart: 25, rightEnd: 80 }
+        goldPoints: { leftStart: 0, leftEnd: 80, rightStart: 80, rightEnd: 100 },
+        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 100 },
+        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 100 },
+        playerImg: { leftStart: 0, leftEnd: 60, rightStart: 60, rightEnd: 100 },
+        bgImg: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 100 }
     }
 };
 
@@ -246,9 +249,9 @@ export const LOBBY_SETTINGS = [
 
 // Lobby settings layout (reuses PREGAME_SETTINGS_LAYOUT grid structure)
 export const LOBBY_SETTINGS_LAYOUT = {
-    startX: 150,       // X of first column
-    startY: 212,       // Y of first row text baseline
-    colWidth: 80,      // Width per column
+    startX: 165,       // X of first column
+    startY: 222,       // Y of first row text baseline
+    colWidth: 100,      // Width per column
     lineHeight: 18,    // Vertical spacing
     rowHeight: 16,     // Clickable height per row
     cols: 4,           // Number of columns
@@ -256,13 +259,13 @@ export const LOBBY_SETTINGS_LAYOUT = {
     // Settings arranged in grid: [row][col] - simulation-affecting only, no sound/playerImg/bgImg
     grid: [
         ['dive', 'accel', 'maxSpeed', null],
-        ['redBalls', 'blackBalls', 'goldBalls', 'goldPoints'],
-        ['duration', 'winScore', null, null]
+        ['redBalls', 'blackBalls', 'goldBalls'],
+        ['duration', 'winScore', 'goldPoints', null]
     ],
     // Hitbox offsets for two-way < > controls (same as PREGAME)
     twoWayHitboxes: {
-        goldPoints: { leftStart: 0, leftEnd: 60, rightStart: 60, rightEnd: 80 },
-        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 80 },
-        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 80 }
+        goldPoints: { leftStart: 0, leftEnd: 80, rightStart: 80, rightEnd: 100 },
+        duration: { leftStart: 0, leftEnd: 45, rightStart: 45, rightEnd: 100 },
+        winScore: { leftStart: 0, leftEnd: 40, rightStart: 40, rightEnd: 100 }
     }
 };
