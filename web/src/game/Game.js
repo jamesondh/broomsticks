@@ -23,6 +23,7 @@ import {
 import { NetworkManager } from '../multiplayer/NetworkManager.js';
 import { serialize, apply } from '../multiplayer/StateSerializer.js';
 import { generatePlayerName } from '../multiplayer/names.js';
+import { netDiag } from '../multiplayer/NetDiagnostics.js';
 
 // Re-export for backward compatibility
 export { GameState, GameMode, AIDifficulty, NetworkMode };
@@ -307,6 +308,8 @@ export class Game {
 
         if (this.state === GameState.PLAYING) {
             if (elapsed >= this.updateInterval) {
+                const physicsStart = performance.now();
+
                 // Increment tick counter (both host and client)
                 this.simTick++;
 
@@ -335,6 +338,23 @@ export class Game {
 
                 // Reset alpha after physics step (next frame starts fresh)
                 this.renderAlpha = 0;
+
+                // Record physics step timing (sample every 10 ticks to reduce overhead)
+                if (this.networkMode !== NetworkMode.OFFLINE && this.simTick % 10 === 0) {
+                    const physicsEnd = performance.now();
+                    netDiag.recordPhysicsStep(physicsEnd - physicsStart, elapsed, this.updateInterval);
+
+                    // Sample buffer lengths
+                    if (this.networkManager) {
+                        netDiag.recordBufferLengths({
+                            hostInputBuffer: this.networkManager.hostInputBuffer?.length || 0,
+                            hostInputHistory: this.networkManager.hostInputHistory?.length || 0,
+                            localInputBuffer: this.networkManager.localInputBuffer?.length || 0,
+                            remoteInputQueue: this.networkManager.remoteInputQueue?.length || 0,
+                            stateHistory: this.stateHistory?.length || 0
+                        });
+                    }
+                }
             }
         } else {
             this.lastUpdateTime = timestamp;
@@ -453,6 +473,10 @@ export class Game {
         this.destroyed = true;
         this.running = false;
         this.input.detach();
+
+        // Stop network diagnostics
+        netDiag.stop();
+
         if (this.networkManager) {
             this.networkManager.disconnect();
         }
@@ -474,6 +498,9 @@ export class Game {
         this.networkManager = new NetworkManager(this);
         this.setupNetworkCallbacks();
         this.networkManager.connect(this.roomCode, this.playerName);
+
+        // Start network diagnostics
+        netDiag.start('host', this.roomCode);
     }
 
     joinRoom(code) {
@@ -491,6 +518,9 @@ export class Game {
         this.networkManager = new NetworkManager(this);
         this.setupNetworkCallbacks();
         this.networkManager.connect(this.roomCode, this.playerName);
+
+        // Start network diagnostics
+        netDiag.start('client', this.roomCode);
     }
 
     setupNetworkCallbacks() {
@@ -587,6 +617,9 @@ export class Game {
     }
 
     leaveRoom() {
+        // Stop network diagnostics
+        netDiag.stop();
+
         if (this.networkManager) {
             this.networkManager.disconnect();
             this.networkManager = null;
@@ -622,6 +655,9 @@ export class Game {
         };
 
         this.networkManager.connect(code, this.playerName);
+
+        // Start network diagnostics
+        netDiag.start('client', code);
     }
 
     // Copy room link to clipboard (for sharing)
@@ -654,6 +690,7 @@ export class Game {
         // Host broadcasts at 20Hz; duplicates/out-of-order snapshots are possible.
         // Re-applying the same tick repeatedly causes visible jitter.
         if (typeof state.tick === 'number' && state.tick <= this.lastAuthoritativeTick) {
+            netDiag.recordSnapshotIgnored(state.tick, this.lastAuthoritativeTick);
             return;
         }
         if (typeof state.tick === 'number') {
@@ -786,6 +823,7 @@ export class Game {
 
         // Trim history to prevent memory growth
         if (this.stateHistory.length > this.maxHistoryLength) {
+            netDiag.recordBufferOverflow('stateHistory');
             this.stateHistory.shift();
         }
     }
@@ -802,21 +840,26 @@ export class Game {
 
         if (predictedIndex === -1) {
             // No matching tick in history - too far behind, hard reset
-            this.hardResetToState(authoritativeState);
+            this.hardResetToState(authoritativeState, 'no_history_for_tick');
             return;
         }
 
         const predictedState = this.stateHistory[predictedIndex];
-        const divergence = this.calculateDivergence(predictedState, authoritativeState);
+        const { maxDivergence, playerDivergence, ballDivergence } = this.calculateDivergenceDetailed(predictedState, authoritativeState);
 
-        if (divergence < 1.0) {
+        // Record divergence for diagnostics
+        netDiag.recordDivergence(maxDivergence, playerDivergence, ballDivergence);
+
+        if (maxDivergence < 1.0) {
             // Prediction was accurate enough, just trim old history
             this.stateHistory = this.stateHistory.slice(predictedIndex + 1);
             return;
         }
 
         // Divergence detected - need to rollback and resimulate
+        const resimStart = performance.now();
 
+        const fromTick = this.simTick;
         const targetTick = this.simTick;
 
         // Restore to authoritative state
@@ -842,13 +885,28 @@ export class Game {
 
             this.saveStateToHistory();
         }
+
+        const resimEnd = performance.now();
+        const resimTicks = targetTick - serverTick;
+        netDiag.recordRollback(fromTick, serverTick, resimTicks, resimEnd - resimStart);
     }
 
     /**
      * Calculate maximum position divergence between predicted and authoritative states.
+     * @deprecated Use calculateDivergenceDetailed for diagnostics support
      */
     calculateDivergence(predicted, authoritative) {
+        return this.calculateDivergenceDetailed(predicted, authoritative).maxDivergence;
+    }
+
+    /**
+     * Calculate position divergence with per-entity-type breakdown.
+     * Returns { maxDivergence, playerDivergence, ballDivergence }
+     */
+    calculateDivergenceDetailed(predicted, authoritative) {
         let maxDelta = 0;
+        let playerMax = 0;
+        let ballMax = 0;
 
         // Compare player positions
         for (let i = 0; i < predicted.players.length && i < authoritative.players.length; i++) {
@@ -856,7 +914,9 @@ export class Game {
             const ap = authoritative.players[i];
             const dx = Math.abs(pp.x - ap.x);
             const dy = Math.abs(pp.y - ap.y);
-            maxDelta = Math.max(maxDelta, dx, dy);
+            const delta = Math.max(dx, dy);
+            playerMax = Math.max(playerMax, delta);
+            maxDelta = Math.max(maxDelta, delta);
         }
 
         // Compare ball positions
@@ -865,10 +925,16 @@ export class Game {
             const ab = authoritative.balls[i];
             const dx = Math.abs(pb.x - ab.x);
             const dy = Math.abs(pb.y - ab.y);
-            maxDelta = Math.max(maxDelta, dx, dy);
+            const delta = Math.max(dx, dy);
+            ballMax = Math.max(ballMax, delta);
+            maxDelta = Math.max(maxDelta, delta);
         }
 
-        return maxDelta;
+        return {
+            maxDivergence: maxDelta,
+            playerDivergence: playerMax,
+            ballDivergence: ballMax
+        };
     }
 
     /**
@@ -917,7 +983,9 @@ export class Game {
     /**
      * Full reset to authoritative state (when too far out of sync).
      */
-    hardResetToState(state) {
+    hardResetToState(state, reason = 'unknown') {
+        netDiag.recordHardReset(state.tick, this.simTick, reason);
+
         this.restoreState(state);
         this.simTick = state.tick;
         // Seed history at the authoritative tick so subsequent snapshots can reconcile.

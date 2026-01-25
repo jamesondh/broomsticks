@@ -1,5 +1,7 @@
 // NetworkManager.js - WebSocket client for PartyKit multiplayer
 
+import { netDiag } from './NetDiagnostics.js';
+
 // PartyKit server URL - update this after deployment
 // Development: ws://localhost:1999/party/{roomCode}
 // Production: wss://broomsticks.{username}.partykit.dev/party/{roomCode}
@@ -148,6 +150,14 @@ export class NetworkManager {
             case 'state':
                 // Client receives state from host
                 if (!this.isHost && this.onStateReceived) {
+                    // Record for diagnostics before callback (which may filter duplicates)
+                    if (this.game && msg.state.tick !== undefined) {
+                        netDiag.recordSnapshotReceived(
+                            msg.state.tick,
+                            this.game.simTick,
+                            msg.state.lastProcessedInputTick || 0
+                        );
+                    }
                     this.onStateReceived(msg.state);
                 }
                 break;
@@ -156,8 +166,10 @@ export class NetworkManager {
                 // Host receives input from client
                 if (this.isHost) {
                     this.remoteInputQueue.push({ tick: msg.tick, input: msg.input });
+                    netDiag.recordRemoteInputReceived(msg.tick, this.remoteInputQueue.length);
                     // Keep queue reasonable (~3 seconds worth of keydowns)
                     if (this.remoteInputQueue.length > 90) {
+                        netDiag.recordBufferOverflow('remoteInputQueue');
                         this.remoteInputQueue.shift();
                     }
                 }
@@ -169,11 +181,14 @@ export class NetworkManager {
                     const event = { tick: msg.tick, input: msg.input };
                     this.hostInputBuffer.push(event);
                     this.hostInputHistory.push(event);  // Permanent history for resimulation
+                    netDiag.recordHostInputReceived(msg.tick, this.hostInputBuffer.length);
                     // Keep buffer sizes reasonable (~3 seconds at 30Hz)
                     if (this.hostInputBuffer.length > 60) {
+                        netDiag.recordBufferOverflow('hostInputBuffer');
                         this.hostInputBuffer.shift();
                     }
                     if (this.hostInputHistory.length > 90) {
+                        netDiag.recordBufferOverflow('hostInputHistory');
                         this.hostInputHistory.shift();
                     }
                 }
@@ -223,8 +238,12 @@ export class NetworkManager {
         // Save to local history (for Phase 7 resimulation)
         this.localInputBuffer.push({ tick, input });
         if (this.localInputBuffer.length > 90) {
+            netDiag.recordBufferOverflow('localInputBuffer');
             this.localInputBuffer.shift();
         }
+
+        // Record for input RTT tracking
+        netDiag.recordInputSent(tick);
 
         this.send({ type: 'input', input, tick });
     }

@@ -47,10 +47,6 @@ export function serialize(game) {
  * @param {boolean} skipPositionUpdate - If true, skip position/velocity updates (for client-side prediction)
  */
 export function apply(game, state, skipPositionUpdate = false) {
-    // Log tick comparison for debugging
-    if (state.tick !== undefined) {
-        console.log(`[State] Received tick ${state.tick}, local tick ${game.simTick}`);
-    }
 
     if (!skipPositionUpdate) {
         // Update players (decode fixed-point velocities)
