@@ -50,7 +50,7 @@ export const DEFAULT_SETTINGS = {
     duration: 60,
     winScore: 50,
     playerImg: '/game/images/players.gif',
-    bgImg: '/game/images/sky1.jpg',
+    bgImg: null,
     sound: true,
     volume: 1.0
 };
@@ -79,8 +79,14 @@ export const SETTINGS_OPTIONS = {
         { value: '/game/images/playersXmas.gif', label: 'Xmas' }
     ],
     bgImg: [
-        { value: '/game/images/sky1.jpg', label: 'Sky 1' },
-        { value: '/game/images/castle1.0.jpg', label: 'Castle' }
+        { value: null, label: 'Solid' },
+        { value: '/game/images/sky1.jpg', label: 'Sky' },
+        { value: '/game/images/sky3.jpg', label: 'Blue Sky' },
+        { value: '/game/images/sky-cpp.jpg', label: 'Sky (v2)' },
+        { value: '/game/images/castle.jpg', label: 'Castle' },
+        { value: '/game/images/diagon-alley.jpg', label: 'Diagon Alley' },
+        { value: '/game/images/leeds-castle.jpg', label: 'Leeds Castle' },
+        { value: '/game/images/winter.jpg', label: 'Winter' }
     ],
     sound: [true, false]
 };

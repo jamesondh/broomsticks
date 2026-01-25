@@ -67,9 +67,9 @@ export class InputHandler {
         }
         this.keysPressed.add(code);
 
-        // B key: toggle background
+        // B key: cycle through all backgrounds
         if (key === 'b' || key === 'B') {
-            this.game.backToggle = !this.game.backToggle;
+            this.game.cycleBgIndex();
         }
 
         // Online client mode: send input to host instead of controlling local player
@@ -525,6 +525,12 @@ export class InputHandler {
             settings[key] = opts[newIdx].value;
             this.game.settingsChanged = true;
             this.game.assets.playSound('pop');
+
+            // Sync currentBgIndex when bgImg changes via settings menu
+            if (key === 'bgImg') {
+                this.game.currentBgIndex = newIdx;
+                localStorage.setItem('broomsticks_bgIndex', newIdx.toString());
+            }
         };
 
         // Two-way settings use explicit arrow hitboxes

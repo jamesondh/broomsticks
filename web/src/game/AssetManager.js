@@ -14,6 +14,8 @@ export class AssetManager {
         this.introImage = null;
         this.backImage = null;
         this.fieldImage = null;
+        this.menuBackImage = null;    // Always sky1.jpg for menu
+        this.bgImages = [];           // All preloaded backgrounds for cycling
 
         // Volume icons
         this.volumeFullIcon = null;
@@ -44,12 +46,24 @@ export class AssetManager {
         const bgImgPath = this.settings.bgImg;
         const introPath = playerImgPath.includes('harden') ? '/game/images/introHarden.gif' : '/game/images/intro.gif';
 
-        // Load main sprite sheets and volume icons
-        const [playersImg, itemsImg, introImg, backImg, fieldImg, volumeFull, volumeHalf, volumeMute] = await Promise.all([
+        // All background image paths (matching SETTINGS_OPTIONS.bgImg order)
+        const bgPaths = [
+            null,  // Solid (index 0)
+            '/game/images/sky1.jpg',
+            '/game/images/sky3.jpg',
+            '/game/images/sky-cpp.jpg',
+            '/game/images/castle.jpg',
+            '/game/images/diagon-alley.jpg',
+            '/game/images/leeds-castle.jpg',
+            '/game/images/winter.jpg'
+        ];
+
+        // Load main sprite sheets, menu background, and volume icons
+        const [playersImg, itemsImg, introImg, menuBackImg, fieldImg, volumeFull, volumeHalf, volumeMute] = await Promise.all([
             loadImage(playerImgPath),
             loadImage('/game/images/items.gif'),
             loadImage(introPath),
-            loadImage(bgImgPath),
+            loadImage('/game/images/sky1.jpg'),  // Always load sky1.jpg for menu
             loadImage('/game/images/field.jpg'),
             loadImage('/images/sound-full-volume.png'),
             loadImage('/images/sound-half-volume.png'),
@@ -57,11 +71,19 @@ export class AssetManager {
         ]);
 
         this.introImage = introImg;
-        this.backImage = backImg;
+        this.menuBackImage = menuBackImg;
         this.fieldImage = fieldImg;
         this.volumeFullIcon = volumeFull;
         this.volumeHalfIcon = volumeHalf;
         this.volumeMuteIcon = volumeMute;
+
+        // Preload ALL backgrounds for in-game cycling
+        this.bgImages = await Promise.all(
+            bgPaths.map(path => path ? loadImage(path) : Promise.resolve(null))
+        );
+
+        // Set backImage based on current settings (for backward compatibility)
+        this.backImage = bgImgPath ? await loadImage(bgImgPath) : null;
 
         // Extract player sprites from sprite sheet
         if (playersImg) {

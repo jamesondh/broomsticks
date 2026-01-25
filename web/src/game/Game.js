@@ -43,6 +43,17 @@ export class Game {
             this.settings.volume = parseFloat(savedVolume);
         }
 
+        // Load saved background index from localStorage
+        const savedBgIndex = localStorage.getItem('broomsticks_bgIndex');
+        if (savedBgIndex !== null) {
+            this.currentBgIndex = parseInt(savedBgIndex, 10);
+            // Sync settings.bgImg with the saved index
+            const bgOptions = SETTINGS_OPTIONS.bgImg;
+            if (this.currentBgIndex >= 0 && this.currentBgIndex < bgOptions.length) {
+                this.settings.bgImg = bgOptions[this.currentBgIndex].value;
+            }
+        }
+
         // Auto-join room from URL (e.g., /?room=ABCD)
         this.autoJoinRoom = autoJoinRoom || null;
 
@@ -60,7 +71,7 @@ export class Game {
 
         // Game state
         this.state = GameState.LOADING;
-        this.backToggle = false;
+        this.currentBgIndex = 0;  // Index into bgImages array (0 = Solid)
         this.currBasket = 0;
         this.timer = 0;
 
@@ -395,6 +406,20 @@ export class Game {
 
         // Play feedback sound (at new volume level)
         this.assets.playSound('pop');
+    }
+
+    cycleBgIndex() {
+        const bgOptions = SETTINGS_OPTIONS.bgImg;
+        this.currentBgIndex = (this.currentBgIndex + 1) % bgOptions.length;
+        this.settings.bgImg = bgOptions[this.currentBgIndex].value;
+        localStorage.setItem('broomsticks_bgIndex', this.currentBgIndex.toString());
+    }
+
+    setBgIndex(index) {
+        const bgOptions = SETTINGS_OPTIONS.bgImg;
+        this.currentBgIndex = Math.max(0, Math.min(index, bgOptions.length - 1));
+        this.settings.bgImg = bgOptions[this.currentBgIndex].value;
+        localStorage.setItem('broomsticks_bgIndex', this.currentBgIndex.toString());
     }
 
     async startFromPreGame() {

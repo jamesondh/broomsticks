@@ -64,34 +64,49 @@ export class GameRenderer {
 
     renderOffscreen() {
         const ctx = this.offCtx;
-        const { assets, state, backToggle } = this.game;
+        const { assets, state, currentBgIndex } = this.game;
 
-        // Draw background
-        const showImageBackground = backToggle || (state !== GameState.PLAYING && state !== GameState.PAUSED);
+        // Menu states: always show sky1.jpg
+        const isMenuState = state !== GameState.PLAYING && state !== GameState.PAUSED;
 
-        if (showImageBackground && assets.backImage) {
-            ctx.drawImage(assets.backImage, 0, 0);
-            if (assets.fieldImage) {
-                ctx.drawImage(assets.fieldImage, 0, GROUND_Y);
+        if (isMenuState) {
+            // Menu always uses sky1.jpg
+            if (assets.menuBackImage) {
+                ctx.drawImage(assets.menuBackImage, 0, 0);
+                if (assets.fieldImage) {
+                    ctx.drawImage(assets.fieldImage, 0, GROUND_Y);
+                }
             }
         } else {
-            // Solid color background
-            ctx.fillStyle = COLORS.sky;
-            ctx.fillRect(0, 0, GAME_WIDTH, GROUND_Y);
-            ctx.fillStyle = COLORS.green;
-            ctx.fillRect(0, GROUND_Y, GAME_WIDTH, 25);
-            ctx.strokeStyle = '#000';
-            ctx.beginPath();
-            ctx.moveTo(0, GROUND_Y);
-            ctx.lineTo(GAME_WIDTH, GROUND_Y);
-            ctx.stroke();
-            // Corner lines
-            ctx.beginPath();
-            ctx.moveTo(30, GROUND_Y);
-            ctx.lineTo(0, GAME_HEIGHT);
-            ctx.moveTo(598, GROUND_Y);
-            ctx.lineTo(GAME_WIDTH, GAME_HEIGHT);
-            ctx.stroke();
+            // In-game: use selected background from bgImages array
+            const bgImage = assets.bgImages[currentBgIndex];
+
+            if (bgImage) {
+                // Draw selected image background
+                ctx.drawImage(bgImage, 0, 0);
+                // Only show field overlay for sky1 (index 1) and sky3 (index 2)
+                if (assets.fieldImage && (currentBgIndex === 1 || currentBgIndex === 2)) {
+                    ctx.drawImage(assets.fieldImage, 0, GROUND_Y);
+                }
+            } else {
+                // Solid color background (index 0 or null image)
+                ctx.fillStyle = COLORS.sky;
+                ctx.fillRect(0, 0, GAME_WIDTH, GROUND_Y);
+                ctx.fillStyle = COLORS.green;
+                ctx.fillRect(0, GROUND_Y, GAME_WIDTH, 25);
+                ctx.strokeStyle = '#000';
+                ctx.beginPath();
+                ctx.moveTo(0, GROUND_Y);
+                ctx.lineTo(GAME_WIDTH, GROUND_Y);
+                ctx.stroke();
+                // Corner lines
+                ctx.beginPath();
+                ctx.moveTo(30, GROUND_Y);
+                ctx.lineTo(0, GAME_HEIGHT);
+                ctx.moveTo(598, GROUND_Y);
+                ctx.lineTo(GAME_WIDTH, GAME_HEIGHT);
+                ctx.stroke();
+            }
         }
 
         // Draw baskets
