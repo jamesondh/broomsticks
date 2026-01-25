@@ -636,6 +636,12 @@ export class InputHandler {
         const btns = BUTTONS.LOBBY;
         const { networkMode, lobbyPlayers } = this.game;
 
+        // Copy link button
+        if (this.hitTest(btns.copyLink, x, y)) {
+            this.game.copyRoomLink();
+            return;
+        }
+
         // Settings grid (host only)
         if (networkMode === NetworkMode.HOST) {
             if (this.handleSettingsGridClick(x, y, LOBBY_SETTINGS_LAYOUT)) {

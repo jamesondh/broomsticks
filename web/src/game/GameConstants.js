@@ -198,7 +198,8 @@ export const BUTTONS = {
     },
     LOBBY: {
         start: { x: 264, y: 277, w: 100, h: 30 },
-        leave: { x: 300, y: 315, w: 60, h: 20 }
+        leave: { x: 300, y: 315, w: 60, h: 20 },
+        copyLink: { x: 165, y: 160, w: 60, h: 22 } // below room code
     },
     PLAYING: {
         pauseIcon: { x: 10, y: 8, w: 32, h: 15, mainCanvas: true }

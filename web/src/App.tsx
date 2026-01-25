@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { GuestbookSearch } from "./components/GuestbookSearch";
 import { BroomsticksGame } from "./game";
 
@@ -35,8 +35,20 @@ function getScreenFromPath(): ScreenState {
   return { screen: "landing", guestbookTab: "search" };
 }
 
+function getRoomCodeFromUrl(): string | undefined {
+  if (typeof window === "undefined") return undefined;
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("room")?.toUpperCase();
+  // Valid room codes: 4 chars from ABCDEFGHJKLMNPQRSTUVWXYZ23456789 (no I, O, 0, 1)
+  const validChars = /^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/;
+  return code && validChars.test(code) ? code : undefined;
+}
+
 function App() {
   const [screenState, setScreenState] = useState<ScreenState>(getScreenFromPath);
+  // Parse room code once on mount (before URL is cleared)
+  const autoJoinRoom = useMemo(() => getRoomCodeFromUrl(), []);
 
   const { screen, guestbookTab } = screenState;
 
@@ -99,7 +111,7 @@ function App() {
   }
 
   // Landing page - show the game
-  return <BroomsticksGame />;
+  return <BroomsticksGame autoJoinRoom={autoJoinRoom} />;
 }
 
 export default App;

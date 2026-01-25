@@ -3,7 +3,11 @@ import { useEffect, useRef, useCallback } from 'react';
 import { Game } from './Game.js';
 import './game.css';
 
-export function BroomsticksGame() {
+interface BroomsticksGameProps {
+  autoJoinRoom?: string;
+}
+
+export function BroomsticksGame({ autoJoinRoom }: BroomsticksGameProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameRef = useRef<Game | null>(null);
@@ -36,7 +40,7 @@ export function BroomsticksGame() {
     void container.offsetHeight;
 
     // Initialize the game
-    const game = new Game(canvas);
+    const game = new Game(canvas, undefined, autoJoinRoom);
     gameRef.current = game;
 
     // Initialize asynchronously - game state transitions to MODE_SELECT when ready
@@ -55,7 +59,7 @@ export function BroomsticksGame() {
         gameRef.current = null;
       }
     };
-  }, [updateScale]);
+  }, [updateScale, autoJoinRoom]);
 
   return (
     <div className="game-page">

@@ -585,7 +585,19 @@ export class GameRenderer {
 
         // Room code and Players side by side
         ctx.font = '32px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
-        ctx.fillText(`Room: ${roomCode}`, 175, 165);
+        ctx.fillText(`Room: ${roomCode}`, 165, 153);
+        ctx.font = GAME_FONT;
+
+        // Copy link button (right of room code)
+        const copyBtn = btns.copyLink;
+        const copyLabel = this.game.copiedFeedback ? 'Copied!' : 'Copy Link';
+        ctx.fillStyle = this.game.copiedFeedback ? COLORS.gold : COLORS.green;
+        ctx.fillRect(copyBtn.x, copyBtn.y, copyBtn.w, copyBtn.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(copyBtn.x + 0.5, copyBtn.y + 0.5, copyBtn.w, copyBtn.h);
+        ctx.fillStyle = '#000';
+        ctx.font = '16px MS Sans Serif Extended, Helvetica, Arial, sans-serif';
+        ctx.fillText(copyLabel, copyBtn.x + 5, copyBtn.y + 15);
         ctx.font = GAME_FONT;
 
         // Players list (right side)

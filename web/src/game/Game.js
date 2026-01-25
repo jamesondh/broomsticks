@@ -28,7 +28,7 @@ import { generatePlayerName } from '../multiplayer/names.js';
 export { GameState, GameMode, AIDifficulty, NetworkMode };
 
 export class Game {
-    constructor(canvas, settings) {
+    constructor(canvas, settings, autoJoinRoom) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.ctx.textRendering = 'geometricPrecision';
@@ -36,6 +36,13 @@ export class Game {
         // Store settings with defaults
         this.settings = settings || { ...DEFAULT_SETTINGS };
         this.settingsOptions = SETTINGS_OPTIONS;
+
+        // Auto-join room from URL (e.g., /?room=ABCD)
+        this.autoJoinRoom = autoJoinRoom || null;
+
+        // "Copied!" feedback state for copy link button
+        this.copiedFeedback = false;
+        this.copiedFeedbackTimer = null;
 
         // Track if settings changed that require asset reload
         this.settingsChanged = false;
@@ -139,6 +146,14 @@ export class Game {
 
         // Start game loop
         this.running = true;
+
+        // Auto-join room if URL contains ?room=XXXX
+        if (this.autoJoinRoom) {
+            this.joinRoomFromUrl(this.autoJoinRoom);
+            requestAnimationFrame(this.gameLoop);
+            return;  // Skip MAIN_MENU
+        }
+
         this.state = GameState.MAIN_MENU;
         requestAnimationFrame(this.gameLoop);
     }
@@ -390,6 +405,10 @@ export class Game {
         if (this.networkManager) {
             this.networkManager.disconnect();
         }
+        if (this.copiedFeedbackTimer) {
+            clearTimeout(this.copiedFeedbackTimer);
+            this.copiedFeedbackTimer = null;
+        }
     }
 
     // ===== Network Multiplayer Methods =====
@@ -526,6 +545,46 @@ export class Game {
         this.roomCode = '';
         this.roomCodeInput = '';
         this.hostPaused = false;
+    }
+
+    // Auto-join a room from URL (e.g., /?room=ABCD)
+    joinRoomFromUrl(code) {
+        // Clear URL param immediately to prevent re-shares
+        window.history.replaceState({}, '', '/');
+
+        // Set up as client
+        this.roomCode = code;
+        this.networkMode = NetworkMode.CLIENT;
+        this.localPlayerIndex = 1;  // Client is player 2 (green)
+        this.lobbyPlayers = [];
+        this.networkError = null;
+
+        this.networkManager = new NetworkManager(this);
+        this.setupNetworkCallbacks();
+
+        // Override error handling to go to main menu on failure
+        const originalOnError = this.networkManager.onError;
+        this.networkManager.onError = (error) => {
+            this.networkError = error;
+            this.state = GameState.MAIN_MENU;
+            this.leaveRoom();
+        };
+
+        this.networkManager.connect(code, this.playerName);
+    }
+
+    // Copy room link to clipboard (for sharing)
+    copyRoomLink() {
+        const url = `${window.location.origin}/?room=${this.roomCode}`;
+        navigator.clipboard.writeText(url).then(() => {
+            this.assets.playSound('pop');
+            this.copiedFeedback = true;
+
+            if (this.copiedFeedbackTimer) clearTimeout(this.copiedFeedbackTimer);
+            this.copiedFeedbackTimer = setTimeout(() => {
+                this.copiedFeedback = false;
+            }, 1500);
+        }).catch(console.error);
     }
 
     requestStartGame() {
