@@ -373,6 +373,9 @@ export class InputHandler {
             this.game.assets.playSound('pop');
             this.game.state = GameState.HELP_MENU;
         }
+        if (this.hitTest(btns.volumeIcon, x, y)) {
+            this.game.cycleVolume();
+        }
         if (this.hitTest(btns.guestbook, x, y)) {
             this.game.assets.playSound('pop');
             window.location.href = '/guestbook';

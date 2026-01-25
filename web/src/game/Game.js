@@ -37,6 +37,12 @@ export class Game {
         this.settings = settings || { ...DEFAULT_SETTINGS };
         this.settingsOptions = SETTINGS_OPTIONS;
 
+        // Load saved volume from localStorage
+        const savedVolume = localStorage.getItem('broomsticks_volume');
+        if (savedVolume !== null) {
+            this.settings.volume = parseFloat(savedVolume);
+        }
+
         // Auto-join room from URL (e.g., /?room=ABCD)
         this.autoJoinRoom = autoJoinRoom || null;
 
@@ -369,6 +375,26 @@ export class Game {
     setPlayerCount(count) {
         this.playerCount = count;
         // TODO: Phase 2 will implement 4-player mode
+    }
+
+    cycleVolume() {
+        // Cycle: 1.0 → 0 → 0.5 → 1.0
+        const current = this.settings.volume;
+        let newVolume;
+        if (current >= 1.0) {
+            newVolume = 0;
+        } else if (current === 0) {
+            newVolume = 0.5;
+        } else {
+            newVolume = 1.0;
+        }
+
+        this.settings.volume = newVolume;
+        this.assets.setVolume(newVolume);
+        localStorage.setItem('broomsticks_volume', newVolume.toString());
+
+        // Play feedback sound (at new volume level)
+        this.assets.playSound('pop');
     }
 
     async startFromPreGame() {

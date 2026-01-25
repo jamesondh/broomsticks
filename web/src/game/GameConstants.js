@@ -51,7 +51,8 @@ export const DEFAULT_SETTINGS = {
     winScore: 50,
     playerImg: '/game/images/players.gif',
     bgImg: '/game/images/sky1.jpg',
-    sound: true
+    sound: true,
+    volume: 1.0
 };
 
 // Settings options for in-game settings screen
@@ -151,6 +152,7 @@ export const BUTTONS = {
         localMultiplayer: { x: 214, y: 185, w: 200, h: 35 },
         online: { x: 214, y: 230, w: 200, h: 35 },
         helpIcon: { x: 580, y: 20, w: 30, h: 30 },
+        volumeIcon: { x: 580, y: 55, w: 30, h: 30 },
         guestbook: { x: 240, y: 280, w: 55, h: 20 },
         github: { x: 340, y: 280, w: 35, h: 20 }
     },

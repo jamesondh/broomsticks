@@ -195,7 +195,7 @@ export class GameRenderer {
 
         // Intro image
         if (assets.introImage) {
-            ctx.drawImage(assets.introImage, 139, 39);
+            ctx.drawImage(assets.introImage, 139, 29);
         }
 
         // Single Player button
@@ -218,7 +218,11 @@ export class GameRenderer {
         ctx.fillText('?', hi.x + 12, hi.y + 20);
         ctx.font = GAME_FONT;
 
+        // Volume icon (below help icon)
+        this.drawVolumeIcon(ctx, btns.volumeIcon, this.game.settings.volume);
+
         // Attribution text
+        ctx.fillStyle = '#000';
         ctx.fillText('A game by Paul Rajlich (2000-2011), port by Jameson Hodge (2026)', 149, 325);
 
         // Footer links
@@ -1063,5 +1067,32 @@ export class GameRenderer {
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 1;
         ctx.strokeRect(x + 0.5, y + 0.5, w, h);
+    }
+
+    // Helper: draw volume icon with appropriate state
+    drawVolumeIcon(ctx, btn, volume) {
+        // Draw button background (matching help icon style)
+        ctx.fillStyle = '#888';
+        ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
+        ctx.strokeStyle = '#000';
+        ctx.strokeRect(btn.x + 0.5, btn.y + 0.5, btn.w, btn.h);
+
+        // Select appropriate icon based on volume level
+        const { assets } = this.game;
+        let icon;
+        if (volume === 0) {
+            icon = assets.volumeMuteIcon;
+        } else if (volume <= 0.5) {
+            icon = assets.volumeHalfIcon;
+        } else {
+            icon = assets.volumeFullIcon;
+        }
+
+        // Draw icon centered in button
+        if (icon) {
+            const iconX = Math.floor(btn.x + (btn.w - icon.width) / 2) + 1;
+            const iconY = Math.floor(btn.y + (btn.h - icon.height) / 2) + 1;
+            ctx.drawImage(icon, iconX, iconY);
+        }
     }
 }

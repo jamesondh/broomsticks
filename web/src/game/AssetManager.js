@@ -15,6 +15,11 @@ export class AssetManager {
         this.backImage = null;
         this.fieldImage = null;
 
+        // Volume icons
+        this.volumeFullIcon = null;
+        this.volumeHalfIcon = null;
+        this.volumeMuteIcon = null;
+
         // Sound assets
         this.sounds = {};
     }
@@ -39,18 +44,24 @@ export class AssetManager {
         const bgImgPath = this.settings.bgImg;
         const introPath = playerImgPath.includes('harden') ? '/game/images/introHarden.gif' : '/game/images/intro.gif';
 
-        // Load main sprite sheets
-        const [playersImg, itemsImg, introImg, backImg, fieldImg] = await Promise.all([
+        // Load main sprite sheets and volume icons
+        const [playersImg, itemsImg, introImg, backImg, fieldImg, volumeFull, volumeHalf, volumeMute] = await Promise.all([
             loadImage(playerImgPath),
             loadImage('/game/images/items.gif'),
             loadImage(introPath),
             loadImage(bgImgPath),
-            loadImage('/game/images/field.jpg')
+            loadImage('/game/images/field.jpg'),
+            loadImage('/images/sound-full-volume.png'),
+            loadImage('/images/sound-half-volume.png'),
+            loadImage('/images/sound-mute.png')
         ]);
 
         this.introImage = introImg;
         this.backImage = backImg;
         this.fieldImage = fieldImg;
+        this.volumeFullIcon = volumeFull;
+        this.volumeHalfIcon = volumeHalf;
+        this.volumeMuteIcon = volumeMute;
 
         // Extract player sprites from sprite sheet
         if (playersImg) {
@@ -78,9 +89,17 @@ export class AssetManager {
             ding: new Audio('/game/snd/ding.mp3')
         };
 
-        // Preload sounds
+        // Apply volume and preload sounds
+        const volume = this.settings.volume ?? 1.0;
         for (const sound of Object.values(this.sounds)) {
+            sound.volume = volume;
             sound.load();
+        }
+    }
+
+    setVolume(volume) {
+        for (const sound of Object.values(this.sounds)) {
+            sound.volume = volume;
         }
     }
 
